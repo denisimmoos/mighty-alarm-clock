@@ -75,6 +75,28 @@
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/lookahead_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="16sp" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/lookahead_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:valueFrom="7"
+            android:valueTo="30" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/calendar_alert_lookahead_help"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="13sp" />
+
         <!-- Sound -->
         <com.google.android.material.textview.MaterialTextView
             style="@style/CalendarAlertSectionTitle"

@@ -867,13 +867,15 @@
     <string name="calendar_alert_edit_profile">Profil bearbeiten</string>
     <string name="calendar_alert_new_profile">Neues Profil</string>
     <plurals name="calendar_alert_event_count">
-        <item quantity="one">%d Wecker in den nächsten 7 Tagen</item>
-        <item quantity="other">%d Wecker in den nächsten 7 Tagen</item>
+        <item quantity="one">%1$d Wecker in den nächsten %2$d Tagen</item>
+        <item quantity="other">%1$d Wecker in den nächsten %2$d Tagen</item>
     </plurals>
     <string name="calendar_alert_next">Nächster: %s</string>
     <string name="calendar_alert_no_next">Kein anstehender Wecker</string>
     <string name="calendar_alert_calendar_missing">Kalender nicht verfügbar</string>
-    <string name="calendar_alert_no_events">Keine passenden Termine in den nächsten 7 Tagen.</string>
+    <string name="calendar_alert_no_events">Keine passenden Termine in den nächsten %d Tagen.</string>
+    <string name="calendar_alert_lookahead">Vorausschau: %d Tage</string>
+    <string name="calendar_alert_lookahead_help">Die App prüft deinen Kalender alle 15 Minuten und nach jeder Änderung. Spätere Termine werden aufgenommen, sobald sie in dieses Zeitfenster rücken.</string>
     <string name="calendar_alert_events_subtitle">Termine aus %1$s, deren Titel zu %2$s passt</string>
     <string name="calendar_alert_event_dismissed">Bereits beendet</string>
     <string name="calendar_alert_profile_name">Profilname</string>

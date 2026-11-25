@@ -255,7 +255,8 @@ public final class CalendarAlertFragment extends DeskClockFragment {
 
             mItem.profileName.setText(profile.name.isEmpty() ? profile.calendarName : profile.name);
             mItem.profileEventCount.setText(context.getResources().getQuantityString(
-                R.plurals.calendar_alert_event_count, row.upcomingCount(), row.upcomingCount()));
+                R.plurals.calendar_alert_event_count, row.upcomingCount(), row.upcomingCount(),
+                CalendarProfile.clampLookaheadDays(profile.lookaheadDays)));
 
             if (row.nextBegin() > 0) {
                 final String when = DateUtils.formatDateTime(context, row.nextBegin(),

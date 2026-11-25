@@ -628,6 +628,12 @@ public final class ClockContract {
          */
         String DISMISS_METHOD = "dismiss_method";
 
+        /**
+         * How many days ahead the profile looks for matching events (7 to 30).
+         * <p>Type: INTEGER</p>
+         */
+        String LOOKAHEAD_DAYS = "lookahead_days";
+
         String DISMISS_METHOD_DEFAULT = "default";
         String DISMISS_METHOD_SLIDE = "slide";
         String DISMISS_METHOD_BUTTON = "button";

@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 /**
  * Turns matching calendar events into alarms.
  *
- * <p>For every profile, the events of its calendar in the next {@link #LOOKAHEAD_DAYS} days are
+ * <p>For every profile, the events of its calendar in the next {@link CalendarProfile#lookaheadDays} days are
  * matched against the profile's title regex. Each match gets a row in the calendar alert events
  * table and, while the profile and the event are switched on, a one-time alarm at the event's
  * start time. The alarm goes through the app's normal alarm pipeline, so the fullscreen alarm,
@@ -39,8 +39,6 @@ import java.util.regex.Pattern;
  * <p>Alarms that are ringing or snoozed are never changed or removed by a sync.</p>
  */
 public final class CalendarAlertSync {
-
-    public static final int LOOKAHEAD_DAYS = 7;
 
     /** How long rows of past events are kept, so a missed alarm notification stays visible. */
     private static final long PAST_EVENT_RETENTION_MS = TimeUnit.HOURS.toMillis(12);
@@ -52,30 +50,38 @@ public final class CalendarAlertSync {
 
     /**
      * Brings the calendar alarms of every profile up to date. Must not run on the main thread.
+     * Never throws: a failure is logged so a background sync can never crash the app.
      */
     public static void syncAll(Context context) {
         synchronized (LOCK) {
-            final Context appContext = context.getApplicationContext();
-            final ContentResolver cr = appContext.getContentResolver();
-            final long now = System.currentTimeMillis();
-            final boolean canReadCalendar = DeviceCalendars.hasPermission(appContext);
-
-            final List<CalendarProfile> profiles = CalendarProfile.getProfiles(cr);
-            final Set<Long> profileIds = new HashSet<>();
-            for (CalendarProfile profile : profiles) {
-                profileIds.add(profile.id);
-                try {
-                    syncProfile(appContext, profile, now, canReadCalendar);
-                } catch (Exception e) {
-                    LogUtils.e("CalendarAlertSync: failed to sync profile " + profile.id, e);
-                }
+            try {
+                syncAllLocked(context.getApplicationContext());
+            } catch (Exception e) {
+                LogUtils.e("CalendarAlertSync: sync failed", e);
             }
+        }
+    }
 
-            // Clean up rows left behind by deleted profiles.
-            for (CalendarAlertEvent event : CalendarAlertEvent.getAllEvents(cr)) {
-                if (!profileIds.contains(event.profileId)) {
-                    removeEvent(appContext, event, true);
-                }
+    private static void syncAllLocked(Context appContext) {
+        final ContentResolver cr = appContext.getContentResolver();
+        final long now = System.currentTimeMillis();
+        final boolean canReadCalendar = DeviceCalendars.hasPermission(appContext);
+
+        final List<CalendarProfile> profiles = CalendarProfile.getProfiles(cr);
+        final Set<Long> profileIds = new HashSet<>();
+        for (CalendarProfile profile : profiles) {
+            profileIds.add(profile.id);
+            try {
+                syncProfile(appContext, profile, now, canReadCalendar);
+            } catch (Exception e) {
+                LogUtils.e("CalendarAlertSync: failed to sync profile " + profile.id, e);
+            }
+        }
+
+        // Clean up rows left behind by deleted profiles.
+        for (CalendarAlertEvent event : CalendarAlertEvent.getAllEvents(cr)) {
+            if (!profileIds.contains(event.profileId)) {
+                removeEvent(appContext, event, true);
             }
         }
     }
@@ -85,10 +91,15 @@ public final class CalendarAlertSync {
      */
     public static void syncProfile(Context context, long profileId) {
         synchronized (LOCK) {
-            final Context appContext = context.getApplicationContext();
-            final CalendarProfile profile = CalendarProfile.getProfile(appContext.getContentResolver(), profileId);
-            if (profile != null) {
-                syncProfile(appContext, profile, System.currentTimeMillis(), DeviceCalendars.hasPermission(appContext));
+            try {
+                final Context appContext = context.getApplicationContext();
+                final CalendarProfile profile = CalendarProfile.getProfile(appContext.getContentResolver(), profileId);
+                if (profile != null) {
+                    syncProfile(appContext, profile, System.currentTimeMillis(),
+                        DeviceCalendars.hasPermission(appContext));
+                }
+            } catch (Exception e) {
+                LogUtils.e("CalendarAlertSync: failed to sync profile " + profileId, e);
             }
         }
     }
@@ -98,12 +109,16 @@ public final class CalendarAlertSync {
      */
     public static void deleteProfile(Context context, long profileId) {
         synchronized (LOCK) {
-            final Context appContext = context.getApplicationContext();
-            final ContentResolver cr = appContext.getContentResolver();
-            for (CalendarAlertEvent event : CalendarAlertEvent.getEventsForProfile(cr, profileId)) {
-                removeEvent(appContext, event, true);
+            try {
+                final Context appContext = context.getApplicationContext();
+                final ContentResolver cr = appContext.getContentResolver();
+                for (CalendarAlertEvent event : CalendarAlertEvent.getEventsForProfile(cr, profileId)) {
+                    removeEvent(appContext, event, true);
+                }
+                CalendarProfile.deleteProfile(cr, profileId);
+            } catch (Exception e) {
+                LogUtils.e("CalendarAlertSync: failed to delete profile " + profileId, e);
             }
-            CalendarProfile.deleteProfile(cr, profileId);
         }
     }
 
@@ -112,19 +127,23 @@ public final class CalendarAlertSync {
      */
     public static void setEventEnabled(Context context, long eventRowId, boolean enabled) {
         synchronized (LOCK) {
-            final Context appContext = context.getApplicationContext();
-            final ContentResolver cr = appContext.getContentResolver();
-            final CalendarAlertEvent event = CalendarAlertEvent.getEvent(cr, eventRowId);
-            if (event == null) {
-                return;
+            try {
+                final Context appContext = context.getApplicationContext();
+                final ContentResolver cr = appContext.getContentResolver();
+                final CalendarAlertEvent event = CalendarAlertEvent.getEvent(cr, eventRowId);
+                if (event == null) {
+                    return;
+                }
+                final CalendarProfile profile = CalendarProfile.getProfile(cr, event.profileId);
+                if (profile == null) {
+                    return;
+                }
+                event.userEnabled = enabled;
+                event.alarmId = reconcileAlarm(appContext, profile, event, profile.enabled && enabled, true);
+                event.save(cr);
+            } catch (Exception e) {
+                LogUtils.e("CalendarAlertSync: failed to switch event " + eventRowId, e);
             }
-            final CalendarProfile profile = CalendarProfile.getProfile(cr, event.profileId);
-            if (profile == null) {
-                return;
-            }
-            event.userEnabled = enabled;
-            event.alarmId = reconcileAlarm(appContext, profile, event, profile.enabled && enabled, true);
-            event.save(cr);
         }
     }
 
@@ -144,7 +163,7 @@ public final class CalendarAlertSync {
         }
 
         final Pattern pattern = profile.compileTitlePattern();
-        final long until = now + TimeUnit.DAYS.toMillis(LOOKAHEAD_DAYS);
+        final long until = now + TimeUnit.DAYS.toMillis(CalendarProfile.clampLookaheadDays(profile.lookaheadDays));
         final List<DeviceCalendars.EventInstance> instances =
             DeviceCalendars.getEventInstances(context, profile.calendarId, now, until);
 

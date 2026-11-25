@@ -35,6 +35,10 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
 
     public static final int DEFAULT_ALARM_VOLUME = 5;
 
+    public static final int MIN_LOOKAHEAD_DAYS = 7;
+    public static final int MAX_LOOKAHEAD_DAYS = 30;
+    public static final int DEFAULT_LOOKAHEAD_DAYS = 7;
+
     private static final String[] QUERY_COLUMNS = {
         _ID,
         NAME,
@@ -50,6 +54,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         SNOOZE_DURATION,
         MAX_SNOOZE_COUNT,
         DISMISS_METHOD,
+        LOOKAHEAD_DAYS,
         CREATED_AT,
         UPDATED_AT
     };
@@ -69,8 +74,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     private static final int SNOOZE_DURATION_INDEX = 11;
     private static final int MAX_SNOOZE_COUNT_INDEX = 12;
     private static final int DISMISS_METHOD_INDEX = 13;
-    private static final int CREATED_AT_INDEX = 14;
-    private static final int UPDATED_AT_INDEX = 15;
+    private static final int LOOKAHEAD_DAYS_INDEX = 14;
+    private static final int CREATED_AT_INDEX = 15;
+    private static final int UPDATED_AT_INDEX = 16;
 
     public long id;
     public String name;
@@ -91,6 +97,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     /** Maximum number of snoozes, 0 for unlimited. */
     public int maxSnoozeCount;
     public String dismissMethod;
+    /** How many days ahead to look for events, {@link #MIN_LOOKAHEAD_DAYS} to {@link #MAX_LOOKAHEAD_DAYS}. */
+    public int lookaheadDays;
     public long createdAt;
     public long updatedAt;
 
@@ -109,6 +117,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         snoozeDuration = DEFAULT_SNOOZE_MINUTES;
         maxSnoozeCount = 0;
         dismissMethod = DISMISS_METHOD_DEFAULT;
+        lookaheadDays = DEFAULT_LOOKAHEAD_DAYS;
         final long now = System.currentTimeMillis();
         createdAt = now;
         updatedAt = now;
@@ -129,6 +138,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         snoozeDuration = c.getInt(SNOOZE_DURATION_INDEX);
         maxSnoozeCount = c.getInt(MAX_SNOOZE_COUNT_INDEX);
         dismissMethod = c.getString(DISMISS_METHOD_INDEX);
+        lookaheadDays = clampLookaheadDays(c.getInt(LOOKAHEAD_DAYS_INDEX));
         createdAt = c.getLong(CREATED_AT_INDEX);
         updatedAt = c.getLong(UPDATED_AT_INDEX);
     }
@@ -155,6 +165,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         values.put(SNOOZE_DURATION, snoozeDuration);
         values.put(MAX_SNOOZE_COUNT, maxSnoozeCount);
         values.put(DISMISS_METHOD, dismissMethod == null ? DISMISS_METHOD_DEFAULT : dismissMethod);
+        values.put(LOOKAHEAD_DAYS, clampLookaheadDays(lookaheadDays));
         values.put(CREATED_AT, createdAt);
         values.put(UPDATED_AT, updatedAt);
         return values;
@@ -185,6 +196,10 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
      */
     public static boolean titleMatches(@Nullable Pattern pattern, @Nullable String title) {
         return pattern != null && title != null && pattern.matcher(title).find();
+    }
+
+    public static int clampLookaheadDays(int days) {
+        return Math.max(MIN_LOOKAHEAD_DAYS, Math.min(MAX_LOOKAHEAD_DAYS, days));
     }
 
     public static Uri getContentUri(long profileId) {

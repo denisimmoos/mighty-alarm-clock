@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Lists the events of one calendar profile in the next 7 days, each with its own on/off switch.
+ * Lists the events of one calendar profile within its lookahead window, each with its own on/off switch.
  */
 public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseActivity {
 
@@ -137,6 +137,8 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
                     profile.calendarName.isEmpty() ? profile.accountName : profile.calendarName,
                     profile.titleRegex));
                 mAdapter.setEvents(events, profile.enabled);
+                mBinding.eventsEmpty.setText(getString(R.string.calendar_alert_no_events,
+                    CalendarProfile.clampLookaheadDays(profile.lookaheadDays)));
                 mBinding.eventsEmpty.setVisibility(events.isEmpty() ? VISIBLE : GONE);
             });
         });

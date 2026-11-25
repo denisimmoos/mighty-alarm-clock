@@ -1701,13 +1701,15 @@
     <string name="calendar_alert_edit_profile">Edit profile</string>
     <string name="calendar_alert_new_profile">New profile</string>
     <plurals name="calendar_alert_event_count">
-        <item quantity="one">%d alarm in the next 7 days</item>
-        <item quantity="other">%d alarms in the next 7 days</item>
+        <item quantity="one">%1$d alarm in the next %2$d days</item>
+        <item quantity="other">%1$d alarms in the next %2$d days</item>
     </plurals>
     <string name="calendar_alert_next">Next: %s</string>
     <string name="calendar_alert_no_next">No upcoming alarm</string>
     <string name="calendar_alert_calendar_missing">Calendar not available</string>
-    <string name="calendar_alert_no_events">No matching events in the next 7 days.</string>
+    <string name="calendar_alert_no_events">No matching events in the next %d days.</string>
+    <string name="calendar_alert_lookahead">Look ahead: %d days</string>
+    <string name="calendar_alert_lookahead_help">The app checks your calendar every 15 minutes and after every change. Events further ahead are picked up once they come within this window.</string>
     <string name="calendar_alert_events_subtitle">Events from %1$s whose title matches %2$s</string>
     <string name="calendar_alert_event_dismissed">Already dismissed</string>
     <string name="calendar_alert_profile_name">Profile name</string>

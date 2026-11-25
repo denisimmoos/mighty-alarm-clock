@@ -103,7 +103,7 @@ public class CalendarAlertSyncTest {
 
     @Before
     public void setUp() {
-        EVENTS.clear();
+        clearEvents();
         mContext = ApplicationProvider.getApplicationContext();
         mCr = mContext.getContentResolver();
         Shadows.shadowOf(mContext).grantPermissions(Manifest.permission.READ_CALENDAR);
@@ -122,12 +122,20 @@ public class CalendarAlertSyncTest {
         mProfile.addProfile(mCr);
     }
 
+    static void clearEvents() {
+        EVENTS.clear();
+    }
+
     private static long inHours(int hours) {
         final Calendar c = Calendar.getInstance();
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
         c.add(Calendar.HOUR_OF_DAY, hours);
         return c.getTimeInMillis();
+    }
+
+    static void addEvent(long id, long calendarId, long begin, String title) {
+        EVENTS.add(new FakeEvent(id, calendarId, begin, title));
     }
 
     private List<CalendarAlertEvent> events() {
@@ -269,6 +277,24 @@ public class CalendarAlertSyncTest {
         mProfile.updateProfile(mCr);
         instance.mSnoozeCount = 50;
         assertFalse(CalendarAlertRules.isSnoozeLimitReached(mCr, instance));
+    }
+
+    @Test
+    public void lookaheadWindowFollowsTheProfile() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(24 * 20), "Alarm: in 20 days"));
+        CalendarAlertSync.syncAll(mContext);
+        assertTrue(events().isEmpty());
+
+        mProfile.lookaheadDays = 30;
+        mProfile.updateProfile(mCr);
+        CalendarAlertSync.syncAll(mContext);
+        assertEquals(1, events().size());
+        assertNotNull(Alarm.getAlarm(mCr, events().get(0).alarmId));
+
+        // Values outside 7..30 are clamped.
+        mProfile.lookaheadDays = 365;
+        mProfile.updateProfile(mCr);
+        assertEquals(30, CalendarProfile.getProfile(mCr, mProfile.id).lookaheadDays);
     }
 
     @Test

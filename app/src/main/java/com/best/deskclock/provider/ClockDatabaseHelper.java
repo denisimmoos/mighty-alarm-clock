@@ -33,7 +33,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
     static final String CALENDAR_PROFILES_TABLE_NAME = "calendar_profiles";
     static final String CALENDAR_ALERT_EVENTS_TABLE_NAME = "calendar_alert_events";
 
-    private static final int DATABASE_VERSION = 29;
+    private static final int DATABASE_VERSION = 30;
     private static final int MINIMUM_SUPPORTED_VERSION = 15;
 
     public ClockDatabaseHelper(Context context) {
@@ -168,6 +168,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             ClockContract.CalendarProfilesColumns.MAX_SNOOZE_COUNT + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.DISMISS_METHOD + " TEXT NOT NULL DEFAULT '" +
                 ClockContract.CalendarProfilesColumns.DISMISS_METHOD_DEFAULT + "', " +
+            ClockContract.CalendarProfilesColumns.LOOKAHEAD_DAYS + " INTEGER NOT NULL DEFAULT 7, " +
             ClockContract.CalendarProfilesColumns.CREATED_AT + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.UPDATED_AT + " INTEGER NOT NULL DEFAULT 0);");
 
@@ -473,6 +474,15 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             createCalendarProfilesTable(db);
             createCalendarAlertEventsTable(db);
             LogUtils.i("Added calendar alert tables for version 29 upgrade.");
+        }
+
+        // Version 29 created the profiles table without the lookahead column; tables created by
+        // the version 29 step above already have it.
+        if (oldVersion == 29) {
+            db.execSQL("ALTER TABLE " + CALENDAR_PROFILES_TABLE_NAME
+                + " ADD COLUMN " + ClockContract.CalendarProfilesColumns.LOOKAHEAD_DAYS
+                + " INTEGER NOT NULL DEFAULT 7;");
+            LogUtils.i("Added lookahead_days column for version 30 upgrade.");
         }
     }
 

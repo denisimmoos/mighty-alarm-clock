@@ -159,6 +159,13 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         updateVolumeLabel(maxVolume);
         mBinding.volumeSlider.addOnChangeListener((slider, value, fromUser) -> updateVolumeLabel(maxVolume));
 
+        // Lookahead window
+        if (fillInputs) {
+            mBinding.lookaheadSlider.setValue(CalendarProfile.clampLookaheadDays(mProfile.lookaheadDays));
+        }
+        updateLookaheadLabel();
+        mBinding.lookaheadSlider.addOnChangeListener((slider, value, fromUser) -> updateLookaheadLabel());
+
         // Snooze fields follow the snooze switch
         mBinding.snoozeFields.setVisibility(mBinding.snoozeSwitch.isChecked() ? VISIBLE : GONE);
         mBinding.snoozeSwitch.setOnCheckedChangeListener((button, checked) ->
@@ -198,6 +205,11 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
 
         mBinding.deleteButton.setVisibility(mIsNew ? GONE : VISIBLE);
         mBinding.deleteButton.setOnClickListener(v -> confirmDelete());
+    }
+
+    private void updateLookaheadLabel() {
+        mBinding.lookaheadLabel.setText(getString(R.string.calendar_alert_lookahead,
+            (int) mBinding.lookaheadSlider.getValue()));
     }
 
     private void updateVolumeLabel(int maxVolume) {
@@ -293,6 +305,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mProfile.enabled = mBinding.enabledSwitch.isChecked();
         mProfile.titleRegex = textOf(mBinding.regexInput.getText());
         mProfile.alarmVolume = (int) mBinding.volumeSlider.getValue();
+        mProfile.lookaheadDays = CalendarProfile.clampLookaheadDays((int) mBinding.lookaheadSlider.getValue());
         mProfile.vibrate = mBinding.vibrateSwitch.isChecked();
         mProfile.autoSilenceDuration = maxDurationMinutes > 0
             ? maxDurationMinutes * 60
