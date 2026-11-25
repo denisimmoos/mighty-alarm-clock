@@ -36,4 +36,5 @@
 
     <item name="city_list_end_guide_percent" type="fraction">0.55</item>
     <dimen name="max_dimension_empty_view">350dp</dimen>
+    <dimen name="calendar_alert_list_bottom_padding">96dp</dimen>
 </resources>

@@ -9,6 +9,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission
@@ -133,6 +134,21 @@
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.best.deskclock.mighty.calendar.CalendarProfileEventsActivity"
+            android:excludeFromRecents="true"
+            android:parentActivityName=".DeskClock"
+            android:taskAffinity=""
+            android:theme="@style/Theme.DeskClock" />
+
+        <activity
+            android:name="com.best.deskclock.mighty.calendar.CalendarProfileEditActivity"
+            android:excludeFromRecents="true"
+            android:parentActivityName=".DeskClock"
+            android:taskAffinity=""
+            android:theme="@style/Theme.DeskClock"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="com.best.deskclock.settings.PermissionsManagementActivity"

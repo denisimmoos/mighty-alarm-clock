@@ -109,6 +109,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
     buildFeatures {
         buildConfig = true
         viewBinding = true
@@ -138,4 +144,8 @@ dependencies {
     implementation 'androidx.work:work-runtime:2.10.0'
     implementation 'com.google.android.material:material:1.14.0'
     implementation 'com.github.martin-stone:hsv-alpha-color-picker-android:3.1.0'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.18.1'
+    testImplementation 'androidx.test:core:1.6.1'
 }

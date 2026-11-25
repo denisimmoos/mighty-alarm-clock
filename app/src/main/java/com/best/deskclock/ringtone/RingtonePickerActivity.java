@@ -216,6 +216,20 @@ public class RingtonePickerActivity extends CollapsingToolbarBaseActivity
     }
 
     /**
+     * @return an intent that launches the ringtone picker for a calendar alert profile. The picked
+     * ringtone is only returned as a result.
+     */
+    public static Intent createCalendarProfileRingtonePickerIntent(Context context, Uri currentRingtone) {
+        final Uri defaultUri = RingtoneManager.getDefaultUri(TYPE_ALARM);
+        return new Intent(context, RingtonePickerActivity.class)
+            .putExtra(EXTRA_TITLE, R.string.alarm_sound)
+            .putExtra(EXTRA_RINGTONE_URI, currentRingtone != null ? currentRingtone : defaultUri)
+            .putExtra(EXTRA_DEFAULT_RINGTONE_URI, defaultUri)
+            .putExtra(EXTRA_DEFAULT_RINGTONE_NAME, R.string.default_alarm_ringtone_title)
+            .putExtra(EXTRA_RETURN_RESULT_ONLY, true);
+    }
+
+    /**
      * @return an intent that launches the ringtone picker to edit the ringtone of all timers
      */
     public static Intent createTimerRingtonePickerIntent(Context context) {

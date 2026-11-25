@@ -1,0 +1,292 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
+package com.best.deskclock.mighty.calendar;
+
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+import static com.best.deskclock.uidata.UiDataModel.Tab.CALENDAR_ALERT;
+
+import android.Manifest;
+import android.content.Intent;
+import android.database.ContentObserver;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.format.DateUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.best.deskclock.R;
+import com.best.deskclock.base.AppExecutors;
+import com.best.deskclock.base.DeskClockFragment;
+import com.best.deskclock.databinding.CalendarAlertFragmentBinding;
+import com.best.deskclock.databinding.CalendarProfileItemBinding;
+import com.best.deskclock.provider.CalendarAlertEvent;
+import com.best.deskclock.provider.CalendarProfile;
+import com.best.deskclock.uicomponents.CustomTooltip;
+import com.best.deskclock.uicomponents.toast.CustomToast;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * The Calendar Alert tab: lists the calendar profiles. Each profile turns matching calendar
+ * events into fullscreen alarms.
+ */
+public final class CalendarAlertFragment extends DeskClockFragment {
+
+    private CalendarAlertFragmentBinding mBinding;
+    private ProfileAdapter mAdapter;
+
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
+
+    private final ContentObserver mObserver = new ContentObserver(mHandler) {
+        @Override
+        public void onChange(boolean selfChange) {
+            // Sync writes many rows at once; reload once they are done.
+            mHandler.removeCallbacks(mReload);
+            mHandler.postDelayed(mReload, 300);
+        }
+    };
+
+    private final Runnable mReload = this::reload;
+
+    private final ActivityResultLauncher<String> mPermissionLauncher = registerForActivityResult(
+        new ActivityResultContracts.RequestPermission(), granted -> {
+            if (granted) {
+                syncAndReload();
+                CalendarAlertWorker.ensureScheduled(requireContext());
+            } else if (getContext() != null) {
+                CustomToast.showLong(requireContext(), getString(R.string.calendar_alert_permission_denied));
+            }
+            updatePermissionCard();
+        });
+
+    /**
+     * The public no-arg constructor required by all fragments.
+     */
+    public CalendarAlertFragment() {
+        super(CALENDAR_ALERT);
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mBinding = CalendarAlertFragmentBinding.inflate(inflater, container, false);
+
+        mAdapter = new ProfileAdapter();
+        mBinding.profilesList.setLayoutManager(new LinearLayoutManager(requireContext()));
+        mBinding.profilesList.setAdapter(mAdapter);
+
+        mBinding.permissionButton.setOnClickListener(v ->
+            mPermissionLauncher.launch(Manifest.permission.READ_CALENDAR));
+
+        return mBinding.getRoot();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireContext().getContentResolver()
+            .registerContentObserver(CalendarProfile.CONTENT_URI, true, mObserver);
+        requireContext().getContentResolver()
+            .registerContentObserver(CalendarAlertEvent.CONTENT_URI, true, mObserver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updatePermissionCard();
+        syncAndReload();
+    }
+
+    @Override
+    public void onStop() {
+        requireContext().getContentResolver().unregisterContentObserver(mObserver);
+        mHandler.removeCallbacks(mReload);
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        mBinding = null;
+        super.onDestroyView();
+    }
+
+    private void updatePermissionCard() {
+        if (mBinding != null) {
+            mBinding.permissionCard.setVisibility(DeviceCalendars.hasPermission(requireContext()) ? GONE : VISIBLE);
+        }
+    }
+
+    /**
+     * Shows the stored state right away, then checks the calendars and shows the result.
+     */
+    private void syncAndReload() {
+        reload();
+        final android.content.Context appContext = requireContext().getApplicationContext();
+        AppExecutors.getDiskIO().execute(() -> CalendarAlertSync.syncAll(appContext));
+    }
+
+    private void reload() {
+        if (getContext() == null) {
+            return;
+        }
+        final android.content.Context appContext = requireContext().getApplicationContext();
+        AppExecutors.getDiskIO().execute(() -> {
+            final List<ProfileRow> rows = new ArrayList<>();
+            final long now = System.currentTimeMillis();
+            for (CalendarProfile profile : CalendarProfile.getProfiles(appContext.getContentResolver())) {
+                int count = 0;
+                long next = -1;
+                for (CalendarAlertEvent event : CalendarAlertEvent.getEventsForProfile(
+                    appContext.getContentResolver(), profile.id)) {
+                    if (event.begin > now && event.userEnabled
+                        && event.alarmId != CalendarAlertEvent.ALARM_CONSUMED) {
+                        count++;
+                        if (next < 0) {
+                            next = event.begin;
+                        }
+                    }
+                }
+                rows.add(new ProfileRow(profile, count, next));
+            }
+            AppExecutors.getMainThread().post(() -> {
+                if (mBinding == null) {
+                    return;
+                }
+                mAdapter.setRows(rows);
+                mBinding.emptyView.setVisibility(rows.isEmpty() ? VISIBLE : GONE);
+            });
+        });
+    }
+
+    private void openProfileEvents(CalendarProfile profile) {
+        startActivity(CalendarProfileEventsActivity.createIntent(requireContext(), profile.id));
+    }
+
+    private void openProfileEditor(long profileId) {
+        startActivity(CalendarProfileEditActivity.createIntent(requireContext(), profileId));
+    }
+
+    private void setProfileEnabled(CalendarProfile profile, boolean enabled) {
+        final android.content.Context appContext = requireContext().getApplicationContext();
+        AppExecutors.getDiskIO().execute(() -> {
+            profile.enabled = enabled;
+            profile.updateProfile(appContext.getContentResolver());
+            CalendarAlertSync.syncProfile(appContext, profile.id);
+        });
+    }
+
+    @Override
+    public void onFabClick() {
+        openProfileEditor(CalendarProfile.INVALID_ID);
+    }
+
+    @Override
+    public void onUpdateFab(@NonNull ImageView fab) {
+        fab.setVisibility(VISIBLE);
+        fab.setImageResource(R.drawable.ic_add);
+        fab.setContentDescription(getString(R.string.calendar_alert_add_profile));
+        fab.setOnLongClickListener(v -> {
+            CustomTooltip.showAbove(v, fab.getContentDescription().toString(), true);
+            return true;
+        });
+    }
+
+    @Override
+    public void onUpdateFabButtons(@NonNull ImageView left, @NonNull ImageView right) {
+        left.setVisibility(INVISIBLE);
+        right.setVisibility(INVISIBLE);
+    }
+
+    private record ProfileRow(CalendarProfile profile, int upcomingCount, long nextBegin) {
+    }
+
+    private final class ProfileAdapter extends RecyclerView.Adapter<ProfileViewHolder> {
+
+        private final List<ProfileRow> mRows = new ArrayList<>();
+
+        @android.annotation.SuppressLint("NotifyDataSetChanged")
+        void setRows(List<ProfileRow> rows) {
+            mRows.clear();
+            mRows.addAll(rows);
+            notifyDataSetChanged();
+        }
+
+        @NonNull
+        @Override
+        public ProfileViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            return new ProfileViewHolder(CalendarProfileItemBinding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ProfileViewHolder holder, int position) {
+            holder.bind(mRows.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mRows.size();
+        }
+    }
+
+    private final class ProfileViewHolder extends RecyclerView.ViewHolder {
+
+        private final CalendarProfileItemBinding mItem;
+
+        ProfileViewHolder(CalendarProfileItemBinding binding) {
+            super(binding.getRoot());
+            mItem = binding;
+        }
+
+        void bind(ProfileRow row) {
+            final CalendarProfile profile = row.profile();
+            final android.content.Context context = itemView.getContext();
+
+            mItem.profileName.setText(profile.name.isEmpty() ? profile.calendarName : profile.name);
+            mItem.profileEventCount.setText(context.getResources().getQuantityString(
+                R.plurals.calendar_alert_event_count, row.upcomingCount(), row.upcomingCount()));
+
+            if (row.nextBegin() > 0) {
+                final String when = DateUtils.formatDateTime(context, row.nextBegin(),
+                    DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_ABBREV_WEEKDAY
+                        | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH
+                        | DateUtils.FORMAT_SHOW_TIME);
+                mItem.profileNext.setText(context.getString(R.string.calendar_alert_next, when));
+            } else {
+                mItem.profileNext.setText(R.string.calendar_alert_no_next);
+            }
+
+            final StringBuilder source = new StringBuilder();
+            if (profile.calendarId < 0) {
+                source.append(context.getString(R.string.calendar_alert_calendar_missing));
+            } else {
+                source.append(profile.accountName);
+                if (!profile.calendarName.isEmpty() && !profile.calendarName.equals(profile.accountName)) {
+                    source.append(" · ").append(profile.calendarName);
+                }
+            }
+            source.append(" · ").append(profile.titleRegex);
+            mItem.profileCalendar.setText(source);
+
+            mItem.profileSwitch.setOnCheckedChangeListener(null);
+            mItem.profileSwitch.setChecked(profile.enabled);
+            mItem.profileSwitch.setOnCheckedChangeListener((button, checked) -> setProfileEnabled(profile, checked));
+
+            mItem.getRoot().setOnClickListener(v -> openProfileEvents(profile));
+            mItem.profileSettings.setOnClickListener(v -> openProfileEditor(profile.id));
+
+            itemView.setAlpha(profile.enabled ? 1f : 0.6f);
+        }
+    }
+}

@@ -319,7 +319,7 @@ public class AlarmSettingsFragment extends ScreenFragment
 
                 if ((boolean) newValue) {
                     AppExecutors.getDiskIO().execute(() -> {
-                        List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                        List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                         for (Alarm alarm : currentAlarms) {
                             alarm.autoSilenceDuration = SettingsDAO.getAlarmTimeout(mPrefs);
                             mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -336,7 +336,7 @@ public class AlarmSettingsFragment extends ScreenFragment
 
                 if ((boolean) newValue) {
                     AppExecutors.getDiskIO().execute(() -> {
-                        List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                        List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                         for (Alarm alarm : currentAlarms) {
                             alarm.snoozeDuration = SettingsDAO.getSnoozeLength(mPrefs);
                             mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -353,7 +353,7 @@ public class AlarmSettingsFragment extends ScreenFragment
 
                 if ((boolean) newValue) {
                     AppExecutors.getDiskIO().execute(() -> {
-                        List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                        List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                         for (Alarm alarm : currentAlarms) {
                             alarm.missedAlarmRepeatLimit = SettingsDAO.getMissedAlarmRepeatLimit(mPrefs);
                             mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -371,7 +371,7 @@ public class AlarmSettingsFragment extends ScreenFragment
 
                 if (SettingsDAO.isPerAlarmMissedRepeatLimitDisabled(mPrefs)) {
                     AppExecutors.getDiskIO().execute(() -> {
-                        List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                        List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                         for (Alarm alarm : currentAlarms) {
                             alarm.missedAlarmRepeatLimit = Integer.parseInt((String) newValue);
                             mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -387,7 +387,7 @@ public class AlarmSettingsFragment extends ScreenFragment
 
                 if ((boolean) newValue) {
                     AppExecutors.getDiskIO().execute(() -> {
-                        List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                        List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                         for (Alarm alarm : currentAlarms) {
                             alarm.alarmVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_ALARM);
                             mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -404,7 +404,7 @@ public class AlarmSettingsFragment extends ScreenFragment
 
                 if ((boolean) newValue) {
                     AppExecutors.getDiskIO().execute(() -> {
-                        List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                        List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                         for (Alarm alarm : currentAlarms) {
                             alarm.crescendoDuration = SettingsDAO.getAlarmVolumeCrescendoDuration(mPrefs);
                             mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -421,7 +421,7 @@ public class AlarmSettingsFragment extends ScreenFragment
 
                 if ((boolean) newValue) {
                     AppExecutors.getDiskIO().execute(() -> {
-                        List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                        List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                         for (Alarm alarm : currentAlarms) {
                             alarm.vibrationPattern = SettingsDAO.getVibrationPattern(mPrefs);
                             mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -461,7 +461,7 @@ public class AlarmSettingsFragment extends ScreenFragment
 
                 if ((boolean) newValue) {
                     AppExecutors.getDiskIO().execute(() -> {
-                        List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                        List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                         for (Alarm alarm : currentAlarms) {
                             alarm.vibrate = true;
                             mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -497,7 +497,7 @@ public class AlarmSettingsFragment extends ScreenFragment
                 Utils.performHapticFeedback(getView(), HapticFeedbackConstantsCompat.VIRTUAL_KEY);
 
                 AppExecutors.getDiskIO().execute(() -> {
-                    List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                    List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                     for (Alarm alarm : currentAlarms) {
                         alarm.flash = (boolean) newValue;
                         mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -510,7 +510,7 @@ public class AlarmSettingsFragment extends ScreenFragment
 
                 if ((boolean) newValue) {
                     AppExecutors.getDiskIO().execute(() -> {
-                        List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                        List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                         for (Alarm alarm : currentAlarms) {
                             alarm.deleteAfterUse = true;
                             mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -706,7 +706,7 @@ public class AlarmSettingsFragment extends ScreenFragment
 
                         if (SettingsDAO.isPerAlarmAutoSilenceDisabled(mPrefs)) {
                             AppExecutors.getDiskIO().execute(() -> {
-                                List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                                List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                                 for (Alarm alarm : currentAlarms) {
                                     alarm.autoSilenceDuration = newValue;
                                     mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -732,7 +732,7 @@ public class AlarmSettingsFragment extends ScreenFragment
 
                         if (SettingsDAO.isPerAlarmSnoozeDurationDisabled(mPrefs)) {
                             AppExecutors.getDiskIO().execute(() -> {
-                                List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                                List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                                 for (Alarm alarm : currentAlarms) {
                                     alarm.snoozeDuration = newValue;
                                     mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -756,7 +756,7 @@ public class AlarmSettingsFragment extends ScreenFragment
 
                         if (SettingsDAO.isPerAlarmCrescendoDurationDisabled(mPrefs)) {
                             AppExecutors.getDiskIO().execute(() -> {
-                                List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                                List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                                 for (Alarm alarm : currentAlarms) {
                                     alarm.crescendoDuration = newValue;
                                     mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -780,7 +780,7 @@ public class AlarmSettingsFragment extends ScreenFragment
 
                         if (!SettingsDAO.isPerAlarmVibrationPatternEnabled(mPrefs)) {
                             AppExecutors.getDiskIO().execute(() -> {
-                                List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                                List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                                 for (Alarm alarm : currentAlarms) {
                                     alarm.vibrationPattern = newValue;
                                     mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);
@@ -817,7 +817,7 @@ public class AlarmSettingsFragment extends ScreenFragment
                         pref.setAlarmNotificationReminderTime(newValue);
 
                         AppExecutors.getDiskIO().execute(() -> {
-                            List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                            List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                             for (Alarm alarm : currentAlarms) {
                                 if (alarm.enabled) {
                                     mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, false);
@@ -932,7 +932,7 @@ public class AlarmSettingsFragment extends ScreenFragment
             getString(android.R.string.ok),
             (d, w) -> {
                 AppExecutors.getDiskIO().execute(() -> {
-                    List<Alarm> currentAlarms = Alarm.getAlarms(requireContext().getContentResolver(), null);
+                    List<Alarm> currentAlarms = Alarm.getUserAlarms(requireContext().getContentResolver());
                     for (Alarm alarm : currentAlarms) {
                         alarmUpdater.update(alarm);
                         mAlarmUpdateHandler.asyncUpdateAlarm(alarm, false, true);

@@ -1,0 +1,250 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
+package com.best.deskclock.provider;
+
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
+import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
+/**
+ * A calendar alert profile: it watches one device calendar and turns every upcoming event whose
+ * title matches {@link #titleRegex} into a fullscreen alarm with the profile's sound settings.
+ */
+public final class CalendarProfile implements ClockContract.CalendarProfilesColumns {
+
+    public static final long INVALID_ID = -1;
+
+    /** Auto silence value meaning "ring until the user dismisses the alarm". */
+    public static final int RING_UNTIL_DISMISSED = -1;
+
+    /** Snooze duration value meaning "snooze is disabled". */
+    public static final int SNOOZE_DISABLED = -1;
+
+    public static final int DEFAULT_SNOOZE_MINUTES = 5;
+
+    public static final int DEFAULT_ALARM_VOLUME = 5;
+
+    private static final String[] QUERY_COLUMNS = {
+        _ID,
+        NAME,
+        ENABLED,
+        CALENDAR_ID,
+        ACCOUNT_NAME,
+        CALENDAR_NAME,
+        TITLE_REGEX,
+        RINGTONE,
+        ALARM_VOLUME,
+        VIBRATE,
+        AUTO_SILENCE_DURATION,
+        SNOOZE_DURATION,
+        MAX_SNOOZE_COUNT,
+        DISMISS_METHOD,
+        CREATED_AT,
+        UPDATED_AT
+    };
+
+    // These must be kept in sync with QUERY_COLUMNS above.
+    private static final int ID_INDEX = 0;
+    private static final int NAME_INDEX = 1;
+    private static final int ENABLED_INDEX = 2;
+    private static final int CALENDAR_ID_INDEX = 3;
+    private static final int ACCOUNT_NAME_INDEX = 4;
+    private static final int CALENDAR_NAME_INDEX = 5;
+    private static final int TITLE_REGEX_INDEX = 6;
+    private static final int RINGTONE_INDEX = 7;
+    private static final int ALARM_VOLUME_INDEX = 8;
+    private static final int VIBRATE_INDEX = 9;
+    private static final int AUTO_SILENCE_DURATION_INDEX = 10;
+    private static final int SNOOZE_DURATION_INDEX = 11;
+    private static final int MAX_SNOOZE_COUNT_INDEX = 12;
+    private static final int DISMISS_METHOD_INDEX = 13;
+    private static final int CREATED_AT_INDEX = 14;
+    private static final int UPDATED_AT_INDEX = 15;
+
+    public long id;
+    public String name;
+    public boolean enabled;
+    public long calendarId;
+    public String accountName;
+    public String calendarName;
+    public String titleRegex;
+    /** Alarm sound, or {@code null} for the app's default alarm sound. */
+    @Nullable
+    public Uri ringtone;
+    public int alarmVolume;
+    public boolean vibrate;
+    /** Maximum ring time in seconds, or {@link #RING_UNTIL_DISMISSED}. */
+    public int autoSilenceDuration;
+    /** Snooze length in minutes, or {@link #SNOOZE_DISABLED}. */
+    public int snoozeDuration;
+    /** Maximum number of snoozes, 0 for unlimited. */
+    public int maxSnoozeCount;
+    public String dismissMethod;
+    public long createdAt;
+    public long updatedAt;
+
+    public CalendarProfile() {
+        id = INVALID_ID;
+        name = "";
+        enabled = true;
+        calendarId = -1;
+        accountName = "";
+        calendarName = "";
+        titleRegex = "^Alarm:";
+        ringtone = null;
+        alarmVolume = DEFAULT_ALARM_VOLUME;
+        vibrate = true;
+        autoSilenceDuration = RING_UNTIL_DISMISSED;
+        snoozeDuration = DEFAULT_SNOOZE_MINUTES;
+        maxSnoozeCount = 0;
+        dismissMethod = DISMISS_METHOD_DEFAULT;
+        final long now = System.currentTimeMillis();
+        createdAt = now;
+        updatedAt = now;
+    }
+
+    public CalendarProfile(Cursor c) {
+        id = c.getLong(ID_INDEX);
+        name = c.getString(NAME_INDEX);
+        enabled = c.getInt(ENABLED_INDEX) == 1;
+        calendarId = c.getLong(CALENDAR_ID_INDEX);
+        accountName = c.getString(ACCOUNT_NAME_INDEX);
+        calendarName = c.getString(CALENDAR_NAME_INDEX);
+        titleRegex = c.getString(TITLE_REGEX_INDEX);
+        ringtone = c.isNull(RINGTONE_INDEX) ? null : Uri.parse(c.getString(RINGTONE_INDEX));
+        alarmVolume = c.getInt(ALARM_VOLUME_INDEX);
+        vibrate = c.getInt(VIBRATE_INDEX) == 1;
+        autoSilenceDuration = c.getInt(AUTO_SILENCE_DURATION_INDEX);
+        snoozeDuration = c.getInt(SNOOZE_DURATION_INDEX);
+        maxSnoozeCount = c.getInt(MAX_SNOOZE_COUNT_INDEX);
+        dismissMethod = c.getString(DISMISS_METHOD_INDEX);
+        createdAt = c.getLong(CREATED_AT_INDEX);
+        updatedAt = c.getLong(UPDATED_AT_INDEX);
+    }
+
+    public ContentValues createContentValues() {
+        final ContentValues values = new ContentValues(QUERY_COLUMNS.length);
+        if (id != INVALID_ID) {
+            values.put(_ID, id);
+        }
+        values.put(NAME, name == null ? "" : name);
+        values.put(ENABLED, enabled ? 1 : 0);
+        values.put(CALENDAR_ID, calendarId);
+        values.put(ACCOUNT_NAME, accountName == null ? "" : accountName);
+        values.put(CALENDAR_NAME, calendarName == null ? "" : calendarName);
+        values.put(TITLE_REGEX, titleRegex == null ? "" : titleRegex);
+        if (ringtone == null) {
+            values.putNull(RINGTONE);
+        } else {
+            values.put(RINGTONE, ringtone.toString());
+        }
+        values.put(ALARM_VOLUME, alarmVolume);
+        values.put(VIBRATE, vibrate ? 1 : 0);
+        values.put(AUTO_SILENCE_DURATION, autoSilenceDuration);
+        values.put(SNOOZE_DURATION, snoozeDuration);
+        values.put(MAX_SNOOZE_COUNT, maxSnoozeCount);
+        values.put(DISMISS_METHOD, dismissMethod == null ? DISMISS_METHOD_DEFAULT : dismissMethod);
+        values.put(CREATED_AT, createdAt);
+        values.put(UPDATED_AT, updatedAt);
+        return values;
+    }
+
+    /**
+     * @return the compiled title pattern, or {@code null} if the regex is empty or invalid.
+     */
+    @Nullable
+    public Pattern compileTitlePattern() {
+        return compileTitlePattern(titleRegex);
+    }
+
+    @Nullable
+    public static Pattern compileTitlePattern(String regex) {
+        if (TextUtils.isEmpty(regex)) {
+            return null;
+        }
+        try {
+            return Pattern.compile(regex);
+        } catch (PatternSyntaxException e) {
+            return null;
+        }
+    }
+
+    /**
+     * @return {@code true} if the event title matches this profile's regex.
+     */
+    public static boolean titleMatches(@Nullable Pattern pattern, @Nullable String title) {
+        return pattern != null && title != null && pattern.matcher(title).find();
+    }
+
+    public static Uri getContentUri(long profileId) {
+        return ContentUris.withAppendedId(CONTENT_URI, profileId);
+    }
+
+    @Nullable
+    public static CalendarProfile getProfile(ContentResolver cr, long profileId) {
+        try (Cursor cursor = cr.query(getContentUri(profileId), QUERY_COLUMNS, null, null, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                return new CalendarProfile(cursor);
+            }
+        }
+        return null;
+    }
+
+    public static List<CalendarProfile> getProfiles(ContentResolver cr) {
+        final List<CalendarProfile> result = new ArrayList<>();
+        try (Cursor cursor = cr.query(CONTENT_URI, QUERY_COLUMNS, null, null, _ID + " ASC")) {
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    result.add(new CalendarProfile(cursor));
+                }
+            }
+        }
+        return result;
+    }
+
+    public CalendarProfile addProfile(ContentResolver cr) {
+        final Uri uri = cr.insert(CONTENT_URI, createContentValues());
+        id = ContentUris.parseId(uri);
+        return this;
+    }
+
+    public void updateProfile(ContentResolver cr) {
+        if (id == INVALID_ID) {
+            return;
+        }
+        updatedAt = System.currentTimeMillis();
+        cr.update(getContentUri(id), createContentValues(), null, null);
+    }
+
+    public static void deleteProfile(ContentResolver cr, long profileId) {
+        if (profileId != INVALID_ID) {
+            cr.delete(getContentUri(profileId), null, null);
+        }
+    }
+
+    public boolean isSlideDismissForced() {
+        return DISMISS_METHOD_SLIDE.equals(dismissMethod);
+    }
+
+    public boolean isButtonDismissForced() {
+        return DISMISS_METHOD_BUTTON.equals(dismissMethod);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "CalendarProfile{id=" + id + ", name='" + name + "', enabled=" + enabled
+            + ", calendarId=" + calendarId + ", titleRegex='" + titleRegex + "'}";
+    }
+}

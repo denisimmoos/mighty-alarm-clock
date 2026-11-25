@@ -538,4 +538,152 @@ public final class ClockContract {
          */
         String DETAILS = "details";
     }
+
+    /**
+     * Constants for the calendar alert profiles table. A profile watches one device calendar
+     * and turns every upcoming event whose title matches its regex into an alarm.
+     */
+    protected interface CalendarProfilesColumns extends TimestampColumns, BaseColumns {
+
+        /**
+         * The content:// style URL for this table.
+         */
+        Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/calendar_profiles");
+
+        /**
+         * Display name of the profile.
+         * <p>Type: TEXT</p>
+         */
+        String NAME = "name";
+
+        /**
+         * True if the profile creates alarms.
+         * <p>Type: BOOLEAN</p>
+         */
+        String ENABLED = "enabled";
+
+        /**
+         * Id of the calendar in the system calendar provider ({@code CalendarContract.Calendars._ID}).
+         * <p>Type: INTEGER (long)</p>
+         */
+        String CALENDAR_ID = "calendar_id";
+
+        /**
+         * Account the calendar belongs to, kept for display when the calendar is unavailable.
+         * <p>Type: TEXT</p>
+         */
+        String ACCOUNT_NAME = "account_name";
+
+        /**
+         * Display name of the calendar, kept for display when the calendar is unavailable.
+         * <p>Type: TEXT</p>
+         */
+        String CALENDAR_NAME = "calendar_name";
+
+        /**
+         * Regular expression that an event title must match (find semantics).
+         * <p>Type: TEXT</p>
+         */
+        String TITLE_REGEX = "title_regex";
+
+        /**
+         * Alarm sound uri.
+         * <p>Type: TEXT</p>
+         */
+        String RINGTONE = "ringtone";
+
+        /**
+         * Alarm volume in stream steps, same meaning as the alarm volume column.
+         * <p>Type: INTEGER</p>
+         */
+        String ALARM_VOLUME = "alarm_volume";
+
+        /**
+         * True if the alarm should vibrate.
+         * <p>Type: BOOLEAN</p>
+         */
+        String VIBRATE = "vibrate";
+
+        /**
+         * Maximum ring time in seconds, -1 to ring until dismissed.
+         * <p>Type: INTEGER</p>
+         */
+        String AUTO_SILENCE_DURATION = "auto_silence_duration";
+
+        /**
+         * Snooze duration in minutes, -1 to disable snooze.
+         * <p>Type: INTEGER</p>
+         */
+        String SNOOZE_DURATION = "snooze_duration";
+
+        /**
+         * Maximum number of snoozes per alarm, 0 for unlimited.
+         * <p>Type: INTEGER</p>
+         */
+        String MAX_SNOOZE_COUNT = "max_snooze_count";
+
+        /**
+         * How the fullscreen alarm is dismissed: "default", "slide" or "button".
+         * <p>Type: TEXT</p>
+         */
+        String DISMISS_METHOD = "dismiss_method";
+
+        String DISMISS_METHOD_DEFAULT = "default";
+        String DISMISS_METHOD_SLIDE = "slide";
+        String DISMISS_METHOD_BUTTON = "button";
+    }
+
+    /**
+     * Constants for the calendar alert events table. Each row is one upcoming calendar event
+     * matched by a profile, linked to the alarm created for it.
+     */
+    protected interface CalendarAlertEventsColumns extends BaseColumns {
+
+        /**
+         * The content:// style URL for this table.
+         */
+        Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/calendar_alert_events");
+
+        /**
+         * Foreign key to the calendar profiles table.
+         * <p>Type: INTEGER (long)</p>
+         */
+        String PROFILE_ID = "profile_id";
+
+        /**
+         * Stable key of the event occurrence: event id and original start time.
+         * <p>Type: TEXT</p>
+         */
+        String EVENT_KEY = "event_key";
+
+        /**
+         * Id of the event in the system calendar provider.
+         * <p>Type: INTEGER (long)</p>
+         */
+        String EVENT_ID = "event_id";
+
+        /**
+         * Event title.
+         * <p>Type: TEXT</p>
+         */
+        String TITLE = "title";
+
+        /**
+         * Start time of the occurrence in ms since epoch.
+         * <p>Type: LONG</p>
+         */
+        String BEGIN = "begin";
+
+        /**
+         * False if the user switched off the alarm for this single event.
+         * <p>Type: BOOLEAN</p>
+         */
+        String USER_ENABLED = "user_enabled";
+
+        /**
+         * Id of the alarm created for this event, or -1 if there is none.
+         * <p>Type: INTEGER (long)</p>
+         */
+        String ALARM_ID = "alarm_id";
+    }
 }

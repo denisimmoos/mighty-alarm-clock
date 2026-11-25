@@ -856,4 +856,53 @@
     <string name="mighty_sample_alarm_snooze_extend">Schlummer verlängern (Beispiel)</string>
     <string name="mighty_sample_alarm_interval">Intervall alle 30 Min, max. 3× (Beispiel)</string>
     <string name="mighty_sample_alarm_future_interval">TÜV-Erinnerung (Beispiel)</string>
+
+    <!-- Calendar Alert tab -->
+    <string name="menu_calendar_alert">Calendar Alert</string>
+    <string name="calendar_alert_permission_needed">Calendar Alert braucht Zugriff auf deine Kalender, um Termine zu finden und Wecker dafür zu stellen.</string>
+    <string name="calendar_alert_permission_button">Kalenderzugriff erlauben</string>
+    <string name="calendar_alert_permission_denied">Ohne Kalenderzugriff können keine Kalender-Wecker gestellt werden.</string>
+    <string name="calendar_alert_no_profiles">Noch keine Profile. Tippe auf +, um eines anzulegen und festzulegen, welche Termine als Wecker klingeln.</string>
+    <string name="calendar_alert_add_profile">Profil hinzufügen</string>
+    <string name="calendar_alert_edit_profile">Profil bearbeiten</string>
+    <string name="calendar_alert_new_profile">Neues Profil</string>
+    <plurals name="calendar_alert_event_count">
+        <item quantity="one">%d Wecker in den nächsten 7 Tagen</item>
+        <item quantity="other">%d Wecker in den nächsten 7 Tagen</item>
+    </plurals>
+    <string name="calendar_alert_next">Nächster: %s</string>
+    <string name="calendar_alert_no_next">Kein anstehender Wecker</string>
+    <string name="calendar_alert_calendar_missing">Kalender nicht verfügbar</string>
+    <string name="calendar_alert_no_events">Keine passenden Termine in den nächsten 7 Tagen.</string>
+    <string name="calendar_alert_events_subtitle">Termine aus %1$s, deren Titel zu %2$s passt</string>
+    <string name="calendar_alert_event_dismissed">Bereits beendet</string>
+    <string name="calendar_alert_profile_name">Profilname</string>
+    <string name="calendar_alert_profile_enabled">Profil aktiv</string>
+    <string name="calendar_alert_section_calendar">Kalender und Filter</string>
+    <string name="calendar_alert_choose_calendar">Kalender auswählen</string>
+    <string name="calendar_alert_no_calendars">Keine Kalender auf diesem Gerät gefunden. Prüfe, ob dein Google-Konto die Kalender synchronisiert.</string>
+    <string name="calendar_alert_title_regex">Titelfilter (regulärer Ausdruck)</string>
+    <string name="calendar_alert_title_regex_help">Termine, deren Titel einen Treffer enthält, klingeln als Wecker. Beispiel: ^Alarm: passt auf Titel, die mit „Alarm:“ beginnen.</string>
+    <string name="calendar_alert_title_regex_invalid">Das ist kein gültiger regulärer Ausdruck.</string>
+    <string name="calendar_alert_section_sound">Wecker</string>
+    <string name="calendar_alert_volume">Lautstärke: %1$d von %2$d</string>
+    <string name="calendar_alert_volume_help">Wird verwendet, wenn die Lautstärke pro Wecker in den Wecker-Einstellungen aktiviert ist.</string>
+    <string name="calendar_alert_vibrate">Vibration</string>
+    <string name="calendar_alert_max_duration">Maximale Weckdauer (Minuten)</string>
+    <string name="calendar_alert_max_duration_help">Leer lassen, damit der Wecker klingelt, bis du ihn beendest.</string>
+    <string name="calendar_alert_section_snooze">Schlummern</string>
+    <string name="calendar_alert_allow_snooze">Schlummern erlauben</string>
+    <string name="calendar_alert_snooze_minutes">Schlummer-Minuten</string>
+    <string name="calendar_alert_max_snoozes">Max. Schlummern</string>
+    <string name="calendar_alert_max_snoozes_help">Leer = unbegrenzt</string>
+    <string name="calendar_alert_section_dismiss">Beenden durch</string>
+    <string name="calendar_alert_dismiss_default">Wie bei anderen Weckern</string>
+    <string name="calendar_alert_dismiss_slide">Wischen</string>
+    <string name="calendar_alert_dismiss_button">Tasten</string>
+    <string name="calendar_alert_save">Speichern</string>
+    <string name="calendar_alert_delete_profile">Profil löschen</string>
+    <string name="calendar_alert_delete_confirm">Dieses Profil und seine anstehenden Wecker löschen?</string>
+    <string name="calendar_alert_error_no_calendar">Wähle zuerst einen Kalender aus.</string>
+    <string name="calendar_alert_error_number">Gib eine ganze Zahl ein.</string>
+
 </resources>

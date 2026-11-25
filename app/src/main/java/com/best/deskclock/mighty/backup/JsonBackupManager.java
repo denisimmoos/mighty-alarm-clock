@@ -168,7 +168,7 @@ public final class JsonBackupManager {
         metadata.put("formatVersion", 1);
         root.put("metadata", metadata);
 
-        final List<Alarm> alarms = Alarm.getAlarms(cr, null);
+        final List<Alarm> alarms = Alarm.getUserAlarms(cr);
         final JSONArray alarmsArray = new JSONArray();
         for (Alarm alarm : alarms) {
             final JSONObject a = new JSONObject();

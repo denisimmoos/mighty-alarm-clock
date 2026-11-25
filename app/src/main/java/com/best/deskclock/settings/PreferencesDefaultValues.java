@@ -49,17 +49,20 @@ public class PreferencesDefaultValues {
     public static final String TAB_TO_DISPLAY_CLOCK = "1";
     public static final String TAB_TO_DISPLAY_TIMER = "2";
     public static final String TAB_TO_DISPLAY_STOPWATCH = "3";
+    public static final String TAB_TO_DISPLAY_CALENDAR_ALERT = "4";
     public static final boolean DEFAULT_VIBRATIONS = false;
     public static final boolean DEFAULT_TOOLBAR_TITLE = true;
     public static final String VISIBLE_TAB_ALARM = "alarm";
     public static final String VISIBLE_TAB_CLOCK = "clock";
     public static final String VISIBLE_TAB_TIMER = "timer";
     public static final String VISIBLE_TAB_STOPWATCH = "stopwatch";
+    public static final String VISIBLE_TAB_CALENDAR_ALERT = "calendar_alert";
     public static final Set<String> DEFAULT_VISIBLE_TABS = Set.of(
         VISIBLE_TAB_ALARM,
         VISIBLE_TAB_CLOCK,
         VISIBLE_TAB_TIMER,
-        VISIBLE_TAB_STOPWATCH
+        VISIBLE_TAB_STOPWATCH,
+        VISIBLE_TAB_CALENDAR_ALERT
     );
     public static final String DEFAULT_TAB_TITLE_VISIBILITY = "0";
     public static final String TAB_TITLE_VISIBILITY_NEVER = "1";

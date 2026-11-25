@@ -1691,4 +1691,52 @@
     <string name="mighty_sample_alarm_interval">Every 30 min, max 3× (sample)</string>
     <string name="mighty_sample_alarm_future_interval">Vehicle inspection reminder (sample)</string>
 
+    <!-- Calendar Alert tab -->
+    <string name="menu_calendar_alert">Calendar Alert</string>
+    <string name="calendar_alert_permission_needed">Calendar Alert needs access to your calendars to find events and set alarms for them.</string>
+    <string name="calendar_alert_permission_button">Allow calendar access</string>
+    <string name="calendar_alert_permission_denied">Without calendar access, no calendar alarms can be set.</string>
+    <string name="calendar_alert_no_profiles">No profiles yet. Tap + to create one and choose which calendar events should ring as alarms.</string>
+    <string name="calendar_alert_add_profile">Add profile</string>
+    <string name="calendar_alert_edit_profile">Edit profile</string>
+    <string name="calendar_alert_new_profile">New profile</string>
+    <plurals name="calendar_alert_event_count">
+        <item quantity="one">%d alarm in the next 7 days</item>
+        <item quantity="other">%d alarms in the next 7 days</item>
+    </plurals>
+    <string name="calendar_alert_next">Next: %s</string>
+    <string name="calendar_alert_no_next">No upcoming alarm</string>
+    <string name="calendar_alert_calendar_missing">Calendar not available</string>
+    <string name="calendar_alert_no_events">No matching events in the next 7 days.</string>
+    <string name="calendar_alert_events_subtitle">Events from %1$s whose title matches %2$s</string>
+    <string name="calendar_alert_event_dismissed">Already dismissed</string>
+    <string name="calendar_alert_profile_name">Profile name</string>
+    <string name="calendar_alert_profile_enabled">Profile on</string>
+    <string name="calendar_alert_section_calendar">Calendar and filter</string>
+    <string name="calendar_alert_choose_calendar">Choose a calendar</string>
+    <string name="calendar_alert_no_calendars">No calendars found on this device. Make sure your Google account syncs its calendars.</string>
+    <string name="calendar_alert_title_regex">Title filter (regular expression)</string>
+    <string name="calendar_alert_title_regex_help">Events whose title contains a match ring as alarms. Example: ^Alarm: matches titles starting with \"Alarm:\".</string>
+    <string name="calendar_alert_title_regex_invalid">This is not a valid regular expression.</string>
+    <string name="calendar_alert_section_sound">Alarm</string>
+    <string name="calendar_alert_volume">Volume: %1$d of %2$d</string>
+    <string name="calendar_alert_volume_help">Used when per-alarm volume is turned on in the alarm settings.</string>
+    <string name="calendar_alert_vibrate">Vibrate</string>
+    <string name="calendar_alert_max_duration">Maximum alert duration (minutes)</string>
+    <string name="calendar_alert_max_duration_help">Leave empty to ring until you dismiss the alarm.</string>
+    <string name="calendar_alert_section_snooze">Snooze</string>
+    <string name="calendar_alert_allow_snooze">Allow snooze</string>
+    <string name="calendar_alert_snooze_minutes">Snooze minutes</string>
+    <string name="calendar_alert_max_snoozes">Max snoozes</string>
+    <string name="calendar_alert_max_snoozes_help">Empty = unlimited</string>
+    <string name="calendar_alert_section_dismiss">Dismiss method</string>
+    <string name="calendar_alert_dismiss_default">Same as other alarms</string>
+    <string name="calendar_alert_dismiss_slide">Slide</string>
+    <string name="calendar_alert_dismiss_button">Buttons</string>
+    <string name="calendar_alert_save">Save</string>
+    <string name="calendar_alert_delete_profile">Delete profile</string>
+    <string name="calendar_alert_delete_confirm">Delete this profile and its upcoming alarms?</string>
+    <string name="calendar_alert_error_no_calendar">Choose a calendar first.</string>
+    <string name="calendar_alert_error_number">Enter a whole number.</string>
+
 </resources>

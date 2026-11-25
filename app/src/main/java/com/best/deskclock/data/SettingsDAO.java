@@ -346,6 +346,19 @@ public final class SettingsDAO {
      * @return the set of currently visible tabs.
      */
     public static Set<String> getVisibleTabs(SharedPreferences prefs) {
+        // The Calendar Alert tab was added after users may already have saved their visible tabs.
+        // Show it once for them; afterwards their own choice is kept.
+        if (!prefs.getBoolean(KEY_CALENDAR_ALERT_TAB_ADDED, false)) {
+            final SharedPreferences.Editor editor = prefs.edit().putBoolean(KEY_CALENDAR_ALERT_TAB_ADDED, true);
+            final Set<String> saved = prefs.getStringSet(KEY_VISIBLE_TABS, null);
+            if (saved != null && !saved.contains(VISIBLE_TAB_CALENDAR_ALERT)) {
+                final Set<String> updated = new java.util.HashSet<>(saved);
+                updated.add(VISIBLE_TAB_CALENDAR_ALERT);
+                editor.putStringSet(KEY_VISIBLE_TABS, updated);
+            }
+            editor.apply();
+        }
+
         // Default value must match the one in res/xml/settings_interface_customization.xml
         return prefs.getStringSet(KEY_VISIBLE_TABS, DEFAULT_VISIBLE_TABS);
     }
@@ -376,6 +389,13 @@ public final class SettingsDAO {
      */
     public static boolean isStopwatchTabVisible(SharedPreferences prefs) {
         return getVisibleTabs(prefs).contains(VISIBLE_TAB_STOPWATCH);
+    }
+
+    /**
+     * @return {@code true} if the Calendar Alert tab is visible in the bottom navigation menu. {@code false} otherwise.
+     */
+    public static boolean isCalendarAlertTabVisible(SharedPreferences prefs) {
+        return getVisibleTabs(prefs).contains(VISIBLE_TAB_CALENDAR_ALERT);
     }
 
     /**

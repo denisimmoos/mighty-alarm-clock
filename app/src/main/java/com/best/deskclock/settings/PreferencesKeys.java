@@ -60,6 +60,7 @@ public class PreferencesKeys {
     public static final String KEY_CARD_BORDER = "key_card_border";
     public static final String KEY_LANGUAGE_CODE = "key_language_code";
     public static final String KEY_VISIBLE_TABS = "key_visible_tabs";
+    public static final String KEY_CALENDAR_ALERT_TAB_ADDED = "key_calendar_alert_tab_added";
     public static final String KEY_TAB_TO_DISPLAY = "key_tab_to_display";
     public static final String KEY_VIBRATIONS = "key_vibrations";
     public static final String KEY_TOOLBAR_TITLE = "key_toolbar_title";

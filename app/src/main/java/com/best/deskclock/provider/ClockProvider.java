@@ -10,6 +10,8 @@ import static com.best.deskclock.provider.ClockContract.AlarmsColumns;
 import static com.best.deskclock.provider.ClockContract.InstancesColumns;
 import static com.best.deskclock.provider.ClockDatabaseHelper.ALARMS_TABLE_NAME;
 import static com.best.deskclock.provider.ClockDatabaseHelper.ALARM_TAGS_TABLE_NAME;
+import static com.best.deskclock.provider.ClockDatabaseHelper.CALENDAR_ALERT_EVENTS_TABLE_NAME;
+import static com.best.deskclock.provider.ClockDatabaseHelper.CALENDAR_PROFILES_TABLE_NAME;
 import static com.best.deskclock.provider.ClockDatabaseHelper.EVENT_LOG_TABLE_NAME;
 import static com.best.deskclock.provider.ClockDatabaseHelper.INSTANCES_TABLE_NAME;
 import static com.best.deskclock.provider.ClockDatabaseHelper.TAGS_TABLE_NAME;
@@ -47,6 +49,10 @@ public class ClockProvider extends ContentProvider {
     private static final int ALARM_TAGS = 8;
     private static final int EVENT_LOG = 9;
     private static final int EVENT_LOG_ID = 10;
+    private static final int CALENDAR_PROFILES = 11;
+    private static final int CALENDAR_PROFILES_ID = 12;
+    private static final int CALENDAR_ALERT_EVENTS = 13;
+    private static final int CALENDAR_ALERT_EVENTS_ID = 14;
     /**
      * Projection map used by query for snoozed alarms.
      */
@@ -193,6 +199,10 @@ public class ClockProvider extends ContentProvider {
         sURIMatcher.addURI(ClockContract.AUTHORITY, "alarm_tags", ALARM_TAGS);
         sURIMatcher.addURI(ClockContract.AUTHORITY, "event_log", EVENT_LOG);
         sURIMatcher.addURI(ClockContract.AUTHORITY, "event_log/#", EVENT_LOG_ID);
+        sURIMatcher.addURI(ClockContract.AUTHORITY, "calendar_profiles", CALENDAR_PROFILES);
+        sURIMatcher.addURI(ClockContract.AUTHORITY, "calendar_profiles/#", CALENDAR_PROFILES_ID);
+        sURIMatcher.addURI(ClockContract.AUTHORITY, "calendar_alert_events", CALENDAR_ALERT_EVENTS);
+        sURIMatcher.addURI(ClockContract.AUTHORITY, "calendar_alert_events/#", CALENDAR_ALERT_EVENTS_ID);
     }
 
     private ClockDatabaseHelper mOpenHelper;
@@ -264,6 +274,18 @@ public class ClockProvider extends ContentProvider {
                 qb.appendWhere(ClockContract.EventLogColumns._ID + "=");
                 qb.appendWhere(Objects.requireNonNull(uri.getLastPathSegment()));
             }
+            case CALENDAR_PROFILES -> qb.setTables(CALENDAR_PROFILES_TABLE_NAME);
+            case CALENDAR_PROFILES_ID -> {
+                qb.setTables(CALENDAR_PROFILES_TABLE_NAME);
+                qb.appendWhere(ClockContract.CalendarProfilesColumns._ID + "=");
+                qb.appendWhere(Objects.requireNonNull(uri.getLastPathSegment()));
+            }
+            case CALENDAR_ALERT_EVENTS -> qb.setTables(CALENDAR_ALERT_EVENTS_TABLE_NAME);
+            case CALENDAR_ALERT_EVENTS_ID -> {
+                qb.setTables(CALENDAR_ALERT_EVENTS_TABLE_NAME);
+                qb.appendWhere(ClockContract.CalendarAlertEventsColumns._ID + "=");
+                qb.appendWhere(Objects.requireNonNull(uri.getLastPathSegment()));
+            }
             default -> throw new IllegalArgumentException("Unknown URI " + uri);
         }
 
@@ -291,6 +313,10 @@ public class ClockProvider extends ContentProvider {
             case ALARM_TAGS -> "vnd.android.cursor.dir/alarm_tags";
             case EVENT_LOG -> "vnd.android.cursor.dir/event_log";
             case EVENT_LOG_ID -> "vnd.android.cursor.item/event_log";
+            case CALENDAR_PROFILES -> "vnd.android.cursor.dir/calendar_profiles";
+            case CALENDAR_PROFILES_ID -> "vnd.android.cursor.item/calendar_profiles";
+            case CALENDAR_ALERT_EVENTS -> "vnd.android.cursor.dir/calendar_alert_events";
+            case CALENDAR_ALERT_EVENTS_ID -> "vnd.android.cursor.item/calendar_alert_events";
             default -> throw new IllegalArgumentException("Unknown URI");
         };
     }
@@ -317,6 +343,20 @@ public class ClockProvider extends ContentProvider {
                 alarmId = uri.getLastPathSegment();
                 count = db.update(EVENT_LOG_TABLE_NAME, values, ClockContract.EventLogColumns._ID + "=" + alarmId, null);
             }
+            case CALENDAR_PROFILES_ID -> {
+                alarmId = uri.getLastPathSegment();
+                count = db.update(CALENDAR_PROFILES_TABLE_NAME, values,
+                    ClockContract.CalendarProfilesColumns._ID + "=" + alarmId, null);
+            }
+            case CALENDAR_ALERT_EVENTS_ID -> {
+                alarmId = uri.getLastPathSegment();
+                count = db.update(CALENDAR_ALERT_EVENTS_TABLE_NAME, values,
+                    ClockContract.CalendarAlertEventsColumns._ID + "=" + alarmId, null);
+            }
+            case CALENDAR_ALERT_EVENTS -> {
+                alarmId = null;
+                count = db.update(CALENDAR_ALERT_EVENTS_TABLE_NAME, values, where, whereArgs);
+            }
             default -> throw new UnsupportedOperationException("Cannot update URI: " + uri);
         }
 
@@ -337,6 +377,9 @@ public class ClockProvider extends ContentProvider {
             case ALARM_TAGS -> db.insertWithOnConflict(ALARM_TAGS_TABLE_NAME, null, initialValues,
                 SQLiteDatabase.CONFLICT_IGNORE);
             case EVENT_LOG -> db.insert(EVENT_LOG_TABLE_NAME, null, initialValues);
+            case CALENDAR_PROFILES -> db.insert(CALENDAR_PROFILES_TABLE_NAME, null, initialValues);
+            case CALENDAR_ALERT_EVENTS -> db.insertWithOnConflict(CALENDAR_ALERT_EVENTS_TABLE_NAME, null,
+                initialValues, SQLiteDatabase.CONFLICT_REPLACE);
             default -> throw new IllegalArgumentException("Cannot insert from URI: " + uri);
         };
 
@@ -351,7 +394,10 @@ public class ClockProvider extends ContentProvider {
         String primaryKey;
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         switch (sURIMatcher.match(uri)) {
-            case ALARMS -> count = db.delete(ALARMS_TABLE_NAME, where, whereArgs);
+            case ALARMS -> {
+                count = db.delete(ALARMS_TABLE_NAME, where, whereArgs);
+                markDeletedCalendarAlarms(db);
+            }
             case ALARMS_ID -> {
                 primaryKey = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(where)) {
@@ -360,6 +406,7 @@ public class ClockProvider extends ContentProvider {
                     where = AlarmsColumns._ID + "=" + primaryKey + " AND (" + where + ")";
                 }
                 count = db.delete(ALARMS_TABLE_NAME, where, whereArgs);
+                markDeletedCalendarAlarms(db);
             }
             case INSTANCES -> count = db.delete(INSTANCES_TABLE_NAME, where, whereArgs);
             case INSTANCES_ID -> {
@@ -392,11 +439,44 @@ public class ClockProvider extends ContentProvider {
                 }
                 count = db.delete(EVENT_LOG_TABLE_NAME, where, whereArgs);
             }
+            case CALENDAR_PROFILES -> count = db.delete(CALENDAR_PROFILES_TABLE_NAME, where, whereArgs);
+            case CALENDAR_PROFILES_ID -> {
+                primaryKey = uri.getLastPathSegment();
+                if (TextUtils.isEmpty(where)) {
+                    where = ClockContract.CalendarProfilesColumns._ID + "=" + primaryKey;
+                } else {
+                    where = ClockContract.CalendarProfilesColumns._ID + "=" + primaryKey + " AND (" + where + ")";
+                }
+                count = db.delete(CALENDAR_PROFILES_TABLE_NAME, where, whereArgs);
+            }
+            case CALENDAR_ALERT_EVENTS -> count = db.delete(CALENDAR_ALERT_EVENTS_TABLE_NAME, where, whereArgs);
+            case CALENDAR_ALERT_EVENTS_ID -> {
+                primaryKey = uri.getLastPathSegment();
+                if (TextUtils.isEmpty(where)) {
+                    where = ClockContract.CalendarAlertEventsColumns._ID + "=" + primaryKey;
+                } else {
+                    where = ClockContract.CalendarAlertEventsColumns._ID + "=" + primaryKey + " AND (" + where + ")";
+                }
+                count = db.delete(CALENDAR_ALERT_EVENTS_TABLE_NAME, where, whereArgs);
+            }
             default -> throw new IllegalArgumentException("Cannot delete from URI: " + uri);
         }
 
         notifyChange(Objects.requireNonNull(getContext()).getContentResolver(), uri);
         return count;
+    }
+
+    /**
+     * Marks calendar alert events whose alarm was just deleted as used up. SQLite may give a
+     * deleted alarm's id to a new alarm, and a stale link would then hide or change that alarm.
+     */
+    private static void markDeletedCalendarAlarms(SQLiteDatabase db) {
+        final ContentValues values = new ContentValues(1);
+        values.put(ClockContract.CalendarAlertEventsColumns.ALARM_ID, CalendarAlertEvent.ALARM_CONSUMED);
+        db.update(CALENDAR_ALERT_EVENTS_TABLE_NAME, values,
+            ClockContract.CalendarAlertEventsColumns.ALARM_ID + " >= 0 AND "
+                + ClockContract.CalendarAlertEventsColumns.ALARM_ID + " NOT IN (SELECT "
+                + AlarmsColumns._ID + " FROM " + ALARMS_TABLE_NAME + ")", null);
     }
 
     /**
@@ -409,7 +489,7 @@ public class ClockProvider extends ContentProvider {
         // Also notify the joined table of changes to instances, alarms, or alarm-tag links
         // (tag changes affect list filtering even when alarm rows themselves are unchanged).
         if (match == ALARMS || match == INSTANCES || match == ALARMS_ID || match == INSTANCES_ID
-            || match == ALARM_TAGS) {
+            || match == ALARM_TAGS || match == CALENDAR_ALERT_EVENTS || match == CALENDAR_ALERT_EVENTS_ID) {
             resolver.notifyChange(AlarmsColumns.ALARMS_WITH_INSTANCES_URI, null);
         }
     }

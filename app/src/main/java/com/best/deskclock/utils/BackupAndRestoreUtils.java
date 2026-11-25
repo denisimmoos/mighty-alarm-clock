@@ -164,7 +164,7 @@ public class BackupAndRestoreUtils {
         JSONArray alarmsArray = new JSONArray();
         JSONArray alarmsWithDateArray = new JSONArray();
 
-        List<Alarm> alarms = Alarm.getAlarms(context.getContentResolver(), null);
+        List<Alarm> alarms = Alarm.getUserAlarms(context.getContentResolver());
         for (Alarm alarm : alarms) {
             JSONObject alarmObject = new JSONObject();
 
@@ -345,7 +345,7 @@ public class BackupAndRestoreUtils {
 
         final ContentResolver contentResolver = context.getContentResolver();
         // Clear the alarm list before restoring to avoid adding duplicates
-        final List<Alarm> alarms = Alarm.getAlarms(contentResolver, null);
+        final List<Alarm> alarms = Alarm.getUserAlarms(contentResolver);
         for (Alarm alarm : alarms) {
             AlarmStateManager.deleteAllInstances(context, alarm.id);
             Alarm.deleteAlarm(contentResolver, alarm.id);

@@ -68,8 +68,10 @@ import com.best.deskclock.data.DataModel.VolumeButtonBehavior;
 import com.best.deskclock.data.SettingsDAO;
 import com.best.deskclock.databinding.AlarmActivityBinding;
 import com.best.deskclock.events.Events;
+import com.best.deskclock.mighty.calendar.CalendarAlertRules;
 import com.best.deskclock.provider.Alarm;
 import com.best.deskclock.provider.AlarmInstance;
+import com.best.deskclock.provider.CalendarProfile;
 import com.best.deskclock.uicomponents.PillView;
 import com.best.deskclock.utils.AlarmUtils;
 import com.best.deskclock.utils.AnimatorUtils;
@@ -261,6 +263,8 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
 
         mIsSwipeActionEnabled = SettingsDAO.isSwipeActionEnabled(mPrefs);
         mIsSnoozeSelectorDisplayed = SettingsDAO.isSnoozeSelectorDisplayed(mPrefs);
+
+        applyCalendarProfileRules();
         mAlarmTitleFontSize = SettingsDAO.getAlarmTitleFontSize(mPrefs);
         mAlarmTitleColor = SettingsDAO.getAlarmTitleColor(mPrefs);
         mAlarmButtonColor = SettingsDAO.getAlarmButtonColor(mPrefs, this);
@@ -594,6 +598,33 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
         mAlarm = Alarm.getAlarm(getContentResolver(), mAlarmInstance.mAlarmId);
         if (mAlarm == null) {
             LogUtils.wtf("Failed to retrieve alarm with ID: %d", mAlarmInstance.mAlarmId);
+        }
+    }
+
+    /**
+     * Applies the dismiss method and snooze limit of the calendar profile that created this
+     * alarm, if any.
+     */
+    private void applyCalendarProfileRules() {
+        if (mAlarm == null || mAlarmInstance == null) {
+            return;
+        }
+
+        final CalendarProfile profile = CalendarAlertRules.getProfileForAlarm(getContentResolver(), mAlarm.id);
+        if (profile == null) {
+            return;
+        }
+
+        if (profile.isSlideDismissForced()) {
+            mIsSwipeActionEnabled = true;
+        } else if (profile.isButtonDismissForced()) {
+            mIsSwipeActionEnabled = false;
+        }
+
+        if (CalendarAlertRules.isSnoozeLimitReached(profile, mAlarmInstance)) {
+            mDefaultSnoozeMinutes = ALARM_SNOOZE_DURATION_DISABLED;
+            mAlarmInstance.mSnoozeDuration = ALARM_SNOOZE_DURATION_DISABLED;
+            mIsSnoozeSelectorDisplayed = false;
         }
     }
 

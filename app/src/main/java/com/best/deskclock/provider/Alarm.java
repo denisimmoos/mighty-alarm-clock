@@ -715,7 +715,11 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
             }
         }
 
-        return new CursorLoader(context, ALARMS_WITH_INSTANCES_URI, QUERY_ALARMS_WITH_INSTANCES_COLUMNS, null, null, sortOrder) {
+        // Alarms created from calendar events are managed in the Calendar Alert tab.
+        final String selection = CalendarAlertEvent.buildExcludeCalendarAlarmsSelection(
+            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + _ID);
+
+        return new CursorLoader(context, ALARMS_WITH_INSTANCES_URI, QUERY_ALARMS_WITH_INSTANCES_COLUMNS, selection, null, sortOrder) {
             @Override
             public Cursor loadInBackground() {
                 // Prime the ringtone title cache for later access. Most alarms will refer to
@@ -768,6 +772,13 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         }
 
         return result;
+    }
+
+    /**
+     * @return every alarm the user created, leaving out alarms created from calendar events.
+     */
+    public static List<Alarm> getUserAlarms(ContentResolver cr) {
+        return getAlarms(cr, CalendarAlertEvent.buildExcludeCalendarAlarmsSelection(_ID));
     }
 
     /**

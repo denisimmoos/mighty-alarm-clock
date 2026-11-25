@@ -17,6 +17,7 @@ import com.best.deskclock.DeskClockApplication;
 import com.best.deskclock.R;
 import com.best.deskclock.alarms.AlarmFragment;
 import com.best.deskclock.clock.ClockFragment;
+import com.best.deskclock.mighty.calendar.CalendarAlertFragment;
 import com.best.deskclock.stopwatch.StopwatchFragment;
 import com.best.deskclock.timer.TimerFragment;
 
@@ -281,7 +282,8 @@ public final class UiDataModel {
         ALARMS(AlarmFragment.class, R.id.page_alarm, R.string.menu_alarm),
         CLOCKS(ClockFragment.class, R.id.page_clock, R.string.menu_clock),
         TIMERS(TimerFragment.class, R.id.page_timer, R.string.menu_timer),
-        STOPWATCH(StopwatchFragment.class, R.id.page_stopwatch, R.string.menu_stopwatch);
+        STOPWATCH(StopwatchFragment.class, R.id.page_stopwatch, R.string.menu_stopwatch),
+        CALENDAR_ALERT(CalendarAlertFragment.class, R.id.page_calendar_alert, R.string.menu_calendar_alert);
 
         private final String mFragmentClassName;
         private final int mPageResId;
