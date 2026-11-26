@@ -158,6 +158,48 @@ public final class DeviceCalendars {
         } catch (SecurityException e) {
             LogUtils.e("DeviceCalendars: no permission to read events", e);
         }
-        return result;
+        return dropDeletedEvents(cr, result);
+    }
+
+    /**
+     * Some calendar apps move an event by deleting it and adding a new one. Until the calendar
+     * syncs, the old event is only marked deleted and may still show up as an instance.
+     */
+    private static List<EventInstance> dropDeletedEvents(ContentResolver cr, List<EventInstance> instances) {
+        if (instances.isEmpty()) {
+            return instances;
+        }
+        final java.util.Set<Long> ids = new java.util.HashSet<>();
+        for (EventInstance instance : instances) {
+            ids.add(instance.eventId);
+        }
+        final StringBuilder in = new StringBuilder();
+        for (Long id : ids) {
+            in.append(in.length() == 0 ? "" : ",").append(id);
+        }
+        final java.util.Set<Long> deleted = new java.util.HashSet<>();
+        try (Cursor c = cr.query(CalendarContract.Events.CONTENT_URI,
+            new String[] {CalendarContract.Events._ID},
+            CalendarContract.Events._ID + " IN (" + in + ") AND " + CalendarContract.Events.DELETED + "=1",
+            null, null)) {
+            if (c != null) {
+                while (c.moveToNext()) {
+                    deleted.add(c.getLong(0));
+                }
+            }
+        } catch (Exception e) {
+            LogUtils.w("DeviceCalendars: could not check for deleted events: " + e);
+            return instances;
+        }
+        if (deleted.isEmpty()) {
+            return instances;
+        }
+        final List<EventInstance> kept = new ArrayList<>();
+        for (EventInstance instance : instances) {
+            if (!deleted.contains(instance.eventId)) {
+                kept.add(instance);
+            }
+        }
+        return kept;
     }
 }

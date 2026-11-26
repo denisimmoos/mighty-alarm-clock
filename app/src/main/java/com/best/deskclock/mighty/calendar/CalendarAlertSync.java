@@ -169,36 +169,46 @@ public final class CalendarAlertSync {
             DeviceCalendars.getEventInstances(context, profile.calendarId, now, until);
 
         final Set<String> matchedKeys = new HashSet<>();
+        final List<DeviceCalendars.EventInstance> matched = new java.util.ArrayList<>();
         for (DeviceCalendars.EventInstance instance : instances) {
-            if (!CalendarProfile.titleMatches(pattern, instance.title)) {
-                continue;
+            if (CalendarProfile.titleMatches(pattern, instance.title)) {
+                matchedKeys.add(CalendarAlertEvent.buildKey(instance.eventId, instance.begin));
+                matched.add(instance);
             }
-
-            final String key = CalendarAlertEvent.buildKey(instance.eventId, instance.begin);
-            matchedKeys.add(key);
-
-            CalendarAlertEvent event = existingByKey.get(key);
-            if (event == null) {
-                event = new CalendarAlertEvent(profile.id, instance.eventId, instance.begin, instance.title);
-            } else {
-                event.title = instance.title;
-            }
-
-            event.alarmId = reconcileAlarm(context, profile, event, profile.enabled && event.userEnabled);
-            event.save(cr);
         }
 
+        // Remove stale rows first, so one failing event can never leave an old alert behind.
         for (CalendarAlertEvent event : existing) {
             if (matchedKeys.contains(event.eventKey)) {
                 continue;
             }
+            try {
+                if (event.begin > now) {
+                    // The event was deleted, moved, renamed so it no longer matches, or the profile
+                    // now points to another calendar or regex.
+                    removeEvent(context, event, false);
+                } else if (event.begin < now - PAST_EVENT_RETENTION_MS || !alarmExists(cr, event.alarmId)) {
+                    removeEvent(context, event, false);
+                }
+            } catch (Throwable e) {
+                LogUtils.e("CalendarAlertSync: failed to remove " + event, e);
+            }
+        }
 
-            if (event.begin > now) {
-                // The event was deleted, moved, renamed so it no longer matches, or the profile now
-                // points to another calendar or regex.
-                removeEvent(context, event, false);
-            } else if (event.begin < now - PAST_EVENT_RETENTION_MS || !alarmExists(cr, event.alarmId)) {
-                removeEvent(context, event, false);
+        for (DeviceCalendars.EventInstance instance : matched) {
+            try {
+                final String key = CalendarAlertEvent.buildKey(instance.eventId, instance.begin);
+                CalendarAlertEvent event = existingByKey.get(key);
+                if (event == null) {
+                    event = new CalendarAlertEvent(profile.id, instance.eventId, instance.begin, instance.title);
+                } else {
+                    event.title = instance.title;
+                }
+
+                event.alarmId = reconcileAlarm(context, profile, event, profile.enabled && event.userEnabled);
+                event.save(cr);
+            } catch (Throwable e) {
+                LogUtils.e("CalendarAlertSync: failed to update event " + instance.eventId, e);
             }
         }
     }

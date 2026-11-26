@@ -67,6 +67,13 @@ public class CalendarAlertSyncTest {
 
         @Override
         public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] args, String sort) {
+            if (uri.getPathSegments().get(0).equals("events")) {
+                final MatrixCursor deleted = new MatrixCursor(projection);
+                for (Long id : DELETED_IDS) {
+                    deleted.addRow(new Object[]{id});
+                }
+                return deleted;
+            }
             final List<String> segments = uri.getPathSegments();
             final long from = Long.parseLong(segments.get(segments.size() - 2));
             final long to = Long.parseLong(segments.get(segments.size() - 1));
@@ -122,8 +129,11 @@ public class CalendarAlertSyncTest {
         mProfile.addProfile(mCr);
     }
 
+    static final java.util.Set<Long> DELETED_IDS = new java.util.HashSet<>();
+
     static void clearEvents() {
         EVENTS.clear();
+        DELETED_IDS.clear();
     }
 
     private static long inHours(int hours) {
@@ -187,11 +197,14 @@ public class CalendarAlertSyncTest {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, newBegin, "Alarm: Dentist"));
         CalendarAlertSync.syncAll(mContext);
 
-        assertNull(Alarm.getAlarm(mCr, firstAlarmId));
+        // The old alarm is gone; SQLite may give its id to the new alarm.
         final List<CalendarAlertEvent> rows = events();
         assertEquals(1, rows.size());
         assertEquals(newBegin, rows.get(0).begin);
-        assertNotNull(Alarm.getAlarm(mCr, rows.get(0).alarmId));
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+        final List<AlarmInstance> moved = AlarmInstance.getInstancesByAlarmId(mCr, rows.get(0).alarmId);
+        assertEquals(1, moved.size());
+        assertEquals(newBegin, moved.get(0).getAlarmTime().getTimeInMillis());
 
         // Deleting the event removes its alarm.
         EVENTS.clear();
@@ -333,6 +346,22 @@ public class CalendarAlertSyncTest {
         CalendarAlertSync.syncAll(mContext);
         org.junit.Assert.assertNotEquals(com.best.deskclock.utils.RingtoneUtils.RINGTONE_SILENT,
             Alarm.getAlarm(mCr, alarmId).alert);
+    }
+
+    @Test
+    public void eventMovedByDeleteAndAddLeavesOneAlert() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
+        CalendarAlertSync.syncAll(mContext);
+
+        // The calendar app deleted event 1 (still waiting to sync) and added event 2 at the new time.
+        DELETED_IDS.add(1L);
+        EVENTS.add(new FakeEvent(2, CALENDAR_ID, inHours(5), "Alarm: Dentist"));
+        CalendarAlertSync.syncAll(mContext);
+
+        final List<CalendarAlertEvent> rows = events();
+        assertEquals(1, rows.size());
+        assertEquals(inHours(5), rows.get(0).begin);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
     }
 
     @Test

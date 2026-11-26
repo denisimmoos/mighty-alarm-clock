@@ -187,6 +187,25 @@ public class CalendarAlertReproTest {
         }
     }
 
+    /** Moving an event is checked in the background on a phone: the old alert must go away. */
+    @Test
+    public void movedEventOffMainThreadLeavesOneAlert() throws Exception {
+        org.robolectric.shadows.ShadowLog.stream = System.out;
+        CalendarAlertSyncTest.clearEvents();
+        final Calendar c = Calendar.getInstance();
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        c.add(Calendar.HOUR_OF_DAY, 5);
+        CalendarAlertSyncTest.addEvent(1, 7, c.getTimeInMillis(), "🔕 Aufstehen %s 100%");
+        syncInBackground();
+        final java.util.List<CalendarAlertEvent> rows = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id);
+        assertEquals(1, rows.size());
+        assertEquals(c.getTimeInMillis(), rows.get(0).begin);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+        assertEquals(c.getTimeInMillis(), AlarmInstance.getInstancesByAlarmId(mCr, rows.get(0).alarmId)
+            .get(0).getAlarmTime().getTimeInMillis());
+    }
+
     @Test
     public void fireSnoozeDismiss() {
         final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
