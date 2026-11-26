@@ -73,7 +73,8 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
         private static final String KEY_SHOW_NOTIF_RATIONALE = "show_notif_rationale";
         private static final String KEY_PENDING_REVOCATION_PREF = "pending_revocation_pref";
         /** Remembers that the calendar permission was asked for once, to tell "never asked" from "don't ask again". */
-        private static final String KEY_CALENDAR_PERMISSION_ASKED = "key_calendar_permission_asked";
+        private static final String KEY_CALENDAR_PERMISSION_ASKED =
+            com.best.deskclock.mighty.calendar.CalendarAlertStatus.KEY_CALENDAR_PERMISSION_ASKED;
 
         private boolean mShowForegroundServiceDialog = false;
         private boolean mShowNotificationRationaleDialog = false;

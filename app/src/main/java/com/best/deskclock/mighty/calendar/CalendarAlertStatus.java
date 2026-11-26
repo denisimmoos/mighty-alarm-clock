@@ -28,6 +28,8 @@ import com.best.deskclock.utils.SdkUtils;
 public final class CalendarAlertStatus {
 
     private static final String KEY_PERMISSION_NOTIFIED = "key_calendar_alert_permission_notified";
+    /** Set by the permissions screen once it asked Android for calendar access. */
+    public static final String KEY_CALENDAR_PERMISSION_ASKED = "key_calendar_permission_asked";
     private static final String CHANNEL_ID = "calendar_alert_status";
     private static final int NOTIFICATION_ID = 0x0CA1;
 
@@ -99,6 +101,8 @@ public final class CalendarAlertStatus {
      * from another phone were restored.
      */
     public static void clearDeviceState(android.content.SharedPreferences.Editor editor) {
-        editor.remove(CalendarAlertSync.KEY_LAST_CHECK).remove(KEY_PERMISSION_NOTIFIED);
+        editor.remove(CalendarAlertSync.KEY_LAST_CHECK).remove(KEY_PERMISSION_NOTIFIED)
+            // Whether Android was already asked for calendar access on this phone.
+            .remove(KEY_CALENDAR_PERMISSION_ASKED);
     }
 }

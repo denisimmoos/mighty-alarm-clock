@@ -679,11 +679,13 @@ public class CalendarAlertSyncTest {
         final android.content.SharedPreferences prefs =
             com.best.deskclock.DeskClockApplication.getDefaultSharedPreferences(mContext);
         prefs.edit().putLong(CalendarAlertSync.KEY_LAST_CHECK, 1234L)
-            .putBoolean("key_calendar_alert_permission_notified", true).commit();
+            .putBoolean("key_calendar_alert_permission_notified", true)
+            .putBoolean(CalendarAlertStatus.KEY_CALENDAR_PERMISSION_ASKED, true).commit();
         final android.content.SharedPreferences.Editor editor = prefs.edit();
         CalendarAlertStatus.clearDeviceState(editor);
         editor.commit();
         assertFalse(prefs.contains(CalendarAlertSync.KEY_LAST_CHECK));
         assertFalse(prefs.contains("key_calendar_alert_permission_notified"));
+        assertFalse(prefs.contains(CalendarAlertStatus.KEY_CALENDAR_PERMISSION_ASKED));
     }
 }

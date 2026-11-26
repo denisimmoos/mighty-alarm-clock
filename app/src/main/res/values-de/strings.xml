@@ -863,7 +863,7 @@
 
     <!-- Calendar Alert tab -->
     <string name="menu_calendar_alert">Kalender</string>
-    <string name="calendar_alert_permission_needed">Calendar Alarm braucht Zugriff auf deine Kalender, um Termine zu finden und Wecker dafür zu stellen.</string>
+    <string name="calendar_alert_permission_needed">Kalender-Alarme brauchen Zugriff auf deine Kalender, um Termine zu finden und Wecker dafür zu stellen.</string>
     <string name="calendar_alert_permission_button">Kalenderzugriff erlauben</string>
     <string name="calendar_alert_permission_denied">Ohne Kalenderzugriff können keine Kalender-Alarme gestellt werden.</string>
     <string name="calendar_alert_no_profiles">Noch keine Profile. Tippe auf +, um eines anzulegen und festzulegen, welche Termine als Wecker klingeln.</string>
