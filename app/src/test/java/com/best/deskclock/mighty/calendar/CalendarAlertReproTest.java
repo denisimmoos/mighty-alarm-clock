@@ -313,4 +313,45 @@ public class CalendarAlertReproTest {
                 .setData(AlarmInstance.getContentUri(instance.mId))).setup();
         ShadowLooper.idleMainLooper();
     }
+
+    @Test(timeout = 60000)
+    public void alarmShowsDescriptionAndOpensLocationInMaps() throws Exception {
+        CalendarAlertSyncTest.EVENT_DETAILS.put(1L, new String[]{"Bring the <b>insurance card</b><br>Room 3",
+            "Bahnhofstrasse 1, Zürich"});
+        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
+        AlarmStateManager.setFiredState(mContext, instance);
+        final AlarmActivity activity = Robolectric.buildActivity(AlarmActivity.class,
+            new android.content.Intent(mContext, AlarmActivity.class)
+                .setData(AlarmInstance.getContentUri(instance.mId))).create().start().postCreate(null).resume().get();
+        com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
+        ShadowLooper.idleMainLooper();
+
+        final android.widget.TextView description = activity.findViewById(com.best.deskclock.R.id.calendar_description);
+        final android.widget.TextView location = activity.findViewById(com.best.deskclock.R.id.calendar_location);
+        assertEquals(android.view.View.VISIBLE, description.getVisibility());
+        assertEquals("Bring the insurance card\nRoom 3", description.getText().toString());
+        assertEquals(android.view.View.VISIBLE, location.getVisibility());
+        assertEquals("Bahnhofstrasse 1, Zürich", location.getText().toString());
+
+        location.performClick();
+        final android.content.Intent maps = Shadows.shadowOf(activity).getNextStartedActivity();
+        org.junit.Assert.assertNotNull(maps);
+        assertEquals("com.google.android.apps.maps", maps.getPackage());
+        assertEquals("geo:0,0?q=Bahnhofstrasse%201%2C%20Z%C3%BCrich", maps.getDataString());
+    }
+
+    @Test(timeout = 60000)
+    public void alarmWithoutDescriptionOrLocationShowsNothingExtra() throws Exception {
+        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
+        AlarmStateManager.setFiredState(mContext, instance);
+        final AlarmActivity activity = Robolectric.buildActivity(AlarmActivity.class,
+            new android.content.Intent(mContext, AlarmActivity.class)
+                .setData(AlarmInstance.getContentUri(instance.mId))).create().start().postCreate(null).resume().get();
+        com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
+        ShadowLooper.idleMainLooper();
+        assertEquals(android.view.View.GONE,
+            activity.findViewById(com.best.deskclock.R.id.calendar_info).getVisibility());
+    }
 }

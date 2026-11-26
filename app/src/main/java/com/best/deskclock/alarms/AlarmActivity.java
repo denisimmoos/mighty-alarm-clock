@@ -281,6 +281,10 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
 
         initAlarmTitle();
 
+        if (mIsCalendarAlarm) {
+            loadCalendarEventDetails();
+        }
+
         if (mIsSwipeActionEnabled) {
             initSlideModeUI();
         } else {
@@ -630,6 +634,92 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             mDefaultSnoozeMinutes = ALARM_SNOOZE_DURATION_DISABLED;
             mAlarmInstance.mSnoozeDuration = ALARM_SNOOZE_DURATION_DISABLED;
             mIsSnoozeSelectorDisplayed = false;
+        }
+    }
+
+    /**
+     * Shows the description and place of the calendar event under the alarm title. They are read
+     * from the calendar when the alarm rings, so later edits of the event are shown too.
+     */
+    private void loadCalendarEventDetails() {
+        final android.content.Context appContext = getApplicationContext();
+        final long alarmId = mAlarm.id;
+        com.best.deskclock.base.AppExecutors.getDiskIO().execute(() -> {
+            final com.best.deskclock.provider.CalendarAlertEvent event =
+                com.best.deskclock.provider.CalendarAlertEvent.getEventForAlarm(appContext.getContentResolver(), alarmId);
+            final com.best.deskclock.mighty.calendar.DeviceCalendars.EventDetails details = event == null
+                ? null
+                : com.best.deskclock.mighty.calendar.DeviceCalendars.getEventDetails(appContext, event.eventId);
+            if (details == null) {
+                return;
+            }
+            com.best.deskclock.base.AppExecutors.getMainThread().post(() -> showCalendarEventDetails(details));
+        });
+    }
+
+    private void showCalendarEventDetails(com.best.deskclock.mighty.calendar.DeviceCalendars.EventDetails details) {
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
+        final boolean hasDescription = !details.description().isEmpty();
+        final boolean hasLocation = !details.location().isEmpty();
+        if (!hasDescription && !hasLocation) {
+            return;
+        }
+
+        if (hasDescription) {
+            mBinding.calendarDescription.setText(
+                com.best.deskclock.mighty.calendar.CalendarEventText.toDisplayText(details.description()));
+            mBinding.calendarDescription.setMovementMethod(new android.text.method.ScrollingMovementMethod());
+            mBinding.calendarDescription.setTextColor(mAlarmTitleColor);
+            mBinding.calendarDescription.setVisibility(VISIBLE);
+        }
+        if (hasLocation) {
+            final android.text.SpannableString place = new android.text.SpannableString(details.location());
+            place.setSpan(new android.text.style.UnderlineSpan(), 0, place.length(), 0);
+            mBinding.calendarLocation.setText(place);
+            mBinding.calendarLocation.setTextColor(mAlarmTitleColor);
+            androidx.core.widget.TextViewCompat.setCompoundDrawableTintList(mBinding.calendarLocation,
+                android.content.res.ColorStateList.valueOf(mAlarmTitleColor));
+            mBinding.calendarLocation.setContentDescription(
+                getString(R.string.calendar_alert_open_location, details.location()));
+            mBinding.calendarLocation.setOnClickListener(v -> openLocation(details.location()));
+            mBinding.calendarLocation.setVisibility(VISIBLE);
+        }
+        if (mIsTextShadowDisplayed) {
+            mBinding.calendarDescription.setShadowLayer(mShadowRadius, mShadowOffset, mShadowOffset, mShadowColor);
+            mBinding.calendarLocation.setShadowLayer(mShadowRadius, mShadowOffset, mShadowOffset, mShadowColor);
+        }
+        mBinding.calendarInfo.setVisibility(VISIBLE);
+    }
+
+    /**
+     * Opens the place in Google Maps, or in another maps app if Google Maps is not installed. On
+     * the lock screen the phone is unlocked first. The alarm keeps ringing until it is dismissed.
+     */
+    private void openLocation(String location) {
+        final Runnable open = () -> {
+            for (Intent intent : com.best.deskclock.mighty.calendar.CalendarEventText.createMapIntents(location)) {
+                try {
+                    startActivity(intent);
+                    return;
+                } catch (android.content.ActivityNotFoundException ignored) {
+                    // Try the next way to show the place.
+                }
+            }
+            com.best.deskclock.uicomponents.toast.CustomToast.showLong(this, getString(R.string.calendar_alert_no_maps_app));
+        };
+
+        final android.app.KeyguardManager keyguard = getSystemService(android.app.KeyguardManager.class);
+        if (SdkUtils.isAtLeastAndroid8() && keyguard != null && keyguard.isKeyguardLocked()) {
+            keyguard.requestDismissKeyguard(this, new android.app.KeyguardManager.KeyguardDismissCallback() {
+                @Override
+                public void onDismissSucceeded() {
+                    open.run();
+                }
+            });
+        } else {
+            open.run();
         }
     }
 

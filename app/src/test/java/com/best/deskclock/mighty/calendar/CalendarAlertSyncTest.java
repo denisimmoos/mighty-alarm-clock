@@ -79,6 +79,15 @@ public class CalendarAlertSyncTest {
                 }
                 return calendars;
             }
+            if (uri.getPathSegments().get(0).equals("events") && uri.getPathSegments().size() == 2) {
+                // One event: its description and location.
+                final MatrixCursor details = new MatrixCursor(projection);
+                final String[] row = EVENT_DETAILS.get(Long.parseLong(uri.getLastPathSegment()));
+                if (row != null) {
+                    details.addRow(new Object[]{row[0], row[1]});
+                }
+                return details;
+            }
             if (uri.getPathSegments().get(0).equals("events")) {
                 final MatrixCursor deleted = new MatrixCursor(projection);
                 for (Long id : DELETED_IDS) {
@@ -156,8 +165,12 @@ public class CalendarAlertSyncTest {
 
     static final java.util.Map<Long, String> CALENDARS = new java.util.TreeMap<>();
 
+    /** Description and location by event id. */
+    static final java.util.Map<Long, String[]> EVENT_DETAILS = new java.util.HashMap<>();
+
     static void clearEvents() {
         EVENTS.clear();
+        EVENT_DETAILS.clear();
         DELETED_IDS.clear();
         CALENDARS.clear();
         CALENDARS.put(CALENDAR_ID, "someone@example.com");

@@ -64,7 +64,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/alarm_vertical_middle_guide"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toTopOf="@+id/calendar_info">
 
             <com.best.deskclock.uicomponents.AnalogClock
                 android:id="@+id/analog_clock"
@@ -88,6 +88,53 @@
                 tools:textColor="@android:color/white" />
 
         </FrameLayout>
+
+        <!-- Description and place of a calendar event (calendar alerts only) -->
+        <LinearLayout
+            android:id="@+id/calendar_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/alarm_vertical_middle_guide"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="visible">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/calendar_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:maxLines="3"
+                android:scrollbars="vertical"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:visibility="gone"
+                tools:text="Bring the insurance card"
+                tools:visibility="visible" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/calendar_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="?attr/selectableItemBackground"
+                android:drawableStart="@drawable/ic_calendar_alert_location"
+                android:drawablePadding="6dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:minHeight="48dp"
+                android:paddingHorizontal="8dp"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:visibility="gone"
+                tools:text="Bahnhofstrasse 1, Zürich"
+                tools:visibility="visible" />
+        </LinearLayout>
 
         <!-- Alarm title -->
         <com.google.android.material.textview.MaterialTextView

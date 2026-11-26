@@ -904,6 +904,8 @@
     <string name="calendar_alert_flash">Taschenlampe blinken</string>
     <string name="calendar_alert_vibrate_only">Nur vibrieren (kein Ton)</string>
     <string name="calendar_alert_flash_only">Nur Taschenlampe (kein Ton, keine Vibration)</string>
+    <string name="calendar_alert_open_location">%s in Karten öffnen</string>
+    <string name="calendar_alert_no_maps_app">Keine Karten-App und kein Browser gefunden, um diesen Ort zu zeigen</string>
     <string name="calendar_alert_status_channel">Kalender-Alarme</string>
     <string name="calendar_alert_permission_lost_title">Kalender-Alarme können den Kalender nicht lesen</string>
     <string name="calendar_alert_permission_lost_text">Der Kalenderzugriff wurde ausgeschaltet. Bereits gestellte Wecker klingeln weiter, auch für geänderte oder gelöschte Termine. Öffne die App, um den Zugriff wieder zu erlauben.</string>

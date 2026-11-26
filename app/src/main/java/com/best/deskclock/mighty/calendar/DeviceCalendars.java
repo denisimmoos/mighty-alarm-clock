@@ -285,4 +285,34 @@ public final class DeviceCalendars {
         }
         return kept;
     }
+
+    /**
+     * Description and place of a calendar event, as currently stored in the calendar.
+     */
+    public record EventDetails(String description, String location) {
+    }
+
+    /**
+     * @return the event's description and location (empty strings when not set), or {@code null}
+     * if the event can't be read. Does a provider query, so call it off the main thread.
+     */
+    @androidx.annotation.Nullable
+    public static EventDetails getEventDetails(Context context, long eventId) {
+        if (eventId < 0 || !hasPermission(context)) {
+            return null;
+        }
+        final String[] projection = {CalendarContract.Events.DESCRIPTION, CalendarContract.Events.EVENT_LOCATION};
+        try (Cursor c = context.getContentResolver().query(
+            ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId), projection, null, null, null)) {
+            if (c == null || !c.moveToFirst()) {
+                return null;
+            }
+            final String description = c.isNull(0) ? "" : c.getString(0).trim();
+            final String location = c.isNull(1) ? "" : c.getString(1).trim();
+            return new EventDetails(description, location);
+        } catch (Exception e) {
+            LogUtils.e("DeviceCalendars: could not read event details", e);
+            return null;
+        }
+    }
 }
