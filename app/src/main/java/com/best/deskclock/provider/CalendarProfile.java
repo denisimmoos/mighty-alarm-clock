@@ -43,6 +43,15 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public static final int MAX_VIBRATION_STRENGTH = 100;
     public static final int DEFAULT_VIBRATION_STRENGTH = 100;
 
+    /** {@link #allDayMinutes} value meaning all-day events get no alarm. */
+    public static final int ALL_DAY_IGNORED = -1;
+
+    /** Titles are cut to this length before matching, which keeps a bad regex from taking long. */
+    private static final int MAX_MATCHED_TITLE_LENGTH = 500;
+
+    /** Matching one title may take at most this long. */
+    private static final long MATCH_TIMEOUT_MS = 200;
+
     private static final String[] QUERY_COLUMNS = {
         _ID,
         NAME,
@@ -63,6 +72,10 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         VIBRATE_ONLY,
         VIBRATION_STRENGTH,
         FLASH_ONLY,
+        IGNORE_CASE,
+        SKIP_DECLINED,
+        SKIP_TENTATIVE,
+        ALL_DAY_MINUTES,
         CREATED_AT,
         UPDATED_AT
     };
@@ -87,8 +100,12 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     private static final int VIBRATE_ONLY_INDEX = 16;
     private static final int VIBRATION_STRENGTH_INDEX = 17;
     private static final int FLASH_ONLY_INDEX = 18;
-    private static final int CREATED_AT_INDEX = 19;
-    private static final int UPDATED_AT_INDEX = 20;
+    private static final int IGNORE_CASE_INDEX = 19;
+    private static final int SKIP_DECLINED_INDEX = 20;
+    private static final int SKIP_TENTATIVE_INDEX = 21;
+    private static final int ALL_DAY_MINUTES_INDEX = 22;
+    private static final int CREATED_AT_INDEX = 23;
+    private static final int UPDATED_AT_INDEX = 24;
 
     public long id;
     public String name;
@@ -119,6 +136,14 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public int vibrationStrength;
     /** Only blink the flashlight, without sound or vibration. Off by default. */
     public boolean flashOnly;
+    /** Match the title regex regardless of upper and lower case. */
+    public boolean ignoreCase;
+    /** Give no alarm for events the user declined. On by default. */
+    public boolean skipDeclined;
+    /** Give no alarm for events the user answered "maybe" to. */
+    public boolean skipTentative;
+    /** Time of day for all-day events in minutes after midnight, or {@link #ALL_DAY_IGNORED}. */
+    public int allDayMinutes;
     public long createdAt;
     public long updatedAt;
 
@@ -142,6 +167,10 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         vibrateOnly = false;
         vibrationStrength = DEFAULT_VIBRATION_STRENGTH;
         flashOnly = false;
+        ignoreCase = false;
+        skipDeclined = true;
+        skipTentative = false;
+        allDayMinutes = ALL_DAY_IGNORED;
         final long now = System.currentTimeMillis();
         createdAt = now;
         updatedAt = now;
@@ -167,6 +196,10 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         vibrateOnly = c.getInt(VIBRATE_ONLY_INDEX) == 1;
         vibrationStrength = clampVibrationStrength(c.getInt(VIBRATION_STRENGTH_INDEX));
         flashOnly = c.getInt(FLASH_ONLY_INDEX) == 1;
+        ignoreCase = c.getInt(IGNORE_CASE_INDEX) == 1;
+        skipDeclined = c.getInt(SKIP_DECLINED_INDEX) == 1;
+        skipTentative = c.getInt(SKIP_TENTATIVE_INDEX) == 1;
+        allDayMinutes = c.getInt(ALL_DAY_MINUTES_INDEX);
         createdAt = c.getLong(CREATED_AT_INDEX);
         updatedAt = c.getLong(UPDATED_AT_INDEX);
     }
@@ -198,6 +231,10 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         values.put(VIBRATE_ONLY, vibrateOnly ? 1 : 0);
         values.put(VIBRATION_STRENGTH, clampVibrationStrength(vibrationStrength));
         values.put(FLASH_ONLY, flashOnly ? 1 : 0);
+        values.put(IGNORE_CASE, ignoreCase ? 1 : 0);
+        values.put(SKIP_DECLINED, skipDeclined ? 1 : 0);
+        values.put(SKIP_TENTATIVE, skipTentative ? 1 : 0);
+        values.put(ALL_DAY_MINUTES, allDayMinutes);
         values.put(CREATED_AT, createdAt);
         values.put(UPDATED_AT, updatedAt);
         return values;
@@ -208,26 +245,86 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
      */
     @Nullable
     public Pattern compileTitlePattern() {
-        return compileTitlePattern(titleRegex);
+        return compileTitlePattern(titleRegex, ignoreCase);
     }
 
     @Nullable
     public static Pattern compileTitlePattern(String regex) {
+        return compileTitlePattern(regex, false);
+    }
+
+    @Nullable
+    public static Pattern compileTitlePattern(String regex, boolean ignoreCase) {
         if (TextUtils.isEmpty(regex)) {
             return null;
         }
         try {
-            return Pattern.compile(regex);
+            return ignoreCase
+                ? Pattern.compile(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE)
+                : Pattern.compile(regex);
         } catch (PatternSyntaxException e) {
             return null;
         }
     }
 
     /**
-     * @return {@code true} if the event title matches this profile's regex.
+     * @return {@code true} if the event title matches this profile's regex. A regex that takes too
+     * long on a title (catastrophic backtracking) counts as no match instead of blocking the app.
      */
     public static boolean titleMatches(@Nullable Pattern pattern, @Nullable String title) {
-        return pattern != null && title != null && pattern.matcher(title).find();
+        if (pattern == null || title == null) {
+            return false;
+        }
+        final String cut = title.length() > MAX_MATCHED_TITLE_LENGTH
+            ? title.substring(0, MAX_MATCHED_TITLE_LENGTH) : title;
+        try {
+            return pattern.matcher(new DeadlineCharSequence(cut, System.currentTimeMillis() + MATCH_TIMEOUT_MS)).find();
+        } catch (MatchTimeoutException e) {
+            return false;
+        }
+    }
+
+    private static final class MatchTimeoutException extends RuntimeException {
+    }
+
+    /**
+     * Gives up once the deadline has passed. The regex engine reads characters all the time, so
+     * this stops even a runaway match.
+     */
+    private static final class DeadlineCharSequence implements CharSequence {
+        private final CharSequence mText;
+        private final long mDeadline;
+        private int mReads;
+
+        DeadlineCharSequence(CharSequence text, long deadline) {
+            mText = text;
+            mDeadline = deadline;
+        }
+
+        @Override
+        public char charAt(int index) {
+            if (++mReads % 1024 == 0 && System.currentTimeMillis() > mDeadline) {
+                throw new MatchTimeoutException();
+            }
+            return mText.charAt(index);
+        }
+
+        @Override
+        public int length() {
+            return mText.length();
+        }
+
+        @NonNull
+        @Override
+        public CharSequence subSequence(int start, int end) {
+            return new DeadlineCharSequence(mText.subSequence(start, end), mDeadline);
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return mText.toString();
+        }
     }
 
     public static int clampVibrationStrength(int percent) {

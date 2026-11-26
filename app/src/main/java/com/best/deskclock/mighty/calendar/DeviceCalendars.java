@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.provider.CalendarContract;
 
 import androidx.annotation.NonNull;
@@ -58,13 +59,21 @@ public final class DeviceCalendars {
      */
     public static final class EventInstance {
         public final long eventId;
+        /** When the alarm should ring: the start, or the chosen time of day for all-day events. */
         public final long begin;
         public final String title;
+        /** One of the {@link CalendarContract.Attendees} ATTENDEE_STATUS values. */
+        public final int selfAttendeeStatus;
 
         EventInstance(long eventId, long begin, String title) {
+            this(eventId, begin, title, CalendarContract.Attendees.ATTENDEE_STATUS_NONE);
+        }
+
+        EventInstance(long eventId, long begin, String title, int selfAttendeeStatus) {
             this.eventId = eventId;
             this.begin = begin;
             this.title = title == null ? "" : title;
+            this.selfAttendeeStatus = selfAttendeeStatus;
         }
     }
 
@@ -77,9 +86,18 @@ public final class DeviceCalendars {
      * @return every calendar on the device, sorted by account and name. Empty without permission.
      */
     public static List<CalendarInfo> getCalendars(Context context) {
+        final List<CalendarInfo> calendars = readCalendars(context);
+        return calendars == null ? new ArrayList<>() : calendars;
+    }
+
+    /**
+     * @return every calendar on the device, or {@code null} if they could not be read.
+     */
+    @androidx.annotation.Nullable
+    private static List<CalendarInfo> readCalendars(Context context) {
         final List<CalendarInfo> result = new ArrayList<>();
         if (!hasPermission(context)) {
-            return result;
+            return null;
         }
 
         final String[] projection = {
@@ -94,14 +112,18 @@ public final class DeviceCalendars {
 
         try (Cursor c = context.getContentResolver().query(CalendarContract.Calendars.CONTENT_URI,
             projection, null, null, sort)) {
-            if (c != null) {
+            if (c == null) {
+                return null;
+            }
+            {
                 while (c.moveToNext()) {
                     result.add(new CalendarInfo(c.getLong(0), c.getString(1), c.getString(2),
                         c.getString(3), c.getInt(4)));
                 }
             }
-        } catch (SecurityException e) {
-            LogUtils.e("DeviceCalendars: no permission to read calendars", e);
+        } catch (Exception e) {
+            LogUtils.e("DeviceCalendars: could not read calendars", e);
+            return null;
         }
         return result;
     }
@@ -119,46 +141,107 @@ public final class DeviceCalendars {
     }
 
     /**
-     * @return the timed (not all-day), not cancelled event occurrences of the calendar that start
-     * strictly after {@code fromMillis} and no later than {@code toMillis}, earliest first.
+     * @return the not cancelled event occurrences of the calendar whose alarm time is strictly
+     * after {@code fromMillis} and no later than {@code toMillis}, earliest first. All-day events
+     * are included only if {@code allDayMinutes} is a time of day, and then ring at that time.
      */
     public static List<EventInstance> getEventInstances(Context context, long calendarId,
                                                         long fromMillis, long toMillis) {
+        return getEventInstances(context, calendarId, fromMillis, toMillis, -1);
+    }
+
+    @androidx.annotation.Nullable
+    public static List<EventInstance> getEventInstances(Context context, long calendarId,
+                                                        long fromMillis, long toMillis, int allDayMinutes) {
         final List<EventInstance> result = new ArrayList<>();
         if (!hasPermission(context) || calendarId < 0) {
             return result;
         }
 
+        final boolean includeAllDay = allDayMinutes >= 0;
+        // All-day events start at midnight UTC, which can be before now even if their alarm isn't.
+        final long queryFrom = includeAllDay ? fromMillis - DAY_MS - DAY_MS : fromMillis;
         final Uri.Builder builder = CalendarContract.Instances.CONTENT_URI.buildUpon();
-        ContentUris.appendId(builder, fromMillis);
-        ContentUris.appendId(builder, toMillis);
+        ContentUris.appendId(builder, queryFrom);
+        ContentUris.appendId(builder, toMillis + (includeAllDay ? DAY_MS : 0));
 
         final String[] projection = {
             CalendarContract.Instances.EVENT_ID,
             CalendarContract.Instances.BEGIN,
-            CalendarContract.Instances.TITLE
+            CalendarContract.Instances.TITLE,
+            CalendarContract.Instances.ALL_DAY,
+            CalendarContract.Instances.SELF_ATTENDEE_STATUS
         };
         final String selection = CalendarContract.Instances.CALENDAR_ID + "=? AND "
-            + CalendarContract.Instances.ALL_DAY + "=0 AND ("
-            + CalendarContract.Instances.STATUS + " IS NULL OR "
+            + (includeAllDay ? "" : CalendarContract.Instances.ALL_DAY + "=0 AND ")
+            + "(" + CalendarContract.Instances.STATUS + " IS NULL OR "
             + CalendarContract.Instances.STATUS + "!=" + CalendarContract.Instances.STATUS_CANCELED + ")";
         final String[] args = {String.valueOf(calendarId)};
 
         final ContentResolver cr = context.getContentResolver();
         try (Cursor c = cr.query(builder.build(), projection, selection, args,
             CalendarContract.Instances.BEGIN + " ASC")) {
-            if (c != null) {
+            if (c == null) {
+                // The calendar could not be read (for example right after a restart). Unknown is
+                // not the same as "no events", so the caller keeps what is scheduled.
+                return null;
+            }
+            {
+                final int allDayIndex = c.getColumnIndex(CalendarContract.Instances.ALL_DAY);
+                final int statusIndex = c.getColumnIndex(CalendarContract.Instances.SELF_ATTENDEE_STATUS);
                 while (c.moveToNext()) {
-                    final long begin = c.getLong(1);
+                    final boolean allDay = allDayIndex >= 0 && c.getInt(allDayIndex) == 1;
+                    if (allDay && !includeAllDay) {
+                        continue;
+                    }
+                    final long begin = allDay ? allDayAlarmTime(c.getLong(1), allDayMinutes) : c.getLong(1);
                     if (begin > fromMillis && begin <= toMillis) {
-                        result.add(new EventInstance(c.getLong(0), begin, c.getString(2)));
+                        final int status = statusIndex >= 0 && !c.isNull(statusIndex)
+                            ? c.getInt(statusIndex) : CalendarContract.Attendees.ATTENDEE_STATUS_NONE;
+                        result.add(new EventInstance(c.getLong(0), begin, c.getString(2), status));
                     }
                 }
             }
-        } catch (SecurityException e) {
-            LogUtils.e("DeviceCalendars: no permission to read events", e);
+        } catch (Exception e) {
+            LogUtils.e("DeviceCalendars: could not read events", e);
+            return null;
         }
+        java.util.Collections.sort(result, (x, y) -> Long.compare(x.begin, y.begin));
         return dropDeletedEvents(cr, result);
+    }
+
+    private static final long DAY_MS = 24L * 60 * 60 * 1000;
+
+    /**
+     * All-day events start at midnight UTC of their day. The alarm rings on that day at the given
+     * local time of day.
+     */
+    static long allDayAlarmTime(long utcMidnight, int minutesOfDay) {
+        final java.util.Calendar utc = java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"));
+        utc.setTimeInMillis(utcMidnight);
+        final java.util.Calendar local = java.util.Calendar.getInstance();
+        local.clear();
+        local.set(utc.get(java.util.Calendar.YEAR), utc.get(java.util.Calendar.MONTH),
+            utc.get(java.util.Calendar.DAY_OF_MONTH), minutesOfDay / 60, minutesOfDay % 60, 0);
+        return local.getTimeInMillis();
+    }
+
+    /**
+     * @return {@code true} if the calendar still exists and belongs to the same account. Android
+     * may give the number of a removed calendar to a new one.
+     */
+    @androidx.annotation.Nullable
+    public static Boolean isSameCalendar(Context context, long calendarId, String accountName) {
+        final List<CalendarInfo> calendars = readCalendars(context);
+        if (calendars == null) {
+            return null;
+        }
+        for (CalendarInfo info : calendars) {
+            if (info.id == calendarId) {
+                return TextUtils.isEmpty(accountName) || accountName.equals(info.accountName);
+            }
+        }
+        return false;
     }
 
     /**

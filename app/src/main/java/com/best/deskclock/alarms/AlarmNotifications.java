@@ -447,7 +447,9 @@ public final class AlarmNotifications {
 
         // Setup Snooze Action only if snooze duration has NOT been set to "None" in the settings
         // or if "Enable alarm snooze actions" is enabled in the alarm editing panel.
-        if (instance.mSnoozeDuration != ALARM_SNOOZE_DURATION_DISABLED) {
+        // Calendar alarms that were snoozed as often as their profile allows get no Snooze button.
+        if (instance.mSnoozeDuration != ALARM_SNOOZE_DURATION_DISABLED
+            && !CalendarAlertRules.isSnoozeLimitReached(context.getContentResolver(), instance)) {
             Intent snoozeIntent = AlarmStateManager.createStateChangeIntent(
                 context, AlarmStateManager.ALARM_SNOOZE_TAG, instance, AlarmInstance.SNOOZE_STATE);
             snoozeIntent.putExtra(AlarmStateManager.FROM_NOTIFICATION_EXTRA, true);

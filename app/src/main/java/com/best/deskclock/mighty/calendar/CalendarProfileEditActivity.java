@@ -44,6 +44,10 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
     private static final String STATE_ACCOUNT_NAME = "state_account_name";
     private static final String STATE_CALENDAR_NAME = "state_calendar_name";
     private static final String STATE_RINGTONE = "state_ringtone";
+    private static final String STATE_ALL_DAY_MINUTES = "state_all_day_minutes";
+
+    /** Default time for all-day events when they are first switched on: 8:00. */
+    private static final int DEFAULT_ALL_DAY_MINUTES = 8 * 60;
 
     private CalendarProfileEditActivityBinding mBinding;
 
@@ -51,6 +55,12 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
     private CalendarProfile mProfile;
 
     private boolean mIsNew;
+
+    /** Set once Save or Delete was tapped, so a second tap does not save twice. */
+    private boolean mFinishing;
+
+    /** Time of day chosen for all-day events, kept even while the switch is off. */
+    private int mAllDayMinutes = DEFAULT_ALL_DAY_MINUTES;
 
     private final ActivityResultLauncher<Intent> mRingtonePickerLauncher = registerForActivityResult(
         new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -102,6 +112,12 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             final String ringtone = savedInstanceState.getString(STATE_RINGTONE);
             mProfile.ringtone = ringtone == null ? null : Uri.parse(ringtone);
         }
+        if (mProfile.allDayMinutes >= 0) {
+            mAllDayMinutes = mProfile.allDayMinutes;
+        }
+        if (savedInstanceState != null) {
+            mAllDayMinutes = savedInstanceState.getInt(STATE_ALL_DAY_MINUTES, mAllDayMinutes);
+        }
 
         bindForm(savedInstanceState == null);
     }
@@ -113,6 +129,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         outState.putString(STATE_ACCOUNT_NAME, mProfile.accountName);
         outState.putString(STATE_CALENDAR_NAME, mProfile.calendarName);
         outState.putString(STATE_RINGTONE, mProfile.ringtone == null ? null : mProfile.ringtone.toString());
+        outState.putInt(STATE_ALL_DAY_MINUTES, mAllDayMinutes);
     }
 
     @Override
@@ -130,6 +147,10 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.nameInput.setText(mProfile.name);
             mBinding.enabledSwitch.setChecked(mProfile.enabled);
             mBinding.regexInput.setText(mProfile.titleRegex);
+            mBinding.ignoreCaseSwitch.setChecked(mProfile.ignoreCase);
+            mBinding.skipDeclinedSwitch.setChecked(mProfile.skipDeclined);
+            mBinding.skipTentativeSwitch.setChecked(mProfile.skipTentative);
+            mBinding.allDaySwitch.setChecked(mProfile.allDayMinutes >= 0);
             mBinding.vibrateSwitch.setChecked(mProfile.vibrate);
             mBinding.flashSwitch.setChecked(mProfile.flash);
             mBinding.vibrateOnlySwitch.setChecked(mProfile.vibrateOnly && !mProfile.flashOnly);
@@ -234,6 +255,11 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mBinding.ringtoneButton.setOnClickListener(v -> mRingtonePickerLauncher.launch(
             RingtonePickerActivity.createCalendarProfileRingtonePickerIntent(this, mProfile.ringtone)));
 
+        mBinding.ignoreCaseSwitch.setOnCheckedChangeListener((button, checked) -> validateRegex());
+        mBinding.allDaySwitch.setOnCheckedChangeListener((button, checked) -> updateAllDay());
+        mBinding.allDayTimeButton.setOnClickListener(v -> chooseAllDayTime());
+        updateAllDay();
+
         mBinding.saveButton.setOnClickListener(v -> save());
 
         mBinding.deleteButton.setVisibility(mIsNew ? GONE : VISIBLE);
@@ -292,6 +318,22 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             (int) mBinding.vibrationStrengthSlider.getValue()));
     }
 
+    private void updateAllDay() {
+        mBinding.allDayTimeButton.setVisibility(mBinding.allDaySwitch.isChecked() ? VISIBLE : GONE);
+        final java.util.Calendar time = java.util.Calendar.getInstance();
+        time.set(java.util.Calendar.HOUR_OF_DAY, mAllDayMinutes / 60);
+        time.set(java.util.Calendar.MINUTE, mAllDayMinutes % 60);
+        mBinding.allDayTimeButton.setText(getString(R.string.calendar_alert_all_day_time,
+            android.text.format.DateFormat.getTimeFormat(this).format(time.getTime())));
+    }
+
+    private void chooseAllDayTime() {
+        new android.app.TimePickerDialog(this, (picker, hour, minute) -> {
+            mAllDayMinutes = hour * 60 + minute;
+            updateAllDay();
+        }, mAllDayMinutes / 60, mAllDayMinutes % 60, android.text.format.DateFormat.is24HourFormat(this)).show();
+    }
+
     private void bindRingtone() {
         final Uri uri = mProfile.ringtone != null
             ? mProfile.ringtone
@@ -301,7 +343,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
 
     private boolean validateRegex() {
         final String regex = textOf(mBinding.regexInput.getText());
-        final boolean valid = CalendarProfile.compileTitlePattern(regex) != null;
+        final boolean valid = CalendarProfile.compileTitlePattern(regex, mBinding.ignoreCaseSwitch.isChecked()) != null;
         mBinding.regexLayout.setError(valid ? null : getString(R.string.calendar_alert_title_regex_invalid));
         return valid;
     }
@@ -348,6 +390,9 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
     }
 
     private void save() {
+        if (mFinishing) {
+            return;
+        }
         if (mProfile.calendarId < 0) {
             CustomToast.showLong(this, getString(R.string.calendar_alert_error_no_calendar));
             return;
@@ -369,6 +414,10 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mProfile.name = name.isEmpty() ? mProfile.calendarName : name;
         mProfile.enabled = mBinding.enabledSwitch.isChecked();
         mProfile.titleRegex = textOf(mBinding.regexInput.getText());
+        mProfile.ignoreCase = mBinding.ignoreCaseSwitch.isChecked();
+        mProfile.skipDeclined = mBinding.skipDeclinedSwitch.isChecked();
+        mProfile.skipTentative = mBinding.skipTentativeSwitch.isChecked();
+        mProfile.allDayMinutes = mBinding.allDaySwitch.isChecked() ? mAllDayMinutes : CalendarProfile.ALL_DAY_IGNORED;
         mProfile.alarmVolume = (int) mBinding.volumeSlider.getValue();
         mProfile.lookaheadDays = CalendarProfile.clampLookaheadDays((int) mBinding.lookaheadSlider.getValue());
         mProfile.vibrate = mBinding.vibrateSwitch.isChecked();
@@ -400,7 +449,8 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         final Context appContext = getApplicationContext();
         final CalendarProfile profile = mProfile;
         final boolean isNew = mIsNew;
-        AppExecutors.getDiskIO().execute(() -> {
+        mFinishing = true;
+        CalendarAlertSync.EXECUTOR.execute(() -> {
             if (isNew) {
                 profile.addProfile(appContext.getContentResolver());
             } else {
@@ -416,9 +466,13 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         new MaterialAlertDialogBuilder(this)
             .setMessage(R.string.calendar_alert_delete_confirm)
             .setPositiveButton(R.string.calendar_alert_delete_profile, (dialog, which) -> {
+                if (mFinishing) {
+                    return;
+                }
+                mFinishing = true;
                 final Context appContext = getApplicationContext();
                 final long profileId = mProfile.id;
-                AppExecutors.getDiskIO().execute(() -> {
+                CalendarAlertSync.EXECUTOR.execute(() -> {
                     CalendarAlertSync.deleteProfile(appContext, profileId);
                     CalendarAlertWorker.ensureScheduled(appContext);
                 });

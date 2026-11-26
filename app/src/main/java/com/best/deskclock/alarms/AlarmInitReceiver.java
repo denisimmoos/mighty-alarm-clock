@@ -147,6 +147,17 @@ public class AlarmInitReceiver extends BroadcastReceiver {
             try {
                 // Update all the alarm instances
                 AlarmStateManager.fixAlarmInstances(context);
+
+                // Calendar alarms follow the event's real start time. After a restart or a change
+                // of time or time zone, check the calendar right away instead of waiting.
+                // The calendar can only be read once the phone is unlocked after a restart; until
+                // then the hourly check and the app start take care of it.
+                if ((ACTION_BOOT_COMPLETED.equals(action) || ACTION_TIME_CHANGED.equals(action)
+                    || Intent.ACTION_TIMEZONE_CHANGED.equals(action))
+                    && com.best.deskclock.utils.DeviceUtils.isUserUnlocked(context)) {
+                    com.best.deskclock.mighty.calendar.CalendarAlertSync.syncAll(context);
+                    com.best.deskclock.mighty.calendar.CalendarAlertWorker.ensureScheduled(context);
+                }
             } finally {
                 result.finish();
                 wl.release();

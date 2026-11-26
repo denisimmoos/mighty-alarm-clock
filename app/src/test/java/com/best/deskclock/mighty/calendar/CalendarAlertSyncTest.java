@@ -53,7 +53,11 @@ public class CalendarAlertSyncTest {
     private ContentResolver mCr;
     private CalendarProfile mProfile;
 
-    private record FakeEvent(long id, long calendarId, long begin, String title) {
+    private record FakeEvent(long id, long calendarId, long begin, String title, int allDay, int status) {
+        FakeEvent(long id, long calendarId, long begin, String title) {
+            this(id, calendarId, begin, title, 0, CalendarContract.Attendees.ATTENDEE_STATUS_NONE);
+        }
+
     }
 
     /**
@@ -67,6 +71,14 @@ public class CalendarAlertSyncTest {
 
         @Override
         public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] args, String sort) {
+            if (uri.getPathSegments().get(0).equals("calendars")) {
+                final MatrixCursor calendars = new MatrixCursor(projection);
+                for (java.util.Map.Entry<Long, String> entry : CALENDARS.entrySet()) {
+                    calendars.addRow(new Object[]{entry.getKey(), entry.getValue(), "com.google",
+                        "Calendar " + entry.getKey(), 0});
+                }
+                return calendars;
+            }
             if (uri.getPathSegments().get(0).equals("events")) {
                 final MatrixCursor deleted = new MatrixCursor(projection);
                 for (Long id : DELETED_IDS) {
@@ -81,7 +93,18 @@ public class CalendarAlertSyncTest {
             final MatrixCursor cursor = new MatrixCursor(projection);
             for (FakeEvent event : EVENTS) {
                 if (event.calendarId() == calendarId && event.begin() >= from && event.begin() <= to) {
-                    cursor.addRow(new Object[]{event.id(), event.begin(), event.title()});
+                    final Object[] row = new Object[projection.length];
+                    for (int i = 0; i < projection.length; i++) {
+                        switch (projection[i]) {
+                            case CalendarContract.Instances.EVENT_ID -> row[i] = event.id();
+                            case CalendarContract.Instances.BEGIN -> row[i] = event.begin();
+                            case CalendarContract.Instances.TITLE -> row[i] = event.title();
+                            case CalendarContract.Instances.ALL_DAY -> row[i] = event.allDay();
+                            case CalendarContract.Instances.SELF_ATTENDEE_STATUS -> row[i] = event.status();
+                            default -> row[i] = null;
+                        }
+                    }
+                    cursor.addRow(row);
                 }
             }
             return cursor;
@@ -131,9 +154,14 @@ public class CalendarAlertSyncTest {
 
     static final java.util.Set<Long> DELETED_IDS = new java.util.HashSet<>();
 
+    static final java.util.Map<Long, String> CALENDARS = new java.util.TreeMap<>();
+
     static void clearEvents() {
         EVENTS.clear();
         DELETED_IDS.clear();
+        CALENDARS.clear();
+        CALENDARS.put(CALENDAR_ID, "someone@example.com");
+        CALENDARS.put(OTHER_CALENDAR_ID, "someone@example.com");
     }
 
     private static long inHours(int hours) {
@@ -418,5 +446,115 @@ public class CalendarAlertSyncTest {
             - (System.currentTimeMillis() % 60000), "Alarm: soon"));
         CalendarAlertSync.syncAll(mContext);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
+    }
+
+    @Test
+    public void eventMatchedByTwoProfilesGetsOneAlarm() {
+        final CalendarProfile second = new CalendarProfile();
+        second.name = "Second";
+        second.calendarId = CALENDAR_ID;
+        second.accountName = "someone@example.com";
+        second.titleRegex = "Dentist";
+        second.addProfile(mCr);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
+
+        CalendarAlertSync.syncAll(mContext);
+        CalendarAlertSync.syncAll(mContext);
+
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+        assertEquals(1, AlarmInstance.getInstances(mCr, null).size());
+    }
+
+    @Test
+    public void declinedEventsAreSkippedAndMaybeOnlyWhenAsked() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: declined", 0,
+            CalendarContract.Attendees.ATTENDEE_STATUS_DECLINED));
+        EVENTS.add(new FakeEvent(2, CALENDAR_ID, inHours(4), "Alarm: maybe", 0,
+            CalendarContract.Attendees.ATTENDEE_STATUS_TENTATIVE));
+        CalendarAlertSync.syncAll(mContext);
+        assertEquals(1, events().size());
+        assertEquals("Alarm: maybe", events().get(0).title);
+
+        mProfile.skipTentative = true;
+        mProfile.updateProfile(mCr);
+        CalendarAlertSync.syncAll(mContext);
+        assertTrue(events().isEmpty());
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+    }
+
+    @Test
+    public void allDayEventsRingAtTheChosenTimeOnlyWhenSwitchedOn() {
+        final Calendar day = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"));
+        day.add(Calendar.DAY_OF_MONTH, 2);
+        day.set(Calendar.HOUR_OF_DAY, 0);
+        day.set(Calendar.MINUTE, 0);
+        day.set(Calendar.SECOND, 0);
+        day.set(Calendar.MILLISECOND, 0);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, day.getTimeInMillis(), "Alarm: holiday", 1,
+            CalendarContract.Attendees.ATTENDEE_STATUS_NONE));
+
+        CalendarAlertSync.syncAll(mContext);
+        assertTrue(events().isEmpty());
+
+        mProfile.allDayMinutes = 8 * 60 + 30;
+        mProfile.updateProfile(mCr);
+        CalendarAlertSync.syncAll(mContext);
+        assertEquals(1, events().size());
+        final Calendar expected = Calendar.getInstance();
+        expected.clear();
+        expected.set(day.get(Calendar.YEAR), day.get(Calendar.MONTH), day.get(Calendar.DAY_OF_MONTH), 8, 30, 0);
+        final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, events().get(0).alarmId).get(0);
+        assertEquals(expected.getTimeInMillis(), instance.getAlarmTime().getTimeInMillis());
+    }
+
+    @Test
+    public void calendarOfAnotherAccountRemovesAlarms() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
+        CalendarAlertSync.syncAll(mContext);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+
+        // The account was removed and the calendar id now belongs to someone else.
+        CALENDARS.put(CALENDAR_ID, "stranger@example.com");
+        CalendarAlertSync.syncAll(mContext);
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+    }
+
+    @Test
+    public void lostPermissionKeepsScheduledAlarms() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
+        CalendarAlertSync.syncAll(mContext);
+        EVENTS.clear();
+
+        Shadows.shadowOf(mContext).denyPermissions(Manifest.permission.READ_CALENDAR);
+        CalendarAlertSync.syncAll(mContext);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+    }
+
+    @Test
+    public void calendarAlarmsAreNotRepeatedWhenMissed() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
+        CalendarAlertSync.syncAll(mContext);
+        assertEquals(0, Alarm.getAlarm(mCr, events().get(0).alarmId).missedAlarmRepeatLimit);
+    }
+
+    @Test
+    public void ignoreCaseMatchesAnyCase() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "ALARM: Dentist"));
+        CalendarAlertSync.syncAll(mContext);
+        assertTrue(events().isEmpty());
+
+        mProfile.ignoreCase = true;
+        mProfile.updateProfile(mCr);
+        CalendarAlertSync.syncAll(mContext);
+        assertEquals(1, events().size());
+    }
+
+    @Test
+    public void alarmTimeRoundsToTheMinuteButNeverIntoThePast() {
+        final long minute = 60_000L;
+        final long base = 1_000L * minute;
+        assertEquals(base, CalendarAlertSync.alarmTimeFor(base + 45_000, base - 1));
+        assertEquals(base + minute, CalendarAlertSync.alarmTimeFor(base + 45_000, base + 10_000));
+        assertEquals(base, CalendarAlertSync.alarmTimeFor(base, base - 5_000));
     }
 }

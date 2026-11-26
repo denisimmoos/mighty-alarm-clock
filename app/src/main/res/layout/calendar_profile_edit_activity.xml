@@ -75,6 +75,14 @@
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/ignore_case_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/calendar_alert_ignore_case"
+            android:textSize="16sp" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/lookahead_label"
             android:layout_width="match_parent"
@@ -96,6 +104,42 @@
             android:text="@string/calendar_alert_lookahead_help"
             android:textColor="?attr/colorOnSurfaceVariant"
             android:textSize="13sp" />
+
+        <!-- Which events -->
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/CalendarAlertSectionTitle"
+            android:text="@string/calendar_alert_section_events" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/skip_declined_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/calendar_alert_skip_declined"
+            android:textSize="16sp" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/skip_tentative_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/calendar_alert_skip_tentative"
+            android:textSize="16sp" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/all_day_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/calendar_alert_all_day"
+            android:textSize="16sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/all_day_time_button"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical" />
 
         <!-- Sound -->
         <com.google.android.material.textview.MaterialTextView

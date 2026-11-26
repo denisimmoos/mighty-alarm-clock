@@ -94,7 +94,7 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
         reload();
         final Context appContext = getApplicationContext();
         final long profileId = mProfileId;
-        AppExecutors.getDiskIO().execute(() -> CalendarAlertSync.syncProfile(appContext, profileId));
+        CalendarAlertSync.EXECUTOR.execute(() -> CalendarAlertSync.syncProfile(appContext, profileId));
     }
 
     @Override
@@ -150,7 +150,7 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
 
     private void setEventEnabled(CalendarAlertEvent event, boolean enabled) {
         final Context appContext = getApplicationContext();
-        AppExecutors.getDiskIO().execute(() -> CalendarAlertSync.setEventEnabled(appContext, event.id, enabled));
+        CalendarAlertSync.EXECUTOR.execute(() -> CalendarAlertSync.setEventEnabled(appContext, event.id, enabled));
     }
 
     /**

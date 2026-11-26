@@ -788,8 +788,22 @@ public class RingtonePickerActivity extends CollapsingToolbarBaseActivity
         AppExecutors.getDiskIO().execute(() -> {
             final Uri systemDefaultRingtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 
-            // Update all alarms that use the custom ringtone to use the system default.
             final ContentResolver cr = appContext.getContentResolver();
+
+            // Calendar alert profiles that used this ringtone go back to the app's default
+            // ringtone; their alarms follow at the next check below.
+            boolean profilesChanged = false;
+            for (com.best.deskclock.provider.CalendarProfile profile
+                : com.best.deskclock.provider.CalendarProfile.getProfiles(cr)) {
+                if (removeUri.equals(profile.ringtone)) {
+                    profile.ringtone = null;
+                    profile.updateProfile(cr);
+                    profilesChanged = true;
+                }
+            }
+            final boolean syncCalendarAlerts = profilesChanged;
+
+            // Update all alarms that use the custom ringtone to use the system default.
             final List<Alarm> alarms = Alarm.getAlarms(cr, null);
             for (Alarm alarm : alarms) {
                 if (removeUri.equals(alarm.alert)) {
@@ -826,6 +840,12 @@ public class RingtonePickerActivity extends CollapsingToolbarBaseActivity
 
                 // Remove the corresponding custom ringtone.
                 DataModel.getDataModel().removeCustomRingtone(removeUri);
+
+                // Rebuild calendar alarms now that the default ringtone setting is up to date.
+                if (syncCalendarAlerts) {
+                    com.best.deskclock.mighty.calendar.CalendarAlertSync.EXECUTOR.execute(() ->
+                        com.best.deskclock.mighty.calendar.CalendarAlertSync.syncAll(appContext));
+                }
 
                 // Find the ringtone to be removed from the adapter.
                 final RingtoneHolder toRemove = getRingtoneHolder(removeUri);

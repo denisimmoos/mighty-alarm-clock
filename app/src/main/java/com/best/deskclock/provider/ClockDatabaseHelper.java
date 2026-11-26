@@ -33,7 +33,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
     static final String CALENDAR_PROFILES_TABLE_NAME = "calendar_profiles";
     static final String CALENDAR_ALERT_EVENTS_TABLE_NAME = "calendar_alert_events";
 
-    private static final int DATABASE_VERSION = 34;
+    private static final int DATABASE_VERSION = 35;
     private static final int MINIMUM_SUPPORTED_VERSION = 15;
 
     public ClockDatabaseHelper(Context context) {
@@ -173,6 +173,10 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             ClockContract.CalendarProfilesColumns.VIBRATE_ONLY + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.VIBRATION_STRENGTH + " INTEGER NOT NULL DEFAULT 100, " +
             ClockContract.CalendarProfilesColumns.FLASH_ONLY + " INTEGER NOT NULL DEFAULT 0, " +
+            ClockContract.CalendarProfilesColumns.IGNORE_CASE + " INTEGER NOT NULL DEFAULT 0, " +
+            ClockContract.CalendarProfilesColumns.SKIP_DECLINED + " INTEGER NOT NULL DEFAULT 1, " +
+            ClockContract.CalendarProfilesColumns.SKIP_TENTATIVE + " INTEGER NOT NULL DEFAULT 0, " +
+            ClockContract.CalendarProfilesColumns.ALL_DAY_MINUTES + " INTEGER NOT NULL DEFAULT -1, " +
             ClockContract.CalendarProfilesColumns.CREATED_AT + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.UPDATED_AT + " INTEGER NOT NULL DEFAULT 0);");
 
@@ -480,45 +484,45 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             LogUtils.i("Added calendar alert tables for version 29 upgrade.");
         }
 
-        // Version 29 created the profiles table without the lookahead column; tables created by
-        // the version 29 step above already have it.
-        if (oldVersion == 29) {
-            db.execSQL("ALTER TABLE " + CALENDAR_PROFILES_TABLE_NAME
-                + " ADD COLUMN " + ClockContract.CalendarProfilesColumns.LOOKAHEAD_DAYS
-                + " INTEGER NOT NULL DEFAULT 7;");
-            LogUtils.i("Added lookahead_days column for version 30 upgrade.");
+        // Calendar profile columns added after version 29. Adding only what is missing keeps this
+        // safe to run again, for example after going back to an older test build and forward again.
+        if (oldVersion >= 29) {
+            addCalendarProfileColumnsIfMissing(db);
         }
+    }
 
-        // Versions 29 and 30 created the profiles table without the flash column.
-        if (oldVersion == 29 || oldVersion == 30) {
-            db.execSQL("ALTER TABLE " + CALENDAR_PROFILES_TABLE_NAME
-                + " ADD COLUMN " + ClockContract.CalendarProfilesColumns.FLASH
-                + " INTEGER NOT NULL DEFAULT 0;");
-            LogUtils.i("Added flash column for version 31 upgrade.");
+    /**
+     * Going back to an older build keeps the data. The added calendar columns are unused there
+     * and are checked again on the next upgrade.
+     */
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        LogUtils.w("Database downgrade from %d to %d, keeping the data", oldVersion, newVersion);
+    }
+
+    private static void addCalendarProfileColumnsIfMissing(SQLiteDatabase db) {
+        final java.util.Set<String> columns = new java.util.HashSet<>();
+        try (android.database.Cursor c = db.rawQuery("PRAGMA table_info(" + CALENDAR_PROFILES_TABLE_NAME + ")", null)) {
+            while (c.moveToNext()) {
+                columns.add(c.getString(c.getColumnIndexOrThrow("name")));
+            }
         }
-
-        // Versions 29 to 31 created the profiles table without the vibrate only column.
-        if (oldVersion >= 29 && oldVersion <= 31) {
-            db.execSQL("ALTER TABLE " + CALENDAR_PROFILES_TABLE_NAME
-                + " ADD COLUMN " + ClockContract.CalendarProfilesColumns.VIBRATE_ONLY
-                + " INTEGER NOT NULL DEFAULT 0;");
-            LogUtils.i("Added vibrate_only column for version 32 upgrade.");
-        }
-
-        // Versions 29 to 32 created the profiles table without the vibration strength column.
-        if (oldVersion >= 29 && oldVersion <= 32) {
-            db.execSQL("ALTER TABLE " + CALENDAR_PROFILES_TABLE_NAME
-                + " ADD COLUMN " + ClockContract.CalendarProfilesColumns.VIBRATION_STRENGTH
-                + " INTEGER NOT NULL DEFAULT 100;");
-            LogUtils.i("Added vibration_strength column for version 33 upgrade.");
-        }
-
-        // Versions 29 to 33 created the profiles table without the flash only column.
-        if (oldVersion >= 29 && oldVersion <= 33) {
-            db.execSQL("ALTER TABLE " + CALENDAR_PROFILES_TABLE_NAME
-                + " ADD COLUMN " + ClockContract.CalendarProfilesColumns.FLASH_ONLY
-                + " INTEGER NOT NULL DEFAULT 0;");
-            LogUtils.i("Added flash_only column for version 34 upgrade.");
+        final String[][] added = {
+            {ClockContract.CalendarProfilesColumns.LOOKAHEAD_DAYS, "INTEGER NOT NULL DEFAULT 7"},
+            {ClockContract.CalendarProfilesColumns.FLASH, "INTEGER NOT NULL DEFAULT 0"},
+            {ClockContract.CalendarProfilesColumns.VIBRATE_ONLY, "INTEGER NOT NULL DEFAULT 0"},
+            {ClockContract.CalendarProfilesColumns.VIBRATION_STRENGTH, "INTEGER NOT NULL DEFAULT 100"},
+            {ClockContract.CalendarProfilesColumns.FLASH_ONLY, "INTEGER NOT NULL DEFAULT 0"},
+            {ClockContract.CalendarProfilesColumns.IGNORE_CASE, "INTEGER NOT NULL DEFAULT 0"},
+            {ClockContract.CalendarProfilesColumns.SKIP_DECLINED, "INTEGER NOT NULL DEFAULT 1"},
+            {ClockContract.CalendarProfilesColumns.SKIP_TENTATIVE, "INTEGER NOT NULL DEFAULT 0"},
+            {ClockContract.CalendarProfilesColumns.ALL_DAY_MINUTES, "INTEGER NOT NULL DEFAULT -1"},
+        };
+        for (String[] column : added) {
+            if (!columns.contains(column[0])) {
+                db.execSQL("ALTER TABLE " + CALENDAR_PROFILES_TABLE_NAME + " ADD COLUMN " + column[0] + " " + column[1] + ";");
+                LogUtils.i("Added calendar profile column " + column[0]);
+            }
         }
     }
 

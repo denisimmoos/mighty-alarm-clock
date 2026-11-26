@@ -15,7 +15,6 @@ import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.best.deskclock.base.AppExecutors;
 import com.best.deskclock.provider.CalendarProfile;
 import com.best.deskclock.utils.LogUtils;
 import com.best.deskclock.utils.SdkUtils;
@@ -62,12 +61,13 @@ public final class CalendarAlertWorker extends Worker {
      */
     public static void ensureScheduled(Context context) {
         final Context appContext = context.getApplicationContext();
-        AppExecutors.getDiskIO().execute(() -> {
+        CalendarAlertSync.EXECUTOR.execute(() -> {
             try {
                 if (CalendarProfile.getProfiles(appContext.getContentResolver()).isEmpty()) {
                     cancelAll(appContext);
                     return;
                 }
+                CalendarAlertWakeReceiver.schedule(appContext);
                 final PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(
                     CalendarAlertWorker.class, 15, TimeUnit.MINUTES).build();
                 WorkManager.getInstance(appContext)
@@ -107,6 +107,7 @@ public final class CalendarAlertWorker extends Worker {
     }
 
     private static void cancelAll(Context context) {
+        CalendarAlertWakeReceiver.cancel(context);
         final WorkManager workManager = WorkManager.getInstance(context);
         workManager.cancelUniqueWork(PERIODIC_WORK_NAME);
         workManager.cancelUniqueWork(CHANGE_WORK_NAME);

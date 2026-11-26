@@ -543,5 +543,9 @@
             </intent-filter>
         </service>
 
+        <receiver
+            android:name="com.best.deskclock.mighty.calendar.CalendarAlertWakeReceiver"
+            android:exported="false" />
+
     </application>
 </manifest>

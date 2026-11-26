@@ -124,7 +124,32 @@ public final class CalendarAlertFragment extends DeskClockFragment {
     private void updatePermissionCard() {
         if (mBinding != null) {
             mBinding.permissionCard.setVisibility(DeviceCalendars.hasPermission(requireContext()) ? GONE : VISIBLE);
+            updateStatus();
         }
+    }
+
+    /**
+     * Shows when the calendar was last read, and a hint if battery saving may delay the checks.
+     */
+    private void updateStatus() {
+        if (mBinding == null || getContext() == null) {
+            return;
+        }
+        final android.content.Context context = requireContext();
+        final long lastCheck = CalendarAlertStatus.getLastCheck(context);
+        final StringBuilder status = new StringBuilder(lastCheck > 0
+            ? getString(R.string.calendar_alert_last_check, DateUtils.formatDateTime(context, lastCheck,
+                DateUtils.isToday(lastCheck) ? DateUtils.FORMAT_SHOW_TIME
+                    : DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH))
+            : getString(R.string.calendar_alert_never_checked));
+        final boolean batteryOptimized = CalendarAlertStatus.isBatteryOptimized(context);
+        if (batteryOptimized) {
+            status.append('\n').append(getString(R.string.calendar_alert_battery_hint));
+        }
+        mBinding.statusText.setText(status);
+        mBinding.statusText.setClickable(batteryOptimized);
+        mBinding.statusText.setOnClickListener(batteryOptimized ? v -> startActivity(
+            new Intent(context, com.best.deskclock.settings.PermissionsManagementActivity.class)) : null);
     }
 
     /**
@@ -133,7 +158,7 @@ public final class CalendarAlertFragment extends DeskClockFragment {
     private void syncAndReload() {
         reload();
         final android.content.Context appContext = requireContext().getApplicationContext();
-        AppExecutors.getDiskIO().execute(() -> CalendarAlertSync.syncAll(appContext));
+        CalendarAlertSync.EXECUTOR.execute(() -> CalendarAlertSync.syncAll(appContext));
     }
 
     private void reload() {
@@ -144,6 +169,8 @@ public final class CalendarAlertFragment extends DeskClockFragment {
         AppExecutors.getDiskIO().execute(() -> {
             final List<ProfileRow> rows = new ArrayList<>();
             final long now = System.currentTimeMillis();
+            final List<DeviceCalendars.CalendarInfo> calendars = DeviceCalendars.hasPermission(appContext)
+                ? DeviceCalendars.getCalendars(appContext) : null;
             for (CalendarProfile profile : CalendarProfile.getProfiles(appContext.getContentResolver())) {
                 int count = 0;
                 long next = -1;
@@ -157,13 +184,14 @@ public final class CalendarAlertFragment extends DeskClockFragment {
                         }
                     }
                 }
-                rows.add(new ProfileRow(profile, count, next));
+                rows.add(new ProfileRow(profile, count, next, isCalendarMissing(profile, calendars)));
             }
             AppExecutors.getMainThread().post(() -> {
                 if (mBinding == null) {
                     return;
                 }
                 mAdapter.setRows(rows);
+                updateStatus();
                 mBinding.emptyView.setVisibility(rows.isEmpty() ? VISIBLE : GONE);
             });
         });
@@ -179,7 +207,7 @@ public final class CalendarAlertFragment extends DeskClockFragment {
 
     private void setProfileEnabled(CalendarProfile profile, boolean enabled) {
         final android.content.Context appContext = requireContext().getApplicationContext();
-        AppExecutors.getDiskIO().execute(() -> {
+        CalendarAlertSync.EXECUTOR.execute(() -> {
             profile.enabled = enabled;
             profile.updateProfile(appContext.getContentResolver());
             CalendarAlertSync.syncProfile(appContext, profile.id);
@@ -208,7 +236,26 @@ public final class CalendarAlertFragment extends DeskClockFragment {
         right.setVisibility(INVISIBLE);
     }
 
-    private record ProfileRow(CalendarProfile profile, int upcomingCount, long nextBegin) {
+    private record ProfileRow(CalendarProfile profile, int upcomingCount, long nextBegin, boolean calendarMissing) {
+    }
+
+    /**
+     * @return {@code true} if the profile's calendar was removed or now belongs to another account.
+     */
+    private static boolean isCalendarMissing(CalendarProfile profile, List<DeviceCalendars.CalendarInfo> calendars) {
+        if (profile.calendarId < 0) {
+            return true;
+        }
+        if (calendars == null || calendars.isEmpty()) {
+            // Without access nothing can be said; the permission card covers that case.
+            return false;
+        }
+        for (DeviceCalendars.CalendarInfo info : calendars) {
+            if (info.id == profile.calendarId) {
+                return !profile.accountName.isEmpty() && !profile.accountName.equals(info.accountName);
+            }
+        }
+        return true;
     }
 
     private final class ProfileAdapter extends RecyclerView.Adapter<ProfileViewHolder> {
@@ -269,7 +316,7 @@ public final class CalendarAlertFragment extends DeskClockFragment {
             }
 
             final StringBuilder source = new StringBuilder();
-            if (profile.calendarId < 0) {
+            if (row.calendarMissing()) {
                 source.append(context.getString(R.string.calendar_alert_calendar_missing));
             } else {
                 source.append(profile.accountName);

@@ -57,6 +57,7 @@ public class CalendarAlertReproTest {
         c.set(Calendar.MILLISECOND, 0);
         c.add(Calendar.HOUR_OF_DAY, 2);
         CalendarAlertSyncTest.clearEvents();
+        CalendarAlertSyncTest.CALENDARS.put(7L, "denis@example.com");
         CalendarAlertSyncTest.addEvent(1, 7, c.getTimeInMillis(), "🔕 Aufstehen %s 100%");
         CalendarAlertSync.syncAll(mContext);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
@@ -192,6 +193,7 @@ public class CalendarAlertReproTest {
     public void movedEventOffMainThreadLeavesOneAlert() throws Exception {
         org.robolectric.shadows.ShadowLog.stream = System.out;
         CalendarAlertSyncTest.clearEvents();
+        CalendarAlertSyncTest.CALENDARS.put(7L, "denis@example.com");
         final Calendar c = Calendar.getInstance();
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);

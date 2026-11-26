@@ -658,6 +658,30 @@ public final class ClockContract {
          */
         String FLASH_ONLY = "flash_only";
 
+        /**
+         * True if the title regex ignores upper and lower case.
+         * <p>Type: BOOLEAN</p>
+         */
+        String IGNORE_CASE = "ignore_case";
+
+        /**
+         * True if events the user declined get no alarm.
+         * <p>Type: BOOLEAN</p>
+         */
+        String SKIP_DECLINED = "skip_declined";
+
+        /**
+         * True if events the user answered "maybe" to get no alarm.
+         * <p>Type: BOOLEAN</p>
+         */
+        String SKIP_TENTATIVE = "skip_tentative";
+
+        /**
+         * Time of day for all-day events in minutes after midnight, or -1 to ignore them.
+         * <p>Type: INTEGER</p>
+         */
+        String ALL_DAY_MINUTES = "all_day_minutes";
+
         String DISMISS_METHOD_DEFAULT = "default";
         String DISMISS_METHOD_SLIDE = "slide";
         String DISMISS_METHOD_BUTTON = "button";
