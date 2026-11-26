@@ -86,6 +86,59 @@ public final class JsonBackupManager {
     }
 
     /**
+     * @return the automatic backup settings for the full backup.
+     */
+    public static org.json.JSONObject exportSettings(Context context) throws org.json.JSONException {
+        final org.json.JSONObject json = new org.json.JSONObject();
+        json.put(KEY_SCHEDULE_ENABLED, isScheduleEnabled(context));
+        json.put(KEY_INTERVAL_HOURS, getIntervalHours(context));
+        final Uri treeUri = getTreeUri(context);
+        if (treeUri != null) {
+            json.put(KEY_TREE_URI, treeUri.toString());
+        }
+        return json;
+    }
+
+    /**
+     * Restores the automatic backup settings and schedules the backup again. The backup folder
+     * is only taken over if this phone still has access to it, which is the case on the phone
+     * the backup was made on.
+     */
+    public static void restoreSettings(Context context, @androidx.annotation.Nullable org.json.JSONObject json) {
+        if (json == null) {
+            return;
+        }
+        setIntervalHours(context, json.optInt(KEY_INTERVAL_HOURS, getIntervalHours(context)));
+        setScheduleEnabled(context, json.optBoolean(KEY_SCHEDULE_ENABLED, isScheduleEnabled(context)));
+        final String tree = json.optString(KEY_TREE_URI, "");
+        if (!tree.isEmpty() && hasFolderAccess(context, Uri.parse(tree))) {
+            setTreeUri(context, Uri.parse(tree));
+        }
+        try {
+            if (isScheduleEnabled(context)) {
+                BackupWorker.schedulePeriodic(context, getIntervalHours(context));
+            } else {
+                BackupWorker.cancel(context);
+            }
+        } catch (IllegalStateException e) {
+            // WorkManager is not ready; the app schedules it again on its next start.
+            LogUtils.e("JsonBackupManager: could not schedule the backup", e);
+        }
+    }
+
+    /**
+     * @return {@code true} if the app may still write to the folder.
+     */
+    public static boolean hasFolderAccess(Context context, Uri treeUri) {
+        for (android.content.UriPermission permission : context.getContentResolver().getPersistedUriPermissions()) {
+            if (permission.getUri().equals(treeUri) && permission.isWritePermission()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Performs an export right now. Safe to call from a background thread.
      *
      * @return {@code true} if the export succeeded.

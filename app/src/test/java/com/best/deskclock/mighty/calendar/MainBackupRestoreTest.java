@@ -143,6 +143,95 @@ public class MainBackupRestoreTest {
         assertTrue(json != null && json.contains("Zipped"));
     }
 
+    @Test(timeout = 120000)
+    public void everyCalendarProfileFieldSurvivesTheMainBackup() throws Exception {
+        final Application context = ApplicationProvider.getApplicationContext();
+        final android.content.ContentResolver cr = context.getContentResolver();
+        final SharedPreferences prefs = DeskClockApplication.getDefaultSharedPreferences(context);
+        final CalendarProfile profile = new CalendarProfile();
+        profile.name = "All";
+        profile.enabled = false;
+        profile.calendarId = 3;
+        profile.calendarName = "Work";
+        profile.accountName = "someone@example.com";
+        profile.titleRegex = "^Wake";
+        // A sound the restoring phone can play; unreadable ones fall back to the default sound.
+        profile.ringtone = android.net.Uri.parse("android.resource://com.best.deskclock/raw/alarm_sound");
+        profile.alarmVolume = 3;
+        profile.vibrate = false;
+        profile.autoSilenceDuration = 600;
+        profile.snoozeDuration = 7;
+        profile.maxSnoozeCount = 4;
+        profile.dismissMethod = CalendarProfile.DISMISS_METHOD_SLIDE;
+        profile.lookaheadDays = 21;
+        profile.flash = true;
+        profile.vibrateOnly = false;
+        profile.vibrationStrength = 40;
+        profile.flashOnly = false;
+        profile.ignoreCase = true;
+        profile.skipDeclined = false;
+        profile.skipTentative = true;
+        profile.allDayMinutes = 7 * 60;
+        profile.showDetailsLocked = false;
+        profile.offsetEnabled = true;
+        profile.offsetMinutes = 95;
+        profile.escalation = true;
+        profile.ringAtStart = false;
+        profile.addProfile(cr);
+        final android.content.ContentValues before = CalendarProfile.getProfile(cr, profile.id).createContentValues();
+
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        BackupAndRestoreUtils.settingsToJsonStream(context, prefs, prefs.getAll(), out);
+        CalendarProfile.deleteProfile(cr, profile.id);
+        BackupAndRestoreUtils.readJson(context, prefs, new ByteArrayInputStream(out.toByteArray()));
+
+        final List<CalendarProfile> profiles = CalendarProfile.getProfiles(cr);
+        assertEquals(1, profiles.size());
+        final android.content.ContentValues after = profiles.get(0).createContentValues();
+        for (String key : before.keySet()) {
+            if (key.equals("_id") || key.equals(CalendarProfile.CALENDAR_ID) || key.equals(CalendarProfile.UPDATED_AT)) {
+                // The calendar is looked up again on the restoring phone, which also updates the profile.
+                continue;
+            }
+            assertEquals(key, before.getAsString(key), after.getAsString(key));
+        }
+        com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
+    }
+
+    @Test(timeout = 120000)
+    public void backupAndExchangeSettingsSurviveTheMainBackup() throws Exception {
+        final Application context = ApplicationProvider.getApplicationContext();
+        final SharedPreferences prefs = DeskClockApplication.getDefaultSharedPreferences(context);
+        com.best.deskclock.mighty.backup.JsonBackupManager.setScheduleEnabled(context, true);
+        com.best.deskclock.mighty.backup.JsonBackupManager.setIntervalHours(context, 72);
+        com.best.deskclock.mighty.exchange.ExchangeManager.setDeviceName(context, "Kitchen phone");
+        // A normal setting too.
+        prefs.edit().putBoolean("key_test_backup_flag", true).putInt("key_test_backup_number", 42).apply();
+
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        BackupAndRestoreUtils.settingsToJsonStream(context, prefs, prefs.getAll(), out);
+        final org.json.JSONObject json = new org.json.JSONObject(out.toString("UTF-8"));
+        // A folder this phone has no access to is not taken over.
+        json.getJSONObject("Mighty settings").getJSONObject("exchange").getJSONArray("folders")
+            .put(new org.json.JSONObject().put("name", "Gone").put("treeUri", "content://nowhere/tree/x")
+                .put("importPolicy", "ASK"));
+
+        com.best.deskclock.mighty.backup.JsonBackupManager.setScheduleEnabled(context, false);
+        com.best.deskclock.mighty.backup.JsonBackupManager.setIntervalHours(context, 24);
+        com.best.deskclock.mighty.exchange.ExchangeManager.setDeviceName(context, "Other");
+        prefs.edit().remove("key_test_backup_flag").remove("key_test_backup_number").apply();
+
+        BackupAndRestoreUtils.readJson(context, prefs, new ByteArrayInputStream(json.toString().getBytes("UTF-8")));
+
+        assertTrue(com.best.deskclock.mighty.backup.JsonBackupManager.isScheduleEnabled(context));
+        assertEquals(72, com.best.deskclock.mighty.backup.JsonBackupManager.getIntervalHours(context));
+        assertEquals("Kitchen phone", com.best.deskclock.mighty.exchange.ExchangeManager.getDeviceName(context));
+        assertTrue(com.best.deskclock.mighty.exchange.ExchangeManager.getFolders(context).isEmpty());
+        assertTrue(prefs.getBoolean("key_test_backup_flag", false));
+        assertEquals(42, prefs.getInt("key_test_backup_number", 0));
+        com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
+    }
+
     private static byte[] readAll(java.io.InputStream in) throws java.io.IOException {
         final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         final byte[] chunk = new byte[8192];

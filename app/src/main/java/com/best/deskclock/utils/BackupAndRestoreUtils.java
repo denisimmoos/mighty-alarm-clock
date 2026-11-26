@@ -66,6 +66,7 @@ public class BackupAndRestoreUtils {
     /** Key of the calendar alarm profiles in the backup's settings.json. */
     // Name used in backup files, kept so backups made before the rename can still be restored.
     private static final String KEY_CALENDAR_ALARM_PROFILES = "Calendar alert profiles";
+    private static final String KEY_MIGHTY_SETTINGS = "Mighty settings";
 
     /** Key of the alarm tags in the backup's settings.json. */
     private static final String KEY_TAGS = "Tags";
@@ -239,6 +240,12 @@ public class BackupAndRestoreUtils {
             tagsArray.put(tagObject);
         }
         jsonObject.put(KEY_TAGS, tagsArray);
+
+        // Mighty settings kept outside the main settings: automatic backup and alarm exchange.
+        final JSONObject mighty = new JSONObject();
+        mighty.put("backup", com.best.deskclock.mighty.backup.JsonBackupManager.exportSettings(context));
+        mighty.put("exchange", com.best.deskclock.mighty.exchange.ExchangeManager.exportSettings(context));
+        jsonObject.put(KEY_MIGHTY_SETTINGS, mighty);
 
         // Calendar alarm profiles; their alarms are rebuilt from the calendar after a restore.
         jsonObject.put(KEY_CALENDAR_ALARM_PROFILES,
@@ -424,6 +431,21 @@ public class BackupAndRestoreUtils {
             for (int i = 0; i < alarmsWithDateArray.length(); i++) {
                 JSONObject alarmObject = alarmsWithDateArray.getJSONObject(i);
                 restoreAlarm(context, prefs, contentResolver, alarmObject, true);
+            }
+        }
+
+        // Mighty settings kept outside the main settings. Older backups leave them as they are.
+        final JSONObject mighty = jsonObject.optJSONObject(KEY_MIGHTY_SETTINGS);
+        if (mighty != null) {
+            try {
+                com.best.deskclock.mighty.backup.JsonBackupManager.restoreSettings(context, mighty.optJSONObject("backup"));
+            } catch (Throwable e) {
+                LogUtils.e("Could not restore the automatic backup settings", e);
+            }
+            try {
+                com.best.deskclock.mighty.exchange.ExchangeManager.restoreSettings(context, mighty.optJSONObject("exchange"));
+            } catch (Throwable e) {
+                LogUtils.e("Could not restore the exchange settings", e);
             }
         }
 

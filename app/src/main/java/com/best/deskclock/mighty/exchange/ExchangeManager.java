@@ -229,6 +229,67 @@ public final class ExchangeManager {
         }
     }
 
+    /**
+     * @return the exchange settings for the full backup: the device name and the folders.
+     */
+    public static JSONObject exportSettings(Context context) throws JSONException {
+        final JSONObject json = new JSONObject();
+        json.put("device_id", getDeviceId(context));
+        json.put("device_name", getDeviceName(context));
+        json.put("folders", new JSONArray(prefs(context).getString(KEY_FOLDERS, "[]")));
+        return json;
+    }
+
+    /**
+     * Restores the exchange settings. The device name is only taken over on the phone the backup
+     * was made on, so two phones never share a name. Folders are only taken over if this phone
+     * still has access to them.
+     */
+    public static void restoreSettings(Context context, @Nullable JSONObject json) {
+        if (json == null) {
+            return;
+        }
+        if (getDeviceId(context).equals(json.optString("device_id"))) {
+            final String name = json.optString("device_name", "");
+            if (!name.trim().isEmpty()) {
+                prefs(context).edit().putString(KEY_DEVICE_NAME, name.trim()).apply();
+            }
+        }
+        final JSONArray folders = json.optJSONArray("folders");
+        if (folders == null) {
+            return;
+        }
+        final List<ExchangeFolder> restored = new ArrayList<>();
+        final Set<String> known = new HashSet<>();
+        for (ExchangeFolder folder : getFolders(context)) {
+            restored.add(folder);
+            known.add(folder.treeUri);
+        }
+        for (int i = 0; i < folders.length(); i++) {
+            final JSONObject o = folders.optJSONObject(i);
+            if (o == null) {
+                continue;
+            }
+            final String tree = o.optString("treeUri");
+            if (tree.isEmpty() || known.contains(tree)
+                || !com.best.deskclock.mighty.backup.JsonBackupManager.hasFolderAccess(context, Uri.parse(tree))) {
+                continue;
+            }
+            known.add(tree);
+            restored.add(new ExchangeFolder(o.optString("name"), tree,
+                "AUTO".equals(o.optString("importPolicy")) ? ImportPolicy.AUTO : ImportPolicy.ASK));
+        }
+        saveFolders(context, restored);
+        if (!restored.isEmpty()) {
+            try {
+                ExchangeScanWorker.schedulePeriodic(context);
+            } catch (IllegalStateException e) {
+                // WorkManager is not ready; the app schedules it again on its next start.
+                LogUtils.e("ExchangeManager: could not schedule the folder check", e);
+            }
+        }
+    }
+
     public static List<ExchangeFolder> getFolders(Context context) {
         final List<ExchangeFolder> folders = new ArrayList<>();
         try {
