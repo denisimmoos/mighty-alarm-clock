@@ -626,33 +626,4 @@ public class CalendarAlertSyncTest {
     public void fileWithoutProfilesIsRejected() {
         assertNull(CalendarProfileRestore.restore(mContext, new org.json.JSONObject()));
     }
-
-    @Test
-    public void restoringFromAFileBringsBackSettingsOfExistingProfiles() throws Exception {
-        mProfile.calendarName = "Calendar 7";
-        mProfile.vibrate = true;
-        mProfile.updateProfile(mCr);
-        final java.io.File file = java.io.File.createTempFile("alarms-latest", ".json");
-        java.nio.file.Files.write(file.toPath(), com.best.deskclock.mighty.backup.JsonBackupManager
-            .buildJson(mContext).toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
-
-        // The profile still exists but was changed since the backup.
-        mProfile.vibrate = false;
-        mProfile.updateProfile(mCr);
-
-        final CalendarProfileRestore.Result result = CalendarProfileRestore.restore(mContext, Uri.fromFile(file));
-        assertNotNull(result);
-        assertEquals(0, result.restored());
-        assertEquals(1, result.skipped());
-        assertEquals(1, CalendarProfile.getProfiles(mCr).size());
-        assertTrue(CalendarProfile.getProfile(mCr, mProfile.id).vibrate);
-        assertEquals(CALENDAR_ID, CalendarProfile.getProfile(mCr, mProfile.id).calendarId);
-    }
-
-    @Test
-    public void oldBackupWithoutProfilesSaysSo() throws Exception {
-        final org.json.JSONObject backup = com.best.deskclock.mighty.backup.JsonBackupManager.buildJson(mContext);
-        backup.remove("calendar_profiles");
-        assertTrue(CalendarProfileRestore.NO_PROFILES == CalendarProfileRestore.restore(mContext, backup));
-    }
 }

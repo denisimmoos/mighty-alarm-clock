@@ -76,7 +76,6 @@ public class MightyFeaturesFragment extends ScreenFragment
     SwitchPreferenceCompat mBackupScheduleEnabledPref;
     ListPreference mBackupIntervalPref;
     Preference mBackupNowPref;
-    Preference mRestoreCalendarProfilesPref;
     Preference mExchangeDeviceNamePref;
     Preference mExchangeAddFolderPref;
     Preference mExchangeFoldersPref;
@@ -98,56 +97,6 @@ public class MightyFeaturesFragment extends ScreenFragment
                 Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             JsonBackupManager.setTreeUri(requireContext(), treeUri);
             refreshSummaries();
-        });
-
-    private final ActivityResultLauncher<String[]> mRestoreFilePicker = registerForActivityResult(
-        new ActivityResultContracts.OpenDocument(), uri -> {
-            if (uri == null || getContext() == null) {
-                return;
-            }
-            final Context context = requireContext();
-            final Context appContext = context.getApplicationContext();
-            com.best.deskclock.mighty.calendar.CalendarAlertSync.EXECUTOR.execute(() -> {
-                final com.best.deskclock.mighty.calendar.CalendarProfileRestore.Result result =
-                    com.best.deskclock.mighty.calendar.CalendarProfileRestore.restore(appContext, uri);
-                AppExecutors.getMainThread().post(() -> {
-                    final String message;
-                    if (result == null) {
-                        message = appContext.getString(R.string.mighty_restore_calendar_profiles_failure);
-                    } else if (result == com.best.deskclock.mighty.calendar.CalendarProfileRestore.NO_PROFILES) {
-                        message = appContext.getString(R.string.mighty_restore_calendar_profiles_none);
-                    } else {
-                        final StringBuilder text = new StringBuilder();
-                        if (result.restored() > 0) {
-                            text.append(appContext.getResources().getQuantityString(
-                                R.plurals.mighty_restore_calendar_profiles_done, result.restored(), result.restored()));
-                        }
-                        if (result.skipped() > 0) {
-                            if (text.length() > 0) {
-                                text.append('\n');
-                            }
-                            text.append(appContext.getResources().getQuantityString(
-                                R.plurals.mighty_restore_calendar_profiles_updated, result.skipped(), result.skipped()));
-                        }
-                        if (result.calendarMissing() > 0) {
-                            text.append("\n\n").append(appContext.getResources().getQuantityString(
-                                R.plurals.mighty_restore_calendar_profiles_missing, result.calendarMissing(),
-                                result.calendarMissing()));
-                        }
-                        message = text.toString();
-                    }
-                    if (isAdded()) {
-                        // A dialog stays until it is read, unlike a short message at the bottom.
-                        new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
-                            .setTitle(R.string.mighty_restore_calendar_profiles_title)
-                            .setMessage(message)
-                            .setPositiveButton(android.R.string.ok, null)
-                            .show();
-                    } else {
-                        CustomToast.showLong(appContext, message);
-                    }
-                });
-            });
         });
 
     private final ActivityResultLauncher<Intent> mExchangeFolderPicker = registerForActivityResult(
@@ -194,7 +143,6 @@ public class MightyFeaturesFragment extends ScreenFragment
         mBackupScheduleEnabledPref = findPreference(KEY_MIGHTY_BACKUP_SCHEDULE_ENABLED);
         mBackupIntervalPref = findPreference(KEY_MIGHTY_BACKUP_INTERVAL_HOURS);
         mBackupNowPref = findPreference(KEY_MIGHTY_BACKUP_NOW);
-        mRestoreCalendarProfilesPref = findPreference(KEY_MIGHTY_RESTORE_CALENDAR_PROFILES);
         mExchangeDeviceNamePref = findPreference(KEY_MIGHTY_EXCHANGE_DEVICE_NAME);
         mExchangeAddFolderPref = findPreference(KEY_MIGHTY_EXCHANGE_ADD_FOLDER);
         mExchangeFoldersPref = findPreference(KEY_MIGHTY_EXCHANGE_FOLDERS);
@@ -231,7 +179,7 @@ public class MightyFeaturesFragment extends ScreenFragment
     @Override
     public void onDestroy() {
         nullifyPreferenceListeners(mDeviceStatsPref, mViewEventLogPref, mExportEventLogPref, mGlobalMutePref, mWifiReevaluatePref, mBackupFolderPref,
-            mBackupScheduleEnabledPref, mBackupIntervalPref, mBackupNowPref, mRestoreCalendarProfilesPref, mExchangeDeviceNamePref, mExchangeAddFolderPref,
+            mBackupScheduleEnabledPref, mBackupIntervalPref, mBackupNowPref, mExchangeDeviceNamePref, mExchangeAddFolderPref,
             mExchangeFoldersPref, mExchangeScanNowPref, mExchangeInboxPref, mManageTagsPref, mDisplayTimezoneGlobePref);
 
         nullifyAllPrefs();
@@ -249,7 +197,6 @@ public class MightyFeaturesFragment extends ScreenFragment
         mBackupScheduleEnabledPref.setOnPreferenceChangeListener(this);
         mBackupIntervalPref.setOnPreferenceChangeListener(this);
         mBackupNowPref.setOnPreferenceClickListener(this);
-        mRestoreCalendarProfilesPref.setOnPreferenceClickListener(this);
         mExchangeDeviceNamePref.setOnPreferenceClickListener(this);
         mExchangeAddFolderPref.setOnPreferenceClickListener(this);
         mExchangeFoldersPref.setOnPreferenceClickListener(this);
@@ -327,11 +274,6 @@ public class MightyFeaturesFragment extends ScreenFragment
                         CustomToast.show(context, success ? R.string.mighty_backup_now_success : R.string.mighty_backup_now_failure));
                 });
             }
-
-            case KEY_MIGHTY_RESTORE_CALENDAR_PROFILES ->
-                // File managers label .json files differently (JSON, plain text, unknown data), and a
-                // file that doesn't match is greyed out. Show all files; the content is checked.
-                mRestoreFilePicker.launch(new String[]{"*/*"});
 
             case KEY_MIGHTY_EXCHANGE_DEVICE_NAME -> showExchangeDeviceNameDialog();
 
@@ -978,7 +920,6 @@ public class MightyFeaturesFragment extends ScreenFragment
         mGlobalMutePref = null;
         mWifiReevaluatePref = null;
         mBackupFolderPref = null;
-        mRestoreCalendarProfilesPref = null;
         mBackupScheduleEnabledPref = null;
         mBackupIntervalPref = null;
         mBackupNowPref = null;

@@ -361,7 +361,6 @@ public class PreferencesKeys {
     public static final String KEY_MIGHTY_BACKUP_SCHEDULE_ENABLED = "key_mighty_backup_schedule_enabled";
     public static final String KEY_MIGHTY_BACKUP_INTERVAL_HOURS = "key_mighty_backup_interval_hours";
     public static final String KEY_MIGHTY_BACKUP_NOW = "key_mighty_backup_now";
-    public static final String KEY_MIGHTY_RESTORE_CALENDAR_PROFILES = "key_mighty_restore_calendar_profiles";
     public static final String KEY_MIGHTY_EXCHANGE_DEVICE_NAME = "key_mighty_exchange_device_name";
     public static final String KEY_MIGHTY_EXCHANGE_ADD_FOLDER = "key_mighty_exchange_add_folder";
     public static final String KEY_MIGHTY_EXCHANGE_FOLDERS = "key_mighty_exchange_folders";

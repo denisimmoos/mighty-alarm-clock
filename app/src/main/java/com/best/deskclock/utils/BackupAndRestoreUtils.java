@@ -62,6 +62,9 @@ import java.util.Set;
 public class BackupAndRestoreUtils {
 
     public static boolean isRestoringBackupOrIsResettingApp = false;
+
+    /** Key of the calendar alert profiles in the backup's settings.json. */
+    private static final String KEY_CALENDAR_ALERT_PROFILES = "Calendar alert profiles";
     public static boolean appNeedsRestart = false;
 
     /**
@@ -203,6 +206,10 @@ public class BackupAndRestoreUtils {
         jsonObject.put("Alarms", alarmsArray);
 
         jsonObject.put("Alarms with specified date", alarmsWithDateArray);
+
+        // Calendar alert profiles; their alarms are rebuilt from the calendar after a restore.
+        jsonObject.put(KEY_CALENDAR_ALERT_PROFILES,
+            com.best.deskclock.mighty.calendar.CalendarProfileRestore.exportProfiles(context.getContentResolver()));
 
         out.write(jsonObject.toString(4).getBytes(StandardCharsets.UTF_8));
 
@@ -365,6 +372,15 @@ public class BackupAndRestoreUtils {
                 JSONObject alarmObject = alarmsWithDateArray.getJSONObject(i);
                 restoreAlarm(context, prefs, contentResolver, alarmObject, true);
             }
+        }
+
+        // Calendar alert profiles. Backups made before they were included leave them as they are.
+        try {
+            com.best.deskclock.mighty.calendar.CalendarProfileRestore.replaceAll(context,
+                jsonObject.optJSONArray(KEY_CALENDAR_ALERT_PROFILES));
+        } catch (Throwable e) {
+            // Never let the profiles stop the rest of the restore.
+            LogUtils.e("Could not restore calendar alert profiles", e);
         }
 
         AlarmStateManager.updateNextAlarm(context);

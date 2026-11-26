@@ -217,19 +217,8 @@ public final class JsonBackupManager {
 
         // Calendar alert profiles. Their alarms are not exported: they are rebuilt from the
         // calendar by the next check.
-        final JSONArray profilesArray = new JSONArray();
-        for (com.best.deskclock.provider.CalendarProfile profile
-            : com.best.deskclock.provider.CalendarProfile.getProfiles(cr)) {
-            final android.content.ContentValues values = profile.createContentValues();
-            final JSONObject p = new JSONObject();
-            p.put("id", profile.id);
-            for (String key : values.keySet()) {
-                final Object value = values.get(key);
-                p.put(key, value == null ? JSONObject.NULL : value);
-            }
-            profilesArray.put(p);
-        }
-        root.put("calendar_profiles", profilesArray);
+        root.put(com.best.deskclock.mighty.calendar.CalendarProfileRestore.KEY_PROFILES,
+            com.best.deskclock.mighty.calendar.CalendarProfileRestore.exportProfiles(cr));
 
         return root;
     }

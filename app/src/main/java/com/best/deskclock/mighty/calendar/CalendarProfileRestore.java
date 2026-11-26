@@ -12,22 +12,16 @@ import android.net.Uri;
 import androidx.annotation.Nullable;
 
 import com.best.deskclock.provider.CalendarProfile;
-import com.best.deskclock.utils.LogUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * Restores calendar alert profiles from a JSON backup file written by
- * {@link com.best.deskclock.mighty.backup.JsonBackupManager}.
+ * Writes calendar alert profiles into the app's backups and restores them from there.
  *
  * <p>A profile that already exists (same name, calendar, account and title pattern) gets the
  * settings from the backup instead of a second copy. The alarms themselves are not in the
@@ -37,9 +31,6 @@ public final class CalendarProfileRestore {
 
     /** The JSON key the backup stores the profiles under. */
     public static final String KEY_PROFILES = "calendar_profiles";
-
-    /** Largest file accepted; real backups are a few kilobytes. */
-    private static final int MAX_FILE_BYTES = 5 * 1024 * 1024;
 
     /**
      * What a restore did.
@@ -52,35 +43,52 @@ public final class CalendarProfileRestore {
     public record Result(int restored, int skipped, int calendarMissing) {
     }
 
-    /** The file is a backup, but holds no calendar alert profiles. */
-    public static final Result NO_PROFILES = new Result(0, 0, 0);
-
     private CalendarProfileRestore() {
     }
 
     /**
-     * Reads the backup file and adds its profiles. Must not run on the main thread.
-     *
-     * @return the result, {@link #NO_PROFILES} if the file is a backup without calendar alert
-     * profiles (made before they were backed up), or {@code null} if the file can't be read.
+     * @return all calendar alert profiles as JSON, as stored in backups.
      */
-    @Nullable
-    public static Result restore(Context context, Uri file) {
-        final ContentResolver cr = context.getContentResolver();
-        try (InputStream in = cr.openInputStream(file)) {
-            if (in == null) {
-                return null;
+    public static JSONArray exportProfiles(ContentResolver cr) throws JSONException {
+        final JSONArray profiles = new JSONArray();
+        for (CalendarProfile profile : CalendarProfile.getProfiles(cr)) {
+            final ContentValues values = profile.createContentValues();
+            final JSONObject json = new JSONObject();
+            json.put("id", profile.id);
+            for (String key : values.keySet()) {
+                final Object value = values.get(key);
+                json.put(key, value == null ? JSONObject.NULL : value);
             }
-            final Result result = restore(context, new JSONObject(readAll(in)));
-            if (result != null && result != NO_PROFILES) {
-                CalendarAlertSync.syncAll(context);
-                CalendarAlertWorker.ensureScheduled(context);
-            }
-            return result;
-        } catch (IOException | JSONException | SecurityException e) {
-            LogUtils.e("CalendarProfileRestore: could not read " + file, e);
-            return null;
+            profiles.put(json);
         }
+        return profiles;
+    }
+
+    /**
+     * Replaces all calendar alert profiles with the ones in a full app backup, the way the app's
+     * main restore replaces all alarms. Must not run on the main thread.
+     *
+     * @param profiles the profiles from the backup, or {@code null} for a backup made before
+     *                 profiles were included; existing profiles are then kept.
+     */
+    public static void replaceAll(Context context, @Nullable JSONArray profiles) {
+        if (profiles == null) {
+            return;
+        }
+        final ContentResolver cr = context.getContentResolver();
+        for (CalendarProfile profile : CalendarProfile.getProfiles(cr)) {
+            // Their alarms are removed by the calendar check below.
+            CalendarProfile.deleteProfile(cr, profile.id);
+        }
+        final JSONObject backup = new JSONObject();
+        try {
+            backup.put(KEY_PROFILES, profiles);
+        } catch (JSONException e) {
+            return;
+        }
+        restore(context, backup);
+        CalendarAlertSync.syncAll(context);
+        CalendarAlertWorker.ensureScheduled(context);
     }
 
     /**
@@ -90,8 +98,7 @@ public final class CalendarProfileRestore {
     static Result restore(Context context, JSONObject backup) {
         final JSONArray profiles = backup.optJSONArray(KEY_PROFILES);
         if (profiles == null || profiles.length() == 0) {
-            // A backup of this app, but from before profiles were included, or without any.
-            return backup.has("alarms") || backup.has("metadata") ? NO_PROFILES : null;
+            return null;
         }
 
         final ContentResolver cr = context.getContentResolver();
@@ -229,18 +236,5 @@ public final class CalendarProfileRestore {
         } catch (Exception e) {
             return false;
         }
-    }
-
-    private static String readAll(InputStream in) throws IOException {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final byte[] buffer = new byte[8192];
-        int read;
-        while ((read = in.read(buffer)) != -1) {
-            out.write(buffer, 0, read);
-            if (out.size() > MAX_FILE_BYTES) {
-                throw new IOException("Backup file too large");
-            }
-        }
-        return out.toString(StandardCharsets.UTF_8.name());
     }
 }
