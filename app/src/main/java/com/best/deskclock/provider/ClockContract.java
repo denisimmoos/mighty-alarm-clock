@@ -646,6 +646,12 @@ public final class ClockContract {
          */
         String VIBRATE_ONLY = "vibrate_only";
 
+        /**
+         * Vibration strength in percent, 10 to 100.
+         * <p>Type: INTEGER</p>
+         */
+        String VIBRATION_STRENGTH = "vibration_strength";
+
         String DISMISS_METHOD_DEFAULT = "default";
         String DISMISS_METHOD_SLIDE = "slide";
         String DISMISS_METHOD_BUTTON = "button";

@@ -133,6 +133,9 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.vibrateSwitch.setChecked(mProfile.vibrate);
             mBinding.flashSwitch.setChecked(mProfile.flash);
             mBinding.vibrateOnlySwitch.setChecked(mProfile.vibrateOnly);
+            // The slider moves in steps of 10.
+            mBinding.vibrationStrengthSlider.setValue(
+                Math.round(CalendarProfile.clampVibrationStrength(mProfile.vibrationStrength) / 10f) * 10f);
             mBinding.maxDurationInput.setText(mProfile.autoSilenceDuration > 0
                 ? String.valueOf(Math.max(1, mProfile.autoSilenceDuration / 60)) : "");
 
@@ -171,6 +174,17 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         // Vibrate only hides the sound settings and always vibrates
         updateVibrateOnly();
         mBinding.vibrateOnlySwitch.setOnCheckedChangeListener((button, checked) -> updateVibrateOnly());
+
+        // Vibration strength: a short buzz lets the user feel each value
+        updateVibrationStrength();
+        mBinding.vibrateSwitch.setOnCheckedChangeListener((button, checked) -> updateVibrationStrength());
+        mBinding.vibrationStrengthSlider.addOnChangeListener((slider, value, fromUser) -> {
+            updateVibrationStrengthLabel();
+            if (fromUser) {
+                CalendarVibration.preview(this, (int) value);
+            }
+        });
+        mBinding.vibrationStrengthHelp.setVisibility(CalendarVibration.hasAmplitudeControl(this) ? GONE : VISIBLE);
 
         // Snooze fields follow the snooze switch
         mBinding.snoozeFields.setVisibility(mBinding.snoozeSwitch.isChecked() ? VISIBLE : GONE);
@@ -240,6 +254,18 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.vibrateSwitch.setChecked(true);
         }
         mBinding.vibrateSwitch.setEnabled(!vibrateOnly);
+        updateVibrationStrength();
+    }
+
+    private void updateVibrationStrength() {
+        final boolean vibrates = mBinding.vibrateSwitch.isChecked() || mBinding.vibrateOnlySwitch.isChecked();
+        mBinding.vibrationStrengthFields.setVisibility(vibrates ? VISIBLE : GONE);
+        updateVibrationStrengthLabel();
+    }
+
+    private void updateVibrationStrengthLabel() {
+        mBinding.vibrationStrengthLabel.setText(getString(R.string.calendar_alert_vibration_strength,
+            (int) mBinding.vibrationStrengthSlider.getValue()));
     }
 
     private void bindRingtone() {
@@ -324,6 +350,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mProfile.vibrate = mBinding.vibrateSwitch.isChecked();
         mProfile.flash = mBinding.flashSwitch.isChecked();
         mProfile.vibrateOnly = mBinding.vibrateOnlySwitch.isChecked();
+        mProfile.vibrationStrength = (int) mBinding.vibrationStrengthSlider.getValue();
         mProfile.autoSilenceDuration = maxDurationMinutes > 0
             ? maxDurationMinutes * 60
             : CalendarProfile.RING_UNTIL_DISMISSED;

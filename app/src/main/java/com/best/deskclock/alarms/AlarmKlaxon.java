@@ -151,6 +151,10 @@ public final class AlarmKlaxon {
                 delayInMillis += SAFETY_MARGIN_MS;
             }
 
+            // Calendar alarms vibrate at the strength set in their profile.
+            final Integer calendarStrength = com.best.deskclock.mighty.calendar.CalendarVibration
+                .getStrengthForAlarm(appContext.getContentResolver(), alarmInstance.mAlarmId);
+
             instance.mVibrationRunnable = () -> {
                 final Vibrator vibrator = appContext.getSystemService(Vibrator.class);
                 AudioAttributes audioAttributes = new AudioAttributes.Builder()
@@ -163,14 +167,22 @@ public final class AlarmKlaxon {
                     : SettingsDAO.getVibrationPattern(prefs);
                 long[] pattern = Utils.getVibrationPatternForKey(patternKey);
 
+                VibrationEffect strengthEffect = null;
+                if (calendarStrength != null) {
+                    strengthEffect = com.best.deskclock.mighty.calendar.CalendarVibration
+                        .createWaveform(appContext, pattern, calendarStrength);
+                }
+
                 if (SdkUtils.isAtLeastAndroid13()) {
                     VibrationAttributes vibrationAttributes = new VibrationAttributes.Builder()
                         .setUsage(VibrationAttributes.USAGE_ALARM)
                         .build();
-                    VibrationEffect vibrationEffect = VibrationEffect.createWaveform(pattern, 0);
+                    VibrationEffect vibrationEffect = strengthEffect != null
+                        ? strengthEffect : VibrationEffect.createWaveform(pattern, 0);
                     vibrator.vibrate(vibrationEffect, vibrationAttributes);
                 } else if (SdkUtils.isAtLeastAndroid8()) {
-                    VibrationEffect vibrationEffect = VibrationEffect.createWaveform(pattern, 0);
+                    VibrationEffect vibrationEffect = strengthEffect != null
+                        ? strengthEffect : VibrationEffect.createWaveform(pattern, 0);
                     vibrator.vibrate(vibrationEffect, audioAttributes);
                 } else {
                     vibrator.vibrate(pattern, 0, audioAttributes);

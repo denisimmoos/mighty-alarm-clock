@@ -156,6 +156,37 @@
             android:text="@string/calendar_alert_vibrate"
             android:textSize="16sp" />
 
+        <LinearLayout
+            android:id="@+id/vibration_strength_fields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/vibration_strength_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="16sp" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/vibration_strength_slider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stepSize="10"
+                android:value="100"
+                android:valueFrom="10"
+                android:valueTo="100" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/vibration_strength_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/calendar_alert_vibration_strength_unsupported"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="13sp" />
+        </LinearLayout>
+
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/flash_switch"
             android:layout_width="match_parent"

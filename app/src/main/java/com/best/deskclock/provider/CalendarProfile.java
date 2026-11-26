@@ -39,6 +39,10 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public static final int MAX_LOOKAHEAD_DAYS = 30;
     public static final int DEFAULT_LOOKAHEAD_DAYS = 7;
 
+    public static final int MIN_VIBRATION_STRENGTH = 10;
+    public static final int MAX_VIBRATION_STRENGTH = 100;
+    public static final int DEFAULT_VIBRATION_STRENGTH = 100;
+
     private static final String[] QUERY_COLUMNS = {
         _ID,
         NAME,
@@ -57,6 +61,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         LOOKAHEAD_DAYS,
         FLASH,
         VIBRATE_ONLY,
+        VIBRATION_STRENGTH,
         CREATED_AT,
         UPDATED_AT
     };
@@ -79,8 +84,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     private static final int LOOKAHEAD_DAYS_INDEX = 14;
     private static final int FLASH_INDEX = 15;
     private static final int VIBRATE_ONLY_INDEX = 16;
-    private static final int CREATED_AT_INDEX = 17;
-    private static final int UPDATED_AT_INDEX = 18;
+    private static final int VIBRATION_STRENGTH_INDEX = 17;
+    private static final int CREATED_AT_INDEX = 18;
+    private static final int UPDATED_AT_INDEX = 19;
 
     public long id;
     public String name;
@@ -107,6 +113,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public boolean flash;
     /** Only vibrate, without any sound. Off by default. */
     public boolean vibrateOnly;
+    /** Vibration strength in percent, {@link #MIN_VIBRATION_STRENGTH} to {@link #MAX_VIBRATION_STRENGTH}. */
+    public int vibrationStrength;
     public long createdAt;
     public long updatedAt;
 
@@ -128,6 +136,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         lookaheadDays = DEFAULT_LOOKAHEAD_DAYS;
         flash = false;
         vibrateOnly = false;
+        vibrationStrength = DEFAULT_VIBRATION_STRENGTH;
         final long now = System.currentTimeMillis();
         createdAt = now;
         updatedAt = now;
@@ -151,6 +160,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         lookaheadDays = clampLookaheadDays(c.getInt(LOOKAHEAD_DAYS_INDEX));
         flash = c.getInt(FLASH_INDEX) == 1;
         vibrateOnly = c.getInt(VIBRATE_ONLY_INDEX) == 1;
+        vibrationStrength = clampVibrationStrength(c.getInt(VIBRATION_STRENGTH_INDEX));
         createdAt = c.getLong(CREATED_AT_INDEX);
         updatedAt = c.getLong(UPDATED_AT_INDEX);
     }
@@ -180,6 +190,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         values.put(LOOKAHEAD_DAYS, clampLookaheadDays(lookaheadDays));
         values.put(FLASH, flash ? 1 : 0);
         values.put(VIBRATE_ONLY, vibrateOnly ? 1 : 0);
+        values.put(VIBRATION_STRENGTH, clampVibrationStrength(vibrationStrength));
         values.put(CREATED_AT, createdAt);
         values.put(UPDATED_AT, updatedAt);
         return values;
@@ -210,6 +221,10 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
      */
     public static boolean titleMatches(@Nullable Pattern pattern, @Nullable String title) {
         return pattern != null && title != null && pattern.matcher(title).find();
+    }
+
+    public static int clampVibrationStrength(int percent) {
+        return Math.max(MIN_VIBRATION_STRENGTH, Math.min(MAX_VIBRATION_STRENGTH, percent));
     }
 
     public static int clampLookaheadDays(int days) {
