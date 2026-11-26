@@ -76,9 +76,28 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
         mAdapter = new EventAdapter();
         mBinding.eventsList.setLayoutManager(new LinearLayoutManager(this));
         mBinding.eventsList.setAdapter(mAdapter);
+    }
 
-        mBinding.editProfileButton.setOnClickListener(v ->
-            startActivity(CalendarProfileEditActivity.createIntent(this, mProfileId)));
+    private static final int MENU_EDIT_PROFILE = 1;
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        // A gear next to the title opens the profile's settings.
+        menu.add(0, MENU_EDIT_PROFILE, 0, R.string.calendar_alert_edit_profile)
+            .setIcon(R.drawable.ic_settings)
+            .setShowAsAction(android.view.MenuItem.SHOW_AS_ACTION_ALWAYS);
+        mBaseBinding.actionBar.post(() ->
+            com.best.deskclock.utils.ThemeUtils.applyToolbarTooltips(mBaseBinding.actionBar));
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
+        if (item.getItemId() == MENU_EDIT_PROFILE) {
+            startActivity(CalendarProfileEditActivity.createIntent(this, mProfileId));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -354,4 +354,19 @@ public class CalendarAlertReproTest {
         assertEquals(android.view.View.GONE,
             activity.findViewById(com.best.deskclock.R.id.calendar_info).getVisibility());
     }
+
+    @Test
+    public void gearInTheTitleBarOpensTheProfileSettings() {
+        final CalendarProfileEventsActivity activity = Robolectric.buildActivity(CalendarProfileEventsActivity.class,
+            CalendarProfileEventsActivity.createIntent(mContext, mProfile.id)).setup().get();
+        ShadowLooper.idleMainLooper();
+        org.junit.Assert.assertNull(activity.findViewById(
+            activity.getResources().getIdentifier("edit_profile_button", "id", activity.getPackageName())));
+        final androidx.appcompat.widget.Toolbar toolbar = activity.findViewById(com.best.deskclock.R.id.action_bar);
+        final android.view.MenuItem gear = toolbar.getMenu().getItem(0);
+        assertEquals(mContext.getString(com.best.deskclock.R.string.calendar_alert_edit_profile), gear.getTitle().toString());
+        org.junit.Assert.assertTrue(activity.onOptionsItemSelected(gear));
+        final android.content.Intent started = Shadows.shadowOf(activity).getNextStartedActivity();
+        assertEquals(CalendarProfileEditActivity.class.getName(), started.getComponent().getClassName());
+    }
 }
