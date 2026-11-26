@@ -131,6 +131,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.enabledSwitch.setChecked(mProfile.enabled);
             mBinding.regexInput.setText(mProfile.titleRegex);
             mBinding.vibrateSwitch.setChecked(mProfile.vibrate);
+            mBinding.flashSwitch.setChecked(mProfile.flash);
             mBinding.maxDurationInput.setText(mProfile.autoSilenceDuration > 0
                 ? String.valueOf(Math.max(1, mProfile.autoSilenceDuration / 60)) : "");
 
@@ -307,6 +308,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mProfile.alarmVolume = (int) mBinding.volumeSlider.getValue();
         mProfile.lookaheadDays = CalendarProfile.clampLookaheadDays((int) mBinding.lookaheadSlider.getValue());
         mProfile.vibrate = mBinding.vibrateSwitch.isChecked();
+        mProfile.flash = mBinding.flashSwitch.isChecked();
         mProfile.autoSilenceDuration = maxDurationMinutes > 0
             ? maxDurationMinutes * 60
             : CalendarProfile.RING_UNTIL_DISMISSED;

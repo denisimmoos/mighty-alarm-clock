@@ -634,6 +634,12 @@ public final class ClockContract {
          */
         String LOOKAHEAD_DAYS = "lookahead_days";
 
+        /**
+         * True if the camera flashlight should blink while the alarm rings.
+         * <p>Type: BOOLEAN</p>
+         */
+        String FLASH = "flash";
+
         String DISMISS_METHOD_DEFAULT = "default";
         String DISMISS_METHOD_SLIDE = "slide";
         String DISMISS_METHOD_BUTTON = "button";

@@ -276,6 +276,7 @@ public final class CalendarAlertSync {
         alarm.daysOfWeek = Weekdays.NONE;
         alarm.alert = resolveRingtone(context, profile.ringtone);
         alarm.vibrate = profile.vibrate;
+        alarm.flash = profile.flash;
         alarm.autoSilenceDuration = profile.autoSilenceDuration;
         alarm.snoozeDuration = profile.snoozeDuration;
         alarm.alarmVolume = profile.alarmVolume;
@@ -297,6 +298,7 @@ public final class CalendarAlertSync {
             || !Objects.equals(a.label, b.label)
             || !Objects.equals(a.alert, b.alert)
             || a.vibrate != b.vibrate
+            || a.flash != b.flash
             || a.autoSilenceDuration != b.autoSilenceDuration
             || a.snoozeDuration != b.snoozeDuration
             || a.alarmVolume != b.alarmVolume

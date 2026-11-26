@@ -298,6 +298,23 @@ public class CalendarAlertSyncTest {
     }
 
     @Test
+    public void flashlightIsOffByDefaultAndFollowsTheProfile() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: flash"));
+        CalendarAlertSync.syncAll(mContext);
+        final long alarmId = events().get(0).alarmId;
+        org.junit.Assert.assertFalse(Alarm.getAlarm(mCr, alarmId).flash);
+        org.junit.Assert.assertFalse(com.best.deskclock.provider.AlarmInstance
+            .getInstancesByAlarmId(mCr, alarmId).get(0).mFlash);
+
+        mProfile.flash = true;
+        mProfile.updateProfile(mCr);
+        CalendarAlertSync.syncAll(mContext);
+        assertTrue(Alarm.getAlarm(mCr, alarmId).flash);
+        assertTrue(com.best.deskclock.provider.AlarmInstance
+            .getInstancesByAlarmId(mCr, alarmId).get(0).mFlash);
+    }
+
+    @Test
     public void invalidRegexMatchesNothing() {
         mProfile.titleRegex = "Alarm:(";
         mProfile.updateProfile(mCr);

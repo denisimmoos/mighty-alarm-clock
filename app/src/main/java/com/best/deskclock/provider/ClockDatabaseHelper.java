@@ -33,7 +33,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
     static final String CALENDAR_PROFILES_TABLE_NAME = "calendar_profiles";
     static final String CALENDAR_ALERT_EVENTS_TABLE_NAME = "calendar_alert_events";
 
-    private static final int DATABASE_VERSION = 30;
+    private static final int DATABASE_VERSION = 31;
     private static final int MINIMUM_SUPPORTED_VERSION = 15;
 
     public ClockDatabaseHelper(Context context) {
@@ -169,6 +169,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             ClockContract.CalendarProfilesColumns.DISMISS_METHOD + " TEXT NOT NULL DEFAULT '" +
                 ClockContract.CalendarProfilesColumns.DISMISS_METHOD_DEFAULT + "', " +
             ClockContract.CalendarProfilesColumns.LOOKAHEAD_DAYS + " INTEGER NOT NULL DEFAULT 7, " +
+            ClockContract.CalendarProfilesColumns.FLASH + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.CREATED_AT + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.UPDATED_AT + " INTEGER NOT NULL DEFAULT 0);");
 
@@ -483,6 +484,14 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
                 + " ADD COLUMN " + ClockContract.CalendarProfilesColumns.LOOKAHEAD_DAYS
                 + " INTEGER NOT NULL DEFAULT 7;");
             LogUtils.i("Added lookahead_days column for version 30 upgrade.");
+        }
+
+        // Versions 29 and 30 created the profiles table without the flash column.
+        if (oldVersion == 29 || oldVersion == 30) {
+            db.execSQL("ALTER TABLE " + CALENDAR_PROFILES_TABLE_NAME
+                + " ADD COLUMN " + ClockContract.CalendarProfilesColumns.FLASH
+                + " INTEGER NOT NULL DEFAULT 0;");
+            LogUtils.i("Added flash column for version 31 upgrade.");
         }
     }
 
