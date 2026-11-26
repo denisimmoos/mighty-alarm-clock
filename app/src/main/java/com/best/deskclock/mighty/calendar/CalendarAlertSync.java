@@ -152,6 +152,10 @@ public final class CalendarAlertSync {
         final ContentResolver cr = context.getContentResolver();
         final List<CalendarAlertEvent> existing = CalendarAlertEvent.getEventsForProfile(cr, profile.id);
 
+        if (!profile.enabled) {
+            silenceProfile(context, existing, now);
+        }
+
         if (!canReadCalendar) {
             // Without calendar access, nothing can be checked. Keep what is already scheduled.
             LogUtils.w("CalendarAlertSync: no calendar permission, profile " + profile.id + " not synced");
@@ -209,6 +213,33 @@ public final class CalendarAlertSync {
                 event.save(cr);
             } catch (Throwable e) {
                 LogUtils.e("CalendarAlertSync: failed to update event " + instance.eventId, e);
+            }
+        }
+    }
+
+    /**
+     * A switched off profile has no alarms at all: this also stops one that is ringing or snoozed
+     * right now (sound, vibration and flashlight). Future events keep their row, so their alarms
+     * come back when the profile is switched on again.
+     */
+    private static void silenceProfile(Context context, List<CalendarAlertEvent> existing, long now) {
+        final ContentResolver cr = context.getContentResolver();
+        for (CalendarAlertEvent event : existing) {
+            try {
+                if (!alarmExists(cr, event.alarmId)) {
+                    // Nothing scheduled. A dismissed event stays dismissed.
+                    continue;
+                }
+                deleteAlarm(context, event.alarmId);
+                LogUtils.i("CalendarAlertSync: profile off, removed alarm " + event.alarmId);
+                if (event.begin <= now) {
+                    event.delete(cr);
+                } else {
+                    event.alarmId = Alarm.INVALID_ID;
+                    event.save(cr);
+                }
+            } catch (Throwable e) {
+                LogUtils.e("CalendarAlertSync: failed to silence " + event, e);
             }
         }
     }

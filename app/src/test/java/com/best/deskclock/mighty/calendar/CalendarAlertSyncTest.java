@@ -365,6 +365,32 @@ public class CalendarAlertSyncTest {
     }
 
     @Test
+    public void switchingTheProfileOffStopsRingingAndScheduledAlarms() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: later"));
+        EVENTS.add(new FakeEvent(2, CALENDAR_ID, inHours(4), "Alarm: much later"));
+        CalendarAlertSync.syncAll(mContext);
+        assertEquals(2, Alarm.getAlarms(mCr, null).size());
+
+        // The first alarm is ringing right now.
+        final long ringingAlarmId = events().get(0).alarmId;
+        AlarmInstance ringing = AlarmInstance.getInstancesByAlarmId(mCr, ringingAlarmId).get(0);
+        com.best.deskclock.alarms.AlarmStateManager.setFiredState(mContext, ringing);
+
+        mProfile.enabled = false;
+        mProfile.updateProfile(mCr);
+        CalendarAlertSync.syncProfile(mContext, mProfile.id);
+
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+        assertTrue(AlarmInstance.getInstances(mCr, null).isEmpty());
+
+        // Switching it back on brings the future alarms back.
+        mProfile.enabled = true;
+        mProfile.updateProfile(mCr);
+        CalendarAlertSync.syncProfile(mContext, mProfile.id);
+        assertEquals(2, Alarm.getAlarms(mCr, null).size());
+    }
+
+    @Test
     public void invalidRegexMatchesNothing() {
         mProfile.titleRegex = "Alarm:(";
         mProfile.updateProfile(mCr);
