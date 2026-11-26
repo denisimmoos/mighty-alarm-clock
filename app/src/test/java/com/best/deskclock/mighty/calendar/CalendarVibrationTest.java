@@ -54,4 +54,57 @@ public class CalendarVibrationTest {
         Shadows.shadowOf(vibrator).setHasAmplitudeControl(false);
         CalendarVibration.preview(context, 50);
     }
+
+    @Test
+    public void escalationWithSoundStartsLaterAndSofter() {
+        final CalendarVibration.Escalation e = CalendarVibration.planEscalation(60_000, false, true, 300);
+        assertEquals(20_000, e.delayMs);
+        assertEquals(2, e.steps.length);
+        assertEquals(0.5f, e.steps[0], 0.001f);
+        assertEquals(1f, e.steps[1], 0.001f);
+        // A longer delay from the settings is kept.
+        assertEquals(30_000, CalendarVibration.planEscalation(60_000, false, true, 30_000).delayMs);
+        // Without strength control, vibration starts once the sound is loud.
+        final CalendarVibration.Escalation fixed = CalendarVibration.planEscalation(60_000, false, false, 300);
+        assertEquals(40_000, fixed.delayMs);
+        assertEquals(1, fixed.steps.length);
+    }
+
+    @Test
+    public void escalationWithoutSoundVibratesAtOnceInThreeSteps() {
+        final CalendarVibration.Escalation e = CalendarVibration.planEscalation(60_000, true, true, 0);
+        assertEquals(0, e.delayMs);
+        assertEquals(3, e.steps.length);
+        assertEquals(20_000, e.stepMs);
+        // Without strength control, the vibration is the only signal and starts right away.
+        assertEquals(0, CalendarVibration.planEscalation(60_000, true, false, 0).delayMs);
+    }
+
+    @Test
+    public void escalatingWaveformRisesAndRepeatsAtFullStrength() {
+        final long[] pattern = {500, 500};
+        final CalendarVibration.Waveform w = CalendarVibration.buildEscalatingWaveform(
+            pattern, 100, new float[]{0.33f, 0.66f, 1f}, 2_000);
+        // 2 seconds per step is 2 cycles of 1 second, then 1 repeating cycle at full strength.
+        assertEquals(10, w.timings.length);
+        assertEquals(8, w.repeat);
+        assertEquals(0, w.amplitudes[0]);
+        assertEquals(Math.round(255 * 0.33f), w.amplitudes[1]);
+        assertEquals(Math.round(255 * 0.66f), w.amplitudes[5]);
+        assertEquals(255, w.amplitudes[9]);
+        assertEquals(0, w.amplitudes[8]);
+
+        // The profile's strength is the top.
+        final CalendarVibration.Waveform half = CalendarVibration.buildEscalatingWaveform(
+            pattern, 50, new float[]{0.5f, 1f}, 1_000);
+        assertEquals(CalendarVibration.toAmplitude(50), half.amplitudes[half.amplitudes.length - 1]);
+
+        final Context context = ApplicationProvider.getApplicationContext();
+        Shadows.shadowOf(context.getSystemService(Vibrator.class)).setHasAmplitudeControl(true);
+        assertNotNull(CalendarVibration.createEscalatingWaveform(context, pattern, 50,
+            CalendarVibration.planEscalation(60_000, true, true, 0)));
+        Shadows.shadowOf(context.getSystemService(Vibrator.class)).setHasAmplitudeControl(false);
+        assertNull(CalendarVibration.createEscalatingWaveform(context, pattern, 50,
+            CalendarVibration.planEscalation(60_000, true, true, 0)));
+    }
 }

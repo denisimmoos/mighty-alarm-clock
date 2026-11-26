@@ -34,7 +34,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
     // Stored name from before the feature was called "Calendar Alarm"; kept so existing data still works.
     static final String CALENDAR_ALARM_EVENTS_TABLE_NAME = "calendar_alert_events";
 
-    private static final int DATABASE_VERSION = 36;
+    private static final int DATABASE_VERSION = 37;
     private static final int MINIMUM_SUPPORTED_VERSION = 15;
 
     public ClockDatabaseHelper(Context context) {
@@ -179,6 +179,9 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             ClockContract.CalendarProfilesColumns.SKIP_TENTATIVE + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.ALL_DAY_MINUTES + " INTEGER NOT NULL DEFAULT -1, " +
             ClockContract.CalendarProfilesColumns.SHOW_DETAILS_LOCKED + " INTEGER NOT NULL DEFAULT 1, " +
+            ClockContract.CalendarProfilesColumns.OFFSET_ENABLED + " INTEGER NOT NULL DEFAULT 0, " +
+            ClockContract.CalendarProfilesColumns.OFFSET_MINUTES + " INTEGER NOT NULL DEFAULT 10, " +
+            ClockContract.CalendarProfilesColumns.ESCALATION + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.CREATED_AT + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.UPDATED_AT + " INTEGER NOT NULL DEFAULT 0);");
 
@@ -520,6 +523,9 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             {ClockContract.CalendarProfilesColumns.SKIP_TENTATIVE, "INTEGER NOT NULL DEFAULT 0"},
             {ClockContract.CalendarProfilesColumns.ALL_DAY_MINUTES, "INTEGER NOT NULL DEFAULT -1"},
             {ClockContract.CalendarProfilesColumns.SHOW_DETAILS_LOCKED, "INTEGER NOT NULL DEFAULT 1"},
+            {ClockContract.CalendarProfilesColumns.OFFSET_ENABLED, "INTEGER NOT NULL DEFAULT 0"},
+            {ClockContract.CalendarProfilesColumns.OFFSET_MINUTES, "INTEGER NOT NULL DEFAULT 10"},
+            {ClockContract.CalendarProfilesColumns.ESCALATION, "INTEGER NOT NULL DEFAULT 0"},
         };
         for (String[] column : added) {
             if (!columns.contains(column[0])) {

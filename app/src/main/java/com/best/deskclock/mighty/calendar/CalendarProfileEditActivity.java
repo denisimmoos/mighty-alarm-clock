@@ -151,6 +151,9 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.skipDeclinedSwitch.setChecked(mProfile.skipDeclined);
             mBinding.skipTentativeSwitch.setChecked(mProfile.skipTentative);
             mBinding.showDetailsLockedSwitch.setChecked(mProfile.showDetailsLocked);
+            mBinding.offsetSwitch.setChecked(mProfile.offsetEnabled);
+            mBinding.offsetMinutesInput.setText(String.valueOf(CalendarProfile.clampOffsetMinutes(mProfile.offsetMinutes)));
+            mBinding.escalationSwitch.setChecked(mProfile.escalation);
             mBinding.allDaySwitch.setChecked(mProfile.allDayMinutes >= 0);
             mBinding.vibrateSwitch.setChecked(mProfile.vibrate);
             mBinding.flashSwitch.setChecked(mProfile.flash);
@@ -220,6 +223,11 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             }
         });
         mBinding.vibrationStrengthHelp.setVisibility(CalendarVibration.hasAmplitudeControl(this) ? GONE : VISIBLE);
+
+        // The offset minutes follow the offset switch
+        mBinding.offsetMinutesLayout.setVisibility(mBinding.offsetSwitch.isChecked() ? VISIBLE : GONE);
+        mBinding.offsetSwitch.setOnCheckedChangeListener((button, checked) ->
+            mBinding.offsetMinutesLayout.setVisibility(checked ? VISIBLE : GONE));
 
         // Snooze fields follow the snooze switch
         mBinding.snoozeFields.setVisibility(mBinding.snoozeSwitch.isChecked() ? VISIBLE : GONE);
@@ -304,6 +312,9 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.flashSwitch.setChecked(true);
         }
         mBinding.flashSwitch.setEnabled(!flashOnly);
+        // A flash only alarm has nothing that could get louder or stronger.
+        mBinding.escalationSwitch.setVisibility(flashOnly ? GONE : VISIBLE);
+        mBinding.escalationHelp.setVisibility(flashOnly ? GONE : VISIBLE);
         updateVibrationStrength();
     }
 
@@ -411,6 +422,15 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             return;
         }
 
+        final Integer offsetMinutes = parseOptionalNumber(mBinding.offsetMinutesInput.getText());
+        final boolean offsetEnabled = mBinding.offsetSwitch.isChecked();
+        if (offsetEnabled && (offsetMinutes == null || offsetMinutes < CalendarProfile.MIN_OFFSET_MINUTES
+            || offsetMinutes > CalendarProfile.MAX_OFFSET_MINUTES)) {
+            CustomToast.showLong(this, getString(R.string.calendar_alarm_error_offset));
+            mBinding.offsetMinutesInput.requestFocus();
+            return;
+        }
+
         final String name = textOf(mBinding.nameInput.getText()).trim();
         mProfile.name = name.isEmpty() ? mProfile.calendarName : name;
         mProfile.enabled = mBinding.enabledSwitch.isChecked();
@@ -419,6 +439,12 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mProfile.skipDeclined = mBinding.skipDeclinedSwitch.isChecked();
         mProfile.skipTentative = mBinding.skipTentativeSwitch.isChecked();
         mProfile.showDetailsLocked = mBinding.showDetailsLockedSwitch.isChecked();
+        mProfile.offsetEnabled = offsetEnabled;
+        if (offsetEnabled) {
+            mProfile.offsetMinutes = offsetMinutes;
+        }
+        // Flash only cannot escalate, see updateVibrateOnly().
+        mProfile.escalation = mBinding.escalationSwitch.isChecked() && !mBinding.flashOnlySwitch.isChecked();
         mProfile.allDayMinutes = mBinding.allDaySwitch.isChecked() ? mAllDayMinutes : CalendarProfile.ALL_DAY_IGNORED;
         mProfile.alarmVolume = (int) mBinding.volumeSlider.getValue();
         mProfile.lookaheadDays = CalendarProfile.clampLookaheadDays((int) mBinding.lookaheadSlider.getValue());

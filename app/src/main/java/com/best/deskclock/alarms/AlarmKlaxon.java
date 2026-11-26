@@ -151,9 +151,22 @@ public final class AlarmKlaxon {
                 delayInMillis += SAFETY_MARGIN_MS;
             }
 
-            // Calendar alarms vibrate at the strength set in their profile.
-            final Integer calendarStrength = com.best.deskclock.mighty.calendar.CalendarVibration
-                .getStrengthForAlarm(appContext.getContentResolver(), alarmInstance.mAlarmId);
+            // Calendar alarms vibrate at the strength set in their profile, and can escalate
+            // from soft to full strength while the ringtone gets louder.
+            final com.best.deskclock.provider.CalendarProfile calendarProfile =
+                com.best.deskclock.mighty.calendar.CalendarVibration
+                    .getProfileForAlarm(appContext.getContentResolver(), alarmInstance.mAlarmId);
+            final Integer calendarStrength = calendarProfile == null ? null : calendarProfile.vibrationStrength;
+            final com.best.deskclock.mighty.calendar.CalendarVibration.Escalation escalation =
+                calendarProfile != null && calendarProfile.escalation && alarmInstance.mCrescendoDuration > 0
+                    ? com.best.deskclock.mighty.calendar.CalendarVibration.planEscalation(
+                        alarmInstance.mCrescendoDuration * 1000L, isRingtoneSilent,
+                        com.best.deskclock.mighty.calendar.CalendarVibration.hasAmplitudeControl(appContext),
+                        delayInMillis)
+                    : null;
+            if (escalation != null) {
+                delayInMillis = escalation.delayMs;
+            }
 
             instance.mVibrationRunnable = () -> {
                 final Vibrator vibrator = appContext.getSystemService(Vibrator.class);
@@ -168,7 +181,10 @@ public final class AlarmKlaxon {
                 long[] pattern = Utils.getVibrationPatternForKey(patternKey);
 
                 VibrationEffect strengthEffect = null;
-                if (calendarStrength != null) {
+                if (escalation != null) {
+                    strengthEffect = com.best.deskclock.mighty.calendar.CalendarVibration
+                        .createEscalatingWaveform(appContext, pattern, calendarStrength, escalation);
+                } else if (calendarStrength != null) {
                     strengthEffect = com.best.deskclock.mighty.calendar.CalendarVibration
                         .createWaveform(appContext, pattern, calendarStrength);
                 }

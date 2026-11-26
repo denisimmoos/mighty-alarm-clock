@@ -77,4 +77,22 @@ public class CalendarProfileUpgradeTest {
         }
         db.close();
     }
+
+    @Test
+    public void upgradeFromVersion36AddsOffsetAndEscalationSwitchedOff() {
+        final SQLiteDatabase db = SQLiteDatabase.create(null);
+        db.execSQL("CREATE TABLE calendar_profiles (_id INTEGER PRIMARY KEY, flash INTEGER NOT NULL DEFAULT 0);");
+        db.execSQL("INSERT INTO calendar_profiles (_id) VALUES (1);");
+        final ClockDatabaseHelper helper = new ClockDatabaseHelper(ApplicationProvider.getApplicationContext());
+        helper.onUpgrade(db, 36, 37);
+        // Running it again must not fail.
+        helper.onUpgrade(db, 36, 37);
+        try (Cursor c = db.rawQuery("SELECT offset_enabled, offset_minutes, escalation FROM calendar_profiles", null)) {
+            assertTrue(c.moveToFirst());
+            assertEquals(0, c.getInt(0));
+            assertEquals(10, c.getInt(1));
+            assertEquals(0, c.getInt(2));
+        }
+        db.close();
+    }
 }

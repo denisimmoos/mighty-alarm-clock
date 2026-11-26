@@ -711,4 +711,115 @@ public class CalendarAlarmSyncTest {
         // Only the train still rings.
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
     }
+
+    @Test
+    public void offsetIsOffByDefaultAndRingsTheChosenMinutesBefore() {
+        final CalendarProfile fresh = CalendarProfile.getProfile(mCr, mProfile.id);
+        assertFalse(fresh.offsetEnabled);
+        assertEquals(CalendarProfile.DEFAULT_OFFSET_MINUTES, fresh.offsetMinutes);
+        assertEquals(10, CalendarProfile.DEFAULT_OFFSET_MINUTES);
+
+        final long begin = inHours(3);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, "Alarm: Dentist"));
+        CalendarAlarmSync.syncAll(mContext);
+        final long alarmId = events().get(0).alarmId;
+        assertEquals(begin, AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0).getAlarmTime().getTimeInMillis());
+
+        // Switching the offset on moves the alarm 10 minutes earlier.
+        mProfile.offsetEnabled = true;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        List<AlarmInstance> instances = AlarmInstance.getInstancesByAlarmId(mCr, events().get(0).alarmId);
+        assertEquals(1, instances.size());
+        assertEquals(begin - TimeUnit.MINUTES.toMillis(10), instances.get(0).getAlarmTime().getTimeInMillis());
+
+        // Other minutes are kept per profile.
+        mProfile.offsetMinutes = 45;
+        mProfile.updateProfile(mCr);
+        assertEquals(45, CalendarProfile.getProfile(mCr, mProfile.id).offsetMinutes);
+        CalendarAlarmSync.syncAll(mContext);
+        instances = AlarmInstance.getInstancesByAlarmId(mCr, events().get(0).alarmId);
+        assertEquals(begin - TimeUnit.MINUTES.toMillis(45), instances.get(0).getAlarmTime().getTimeInMillis());
+
+        // Switching it off again rings at the start.
+        mProfile.offsetEnabled = false;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        instances = AlarmInstance.getInstancesByAlarmId(mCr, events().get(0).alarmId);
+        assertEquals(begin, instances.get(0).getAlarmTime().getTimeInMillis());
+    }
+
+    @Test
+    public void offsetThatHasAlreadyPassedRingsAtTheNextMinute() {
+        final CalendarProfile profile = new CalendarProfile();
+        profile.offsetEnabled = true;
+        profile.offsetMinutes = 30;
+        final long minute = 60_000L;
+        final long now = 1_000L * minute + 5_000;
+        final long begin = 1_010L * minute;
+        // The event starts in 10 minutes, so 30 minutes before is already gone.
+        assertEquals(1_001L * minute, CalendarAlarmSync.ringTimeFor(profile, begin, now));
+        // Far enough ahead, it rings 30 minutes before.
+        assertEquals(1_070L * minute, CalendarAlarmSync.ringTimeFor(profile, 1_100L * minute, now));
+        // Without an offset, at the start.
+        profile.offsetEnabled = false;
+        assertEquals(begin, CalendarAlarmSync.ringTimeFor(profile, begin, now));
+        // Out of range minutes are clamped.
+        assertEquals(CalendarProfile.MAX_OFFSET_MINUTES, CalendarProfile.clampOffsetMinutes(10_000));
+        assertEquals(CalendarProfile.MIN_OFFSET_MINUTES, CalendarProfile.clampOffsetMinutes(0));
+    }
+
+    @Test
+    public void escalationIsOffByDefaultAndRampsTheVolume() {
+        assertFalse(CalendarProfile.getProfile(mCr, mProfile.id).escalation);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
+        CalendarAlarmSync.syncAll(mContext);
+        assertEquals(0, Alarm.getAlarm(mCr, events().get(0).alarmId).crescendoDuration);
+
+        mProfile.escalation = true;
+        mProfile.updateProfile(mCr);
+        assertTrue(CalendarProfile.getProfile(mCr, mProfile.id).escalation);
+        CalendarAlarmSync.syncAll(mContext);
+        final long alarmId = events().get(0).alarmId;
+        assertEquals(CalendarAlarmSync.ESCALATION_SECONDS, Alarm.getAlarm(mCr, alarmId).crescendoDuration);
+        // The scheduled instance, and so every snooze of it, gets the same ramp.
+        assertEquals(CalendarAlarmSync.ESCALATION_SECONDS,
+            AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0).mCrescendoDuration);
+
+        // A short maximum ring time gets a shorter ramp, so the alarm still reaches full strength.
+        mProfile.autoSilenceDuration = 60;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        assertEquals(30, Alarm.getAlarm(mCr, events().get(0).alarmId).crescendoDuration);
+        mProfile.autoSilenceDuration = 5 * 60;
+        assertEquals(CalendarAlarmSync.ESCALATION_SECONDS, CalendarAlarmSync.escalationSecondsFor(mProfile));
+        mProfile.autoSilenceDuration = 4;
+        assertEquals(CalendarAlarmSync.MIN_ESCALATION_SECONDS, CalendarAlarmSync.escalationSecondsFor(mProfile));
+    }
+
+    @Test
+    public void offsetAndEscalationAreRestoredFromTheBackup() throws Exception {
+        mProfile.offsetEnabled = true;
+        mProfile.offsetMinutes = 25;
+        mProfile.escalation = true;
+        mProfile.updateProfile(mCr);
+        final org.json.JSONArray backup = CalendarProfileRestore.exportProfiles(mCr);
+
+        CalendarAlarmSync.deleteProfile(mContext, mProfile.id);
+        CalendarProfileRestore.replaceAll(mContext, backup);
+        final CalendarProfile restored = CalendarProfile.getProfiles(mCr).get(0);
+        assertTrue(restored.offsetEnabled);
+        assertEquals(25, restored.offsetMinutes);
+        assertTrue(restored.escalation);
+
+        // A backup from before these settings existed restores them switched off.
+        backup.getJSONObject(0).remove("offset_enabled");
+        backup.getJSONObject(0).remove("offset_minutes");
+        backup.getJSONObject(0).remove("escalation");
+        CalendarProfileRestore.replaceAll(mContext, backup);
+        final CalendarProfile old = CalendarProfile.getProfiles(mCr).get(0);
+        assertFalse(old.offsetEnabled);
+        assertEquals(CalendarProfile.DEFAULT_OFFSET_MINUTES, old.offsetMinutes);
+        assertFalse(old.escalation);
+    }
 }

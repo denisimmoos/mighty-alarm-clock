@@ -1744,6 +1744,13 @@
     <string name="calendar_alarm_section_events">Which events</string>
     <string name="calendar_alarm_skip_declined">Skip events I declined</string>
     <string name="calendar_alarm_show_details_locked">Show title, description and place on the lock screen</string>
+    <string name="calendar_alarm_offset">Ring before the event starts</string>
+    <string name="calendar_alarm_offset_minutes">Minutes before the event</string>
+    <string name="calendar_alarm_offset_minutes_help">1 to 240 minutes. Default 10.</string>
+    <string name="calendar_alarm_error_offset">Enter 1 to 240 minutes before the event.</string>
+    <string name="calendar_alarm_rings_at">Rings at %s</string>
+    <string name="calendar_alarm_escalation">Escalate: start quietly and get stronger</string>
+    <string name="calendar_alarm_escalation_help">Over about a minute, the sound rises from very quiet to the set volume. After about 20 seconds the phone starts vibrating softly, and the vibration gets stronger. Without sound, the vibration gets stronger in three steps. The ramp is shorter when the maximum alarm duration is short, and it starts again after each snooze.</string>
     <string name="calendar_alarm_hidden_title">Calendar alarm</string>
     <string name="calendar_alarm_skip_tentative">Skip events I answered \"maybe\" to</string>
     <string name="calendar_alarm_all_day">Ring for all-day events</string>

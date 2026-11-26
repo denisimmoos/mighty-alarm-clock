@@ -43,6 +43,10 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public static final int MAX_VIBRATION_STRENGTH = 100;
     public static final int DEFAULT_VIBRATION_STRENGTH = 100;
 
+    public static final int MIN_OFFSET_MINUTES = 1;
+    public static final int MAX_OFFSET_MINUTES = 240;
+    public static final int DEFAULT_OFFSET_MINUTES = 10;
+
     /** {@link #allDayMinutes} value meaning all-day events get no alarm. */
     public static final int ALL_DAY_IGNORED = -1;
 
@@ -78,7 +82,10 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         ALL_DAY_MINUTES,
         CREATED_AT,
         UPDATED_AT,
-        SHOW_DETAILS_LOCKED
+        SHOW_DETAILS_LOCKED,
+        OFFSET_ENABLED,
+        OFFSET_MINUTES,
+        ESCALATION
     };
 
     // These must be kept in sync with QUERY_COLUMNS above.
@@ -108,6 +115,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     private static final int CREATED_AT_INDEX = 23;
     private static final int UPDATED_AT_INDEX = 24;
     private static final int SHOW_DETAILS_LOCKED_INDEX = 25;
+    private static final int OFFSET_ENABLED_INDEX = 26;
+    private static final int OFFSET_MINUTES_INDEX = 27;
+    private static final int ESCALATION_INDEX = 28;
 
     public long id;
     public String name;
@@ -146,6 +156,12 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public boolean skipTentative;
     /** Shows the event's description and place on the alarm screen also while the phone is locked. */
     public boolean showDetailsLocked;
+    /** Rings {@link #offsetMinutes} before the event starts. Off by default. */
+    public boolean offsetEnabled;
+    /** Minutes before the event, {@link #MIN_OFFSET_MINUTES} to {@link #MAX_OFFSET_MINUTES}. */
+    public int offsetMinutes;
+    /** Starts quietly, then gets louder and vibrates stronger. Off by default. */
+    public boolean escalation;
     /** Time of day for all-day events in minutes after midnight, or {@link #ALL_DAY_IGNORED}. */
     public int allDayMinutes;
     public long createdAt;
@@ -176,6 +192,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         skipTentative = false;
         allDayMinutes = ALL_DAY_IGNORED;
         showDetailsLocked = true;
+        offsetEnabled = false;
+        offsetMinutes = DEFAULT_OFFSET_MINUTES;
+        escalation = false;
         final long now = System.currentTimeMillis();
         createdAt = now;
         updatedAt = now;
@@ -208,6 +227,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         createdAt = c.getLong(CREATED_AT_INDEX);
         updatedAt = c.getLong(UPDATED_AT_INDEX);
         showDetailsLocked = c.getInt(SHOW_DETAILS_LOCKED_INDEX) == 1;
+        offsetEnabled = c.getInt(OFFSET_ENABLED_INDEX) == 1;
+        offsetMinutes = clampOffsetMinutes(c.getInt(OFFSET_MINUTES_INDEX));
+        escalation = c.getInt(ESCALATION_INDEX) == 1;
     }
 
     public ContentValues createContentValues() {
@@ -242,6 +264,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         values.put(SKIP_TENTATIVE, skipTentative ? 1 : 0);
         values.put(ALL_DAY_MINUTES, allDayMinutes);
         values.put(SHOW_DETAILS_LOCKED, showDetailsLocked ? 1 : 0);
+        values.put(OFFSET_ENABLED, offsetEnabled ? 1 : 0);
+        values.put(OFFSET_MINUTES, clampOffsetMinutes(offsetMinutes));
+        values.put(ESCALATION, escalation ? 1 : 0);
         values.put(CREATED_AT, createdAt);
         values.put(UPDATED_AT, updatedAt);
         return values;
@@ -336,6 +361,17 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
 
     public static int clampVibrationStrength(int percent) {
         return Math.max(MIN_VIBRATION_STRENGTH, Math.min(MAX_VIBRATION_STRENGTH, percent));
+    }
+
+    public static int clampOffsetMinutes(int minutes) {
+        return Math.max(MIN_OFFSET_MINUTES, Math.min(MAX_OFFSET_MINUTES, minutes));
+    }
+
+    /**
+     * @return how many milliseconds before the event the alarm rings, 0 without an offset.
+     */
+    public long getOffsetMillis() {
+        return offsetEnabled ? clampOffsetMinutes(offsetMinutes) * 60_000L : 0L;
     }
 
     public static int clampLookaheadDays(int days) {

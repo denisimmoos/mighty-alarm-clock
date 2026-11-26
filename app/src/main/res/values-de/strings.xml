@@ -910,6 +910,13 @@
     <string name="calendar_alarm_section_events">Welche Termine</string>
     <string name="calendar_alarm_skip_declined">Abgelehnte Termine überspringen</string>
     <string name="calendar_alarm_show_details_locked">Titel, Beschreibung und Ort auf dem Sperrbildschirm zeigen</string>
+    <string name="calendar_alarm_offset">Vor Terminbeginn klingeln</string>
+    <string name="calendar_alarm_offset_minutes">Minuten vor dem Termin</string>
+    <string name="calendar_alarm_offset_minutes_help">1 bis 240 Minuten. Standard 10.</string>
+    <string name="calendar_alarm_error_offset">Gib 1 bis 240 Minuten vor dem Termin ein.</string>
+    <string name="calendar_alarm_rings_at">Klingelt um %s</string>
+    <string name="calendar_alarm_escalation">Steigern: leise beginnen und stärker werden</string>
+    <string name="calendar_alarm_escalation_help">Innerhalb von etwa einer Minute wird der Ton von sehr leise bis zur eingestellten Lautstärke lauter. Nach etwa 20 Sekunden beginnt eine sanfte Vibration, die stärker wird. Ohne Ton wird die Vibration in drei Stufen stärker. Bei kurzer maximaler Weckdauer ist die Steigerung kürzer, und sie beginnt nach jedem Schlummern neu.</string>
     <string name="calendar_alarm_hidden_title">Kalender-Alarm</string>
     <string name="calendar_alarm_skip_tentative">Mit \"Vielleicht\" beantwortete Termine überspringen</string>
     <string name="calendar_alarm_all_day">Bei ganztägigen Terminen klingeln</string>

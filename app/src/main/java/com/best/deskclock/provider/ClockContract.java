@@ -684,6 +684,24 @@ public final class ClockContract {
         String SHOW_DETAILS_LOCKED = "show_details_locked";
 
         /**
+         * True if the alarm rings {@link #OFFSET_MINUTES} before the event starts.
+         * <p>Type: BOOLEAN</p>
+         */
+        String OFFSET_ENABLED = "offset_enabled";
+
+        /**
+         * How many minutes before the event the alarm rings, if {@link #OFFSET_ENABLED}.
+         * <p>Type: INTEGER</p>
+         */
+        String OFFSET_MINUTES = "offset_minutes";
+
+        /**
+         * True if the alarm starts quietly and gets louder and vibrates stronger over time.
+         * <p>Type: BOOLEAN</p>
+         */
+        String ESCALATION = "escalation";
+
+        /**
          * Time of day for all-day events in minutes after midnight, or -1 to ignore them.
          * <p>Type: INTEGER</p>
          */

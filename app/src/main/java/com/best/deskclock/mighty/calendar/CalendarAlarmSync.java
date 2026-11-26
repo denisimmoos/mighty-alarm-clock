@@ -48,6 +48,11 @@ public final class CalendarAlarmSync {
 
     private static final Object LOCK = new Object();
 
+    /** Length of the escalation from quiet to full strength, in seconds. */
+    public static final int ESCALATION_SECONDS = 60;
+    /** Shortest escalation, used when the maximum ring time is very short. */
+    public static final int MIN_ESCALATION_SECONDS = 10;
+
     /** When the calendar was last read successfully, in milliseconds since the epoch. */
     // Stored name from before the feature was called "Calendar Alarm"; kept so existing data still works.
     public static final String KEY_LAST_CHECK = "key_calendar_alert_last_check";
@@ -408,7 +413,7 @@ public final class CalendarAlarmSync {
         }
 
         final Calendar start = Calendar.getInstance();
-        start.setTimeInMillis(alarmTimeFor(event.begin, System.currentTimeMillis()));
+        start.setTimeInMillis(ringTimeFor(profile, event.begin, System.currentTimeMillis()));
 
         if (alarm == null) {
             alarm = new Alarm(start.get(Calendar.YEAR), start.get(Calendar.MONTH),
@@ -450,6 +455,31 @@ public final class CalendarAlarmSync {
         return floor > now ? floor : floor + minute;
     }
 
+    /**
+     * @return when the alarm for an event starting at {@code begin} rings: at the start, or the
+     * profile's offset before it. If that time has already passed while the event is still to
+     * come, for example after turning on the offset, the alarm rings at the next minute.
+     */
+    public static long ringTimeFor(CalendarProfile profile, long begin, long now) {
+        return alarmTimeFor(Math.max(begin - profile.getOffsetMillis(), now), now);
+    }
+
+    /**
+     * @return the volume ramp in seconds for an escalating alarm, 0 without escalation. The ramp
+     * is {@link #ESCALATION_SECONDS} long, shorter if the maximum ring time would cut it off, so
+     * the alarm still reaches full strength before it stops.
+     */
+    static int escalationSecondsFor(CalendarProfile profile) {
+        if (!profile.escalation) {
+            return 0;
+        }
+        if (profile.autoSilenceDuration > 0) {
+            return Math.max(MIN_ESCALATION_SECONDS,
+                Math.min(ESCALATION_SECONDS, profile.autoSilenceDuration / 2));
+        }
+        return ESCALATION_SECONDS;
+    }
+
     private static void applyProfile(Context context, CalendarProfile profile, CalendarAlarmEvent event, Alarm alarm) {
         alarm.label = event.title;
         alarm.daysOfWeek = Weekdays.NONE;
@@ -467,6 +497,7 @@ public final class CalendarAlarmSync {
         alarm.autoSilenceDuration = profile.autoSilenceDuration;
         alarm.snoozeDuration = profile.snoozeDuration;
         alarm.alarmVolume = profile.alarmVolume;
+        alarm.crescendoDuration = escalationSecondsFor(profile);
         alarm.deleteAfterUse = true;
         alarm.syncByLabel = false;
         alarm.snoozeExtendEnabled = false;
@@ -492,6 +523,7 @@ public final class CalendarAlarmSync {
             || a.autoSilenceDuration != b.autoSilenceDuration
             || a.snoozeDuration != b.snoozeDuration
             || a.alarmVolume != b.alarmVolume
+            || a.crescendoDuration != b.crescendoDuration
             || a.missedAlarmRepeatLimit != b.missedAlarmRepeatLimit
             || a.deleteAfterUse != b.deleteAfterUse;
     }

@@ -142,6 +142,32 @@
             android:gravity="start|center_vertical" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/offset_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/calendar_alarm_offset"
+            android:textSize="16sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/offset_minutes_layout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/calendar_alarm_offset_minutes"
+            app:helperText="@string/calendar_alarm_offset_minutes_help"
+            app:helperTextEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/offset_minutes_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="3"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/show_details_locked_switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -254,6 +280,22 @@
             android:minHeight="48dp"
             android:text="@string/calendar_alarm_flash"
             android:textSize="16sp" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/escalation_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/calendar_alarm_escalation"
+            android:textSize="16sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/escalation_help"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/calendar_alarm_escalation_help"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="13sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
