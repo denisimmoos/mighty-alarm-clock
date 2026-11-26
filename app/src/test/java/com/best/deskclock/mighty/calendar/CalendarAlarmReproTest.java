@@ -17,7 +17,7 @@ import com.best.deskclock.alarms.AlarmActivity;
 import com.best.deskclock.alarms.AlarmStateManager;
 import com.best.deskclock.provider.Alarm;
 import com.best.deskclock.provider.AlarmInstance;
-import com.best.deskclock.provider.CalendarAlertEvent;
+import com.best.deskclock.provider.CalendarAlarmEvent;
 import com.best.deskclock.provider.CalendarProfile;
 
 import org.junit.Before;
@@ -33,7 +33,7 @@ import java.util.Calendar;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = 35)
-public class CalendarAlertReproTest {
+public class CalendarAlarmReproTest {
 
     private Application mContext;
     private ContentResolver mCr;
@@ -44,7 +44,7 @@ public class CalendarAlertReproTest {
         mContext = ApplicationProvider.getApplicationContext();
         mCr = mContext.getContentResolver();
         Shadows.shadowOf(mContext).grantPermissions(Manifest.permission.READ_CALENDAR);
-        Robolectric.setupContentProvider(CalendarAlertSyncTest.FakeCalendarProvider.class, CalendarContract.AUTHORITY);
+        Robolectric.setupContentProvider(CalendarAlarmSyncTest.FakeCalendarProvider.class, CalendarContract.AUTHORITY);
         mProfile = new CalendarProfile();
         mProfile.name = "🔕 Profil";
         mProfile.calendarId = 7;
@@ -56,10 +56,10 @@ public class CalendarAlertReproTest {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
         c.add(Calendar.HOUR_OF_DAY, 2);
-        CalendarAlertSyncTest.clearEvents();
-        CalendarAlertSyncTest.CALENDARS.put(7L, "denis@example.com");
-        CalendarAlertSyncTest.addEvent(1, 7, c.getTimeInMillis(), "🔕 Aufstehen %s 100%");
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSyncTest.clearEvents();
+        CalendarAlarmSyncTest.CALENDARS.put(7L, "denis@example.com");
+        CalendarAlarmSyncTest.addEvent(1, 7, c.getTimeInMillis(), "🔕 Aufstehen %s 100%");
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
     }
 
@@ -69,7 +69,7 @@ public class CalendarAlertReproTest {
         com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
         // Calendar checks started by a screen run on their own thread; let them finish so they
         // can't change the next test's database.
-        CalendarAlertSync.EXECUTOR.submit(() -> { }).get();
+        CalendarAlarmSync.EXECUTOR.submit(() -> { }).get();
         com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
         ShadowLooper.idleMainLooper();
         com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
@@ -125,7 +125,7 @@ public class CalendarAlertReproTest {
         com.best.deskclock.DeskClockApplication.getDefaultSharedPreferences(mContext).edit()
             .putBoolean(com.best.deskclock.settings.PreferencesKeys.KEY_IS_FIRST_LAUNCH, false)
             .putBoolean(com.best.deskclock.settings.PreferencesKeys.KEY_ESSENTIAL_PERMISSIONS_GRANTED, true)
-            .putInt("selected_tab", com.best.deskclock.uidata.UiDataModel.Tab.CALENDAR_ALERT.ordinal())
+            .putInt("selected_tab", com.best.deskclock.uidata.UiDataModel.Tab.CALENDAR_ALARM.ordinal())
             .commit();
         org.robolectric.android.controller.ActivityController<DeskClock> c =
             Robolectric.buildActivity(DeskClock.class).setup();
@@ -154,7 +154,7 @@ public class CalendarAlertReproTest {
         final Throwable[] error = new Throwable[1];
         final Thread t = new Thread(() -> {
             try {
-                CalendarAlertSync.syncAll(mContext);
+                CalendarAlarmSync.syncAll(mContext);
             } catch (Throwable e) {
                 error[0] = e;
             }
@@ -170,14 +170,14 @@ public class CalendarAlertReproTest {
     /** Sync runs in the background on a phone: creating and updating alarms there must work. */
     @Test
     public void syncOffMainThread() throws Exception {
-        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         AlarmStateManager.deleteAllInstances(mContext, alarmId);
         Alarm.deleteAlarm(mCr, alarmId);
-        CalendarAlertEvent.deleteEventsForProfile(mCr, mProfile.id);
+        CalendarAlarmEvent.deleteEventsForProfile(mCr, mProfile.id);
         org.robolectric.shadows.ShadowLog.clear();
 
         syncInBackground();
-        final long newId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final long newId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         org.junit.Assert.assertNotNull(Alarm.getAlarm(mCr, newId));
         assertEquals(1, AlarmInstance.getInstancesByAlarmId(mCr, newId).size());
 
@@ -188,23 +188,23 @@ public class CalendarAlertReproTest {
 
         for (org.robolectric.shadows.ShadowLog.LogItem item : org.robolectric.shadows.ShadowLog.getLogs()) {
             org.junit.Assert.assertFalse(String.valueOf(item.msg), item.type >= android.util.Log.ERROR
-                && String.valueOf(item.msg).contains("CalendarAlert"));
+                && String.valueOf(item.msg).contains("CalendarAlarm"));
         }
     }
 
-    /** Moving an event is checked in the background on a phone: the old alert must go away. */
+    /** Moving an event is checked in the background on a phone: the old alarm must go away. */
     @Test
     public void movedEventOffMainThreadLeavesOneAlert() throws Exception {
         org.robolectric.shadows.ShadowLog.stream = System.out;
-        CalendarAlertSyncTest.clearEvents();
-        CalendarAlertSyncTest.CALENDARS.put(7L, "denis@example.com");
+        CalendarAlarmSyncTest.clearEvents();
+        CalendarAlarmSyncTest.CALENDARS.put(7L, "denis@example.com");
         final Calendar c = Calendar.getInstance();
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
         c.add(Calendar.HOUR_OF_DAY, 5);
-        CalendarAlertSyncTest.addEvent(1, 7, c.getTimeInMillis(), "🔕 Aufstehen %s 100%");
+        CalendarAlarmSyncTest.addEvent(1, 7, c.getTimeInMillis(), "🔕 Aufstehen %s 100%");
         syncInBackground();
-        final java.util.List<CalendarAlertEvent> rows = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id);
+        final java.util.List<CalendarAlarmEvent> rows = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id);
         assertEquals(1, rows.size());
         assertEquals(c.getTimeInMillis(), rows.get(0).begin);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
@@ -214,7 +214,7 @@ public class CalendarAlertReproTest {
 
     @Test
     public void fireSnoozeDismiss() {
-        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         AlarmStateManager.setFiredState(mContext, instance);
         instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
@@ -224,7 +224,7 @@ public class CalendarAlertReproTest {
         instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         AlarmStateManager.deleteInstanceAndUpdateParent(mContext, instance, false);
         org.junit.Assert.assertNull(Alarm.getAlarm(mCr, alarmId));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(0, Alarm.getAlarms(mCr, null).size());
     }
 
@@ -232,18 +232,18 @@ public class CalendarAlertReproTest {
         com.best.deskclock.DeskClockApplication.getDefaultSharedPreferences(mContext).edit()
             .putBoolean(com.best.deskclock.settings.PreferencesKeys.KEY_IS_FIRST_LAUNCH, false)
             .putBoolean(com.best.deskclock.settings.PreferencesKeys.KEY_ESSENTIAL_PERMISSIONS_GRANTED, true)
-            .putInt("selected_tab", com.best.deskclock.uidata.UiDataModel.Tab.CALENDAR_ALERT.ordinal())
+            .putInt("selected_tab", com.best.deskclock.uidata.UiDataModel.Tab.CALENDAR_ALARM.ordinal())
             .commit();
     }
 
     @Test
     public void reopenAfterDismiss() {
-        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         AlarmStateManager.setFiredState(mContext, instance);
         instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         AlarmStateManager.deleteInstanceAndUpdateParent(mContext, instance, false);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         openMainPrefs();
         Robolectric.buildActivity(DeskClock.class).setup();
         ShadowLooper.idleMainLooper();
@@ -254,7 +254,7 @@ public class CalendarAlertReproTest {
 
     @Test
     public void reopenWhileFiredAndMissed() {
-        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         AlarmStateManager.setFiredState(mContext, instance);
         openMainPrefs();
@@ -262,14 +262,14 @@ public class CalendarAlertReproTest {
         ShadowLooper.idleMainLooper();
         instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         AlarmStateManager.setMissedState(mContext, instance);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         Robolectric.buildActivity(DeskClock.class).setup();
         ShadowLooper.idleMainLooper();
     }
 
     @Test(timeout = 60000)
     public void fireAlarmCreateOnly() {
-        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         AlarmStateManager.setFiredState(mContext, instance);
         final AlarmActivity activity = Robolectric.buildActivity(AlarmActivity.class,
@@ -288,7 +288,7 @@ public class CalendarAlertReproTest {
 
     @Test
     public void notificationSaysDismiss() {
-        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         Shadows.shadowOf(mContext).grantPermissions(Manifest.permission.POST_NOTIFICATIONS);
         com.best.deskclock.alarms.AlarmNotifications.showUpcomingNotification(mContext, instance);
@@ -309,7 +309,7 @@ public class CalendarAlertReproTest {
     @org.junit.Ignore("AlarmActivity animations keep the looper busy under Robolectric")
     @Test
     public void fireAlarm() {
-        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         AlarmStateManager.setFiredState(mContext, instance);
         Robolectric.buildActivity(AlarmActivity.class,
@@ -320,9 +320,9 @@ public class CalendarAlertReproTest {
 
     @Test(timeout = 60000)
     public void alarmShowsDescriptionAndOpensLocationInMaps() throws Exception {
-        CalendarAlertSyncTest.EVENT_DETAILS.put(1L, new String[]{"Bring the <b>insurance card</b><br>Room 3",
+        CalendarAlarmSyncTest.EVENT_DETAILS.put(1L, new String[]{"Bring the <b>insurance card</b><br>Room 3",
             "Bahnhofstrasse 1, Zürich"});
-        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         AlarmStateManager.setFiredState(mContext, instance);
         final AlarmActivity activity = Robolectric.buildActivity(AlarmActivity.class,
@@ -347,7 +347,7 @@ public class CalendarAlertReproTest {
 
     @Test(timeout = 60000)
     public void alarmWithoutDescriptionOrLocationShowsNothingExtra() throws Exception {
-        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         AlarmStateManager.setFiredState(mContext, instance);
         final AlarmActivity activity = Robolectric.buildActivity(AlarmActivity.class,
@@ -376,7 +376,7 @@ public class CalendarAlertReproTest {
     @Test(timeout = 60000)
     public void deleteButtonDeletesTheProfileAndItsAlarms() throws Exception {
         // Even a ringing alarm goes away with its profile.
-        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         AlarmStateManager.setFiredState(mContext, AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0));
         final CalendarProfileEditActivity activity = Robolectric.buildActivity(CalendarProfileEditActivity.class,
             CalendarProfileEditActivity.createIntent(mContext, mProfile.id)).setup().get();
@@ -388,25 +388,25 @@ public class CalendarAlertReproTest {
         ((androidx.appcompat.app.AlertDialog) dialog).getButton(android.content.DialogInterface.BUTTON_POSITIVE).performClick();
         com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
         ShadowLooper.idleMainLooper();
-        CalendarAlertSync.EXECUTOR.submit(() -> { }).get();
+        CalendarAlarmSync.EXECUTOR.submit(() -> { }).get();
         ShadowLooper.idleMainLooper();
 
         org.junit.Assert.assertTrue(activity.isFinishing());
         org.junit.Assert.assertTrue(AlarmInstance.getInstances(mCr, null).isEmpty());
         org.junit.Assert.assertNull(CalendarProfile.getProfile(mCr, mProfile.id));
         org.junit.Assert.assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
-        org.junit.Assert.assertTrue(CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).isEmpty());
+        org.junit.Assert.assertTrue(CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).isEmpty());
     }
 
     @Test(timeout = 60000)
     public void hiddenDetailsKeepTheTitleOffTheLockScreenUntilUnlock() throws Exception {
         mProfile.showDetailsLocked = false;
         mProfile.updateProfile(mCr);
-        CalendarAlertSyncTest.EVENT_DETAILS.put(1L, new String[]{"Private note", "Somewhere"});
+        CalendarAlarmSyncTest.EVENT_DETAILS.put(1L, new String[]{"Private note", "Somewhere"});
         final android.app.KeyguardManager keyguard = mContext.getSystemService(android.app.KeyguardManager.class);
         Shadows.shadowOf(keyguard).setKeyguardLocked(true);
 
-        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         AlarmStateManager.setFiredState(mContext, instance);
         final AlarmActivity activity = Robolectric.buildActivity(AlarmActivity.class,
@@ -435,7 +435,7 @@ public class CalendarAlertReproTest {
     public void hiddenDetailsKeepTheTitleOutOfTheLockScreenNotification() {
         mProfile.showDetailsLocked = false;
         mProfile.updateProfile(mCr);
-        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         Shadows.shadowOf(mContext).grantPermissions(Manifest.permission.POST_NOTIFICATIONS);
         com.best.deskclock.alarms.AlarmNotifications.showUpcomingNotification(mContext, instance);

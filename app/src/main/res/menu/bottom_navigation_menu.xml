@@ -25,8 +25,8 @@
         android:icon="@drawable/ic_tab_stopwatch"
         android:title="@string/menu_stopwatch" />
     <item
-        android:id="@+id/page_calendar_alert"
+        android:id="@+id/page_calendar_alarm"
         android:enabled="true"
-        android:icon="@drawable/ic_tab_calendar_alert"
-        android:title="@string/menu_calendar_alert" />
+        android:icon="@drawable/ic_tab_calendar_alarm"
+        android:title="@string/menu_calendar_alarm" />
 </menu>

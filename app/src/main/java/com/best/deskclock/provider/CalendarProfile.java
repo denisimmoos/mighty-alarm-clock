@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /**
- * A calendar alert profile: it watches one device calendar and turns every upcoming event whose
+ * A calendar alarm profile: it watches one device calendar and turns every upcoming event whose
  * title matches {@link #titleRegex} into a fullscreen alarm with the profile's sound settings.
  */
 public final class CalendarProfile implements ClockContract.CalendarProfilesColumns {

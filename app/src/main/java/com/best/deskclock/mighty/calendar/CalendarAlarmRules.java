@@ -7,15 +7,15 @@ import android.content.ContentResolver;
 import androidx.annotation.Nullable;
 
 import com.best.deskclock.provider.AlarmInstance;
-import com.best.deskclock.provider.CalendarAlertEvent;
+import com.best.deskclock.provider.CalendarAlarmEvent;
 import com.best.deskclock.provider.CalendarProfile;
 
 /**
  * Profile rules that apply while a calendar alarm rings: the snooze limit and the dismiss method.
  */
-public final class CalendarAlertRules {
+public final class CalendarAlarmRules {
 
-    private CalendarAlertRules() {
+    private CalendarAlarmRules() {
     }
 
     /**
@@ -26,7 +26,7 @@ public final class CalendarAlertRules {
         if (alarmId == null) {
             return null;
         }
-        final CalendarAlertEvent event = CalendarAlertEvent.getEventForAlarm(cr, alarmId);
+        final CalendarAlarmEvent event = CalendarAlarmEvent.getEventForAlarm(cr, alarmId);
         return event == null ? null : CalendarProfile.getProfile(cr, event.profileId);
     }
 

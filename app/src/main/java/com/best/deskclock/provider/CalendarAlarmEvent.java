@@ -18,7 +18,7 @@ import java.util.List;
  * One upcoming calendar event occurrence matched by a {@link CalendarProfile}, linked to the
  * alarm that was created for it.
  */
-public final class CalendarAlertEvent implements ClockContract.CalendarAlertEventsColumns {
+public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEventsColumns {
 
     public static final long INVALID_ID = -1;
 
@@ -57,7 +57,7 @@ public final class CalendarAlertEvent implements ClockContract.CalendarAlertEven
     public boolean userEnabled;
     public long alarmId;
 
-    public CalendarAlertEvent(long profileId, long eventId, long begin, String title) {
+    public CalendarAlarmEvent(long profileId, long eventId, long begin, String title) {
         this.id = INVALID_ID;
         this.profileId = profileId;
         this.eventId = eventId;
@@ -68,7 +68,7 @@ public final class CalendarAlertEvent implements ClockContract.CalendarAlertEven
         this.alarmId = Alarm.INVALID_ID;
     }
 
-    public CalendarAlertEvent(Cursor c) {
+    public CalendarAlarmEvent(Cursor c) {
         id = c.getLong(ID_INDEX);
         profileId = c.getLong(PROFILE_ID_INDEX);
         eventKey = c.getString(EVENT_KEY_INDEX);
@@ -107,10 +107,10 @@ public final class CalendarAlertEvent implements ClockContract.CalendarAlertEven
     }
 
     @Nullable
-    public static CalendarAlertEvent getEvent(ContentResolver cr, long id) {
+    public static CalendarAlarmEvent getEvent(ContentResolver cr, long id) {
         try (Cursor cursor = cr.query(getContentUri(id), QUERY_COLUMNS, null, null, null)) {
             if (cursor != null && cursor.moveToFirst()) {
-                return new CalendarAlertEvent(cursor);
+                return new CalendarAlarmEvent(cursor);
             }
         }
         return null;
@@ -119,11 +119,11 @@ public final class CalendarAlertEvent implements ClockContract.CalendarAlertEven
     /**
      * @return the events of the given profile, earliest first.
      */
-    public static List<CalendarAlertEvent> getEventsForProfile(ContentResolver cr, long profileId) {
+    public static List<CalendarAlarmEvent> getEventsForProfile(ContentResolver cr, long profileId) {
         return query(cr, PROFILE_ID + "=?", new String[]{String.valueOf(profileId)});
     }
 
-    public static List<CalendarAlertEvent> getAllEvents(ContentResolver cr) {
+    public static List<CalendarAlarmEvent> getAllEvents(ContentResolver cr) {
         return query(cr, null, null);
     }
 
@@ -132,20 +132,20 @@ public final class CalendarAlertEvent implements ClockContract.CalendarAlertEven
      * by a calendar profile.
      */
     @Nullable
-    public static CalendarAlertEvent getEventForAlarm(ContentResolver cr, long alarmId) {
+    public static CalendarAlarmEvent getEventForAlarm(ContentResolver cr, long alarmId) {
         if (alarmId == Alarm.INVALID_ID) {
             return null;
         }
-        final List<CalendarAlertEvent> events = query(cr, ALARM_ID + "=?", new String[]{String.valueOf(alarmId)});
+        final List<CalendarAlarmEvent> events = query(cr, ALARM_ID + "=?", new String[]{String.valueOf(alarmId)});
         return events.isEmpty() ? null : events.get(0);
     }
 
-    private static List<CalendarAlertEvent> query(ContentResolver cr, String selection, String[] args) {
-        final List<CalendarAlertEvent> result = new ArrayList<>();
+    private static List<CalendarAlarmEvent> query(ContentResolver cr, String selection, String[] args) {
+        final List<CalendarAlarmEvent> result = new ArrayList<>();
         try (Cursor cursor = cr.query(CONTENT_URI, QUERY_COLUMNS, selection, args, BEGIN + " ASC")) {
             if (cursor != null) {
                 while (cursor.moveToNext()) {
-                    result.add(new CalendarAlertEvent(cursor));
+                    result.add(new CalendarAlarmEvent(cursor));
                 }
             }
         }
@@ -180,13 +180,13 @@ public final class CalendarAlertEvent implements ClockContract.CalendarAlertEven
      */
     public static String buildExcludeCalendarAlarmsSelection(String alarmIdColumn) {
         return alarmIdColumn + " NOT IN (SELECT " + ALARM_ID + " FROM "
-            + ClockDatabaseHelper.CALENDAR_ALERT_EVENTS_TABLE_NAME + ")";
+            + ClockDatabaseHelper.CALENDAR_ALARM_EVENTS_TABLE_NAME + ")";
     }
 
     @NonNull
     @Override
     public String toString() {
-        return "CalendarAlertEvent{id=" + id + ", profileId=" + profileId + ", key='" + eventKey
+        return "CalendarAlarmEvent{id=" + id + ", profileId=" + profileId + ", key='" + eventKey
             + "', begin=" + begin + ", userEnabled=" + userEnabled + ", alarmId=" + alarmId + "}";
     }
 }

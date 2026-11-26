@@ -22,18 +22,18 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLooper;
 
 /**
- * Opens the calendar alert screens to catch layout and setup errors.
+ * Opens the calendar alarm screens to catch layout and setup errors.
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = 35)
-public class CalendarAlertScreensTest {
+public class CalendarAlarmScreensTest {
 
     @org.junit.After
     public void drainBackgroundWork() throws Exception {
         com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
         // Calendar checks started by a screen run on their own thread; let them finish so they
         // can't change the next test's database.
-        CalendarAlertSync.EXECUTOR.submit(() -> { }).get();
+        CalendarAlarmSync.EXECUTOR.submit(() -> { }).get();
         com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
     }
 
@@ -84,7 +84,7 @@ public class CalendarAlertScreensTest {
         try (ActivityController<androidx.fragment.app.FragmentActivity> controller =
                  Robolectric.buildActivity(androidx.fragment.app.FragmentActivity.class).setup()) {
             controller.get().setTheme(R.style.Theme_DeskClock);
-            final CalendarAlertFragment fragment = new CalendarAlertFragment();
+            final CalendarAlarmFragment fragment = new CalendarAlarmFragment();
             controller.get().getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content, fragment).commitNow();
             assertNotNull(fragment.getView());

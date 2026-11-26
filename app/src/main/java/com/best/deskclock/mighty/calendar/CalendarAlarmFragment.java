@@ -5,7 +5,7 @@ package com.best.deskclock.mighty.calendar;
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
-import static com.best.deskclock.uidata.UiDataModel.Tab.CALENDAR_ALERT;
+import static com.best.deskclock.uidata.UiDataModel.Tab.CALENDAR_ALARM;
 
 import android.Manifest;
 import android.content.Intent;
@@ -28,9 +28,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.best.deskclock.R;
 import com.best.deskclock.base.AppExecutors;
 import com.best.deskclock.base.DeskClockFragment;
-import com.best.deskclock.databinding.CalendarAlertFragmentBinding;
+import com.best.deskclock.databinding.CalendarAlarmFragmentBinding;
 import com.best.deskclock.databinding.CalendarProfileItemBinding;
-import com.best.deskclock.provider.CalendarAlertEvent;
+import com.best.deskclock.provider.CalendarAlarmEvent;
 import com.best.deskclock.provider.CalendarProfile;
 import com.best.deskclock.uicomponents.CustomTooltip;
 import com.best.deskclock.uicomponents.toast.CustomToast;
@@ -39,12 +39,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Calendar Alert tab: lists the calendar profiles. Each profile turns matching calendar
+ * The Calendar Alarm tab: lists the calendar profiles. Each profile turns matching calendar
  * events into fullscreen alarms.
  */
-public final class CalendarAlertFragment extends DeskClockFragment {
+public final class CalendarAlarmFragment extends DeskClockFragment {
 
-    private CalendarAlertFragmentBinding mBinding;
+    private CalendarAlarmFragmentBinding mBinding;
     private ProfileAdapter mAdapter;
 
     private final Handler mHandler = new Handler(Looper.getMainLooper());
@@ -64,9 +64,9 @@ public final class CalendarAlertFragment extends DeskClockFragment {
         new ActivityResultContracts.RequestPermission(), granted -> {
             if (granted) {
                 syncAndReload();
-                CalendarAlertWorker.ensureScheduled(requireContext());
+                CalendarAlarmWorker.ensureScheduled(requireContext());
             } else if (getContext() != null) {
-                CustomToast.showLong(requireContext(), getString(R.string.calendar_alert_permission_denied));
+                CustomToast.showLong(requireContext(), getString(R.string.calendar_alarm_permission_denied));
             }
             updatePermissionCard();
         });
@@ -74,13 +74,13 @@ public final class CalendarAlertFragment extends DeskClockFragment {
     /**
      * The public no-arg constructor required by all fragments.
      */
-    public CalendarAlertFragment() {
-        super(CALENDAR_ALERT);
+    public CalendarAlarmFragment() {
+        super(CALENDAR_ALARM);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mBinding = CalendarAlertFragmentBinding.inflate(inflater, container, false);
+        mBinding = CalendarAlarmFragmentBinding.inflate(inflater, container, false);
 
         mAdapter = new ProfileAdapter();
         mBinding.profilesList.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -98,7 +98,7 @@ public final class CalendarAlertFragment extends DeskClockFragment {
         requireContext().getContentResolver()
             .registerContentObserver(CalendarProfile.CONTENT_URI, true, mObserver);
         requireContext().getContentResolver()
-            .registerContentObserver(CalendarAlertEvent.CONTENT_URI, true, mObserver);
+            .registerContentObserver(CalendarAlarmEvent.CONTENT_URI, true, mObserver);
     }
 
     @Override
@@ -136,15 +136,15 @@ public final class CalendarAlertFragment extends DeskClockFragment {
             return;
         }
         final android.content.Context context = requireContext();
-        final long lastCheck = CalendarAlertStatus.getLastCheck(context);
+        final long lastCheck = CalendarAlarmStatus.getLastCheck(context);
         final StringBuilder status = new StringBuilder(lastCheck > 0
-            ? getString(R.string.calendar_alert_last_check, DateUtils.formatDateTime(context, lastCheck,
+            ? getString(R.string.calendar_alarm_last_check, DateUtils.formatDateTime(context, lastCheck,
                 DateUtils.isToday(lastCheck) ? DateUtils.FORMAT_SHOW_TIME
                     : DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH))
-            : getString(R.string.calendar_alert_never_checked));
-        final boolean batteryOptimized = CalendarAlertStatus.isBatteryOptimized(context);
+            : getString(R.string.calendar_alarm_never_checked));
+        final boolean batteryOptimized = CalendarAlarmStatus.isBatteryOptimized(context);
         if (batteryOptimized) {
-            status.append('\n').append(getString(R.string.calendar_alert_battery_hint));
+            status.append('\n').append(getString(R.string.calendar_alarm_battery_hint));
         }
         mBinding.statusText.setText(status);
         mBinding.statusText.setClickable(batteryOptimized);
@@ -158,7 +158,7 @@ public final class CalendarAlertFragment extends DeskClockFragment {
     private void syncAndReload() {
         reload();
         final android.content.Context appContext = requireContext().getApplicationContext();
-        CalendarAlertSync.EXECUTOR.execute(() -> CalendarAlertSync.syncAll(appContext));
+        CalendarAlarmSync.EXECUTOR.execute(() -> CalendarAlarmSync.syncAll(appContext));
     }
 
     private void reload() {
@@ -174,11 +174,11 @@ public final class CalendarAlertFragment extends DeskClockFragment {
             for (CalendarProfile profile : CalendarProfile.getProfiles(appContext.getContentResolver())) {
                 int count = 0;
                 long next = -1;
-                for (CalendarAlertEvent event : CalendarAlertEvent.getEventsForProfile(
+                for (CalendarAlarmEvent event : CalendarAlarmEvent.getEventsForProfile(
                     appContext.getContentResolver(), profile.id)) {
                     // A switched off profile rings for nothing.
                     if (profile.enabled && event.begin > now && event.userEnabled
-                        && event.alarmId != CalendarAlertEvent.ALARM_CONSUMED) {
+                        && event.alarmId != CalendarAlarmEvent.ALARM_CONSUMED) {
                         count++;
                         if (next < 0) {
                             next = event.begin;
@@ -209,7 +209,7 @@ public final class CalendarAlertFragment extends DeskClockFragment {
     private void setProfileEnabled(CalendarProfile profile, boolean enabled) {
         final android.content.Context appContext = requireContext().getApplicationContext();
         final long profileId = profile.id;
-        CalendarAlertSync.EXECUTOR.execute(() -> {
+        CalendarAlarmSync.EXECUTOR.execute(() -> {
             // Change only the switch. The list's copy may be older than what the profile settings
             // or the calendar check saved since; saving that copy would undo their changes.
             final CalendarProfile current = CalendarProfile.getProfile(appContext.getContentResolver(), profileId);
@@ -218,8 +218,8 @@ public final class CalendarAlertFragment extends DeskClockFragment {
             }
             current.enabled = enabled;
             current.updateProfile(appContext.getContentResolver());
-            CalendarAlertSync.syncProfile(appContext, profileId);
-            CalendarAlertWorker.ensureScheduled(appContext);
+            CalendarAlarmSync.syncProfile(appContext, profileId);
+            CalendarAlarmWorker.ensureScheduled(appContext);
         });
     }
 
@@ -232,7 +232,7 @@ public final class CalendarAlertFragment extends DeskClockFragment {
     public void onUpdateFab(@NonNull ImageView fab) {
         fab.setVisibility(VISIBLE);
         fab.setImageResource(R.drawable.ic_add);
-        fab.setContentDescription(getString(R.string.calendar_alert_add_profile));
+        fab.setContentDescription(getString(R.string.calendar_alarm_add_profile));
         fab.setOnLongClickListener(v -> {
             CustomTooltip.showAbove(v, fab.getContentDescription().toString(), true);
             return true;
@@ -311,7 +311,7 @@ public final class CalendarAlertFragment extends DeskClockFragment {
 
             mItem.profileName.setText(profile.name.isEmpty() ? profile.calendarName : profile.name);
             mItem.profileEventCount.setText(context.getResources().getQuantityString(
-                R.plurals.calendar_alert_event_count, row.upcomingCount(), row.upcomingCount(),
+                R.plurals.calendar_alarm_event_count, row.upcomingCount(), row.upcomingCount(),
                 CalendarProfile.clampLookaheadDays(profile.lookaheadDays)));
 
             if (row.nextBegin() > 0) {
@@ -319,14 +319,14 @@ public final class CalendarAlertFragment extends DeskClockFragment {
                     DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_ABBREV_WEEKDAY
                         | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH
                         | DateUtils.FORMAT_SHOW_TIME);
-                mItem.profileNext.setText(context.getString(R.string.calendar_alert_next, when));
+                mItem.profileNext.setText(context.getString(R.string.calendar_alarm_next, when));
             } else {
-                mItem.profileNext.setText(R.string.calendar_alert_no_next);
+                mItem.profileNext.setText(R.string.calendar_alarm_no_next);
             }
 
             final StringBuilder source = new StringBuilder();
             if (row.calendarMissing()) {
-                source.append(context.getString(R.string.calendar_alert_calendar_missing));
+                source.append(context.getString(R.string.calendar_alarm_calendar_missing));
             } else {
                 source.append(profile.accountName);
                 if (!profile.calendarName.isEmpty() && !profile.calendarName.equals(profile.accountName)) {

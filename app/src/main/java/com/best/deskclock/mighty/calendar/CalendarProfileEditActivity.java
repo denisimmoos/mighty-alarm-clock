@@ -35,7 +35,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.List;
 
 /**
- * Creates or edits a calendar alert profile.
+ * Creates or edits a calendar alarm profile.
  */
 public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActivity {
 
@@ -78,7 +78,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             if (granted) {
                 chooseCalendar();
             } else {
-                CustomToast.showLong(this, getString(R.string.calendar_alert_permission_denied));
+                CustomToast.showLong(this, getString(R.string.calendar_alarm_permission_denied));
             }
         });
 
@@ -88,7 +88,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
 
     @Override
     protected String getActivityTitle() {
-        return getString(mIsNew ? R.string.calendar_alert_new_profile : R.string.calendar_alert_edit_profile);
+        return getString(mIsNew ? R.string.calendar_alarm_new_profile : R.string.calendar_alarm_edit_profile);
     }
 
     @Override
@@ -268,18 +268,18 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
     }
 
     private void updateLookaheadLabel() {
-        mBinding.lookaheadLabel.setText(getString(R.string.calendar_alert_lookahead,
+        mBinding.lookaheadLabel.setText(getString(R.string.calendar_alarm_lookahead,
             (int) mBinding.lookaheadSlider.getValue()));
     }
 
     private void updateVolumeLabel(int maxVolume) {
-        mBinding.volumeLabel.setText(getString(R.string.calendar_alert_volume,
+        mBinding.volumeLabel.setText(getString(R.string.calendar_alarm_volume,
             (int) mBinding.volumeSlider.getValue(), maxVolume));
     }
 
     private void bindCalendar() {
         if (mProfile.calendarId < 0) {
-            mBinding.calendarButton.setText(R.string.calendar_alert_choose_calendar);
+            mBinding.calendarButton.setText(R.string.calendar_alarm_choose_calendar);
         } else if (TextUtils.isEmpty(mProfile.accountName) || mProfile.accountName.equals(mProfile.calendarName)) {
             mBinding.calendarButton.setText(mProfile.calendarName);
         } else {
@@ -315,7 +315,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
     }
 
     private void updateVibrationStrengthLabel() {
-        mBinding.vibrationStrengthLabel.setText(getString(R.string.calendar_alert_vibration_strength,
+        mBinding.vibrationStrengthLabel.setText(getString(R.string.calendar_alarm_vibration_strength,
             (int) mBinding.vibrationStrengthSlider.getValue()));
     }
 
@@ -324,7 +324,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         final java.util.Calendar time = java.util.Calendar.getInstance();
         time.set(java.util.Calendar.HOUR_OF_DAY, mAllDayMinutes / 60);
         time.set(java.util.Calendar.MINUTE, mAllDayMinutes % 60);
-        mBinding.allDayTimeButton.setText(getString(R.string.calendar_alert_all_day_time,
+        mBinding.allDayTimeButton.setText(getString(R.string.calendar_alarm_all_day_time,
             android.text.format.DateFormat.getTimeFormat(this).format(time.getTime())));
     }
 
@@ -345,7 +345,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
     private boolean validateRegex() {
         final String regex = textOf(mBinding.regexInput.getText());
         final boolean valid = CalendarProfile.compileTitlePattern(regex, mBinding.ignoreCaseSwitch.isChecked()) != null;
-        mBinding.regexLayout.setError(valid ? null : getString(R.string.calendar_alert_title_regex_invalid));
+        mBinding.regexLayout.setError(valid ? null : getString(R.string.calendar_alarm_title_regex_invalid));
         return valid;
     }
 
@@ -358,7 +358,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
                     return;
                 }
                 if (calendars.isEmpty()) {
-                    CustomToast.showLong(this, getString(R.string.calendar_alert_no_calendars));
+                    CustomToast.showLong(this, getString(R.string.calendar_alarm_no_calendars));
                     return;
                 }
 
@@ -375,7 +375,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
                 }
 
                 new MaterialAlertDialogBuilder(this)
-                    .setTitle(R.string.calendar_alert_choose_calendar)
+                    .setTitle(R.string.calendar_alarm_choose_calendar)
                     .setSingleChoiceItems(labels, checked, (dialog, which) -> {
                         final DeviceCalendars.CalendarInfo info = calendars.get(which);
                         mProfile.calendarId = info.id;
@@ -395,7 +395,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             return;
         }
         if (mProfile.calendarId < 0) {
-            CustomToast.showLong(this, getString(R.string.calendar_alert_error_no_calendar));
+            CustomToast.showLong(this, getString(R.string.calendar_alarm_error_no_calendar));
             return;
         }
         if (!validateRegex()) {
@@ -407,7 +407,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         final Integer snoozeMinutes = parseOptionalNumber(mBinding.snoozeMinutesInput.getText());
         final Integer maxSnoozes = parseOptionalNumber(mBinding.maxSnoozesInput.getText());
         if (maxDurationMinutes == null || snoozeMinutes == null || maxSnoozes == null) {
-            CustomToast.showLong(this, getString(R.string.calendar_alert_error_number));
+            CustomToast.showLong(this, getString(R.string.calendar_alarm_error_number));
             return;
         }
 
@@ -452,22 +452,22 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         final CalendarProfile profile = mProfile;
         final boolean isNew = mIsNew;
         mFinishing = true;
-        CalendarAlertSync.EXECUTOR.execute(() -> {
+        CalendarAlarmSync.EXECUTOR.execute(() -> {
             if (isNew) {
                 profile.addProfile(appContext.getContentResolver());
             } else {
                 profile.updateProfile(appContext.getContentResolver());
             }
-            CalendarAlertSync.syncProfile(appContext, profile.id);
-            CalendarAlertWorker.ensureScheduled(appContext);
+            CalendarAlarmSync.syncProfile(appContext, profile.id);
+            CalendarAlarmWorker.ensureScheduled(appContext);
         });
         finish();
     }
 
     private void confirmDelete() {
         new MaterialAlertDialogBuilder(this)
-            .setMessage(R.string.calendar_alert_delete_confirm)
-            .setPositiveButton(R.string.calendar_alert_delete_profile, (dialog, which) -> {
+            .setMessage(R.string.calendar_alarm_delete_confirm)
+            .setPositiveButton(R.string.calendar_alarm_delete_profile, (dialog, which) -> {
                 if (mFinishing) {
                     return;
                 }
@@ -479,12 +479,12 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
                 AppExecutors.getDiskIO().execute(() -> {
                     CalendarProfile.deleteProfile(appContext.getContentResolver(), profileId);
                     AppExecutors.getMainThread().post(() -> {
-                        CustomToast.show(appContext, appContext.getString(R.string.calendar_alert_profile_deleted));
+                        CustomToast.show(appContext, appContext.getString(R.string.calendar_alarm_profile_deleted));
                         finish();
                     });
-                    CalendarAlertSync.EXECUTOR.execute(() -> {
-                        CalendarAlertSync.deleteProfile(appContext, profileId);
-                        CalendarAlertWorker.ensureScheduled(appContext);
+                    CalendarAlarmSync.EXECUTOR.execute(() -> {
+                        CalendarAlarmSync.deleteProfile(appContext, profileId);
+                        CalendarAlarmWorker.ensureScheduled(appContext);
                     });
                 });
             })

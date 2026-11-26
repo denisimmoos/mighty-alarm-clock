@@ -68,7 +68,7 @@ import com.best.deskclock.data.DataModel.VolumeButtonBehavior;
 import com.best.deskclock.data.SettingsDAO;
 import com.best.deskclock.databinding.AlarmActivityBinding;
 import com.best.deskclock.events.Events;
-import com.best.deskclock.mighty.calendar.CalendarAlertRules;
+import com.best.deskclock.mighty.calendar.CalendarAlarmRules;
 import com.best.deskclock.provider.Alarm;
 import com.best.deskclock.provider.AlarmInstance;
 import com.best.deskclock.provider.CalendarProfile;
@@ -620,7 +620,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             return;
         }
 
-        final CalendarProfile profile = CalendarAlertRules.getProfileForAlarm(getContentResolver(), mAlarm.id);
+        final CalendarProfile profile = CalendarAlarmRules.getProfileForAlarm(getContentResolver(), mAlarm.id);
         if (profile == null) {
             return;
         }
@@ -635,7 +635,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             mIsSwipeActionEnabled = false;
         }
 
-        if (CalendarAlertRules.isSnoozeLimitReached(profile, mAlarmInstance)) {
+        if (CalendarAlarmRules.isSnoozeLimitReached(profile, mAlarmInstance)) {
             mDefaultSnoozeMinutes = ALARM_SNOOZE_DURATION_DISABLED;
             mAlarmInstance.mSnoozeDuration = ALARM_SNOOZE_DURATION_DISABLED;
             mIsSnoozeSelectorDisplayed = false;
@@ -650,8 +650,8 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
         final android.content.Context appContext = getApplicationContext();
         final long alarmId = mAlarm.id;
         com.best.deskclock.base.AppExecutors.getDiskIO().execute(() -> {
-            final com.best.deskclock.provider.CalendarAlertEvent event =
-                com.best.deskclock.provider.CalendarAlertEvent.getEventForAlarm(appContext.getContentResolver(), alarmId);
+            final com.best.deskclock.provider.CalendarAlarmEvent event =
+                com.best.deskclock.provider.CalendarAlarmEvent.getEventForAlarm(appContext.getContentResolver(), alarmId);
             if (event == null) {
                 return;
             }
@@ -737,7 +737,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             androidx.core.widget.TextViewCompat.setCompoundDrawableTintList(mBinding.calendarLocation,
                 android.content.res.ColorStateList.valueOf(mAlarmTitleColor));
             mBinding.calendarLocation.setContentDescription(
-                getString(R.string.calendar_alert_open_location, details.location()));
+                getString(R.string.calendar_alarm_open_location, details.location()));
             mBinding.calendarLocation.setOnClickListener(v -> openLocation(details.location()));
             mBinding.calendarLocation.setVisibility(VISIBLE);
         }
@@ -762,7 +762,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
                     // Try the next way to show the place.
                 }
             }
-            com.best.deskclock.uicomponents.toast.CustomToast.showLong(this, getString(R.string.calendar_alert_no_maps_app));
+            com.best.deskclock.uicomponents.toast.CustomToast.showLong(this, getString(R.string.calendar_alarm_no_maps_app));
         };
 
         final android.app.KeyguardManager keyguard = getSystemService(android.app.KeyguardManager.class);

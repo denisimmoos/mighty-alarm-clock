@@ -11,7 +11,7 @@ import android.net.Uri;
 
 import androidx.annotation.Nullable;
 
-import com.best.deskclock.provider.CalendarAlertEvent;
+import com.best.deskclock.provider.CalendarAlarmEvent;
 import com.best.deskclock.provider.CalendarProfile;
 
 import org.json.JSONArray;
@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 /**
- * Writes calendar alert profiles into the app's backups and restores them from there.
+ * Writes calendar alarm profiles into the app's backups and restores them from there.
  *
  * <p>The alarms themselves are not in the backup; they are rebuilt from the calendar right after
  * the restore.</p>
@@ -42,7 +42,7 @@ public final class CalendarProfileRestore {
     }
 
     /**
-     * @return all calendar alert profiles as JSON, as stored in backups.
+     * @return all calendar alarm profiles as JSON, as stored in backups.
      */
     public static JSONArray exportProfiles(ContentResolver cr) throws JSONException {
         final JSONArray profiles = new JSONArray();
@@ -63,8 +63,8 @@ public final class CalendarProfileRestore {
     private static JSONArray exportHandledEvents(ContentResolver cr, long profileId) throws JSONException {
         final JSONArray events = new JSONArray();
         final long now = System.currentTimeMillis();
-        for (CalendarAlertEvent event : CalendarAlertEvent.getEventsForProfile(cr, profileId)) {
-            final boolean dismissed = event.alarmId == CalendarAlertEvent.ALARM_CONSUMED;
+        for (CalendarAlarmEvent event : CalendarAlarmEvent.getEventsForProfile(cr, profileId)) {
+            final boolean dismissed = event.alarmId == CalendarAlarmEvent.ALARM_CONSUMED;
             if (event.begin > now && (!event.userEnabled || dismissed)) {
                 events.put(new JSONObject()
                     .put("event_id", event.eventId)
@@ -87,11 +87,11 @@ public final class CalendarProfileRestore {
             if (json == null || json.optLong("begin") <= now) {
                 continue;
             }
-            final CalendarAlertEvent event = new CalendarAlertEvent(profileId, json.optLong("event_id"),
+            final CalendarAlarmEvent event = new CalendarAlarmEvent(profileId, json.optLong("event_id"),
                 json.optLong("begin"), json.optString("title"));
             event.userEnabled = !json.optBoolean("switched_off");
             if (json.optBoolean("dismissed")) {
-                event.alarmId = CalendarAlertEvent.ALARM_CONSUMED;
+                event.alarmId = CalendarAlarmEvent.ALARM_CONSUMED;
             }
             try {
                 event.save(cr);
@@ -102,7 +102,7 @@ public final class CalendarProfileRestore {
     }
 
     /**
-     * Replaces all calendar alert profiles with the ones in a full app backup, the way the app's
+     * Replaces all calendar alarm profiles with the ones in a full app backup, the way the app's
      * main restore replaces all alarms. Must not run on the main thread.
      *
      * @param profiles the profiles from the backup, or {@code null} for a backup made before
@@ -118,8 +118,8 @@ public final class CalendarProfileRestore {
             CalendarProfile.deleteProfile(cr, profile.id);
         }
         insertAll(context, profiles);
-        CalendarAlertSync.syncAll(context);
-        CalendarAlertWorker.ensureScheduled(context);
+        CalendarAlarmSync.syncAll(context);
+        CalendarAlarmWorker.ensureScheduled(context);
     }
 
     /**

@@ -24,7 +24,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 /**
- * The backup and restore in the app's main settings also covers calendar alert profiles.
+ * The backup and restore in the app's main settings also covers calendar alarm profiles.
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = 35)

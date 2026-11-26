@@ -48,7 +48,7 @@ public final class CalendarVibration {
     @Nullable
     public static Integer getStrengthForAlarm(ContentResolver cr, @Nullable Long alarmId) {
         try {
-            final CalendarProfile profile = CalendarAlertRules.getProfileForAlarm(cr, alarmId);
+            final CalendarProfile profile = CalendarAlarmRules.getProfileForAlarm(cr, alarmId);
             return profile == null ? null : profile.vibrationStrength;
         } catch (Exception e) {
             LogUtils.e("CalendarVibration: could not read the profile of alarm " + alarmId, e);

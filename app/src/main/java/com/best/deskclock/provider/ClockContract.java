@@ -540,7 +540,7 @@ public final class ClockContract {
     }
 
     /**
-     * Constants for the calendar alert profiles table. A profile watches one device calendar
+     * Constants for the calendar alarm profiles table. A profile watches one device calendar
      * and turns every upcoming event whose title matches its regex into an alarm.
      */
     protected interface CalendarProfilesColumns extends TimestampColumns, BaseColumns {
@@ -695,15 +695,15 @@ public final class ClockContract {
     }
 
     /**
-     * Constants for the calendar alert events table. Each row is one upcoming calendar event
+     * Constants for the calendar alarm events table. Each row is one upcoming calendar event
      * matched by a profile, linked to the alarm created for it.
      */
-    protected interface CalendarAlertEventsColumns extends BaseColumns {
+    protected interface CalendarAlarmEventsColumns extends BaseColumns {
 
         /**
          * The content:// style URL for this table.
          */
-        Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/calendar_alert_events");
+        Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/calendar_alarm_events");
 
         /**
          * Foreign key to the calendar profiles table.

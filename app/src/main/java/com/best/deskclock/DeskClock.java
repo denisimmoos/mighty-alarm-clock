@@ -528,8 +528,8 @@ public class DeskClock extends BaseActivity implements FabContainer {
             tab = UiDataModel.Tab.TIMERS;
         } else if (itemId == R.id.page_stopwatch) {
             tab = UiDataModel.Tab.STOPWATCH;
-        } else if (itemId == R.id.page_calendar_alert) {
-            tab = UiDataModel.Tab.CALENDAR_ALERT;
+        } else if (itemId == R.id.page_calendar_alarm) {
+            tab = UiDataModel.Tab.CALENDAR_ALARM;
         }
 
         if (tab != null) {
@@ -858,7 +858,7 @@ public class DeskClock extends BaseActivity implements FabContainer {
         boolean showClock = UiDataModel.getUiDataModel().isTabVisible(UiDataModel.Tab.CLOCKS);
         boolean showTimer = UiDataModel.getUiDataModel().isTabVisible(UiDataModel.Tab.TIMERS);
         boolean showStopwatch = UiDataModel.getUiDataModel().isTabVisible(UiDataModel.Tab.STOPWATCH);
-        boolean showCalendarAlert = UiDataModel.getUiDataModel().isTabVisible(UiDataModel.Tab.CALENDAR_ALERT);
+        boolean showCalendarAlarm = UiDataModel.getUiDataModel().isTabVisible(UiDataModel.Tab.CALENDAR_ALARM);
 
         if (menu.findItem(R.id.page_alarm).isVisible() != showAlarm) {
             menu.findItem(R.id.page_alarm).setVisible(showAlarm);
@@ -880,8 +880,8 @@ public class DeskClock extends BaseActivity implements FabContainer {
             menuChanged = true;
         }
 
-        if (menu.findItem(R.id.page_calendar_alert).isVisible() != showCalendarAlert) {
-            menu.findItem(R.id.page_calendar_alert).setVisible(showCalendarAlert);
+        if (menu.findItem(R.id.page_calendar_alarm).isVisible() != showCalendarAlarm) {
+            menu.findItem(R.id.page_calendar_alarm).setVisible(showCalendarAlarm);
             menuChanged = true;
         }
 
@@ -896,7 +896,7 @@ public class DeskClock extends BaseActivity implements FabContainer {
                 case CLOCKS -> R.id.page_clock;
                 case TIMERS -> R.id.page_timer;
                 case STOPWATCH -> R.id.page_stopwatch;
-                case CALENDAR_ALERT -> R.id.page_calendar_alert;
+                case CALENDAR_ALARM -> R.id.page_calendar_alarm;
             };
 
             MenuItem activeItem = mBinding.deskClockBottomMenu.getMenu().findItem(currentItemId);

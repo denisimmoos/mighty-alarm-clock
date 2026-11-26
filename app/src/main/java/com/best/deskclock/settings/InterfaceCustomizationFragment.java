@@ -460,8 +460,8 @@ public class InterfaceCustomizationFragment extends ScreenFragment
             labels.add(getString(R.string.menu_stopwatch));
         }
 
-        if (selectedTabs.contains(VISIBLE_TAB_CALENDAR_ALERT)) {
-            labels.add(getString(R.string.menu_calendar_alert));
+        if (selectedTabs.contains(VISIBLE_TAB_CALENDAR_ALARM)) {
+            labels.add(getString(R.string.menu_calendar_alarm));
         }
 
         String summary = String.join(" - ", labels);
@@ -494,7 +494,7 @@ public class InterfaceCustomizationFragment extends ScreenFragment
                     case VISIBLE_TAB_CLOCK -> value = TAB_TO_DISPLAY_CLOCK;
                     case VISIBLE_TAB_TIMER -> value = TAB_TO_DISPLAY_TIMER;
                     case VISIBLE_TAB_STOPWATCH -> value = TAB_TO_DISPLAY_STOPWATCH;
-                    case VISIBLE_TAB_CALENDAR_ALERT -> value = TAB_TO_DISPLAY_CALENDAR_ALERT;
+                    case VISIBLE_TAB_CALENDAR_ALARM -> value = TAB_TO_DISPLAY_CALENDAR_ALARM;
                 }
 
                 mTabToDisplayPref.setValue(value);
@@ -533,9 +533,9 @@ public class InterfaceCustomizationFragment extends ScreenFragment
             entryValues.add(TAB_TO_DISPLAY_STOPWATCH);
         }
 
-        if (visibleTabs.contains(VISIBLE_TAB_CALENDAR_ALERT)) {
-            entries.add(getString(R.string.menu_calendar_alert));
-            entryValues.add(TAB_TO_DISPLAY_CALENDAR_ALERT);
+        if (visibleTabs.contains(VISIBLE_TAB_CALENDAR_ALARM)) {
+            entries.add(getString(R.string.menu_calendar_alarm));
+            entryValues.add(TAB_TO_DISPLAY_CALENDAR_ALARM);
         }
 
         // Apply the new lists to mTabToDisplayPref

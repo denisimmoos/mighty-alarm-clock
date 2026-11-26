@@ -155,8 +155,8 @@ public class AlarmInitReceiver extends BroadcastReceiver {
                 if ((ACTION_BOOT_COMPLETED.equals(action) || ACTION_TIME_CHANGED.equals(action)
                     || Intent.ACTION_TIMEZONE_CHANGED.equals(action))
                     && com.best.deskclock.utils.DeviceUtils.isUserUnlocked(context)) {
-                    com.best.deskclock.mighty.calendar.CalendarAlertSync.syncAll(context);
-                    com.best.deskclock.mighty.calendar.CalendarAlertWorker.ensureScheduled(context);
+                    com.best.deskclock.mighty.calendar.CalendarAlarmSync.syncAll(context);
+                    com.best.deskclock.mighty.calendar.CalendarAlarmWorker.ensureScheduled(context);
                 }
             } finally {
                 result.finish();

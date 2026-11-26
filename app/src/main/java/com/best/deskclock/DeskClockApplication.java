@@ -35,7 +35,7 @@ import com.best.deskclock.data.DataModel;
 import com.best.deskclock.data.SettingsDAO;
 import com.best.deskclock.events.LogEventTracker;
 import com.best.deskclock.mighty.backup.BackupWorker;
-import com.best.deskclock.mighty.calendar.CalendarAlertWorker;
+import com.best.deskclock.mighty.calendar.CalendarAlarmWorker;
 import com.best.deskclock.mighty.backup.JsonBackupManager;
 import com.best.deskclock.mighty.exchange.ExchangeManager;
 import com.best.deskclock.mighty.exchange.ExchangeScanWorker;
@@ -104,7 +104,7 @@ public class DeskClockApplication extends Application implements Application.Act
             if (!ExchangeManager.getFolders(this).isEmpty()) {
                 ExchangeScanWorker.schedulePeriodic(this);
             }
-            CalendarAlertWorker.ensureScheduled(this);
+            CalendarAlarmWorker.ensureScheduled(this);
         } catch (Exception e) {
             LogUtils.e("DeskClockApplication: failed to schedule Mighty background work", e);
         }

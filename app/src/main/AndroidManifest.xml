@@ -544,7 +544,7 @@
         </service>
 
         <receiver
-            android:name="com.best.deskclock.mighty.calendar.CalendarAlertWakeReceiver"
+            android:name="com.best.deskclock.mighty.calendar.CalendarAlarmWakeReceiver"
             android:exported="false" />
 
     </application>

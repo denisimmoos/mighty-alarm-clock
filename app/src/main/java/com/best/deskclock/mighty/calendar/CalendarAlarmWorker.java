@@ -22,18 +22,26 @@ import com.best.deskclock.utils.SdkUtils;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Runs {@link CalendarAlertSync} in the background: every 15 minutes, and soon after anything in
+ * Runs {@link CalendarAlarmSync} in the background: every 15 minutes, and soon after anything in
  * the system calendar changes.
  */
-public final class CalendarAlertWorker extends Worker {
+public final class CalendarAlarmWorker extends Worker {
 
-    private static final String PERIODIC_WORK_NAME = "calendar_alert_sync_periodic";
-    private static final String CHANGE_WORK_NAME = "calendar_alert_sync_on_change";
-    private static final String NOW_WORK_NAME = "calendar_alert_sync_now";
+    private static final String PERIODIC_WORK_NAME = "calendar_alarm_sync_periodic";
+    private static final String CHANGE_WORK_NAME = "calendar_alarm_sync_on_change";
+    private static final String NOW_WORK_NAME = "calendar_alarm_sync_now";
 
-    private static final String TAG_CHANGE_TRIGGER = "calendar_alert_change_trigger";
+    private static final String TAG_CHANGE_TRIGGER = "calendar_alarm_change_trigger";
 
-    public CalendarAlertWorker(@NonNull Context context, @NonNull WorkerParameters params) {
+    /**
+     * Work scheduled by builds from before the rename to "Calendar Alarm". It names a worker
+     * class that no longer exists, so it is cancelled.
+     */
+    private static final String[] OLD_WORK_NAMES = {
+        "calendar_alert_sync_periodic", "calendar_alert_sync_on_change", "calendar_alert_sync_now"
+    };
+
+    public CalendarAlarmWorker(@NonNull Context context, @NonNull WorkerParameters params) {
         super(context, params);
     }
 
@@ -41,10 +49,10 @@ public final class CalendarAlertWorker extends Worker {
     @Override
     public Result doWork() {
         try {
-            CalendarAlertSync.syncAll(getApplicationContext());
+            CalendarAlarmSync.syncAll(getApplicationContext());
             return Result.success();
         } catch (Throwable e) {
-            LogUtils.e("CalendarAlertWorker: sync failed", e);
+            LogUtils.e("CalendarAlarmWorker: sync failed", e);
             return Result.retry();
         } finally {
             if (getTags().contains(TAG_CHANGE_TRIGGER) && hasEnabledProfile(getApplicationContext())) {
@@ -61,23 +69,31 @@ public final class CalendarAlertWorker extends Worker {
      */
     public static void ensureScheduled(Context context) {
         final Context appContext = context.getApplicationContext();
-        CalendarAlertSync.EXECUTOR.execute(() -> {
+        CalendarAlarmSync.EXECUTOR.execute(() -> {
             try {
+                cancelOldWork(appContext);
                 if (!hasEnabledProfile(appContext)) {
                     // Switched-off profiles have no alarms, so nothing needs to be checked.
                     cancelAll(appContext);
                     return;
                 }
-                CalendarAlertWakeReceiver.schedule(appContext);
+                CalendarAlarmWakeReceiver.schedule(appContext);
                 final PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(
-                    CalendarAlertWorker.class, 15, TimeUnit.MINUTES).build();
+                    CalendarAlarmWorker.class, 15, TimeUnit.MINUTES).build();
                 WorkManager.getInstance(appContext)
                     .enqueueUniquePeriodicWork(PERIODIC_WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, request);
                 scheduleOnCalendarChange(appContext, ExistingWorkPolicy.KEEP);
             } catch (Throwable e) {
-                LogUtils.e("CalendarAlertWorker: failed to schedule", e);
+                LogUtils.e("CalendarAlarmWorker: failed to schedule", e);
             }
         });
+    }
+
+    private static void cancelOldWork(Context context) {
+        final WorkManager workManager = WorkManager.getInstance(context);
+        for (String name : OLD_WORK_NAMES) {
+            workManager.cancelUniqueWork(name);
+        }
     }
 
     static boolean hasEnabledProfile(Context context) {
@@ -93,7 +109,7 @@ public final class CalendarAlertWorker extends Worker {
      * Runs a sync as soon as possible, for example after a profile was edited.
      */
     public static void syncNow(Context context) {
-        final OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(CalendarAlertWorker.class).build();
+        final OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(CalendarAlarmWorker.class).build();
         WorkManager.getInstance(context.getApplicationContext())
             .enqueueUniqueWork(NOW_WORK_NAME, ExistingWorkPolicy.REPLACE, request);
     }
@@ -108,7 +124,7 @@ public final class CalendarAlertWorker extends Worker {
             .setTriggerContentUpdateDelay(30, TimeUnit.SECONDS)
             .setTriggerContentMaxDelay(2, TimeUnit.MINUTES)
             .build();
-        final OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(CalendarAlertWorker.class)
+        final OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(CalendarAlarmWorker.class)
             .setConstraints(constraints)
             .addTag(TAG_CHANGE_TRIGGER)
             .build();
@@ -117,7 +133,7 @@ public final class CalendarAlertWorker extends Worker {
     }
 
     private static void cancelAll(Context context) {
-        CalendarAlertWakeReceiver.cancel(context);
+        CalendarAlarmWakeReceiver.cancel(context);
         final WorkManager workManager = WorkManager.getInstance(context);
         workManager.cancelUniqueWork(PERIODIC_WORK_NAME);
         workManager.cancelUniqueWork(CHANGE_WORK_NAME);

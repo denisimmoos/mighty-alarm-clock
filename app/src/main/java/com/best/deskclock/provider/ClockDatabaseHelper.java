@@ -31,7 +31,8 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
     static final String ALARM_TAGS_TABLE_NAME = "alarm_tags";
     static final String EVENT_LOG_TABLE_NAME = "event_log";
     static final String CALENDAR_PROFILES_TABLE_NAME = "calendar_profiles";
-    static final String CALENDAR_ALERT_EVENTS_TABLE_NAME = "calendar_alert_events";
+    // Stored name from before the feature was called "Calendar Alarm"; kept so existing data still works.
+    static final String CALENDAR_ALARM_EVENTS_TABLE_NAME = "calendar_alert_events";
 
     private static final int DATABASE_VERSION = 36;
     private static final int MINIMUM_SUPPORTED_VERSION = 15;
@@ -184,20 +185,20 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
         LogUtils.i("Calendar profiles table created");
     }
 
-    private static void createCalendarAlertEventsTable(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + CALENDAR_ALERT_EVENTS_TABLE_NAME + " (" +
-            ClockContract.CalendarAlertEventsColumns._ID + " INTEGER PRIMARY KEY, " +
-            ClockContract.CalendarAlertEventsColumns.PROFILE_ID + " INTEGER NOT NULL, " +
-            ClockContract.CalendarAlertEventsColumns.EVENT_KEY + " TEXT NOT NULL, " +
-            ClockContract.CalendarAlertEventsColumns.EVENT_ID + " INTEGER NOT NULL DEFAULT -1, " +
-            ClockContract.CalendarAlertEventsColumns.TITLE + " TEXT NOT NULL DEFAULT '', " +
-            ClockContract.CalendarAlertEventsColumns.BEGIN + " INTEGER NOT NULL DEFAULT 0, " +
-            ClockContract.CalendarAlertEventsColumns.USER_ENABLED + " INTEGER NOT NULL DEFAULT 1, " +
-            ClockContract.CalendarAlertEventsColumns.ALARM_ID + " INTEGER NOT NULL DEFAULT -1, " +
-            "UNIQUE(" + ClockContract.CalendarAlertEventsColumns.PROFILE_ID + ", " +
-                ClockContract.CalendarAlertEventsColumns.EVENT_KEY + "));");
+    private static void createCalendarAlarmEventsTable(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + CALENDAR_ALARM_EVENTS_TABLE_NAME + " (" +
+            ClockContract.CalendarAlarmEventsColumns._ID + " INTEGER PRIMARY KEY, " +
+            ClockContract.CalendarAlarmEventsColumns.PROFILE_ID + " INTEGER NOT NULL, " +
+            ClockContract.CalendarAlarmEventsColumns.EVENT_KEY + " TEXT NOT NULL, " +
+            ClockContract.CalendarAlarmEventsColumns.EVENT_ID + " INTEGER NOT NULL DEFAULT -1, " +
+            ClockContract.CalendarAlarmEventsColumns.TITLE + " TEXT NOT NULL DEFAULT '', " +
+            ClockContract.CalendarAlarmEventsColumns.BEGIN + " INTEGER NOT NULL DEFAULT 0, " +
+            ClockContract.CalendarAlarmEventsColumns.USER_ENABLED + " INTEGER NOT NULL DEFAULT 1, " +
+            ClockContract.CalendarAlarmEventsColumns.ALARM_ID + " INTEGER NOT NULL DEFAULT -1, " +
+            "UNIQUE(" + ClockContract.CalendarAlarmEventsColumns.PROFILE_ID + ", " +
+                ClockContract.CalendarAlarmEventsColumns.EVENT_KEY + "));");
 
-        LogUtils.i("Calendar alert events table created");
+        LogUtils.i("Calendar alarm events table created");
     }
 
     @Override
@@ -208,7 +209,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
         createAlarmTagsTable(db, ALARM_TAGS_TABLE_NAME, ALARMS_TABLE_NAME, TAGS_TABLE_NAME);
         createEventLogTable(db, EVENT_LOG_TABLE_NAME);
         createCalendarProfilesTable(db);
-        createCalendarAlertEventsTable(db);
+        createCalendarAlarmEventsTable(db);
     }
 
     @Override
@@ -481,8 +482,8 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
 
         if (oldVersion < 29) {
             createCalendarProfilesTable(db);
-            createCalendarAlertEventsTable(db);
-            LogUtils.i("Added calendar alert tables for version 29 upgrade.");
+            createCalendarAlarmEventsTable(db);
+            LogUtils.i("Added calendar alarm tables for version 29 upgrade.");
         }
 
         // Calendar profile columns added after version 29. Adding only what is missing keeps this

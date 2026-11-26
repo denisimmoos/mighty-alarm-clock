@@ -27,7 +27,7 @@ import com.best.deskclock.R;
 import com.best.deskclock.base.AppExecutors;
 import com.best.deskclock.databinding.CalendarEventItemBinding;
 import com.best.deskclock.databinding.CalendarProfileEventsActivityBinding;
-import com.best.deskclock.provider.CalendarAlertEvent;
+import com.best.deskclock.provider.CalendarAlarmEvent;
 import com.best.deskclock.provider.CalendarProfile;
 import com.best.deskclock.uicomponents.CollapsingToolbarBaseActivity;
 import com.best.deskclock.uicomponents.toast.CustomToast;
@@ -95,8 +95,8 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
         final android.util.TypedValue value = new android.util.TypedValue();
         getTheme().resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, value, true);
         gear.setBackgroundResource(value.resourceId);
-        gear.setContentDescription(getString(R.string.calendar_alert_edit_profile));
-        androidx.appcompat.widget.TooltipCompat.setTooltipText(gear, getString(R.string.calendar_alert_edit_profile));
+        gear.setContentDescription(getString(R.string.calendar_alarm_edit_profile));
+        androidx.appcompat.widget.TooltipCompat.setTooltipText(gear, getString(R.string.calendar_alarm_edit_profile));
         gear.setOnClickListener(v -> startActivity(CalendarProfileEditActivity.createIntent(this, mProfileId)));
 
         // Line the gear up with the middle of the large title.
@@ -134,7 +134,7 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
     protected void onStart() {
         super.onStart();
         getContentResolver().registerContentObserver(CalendarProfile.CONTENT_URI, true, mObserver);
-        getContentResolver().registerContentObserver(CalendarAlertEvent.CONTENT_URI, true, mObserver);
+        getContentResolver().registerContentObserver(CalendarAlarmEvent.CONTENT_URI, true, mObserver);
     }
 
     @Override
@@ -143,7 +143,7 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
         reload();
         final Context appContext = getApplicationContext();
         final long profileId = mProfileId;
-        CalendarAlertSync.EXECUTOR.execute(() -> CalendarAlertSync.syncProfile(appContext, profileId));
+        CalendarAlarmSync.EXECUTOR.execute(() -> CalendarAlarmSync.syncProfile(appContext, profileId));
     }
 
     @Override
@@ -164,10 +164,10 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
         final long profileId = mProfileId;
         AppExecutors.getDiskIO().execute(() -> {
             final CalendarProfile profile = CalendarProfile.getProfile(appContext.getContentResolver(), profileId);
-            final List<CalendarAlertEvent> events = new ArrayList<>();
+            final List<CalendarAlarmEvent> events = new ArrayList<>();
             if (profile != null) {
                 final long now = System.currentTimeMillis();
-                for (CalendarAlertEvent event : CalendarAlertEvent.getEventsForProfile(
+                for (CalendarAlarmEvent event : CalendarAlarmEvent.getEventsForProfile(
                     appContext.getContentResolver(), profileId)) {
                     if (event.begin > now) {
                         events.add(event);
@@ -186,43 +186,43 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
                 }
                 mTitle = profile.name.isEmpty() ? profile.calendarName : profile.name;
                 mBaseBinding.collapsingToolbar.setTitle(mTitle);
-                mBinding.eventsSubtitle.setText(getString(R.string.calendar_alert_events_subtitle,
+                mBinding.eventsSubtitle.setText(getString(R.string.calendar_alarm_events_subtitle,
                     profile.calendarName.isEmpty() ? profile.accountName : profile.calendarName,
                     profile.titleRegex));
                 mAdapter.setEvents(events, profile.enabled);
-                mBinding.eventsEmpty.setText(getString(R.string.calendar_alert_no_events,
+                mBinding.eventsEmpty.setText(getString(R.string.calendar_alarm_no_events,
                     CalendarProfile.clampLookaheadDays(profile.lookaheadDays)));
                 mBinding.eventsEmpty.setVisibility(events.isEmpty() ? VISIBLE : GONE);
             });
         });
     }
 
-    private void setEventEnabled(CalendarAlertEvent event, boolean enabled) {
+    private void setEventEnabled(CalendarAlarmEvent event, boolean enabled) {
         final Context appContext = getApplicationContext();
-        CalendarAlertSync.EXECUTOR.execute(() -> CalendarAlertSync.setEventEnabled(appContext, event.id, enabled));
+        CalendarAlarmSync.EXECUTOR.execute(() -> CalendarAlarmSync.setEventEnabled(appContext, event.id, enabled));
     }
 
     /**
      * Opens the calendar entry of the event in the device's calendar app.
      */
-    static void openInCalendar(Context context, CalendarAlertEvent event) {
+    static void openInCalendar(Context context, CalendarAlarmEvent event) {
         final Intent intent = new Intent(Intent.ACTION_VIEW)
             .setData(ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, event.eventId))
             .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.begin);
         try {
             context.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            CustomToast.showLong(context, context.getString(R.string.calendar_alert_no_calendar_app));
+            CustomToast.showLong(context, context.getString(R.string.calendar_alarm_no_calendar_app));
         }
     }
 
     private final class EventAdapter extends RecyclerView.Adapter<EventViewHolder> {
 
-        private final List<CalendarAlertEvent> mEvents = new ArrayList<>();
+        private final List<CalendarAlarmEvent> mEvents = new ArrayList<>();
         private boolean mProfileEnabled = true;
 
         @android.annotation.SuppressLint("NotifyDataSetChanged")
-        void setEvents(List<CalendarAlertEvent> events, boolean profileEnabled) {
+        void setEvents(List<CalendarAlarmEvent> events, boolean profileEnabled) {
             mEvents.clear();
             mEvents.addAll(events);
             mProfileEnabled = profileEnabled;
@@ -256,7 +256,7 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
             mItem = binding;
         }
 
-        void bind(CalendarAlertEvent event, boolean profileEnabled) {
+        void bind(CalendarAlarmEvent event, boolean profileEnabled) {
             final Context context = itemView.getContext();
 
             mItem.eventTime.setText(DateFormat.getTimeFormat(context).format(new java.util.Date(event.begin)));
@@ -265,10 +265,10 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
             final String date = DateUtils.formatDateTime(context, event.begin,
                 DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_ABBREV_WEEKDAY
                     | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH);
-            final boolean consumed = event.userEnabled && event.alarmId == CalendarAlertEvent.ALARM_CONSUMED;
+            final boolean consumed = event.userEnabled && event.alarmId == CalendarAlarmEvent.ALARM_CONSUMED;
             mItem.eventDate.setText(consumed
-                ? date + " · " + context.getString(R.string.calendar_alert_event_dismissed)
-                : context.getString(R.string.calendar_alert_next, date));
+                ? date + " · " + context.getString(R.string.calendar_alarm_event_dismissed)
+                : context.getString(R.string.calendar_alarm_next, date));
 
             mItem.eventSwitch.setOnCheckedChangeListener(null);
             mItem.eventSwitch.setChecked(event.userEnabled && !consumed);

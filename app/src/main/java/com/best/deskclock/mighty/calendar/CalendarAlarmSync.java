@@ -13,7 +13,7 @@ import com.best.deskclock.data.DataModel;
 import com.best.deskclock.data.Weekdays;
 import com.best.deskclock.provider.Alarm;
 import com.best.deskclock.provider.AlarmInstance;
-import com.best.deskclock.provider.CalendarAlertEvent;
+import com.best.deskclock.provider.CalendarAlarmEvent;
 import com.best.deskclock.provider.CalendarProfile;
 import com.best.deskclock.utils.LogUtils;
 import com.best.deskclock.utils.RingtoneUtils;
@@ -34,14 +34,14 @@ import java.util.regex.Pattern;
  * Turns matching calendar events into alarms.
  *
  * <p>For every profile, the events of its calendar in the next {@link CalendarProfile#lookaheadDays} days are
- * matched against the profile's title regex. Each match gets a row in the calendar alert events
+ * matched against the profile's title regex. Each match gets a row in the calendar alarm events
  * table and, while the profile and the event are switched on, a one-time alarm at the event's
  * start time. The alarm goes through the app's normal alarm pipeline, so the fullscreen alarm,
  * snooze and auto silence all work as for any other alarm.</p>
  *
  * <p>Alarms that are ringing or snoozed are never changed or removed by a sync.</p>
  */
-public final class CalendarAlertSync {
+public final class CalendarAlarmSync {
 
     /** How long rows of past events are kept, so a missed alarm notification stays visible. */
     private static final long PAST_EVENT_RETENTION_MS = TimeUnit.HOURS.toMillis(12);
@@ -49,6 +49,7 @@ public final class CalendarAlertSync {
     private static final Object LOCK = new Object();
 
     /** When the calendar was last read successfully, in milliseconds since the epoch. */
+    // Stored name from before the feature was called "Calendar Alarm"; kept so existing data still works.
     public static final String KEY_LAST_CHECK = "key_calendar_alert_last_check";
 
     /**
@@ -57,7 +58,7 @@ public final class CalendarAlertSync {
      */
     public static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
 
-    private CalendarAlertSync() {
+    private CalendarAlarmSync() {
     }
 
     /**
@@ -69,7 +70,7 @@ public final class CalendarAlertSync {
             try {
                 syncAllLocked(context.getApplicationContext());
             } catch (Throwable e) {
-                LogUtils.e("CalendarAlertSync: sync failed", e);
+                LogUtils.e("CalendarAlarmSync: sync failed", e);
             }
         }
     }
@@ -88,14 +89,14 @@ public final class CalendarAlertSync {
             try {
                 syncProfile(appContext, profile, now, canReadCalendar, claimedKeys);
             } catch (Throwable e) {
-                LogUtils.e("CalendarAlertSync: failed to sync profile " + profile.id, e);
+                LogUtils.e("CalendarAlarmSync: failed to sync profile " + profile.id, e);
             }
         }
 
-        CalendarAlertStatus.update(appContext, canReadCalendar, !profiles.isEmpty(), now);
+        CalendarAlarmStatus.update(appContext, canReadCalendar, !profiles.isEmpty(), now);
 
         // Clean up alarms and rows left behind by deleted profiles, ringing ones included.
-        for (CalendarAlertEvent event : CalendarAlertEvent.getAllEvents(cr)) {
+        for (CalendarAlarmEvent event : CalendarAlarmEvent.getAllEvents(cr)) {
             if (!profileIds.contains(event.profileId)) {
                 deleteEventAndAlarm(appContext, event);
             }
@@ -106,14 +107,14 @@ public final class CalendarAlertSync {
      * Deletes the event row and its alarm, stopping the alarm if it is ringing. A failure to stop
      * the alarm never keeps the row, so a deleted profile cannot come back.
      */
-    private static void deleteEventAndAlarm(Context context, CalendarAlertEvent event) {
+    private static void deleteEventAndAlarm(Context context, CalendarAlarmEvent event) {
         final ContentResolver cr = context.getContentResolver();
         try {
             if (alarmExists(cr, event.alarmId)) {
                 deleteAlarm(context, event.alarmId);
             }
         } catch (Throwable e) {
-            LogUtils.e("CalendarAlertSync: could not stop alarm " + event.alarmId, e);
+            LogUtils.e("CalendarAlarmSync: could not stop alarm " + event.alarmId, e);
             try {
                 // At least remove the alarm itself so it can't ring any more.
                 for (AlarmInstance instance : AlarmInstance.getInstancesByAlarmId(cr, event.alarmId)) {
@@ -145,14 +146,14 @@ public final class CalendarAlertSync {
                 final ContentResolver cr = appContext.getContentResolver();
                 // The profile goes first, so it is gone even if stopping an alarm fails.
                 CalendarProfile.deleteProfile(cr, profileId);
-                for (CalendarAlertEvent event : CalendarAlertEvent.getEventsForProfile(cr, profileId)) {
+                for (CalendarAlarmEvent event : CalendarAlarmEvent.getEventsForProfile(cr, profileId)) {
                     // Also stops an alarm that is ringing or snoozed right now.
                     deleteEventAndAlarm(appContext, event);
                 }
                 // Another profile may match the same events and now gets their alarms.
                 syncAllLocked(appContext);
             } catch (Throwable e) {
-                LogUtils.e("CalendarAlertSync: failed to delete profile " + profileId, e);
+                LogUtils.e("CalendarAlarmSync: failed to delete profile " + profileId, e);
             }
         }
     }
@@ -168,12 +169,12 @@ public final class CalendarAlertSync {
             for (CalendarProfile profile : CalendarProfile.getProfiles(cr)) {
                 profileIds.add(profile.id);
             }
-            for (CalendarAlertEvent event : CalendarAlertEvent.getAllEvents(cr)) {
+            for (CalendarAlarmEvent event : CalendarAlarmEvent.getAllEvents(cr)) {
                 profileIds.add(event.profileId);
             }
             for (Long profileId : profileIds) {
                 // Events first, so deleting the alarms afterwards doesn't mark them as dismissed.
-                CalendarAlertEvent.deleteEventsForProfile(cr, profileId);
+                CalendarAlarmEvent.deleteEventsForProfile(cr, profileId);
                 CalendarProfile.deleteProfile(cr, profileId);
             }
         }
@@ -187,7 +188,7 @@ public final class CalendarAlertSync {
             try {
                 final Context appContext = context.getApplicationContext();
                 final ContentResolver cr = appContext.getContentResolver();
-                final CalendarAlertEvent event = CalendarAlertEvent.getEvent(cr, eventRowId);
+                final CalendarAlarmEvent event = CalendarAlarmEvent.getEvent(cr, eventRowId);
                 if (event == null) {
                     return;
                 }
@@ -196,11 +197,11 @@ public final class CalendarAlertSync {
                     return;
                 }
                 event.userEnabled = enabled;
-                // Switching an alert off also stops it if it is ringing or snoozed right now.
+                // Switching an alarm off also stops it if it is ringing or snoozed right now.
                 event.alarmId = reconcileAlarm(appContext, profile, event, profile.enabled && enabled, true, !enabled);
                 event.save(cr);
             } catch (Throwable e) {
-                LogUtils.e("CalendarAlertSync: failed to switch event " + eventRowId, e);
+                LogUtils.e("CalendarAlarmSync: failed to switch event " + eventRowId, e);
             }
         }
     }
@@ -208,7 +209,7 @@ public final class CalendarAlertSync {
     private static void syncProfile(Context context, CalendarProfile profile, long now, boolean canReadCalendar,
                                     Set<String> claimedKeys) {
         final ContentResolver cr = context.getContentResolver();
-        final List<CalendarAlertEvent> existing = CalendarAlertEvent.getEventsForProfile(cr, profile.id);
+        final List<CalendarAlarmEvent> existing = CalendarAlarmEvent.getEventsForProfile(cr, profile.id);
 
         if (!profile.enabled) {
             silenceProfile(context, existing, now);
@@ -216,13 +217,13 @@ public final class CalendarAlertSync {
 
         if (!canReadCalendar) {
             // Without calendar access, nothing can be checked. Keep what is already scheduled.
-            LogUtils.w("CalendarAlertSync: no calendar permission, profile " + profile.id + " not synced");
+            LogUtils.w("CalendarAlarmSync: no calendar permission, profile " + profile.id + " not synced");
             keepClaims(existing, profile, claimedKeys);
             return;
         }
 
-        final Map<String, CalendarAlertEvent> existingByKey = new HashMap<>();
-        for (CalendarAlertEvent event : existing) {
+        final Map<String, CalendarAlarmEvent> existingByKey = new HashMap<>();
+        for (CalendarAlarmEvent event : existing) {
             existingByKey.put(event.eventKey, event);
         }
 
@@ -235,7 +236,7 @@ public final class CalendarAlertSync {
         if (calendar != null && calendar.id >= 0
             && (calendar.id != profile.calendarId || !calendar.displayName.equals(profile.calendarName))) {
             // The calendar got another number (for example after a restore) or was renamed.
-            LogUtils.i("CalendarAlertSync: profile " + profile.id + " now watches calendar " + calendar.id);
+            LogUtils.i("CalendarAlarmSync: profile " + profile.id + " now watches calendar " + calendar.id);
             profile.calendarId = calendar.id;
             profile.calendarName = calendar.displayName;
             profile.updateProfile(context.getContentResolver());
@@ -245,7 +246,7 @@ public final class CalendarAlertSync {
             : DeviceCalendars.getEventInstances(context, profile.calendarId, now, until, profile.allDayMinutes);
         if (calendar == null || instances == null) {
             // The calendar could not be read right now. Keep what is scheduled and try again later.
-            LogUtils.w("CalendarAlertSync: calendar of profile " + profile.id + " could not be read");
+            LogUtils.w("CalendarAlarmSync: calendar of profile " + profile.id + " could not be read");
             keepClaims(existing, profile, claimedKeys);
             return;
         }
@@ -257,7 +258,7 @@ public final class CalendarAlertSync {
             if (!CalendarProfile.titleMatches(pattern, instance.title) || isSkipped(profile, instance)) {
                 continue;
             }
-            final String key = CalendarAlertEvent.buildKey(instance.eventId, instance.begin);
+            final String key = CalendarAlarmEvent.buildKey(instance.eventId, instance.begin);
             if (claimedKeys.contains(key)) {
                 // An earlier profile already rings for this event.
                 continue;
@@ -268,16 +269,16 @@ public final class CalendarAlertSync {
             matchesPerEvent.put(instance.eventId, count == null ? 1 : count + 1);
         }
 
-        // Remember alerts the user switched off, so they stay off if their event is moved.
+        // Remember alarms the user switched off, so they stay off if their event is moved.
         final Set<Long> switchedOffEvents = new HashSet<>();
-        for (CalendarAlertEvent event : existing) {
+        for (CalendarAlarmEvent event : existing) {
             if (!event.userEnabled && !matchedKeys.contains(event.eventKey)) {
                 switchedOffEvents.add(event.eventId);
             }
         }
 
-        // Remove stale rows first, so one failing event can never leave an old alert behind.
-        for (CalendarAlertEvent event : existing) {
+        // Remove stale rows first, so one failing event can never leave an old alarm behind.
+        for (CalendarAlarmEvent event : existing) {
             if (matchedKeys.contains(event.eventKey)) {
                 continue;
             }
@@ -290,17 +291,17 @@ public final class CalendarAlertSync {
                     removeEvent(context, event, false);
                 }
             } catch (Throwable e) {
-                LogUtils.e("CalendarAlertSync: failed to remove " + event, e);
+                LogUtils.e("CalendarAlarmSync: failed to remove " + event, e);
             }
         }
 
         for (DeviceCalendars.EventInstance instance : matched) {
             try {
-                final String key = CalendarAlertEvent.buildKey(instance.eventId, instance.begin);
-                CalendarAlertEvent event = existingByKey.get(key);
+                final String key = CalendarAlarmEvent.buildKey(instance.eventId, instance.begin);
+                CalendarAlarmEvent event = existingByKey.get(key);
                 if (event == null) {
-                    event = new CalendarAlertEvent(profile.id, instance.eventId, instance.begin, instance.title);
-                    // A moved event that is not repeating keeps its switched off alert.
+                    event = new CalendarAlarmEvent(profile.id, instance.eventId, instance.begin, instance.title);
+                    // A moved event that is not repeating keeps its switched off alarm.
                     if (switchedOffEvents.contains(instance.eventId)
                         && Integer.valueOf(1).equals(matchesPerEvent.get(instance.eventId))) {
                         event.userEnabled = false;
@@ -315,14 +316,14 @@ public final class CalendarAlertSync {
                     claimedKeys.add(key);
                 }
             } catch (Throwable e) {
-                LogUtils.e("CalendarAlertSync: failed to update event " + instance.eventId, e);
+                LogUtils.e("CalendarAlarmSync: failed to update event " + instance.eventId, e);
             }
         }
     }
 
-    private static void keepClaims(List<CalendarAlertEvent> existing, CalendarProfile profile, Set<String> claimedKeys) {
+    private static void keepClaims(List<CalendarAlarmEvent> existing, CalendarProfile profile, Set<String> claimedKeys) {
         if (profile.enabled) {
-            for (CalendarAlertEvent event : existing) {
+            for (CalendarAlarmEvent event : existing) {
                 if (event.userEnabled && event.alarmId >= 0) {
                     claimedKeys.add(event.eventKey);
                 }
@@ -345,16 +346,16 @@ public final class CalendarAlertSync {
      * right now (sound, vibration and flashlight). Future events keep their row, so their alarms
      * come back when the profile is switched on again.
      */
-    private static void silenceProfile(Context context, List<CalendarAlertEvent> existing, long now) {
+    private static void silenceProfile(Context context, List<CalendarAlarmEvent> existing, long now) {
         final ContentResolver cr = context.getContentResolver();
-        for (CalendarAlertEvent event : existing) {
+        for (CalendarAlarmEvent event : existing) {
             try {
                 if (!alarmExists(cr, event.alarmId)) {
                     // Nothing scheduled. A dismissed event stays dismissed.
                     continue;
                 }
                 deleteAlarm(context, event.alarmId);
-                LogUtils.i("CalendarAlertSync: profile off, removed alarm " + event.alarmId);
+                LogUtils.i("CalendarAlarmSync: profile off, removed alarm " + event.alarmId);
                 if (event.begin <= now) {
                     event.delete(cr);
                 } else {
@@ -362,7 +363,7 @@ public final class CalendarAlertSync {
                     event.save(cr);
                 }
             } catch (Throwable e) {
-                LogUtils.e("CalendarAlertSync: failed to silence " + event, e);
+                LogUtils.e("CalendarAlarmSync: failed to silence " + event, e);
             }
         }
     }
@@ -372,7 +373,7 @@ public final class CalendarAlertSync {
      *
      * @return the id of the event's alarm afterwards, or {@link Alarm#INVALID_ID} if it has none
      */
-    private static long reconcileAlarm(Context context, CalendarProfile profile, CalendarAlertEvent event,
+    private static long reconcileAlarm(Context context, CalendarProfile profile, CalendarAlarmEvent event,
                                        boolean shouldBeArmed) {
         return reconcileAlarm(context, profile, event, shouldBeArmed, false, false);
     }
@@ -383,7 +384,7 @@ public final class CalendarAlertSync {
      * @param stopRinging   {@code true} to also remove an alarm that is ringing or snoozed, when it
      *                      should no longer be armed
      */
-    private static long reconcileAlarm(Context context, CalendarProfile profile, CalendarAlertEvent event,
+    private static long reconcileAlarm(Context context, CalendarProfile profile, CalendarAlarmEvent event,
                                        boolean shouldBeArmed, boolean rearmConsumed, boolean stopRinging) {
         final ContentResolver cr = context.getContentResolver();
         Alarm alarm = event.alarmId != Alarm.INVALID_ID ? Alarm.getAlarm(cr, event.alarmId) : null;
@@ -391,7 +392,7 @@ public final class CalendarAlertSync {
         if (alarm == null && event.alarmId != Alarm.INVALID_ID && !rearmConsumed) {
             // The alarm existed and is gone: the user already dismissed it. Do not bring it back,
             // also not after the profile or the event was switched off and on again.
-            return CalendarAlertEvent.ALARM_CONSUMED;
+            return CalendarAlarmEvent.ALARM_CONSUMED;
         }
 
         if (alarm != null && !(stopRinging && !shouldBeArmed) && isRingingOrSnoozed(cr, alarm.id)) {
@@ -416,7 +417,7 @@ public final class CalendarAlertSync {
             alarm.enabled = true;
             alarm.addAlarm(cr);
             scheduleInstance(context, alarm);
-            LogUtils.i("CalendarAlertSync: created alarm " + alarm.id + " for " + event);
+            LogUtils.i("CalendarAlarmSync: created alarm " + alarm.id + " for " + event);
             return alarm.id;
         }
 
@@ -434,7 +435,7 @@ public final class CalendarAlertSync {
             alarm.updateAlarm(cr);
             AlarmStateManager.deleteAllInstances(context, alarm.id);
             scheduleInstance(context, alarm);
-            LogUtils.i("CalendarAlertSync: updated alarm " + alarm.id + " for " + event);
+            LogUtils.i("CalendarAlarmSync: updated alarm " + alarm.id + " for " + event);
         }
         return alarm.id;
     }
@@ -449,7 +450,7 @@ public final class CalendarAlertSync {
         return floor > now ? floor : floor + minute;
     }
 
-    private static void applyProfile(Context context, CalendarProfile profile, CalendarAlertEvent event, Alarm alarm) {
+    private static void applyProfile(Context context, CalendarProfile profile, CalendarAlarmEvent event, Alarm alarm) {
         alarm.label = event.title;
         alarm.daysOfWeek = Weekdays.NONE;
         if (profile.flashOnly) {
@@ -472,7 +473,7 @@ public final class CalendarAlertSync {
         alarm.repeatIntervalMinutes = 0;
         alarm.repeatMaxCount = 0;
         alarm.wifiRuleEnabled = false;
-        // When the max alert duration runs out, the alarm stops and counts as missed instead of
+        // When the max alarm duration runs out, the alarm stops and counts as missed instead of
         // snoozing and ringing again forever.
         alarm.missedAlarmRepeatLimit = 0;
     }
@@ -501,7 +502,7 @@ public final class CalendarAlertSync {
         AlarmStateManager.registerInstance(context, instance, true);
     }
 
-    private static void removeEvent(Context context, CalendarAlertEvent event, boolean force) {
+    private static void removeEvent(Context context, CalendarAlarmEvent event, boolean force) {
         final ContentResolver cr = context.getContentResolver();
         if (event.alarmId != Alarm.INVALID_ID && alarmExists(cr, event.alarmId)) {
             if (isRingingOrSnoozed(cr, event.alarmId)) {

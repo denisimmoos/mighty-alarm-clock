@@ -216,7 +216,7 @@ public class RingtonePickerActivity extends CollapsingToolbarBaseActivity
     }
 
     /**
-     * @return an intent that launches the ringtone picker for a calendar alert profile. The picked
+     * @return an intent that launches the ringtone picker for a calendar alarm profile. The picked
      * ringtone is only returned as a result.
      */
     public static Intent createCalendarProfileRingtonePickerIntent(Context context, Uri currentRingtone) {
@@ -790,7 +790,7 @@ public class RingtonePickerActivity extends CollapsingToolbarBaseActivity
 
             final ContentResolver cr = appContext.getContentResolver();
 
-            // Calendar alert profiles that used this ringtone go back to the app's default
+            // Calendar alarm profiles that used this ringtone go back to the app's default
             // ringtone; their alarms follow at the next check below.
             boolean profilesChanged = false;
             for (com.best.deskclock.provider.CalendarProfile profile
@@ -801,7 +801,7 @@ public class RingtonePickerActivity extends CollapsingToolbarBaseActivity
                     profilesChanged = true;
                 }
             }
-            final boolean syncCalendarAlerts = profilesChanged;
+            final boolean syncCalendarAlarms = profilesChanged;
 
             // Update all alarms that use the custom ringtone to use the system default.
             final List<Alarm> alarms = Alarm.getAlarms(cr, null);
@@ -841,9 +841,9 @@ public class RingtonePickerActivity extends CollapsingToolbarBaseActivity
                 DataModel.getDataModel().removeCustomRingtone(removeUri);
 
                 // Rebuild calendar alarms now that the default ringtone setting is up to date.
-                if (syncCalendarAlerts) {
-                    com.best.deskclock.mighty.calendar.CalendarAlertSync.EXECUTOR.execute(() ->
-                        com.best.deskclock.mighty.calendar.CalendarAlertSync.syncAll(appContext));
+                if (syncCalendarAlarms) {
+                    com.best.deskclock.mighty.calendar.CalendarAlarmSync.EXECUTOR.execute(() ->
+                        com.best.deskclock.mighty.calendar.CalendarAlarmSync.syncAll(appContext));
                 }
 
                 if (isFinishing() || isDestroyed()) {

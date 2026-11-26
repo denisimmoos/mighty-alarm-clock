@@ -31,7 +31,7 @@ import androidx.core.content.ContextCompat;
 
 import com.best.deskclock.DeskClock;
 import com.best.deskclock.R;
-import com.best.deskclock.mighty.calendar.CalendarAlertRules;
+import com.best.deskclock.mighty.calendar.CalendarAlarmRules;
 import com.best.deskclock.provider.Alarm;
 import com.best.deskclock.provider.AlarmInstance;
 import com.best.deskclock.utils.AlarmUtils;
@@ -452,7 +452,7 @@ public final class AlarmNotifications {
         // or if "Enable alarm snooze actions" is enabled in the alarm editing panel.
         // Calendar alarms that were snoozed as often as their profile allows get no Snooze button.
         if (instance.mSnoozeDuration != ALARM_SNOOZE_DURATION_DISABLED
-            && !CalendarAlertRules.isSnoozeLimitReached(context.getContentResolver(), instance)) {
+            && !CalendarAlarmRules.isSnoozeLimitReached(context.getContentResolver(), instance)) {
             Intent snoozeIntent = AlarmStateManager.createStateChangeIntent(
                 context, AlarmStateManager.ALARM_SNOOZE_TAG, instance, AlarmInstance.SNOOZE_STATE);
             snoozeIntent.putExtra(AlarmStateManager.FROM_NOTIFICATION_EXTRA, true);
@@ -558,7 +558,7 @@ public final class AlarmNotifications {
      */
     private static boolean isDeleteAfterUseShown(Context context, Alarm alarm) {
         return alarm.isDeleteAfterUse()
-            && CalendarAlertRules.getProfileForAlarm(context.getContentResolver(), alarm.id) == null;
+            && CalendarAlarmRules.getProfileForAlarm(context.getContentResolver(), alarm.id) == null;
     }
 
     /**
@@ -568,7 +568,7 @@ public final class AlarmNotifications {
     private static void hideCalendarDetailsWhenLocked(Context context, Context localizedContext,
                                                       NotificationCompat.Builder builder, AlarmInstance instance) {
         final com.best.deskclock.provider.CalendarProfile profile =
-            CalendarAlertRules.getProfileForAlarm(context.getContentResolver(), instance.mAlarmId);
+            CalendarAlarmRules.getProfileForAlarm(context.getContentResolver(), instance.mAlarmId);
         if (profile == null || profile.showDetailsLocked) {
             return;
         }

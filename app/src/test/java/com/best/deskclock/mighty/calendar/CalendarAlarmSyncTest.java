@@ -23,7 +23,7 @@ import androidx.test.core.app.ApplicationProvider;
 
 import com.best.deskclock.provider.Alarm;
 import com.best.deskclock.provider.AlarmInstance;
-import com.best.deskclock.provider.CalendarAlertEvent;
+import com.best.deskclock.provider.CalendarAlarmEvent;
 import com.best.deskclock.provider.CalendarProfile;
 
 import org.junit.Before;
@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = 35)
-public class CalendarAlertSyncTest {
+public class CalendarAlarmSyncTest {
 
     private static final long CALENDAR_ID = 7;
     private static final long OTHER_CALENDAR_ID = 8;
@@ -189,8 +189,8 @@ public class CalendarAlertSyncTest {
         EVENTS.add(new FakeEvent(id, calendarId, begin, title));
     }
 
-    private List<CalendarAlertEvent> events() {
-        return CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id);
+    private List<CalendarAlarmEvent> events() {
+        return CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id);
     }
 
     @Test
@@ -201,9 +201,9 @@ public class CalendarAlertSyncTest {
         EVENTS.add(new FakeEvent(3, OTHER_CALENDAR_ID, inHours(5), "Alarm: other calendar"));
         EVENTS.add(new FakeEvent(4, CALENDAR_ID, inHours(24 * 8), "Alarm: too far ahead"));
 
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
 
-        final List<CalendarAlertEvent> rows = events();
+        final List<CalendarAlarmEvent> rows = events();
         assertEquals(1, rows.size());
         final Alarm alarm = Alarm.getAlarm(mCr, rows.get(0).alarmId);
         assertNotNull(alarm);
@@ -224,11 +224,11 @@ public class CalendarAlertSyncTest {
     @Test
     public void syncIsStableAndFollowsMovedEvents() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         final long firstAlarmId = events().get(0).alarmId;
 
         // A second sync changes nothing.
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(1, events().size());
         assertEquals(firstAlarmId, events().get(0).alarmId);
 
@@ -236,10 +236,10 @@ public class CalendarAlertSyncTest {
         EVENTS.clear();
         final long newBegin = inHours(6);
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, newBegin, "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
 
         // The old alarm is gone; SQLite may give its id to the new alarm.
-        final List<CalendarAlertEvent> rows = events();
+        final List<CalendarAlarmEvent> rows = events();
         assertEquals(1, rows.size());
         assertEquals(newBegin, rows.get(0).begin);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
@@ -249,7 +249,7 @@ public class CalendarAlertSyncTest {
 
         // Deleting the event removes its alarm.
         EVENTS.clear();
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertTrue(events().isEmpty());
         assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
     }
@@ -257,91 +257,91 @@ public class CalendarAlertSyncTest {
     @Test
     public void singleEventCanBeSwitchedOffAndOn() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
-        final CalendarAlertEvent row = events().get(0);
+        CalendarAlarmSync.syncAll(mContext);
+        final CalendarAlarmEvent row = events().get(0);
 
-        CalendarAlertSync.setEventEnabled(mContext, row.id, false);
+        CalendarAlarmSync.setEventEnabled(mContext, row.id, false);
         assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
 
         // The switch survives later syncs.
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertFalse(events().get(0).userEnabled);
         assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
 
-        CalendarAlertSync.setEventEnabled(mContext, row.id, true);
+        CalendarAlarmSync.setEventEnabled(mContext, row.id, true);
         assertNotNull(Alarm.getAlarm(mCr, events().get(0).alarmId));
     }
 
     @Test
     public void dismissedAlarmIsNotRecreated() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         final long alarmId = events().get(0).alarmId;
 
         // Dismissing a one-time calendar alarm deletes it.
         Alarm.deleteAlarm(mCr, alarmId);
-        assertEquals(CalendarAlertEvent.ALARM_CONSUMED, events().get(0).alarmId);
+        assertEquals(CalendarAlarmEvent.ALARM_CONSUMED, events().get(0).alarmId);
 
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
-        assertEquals(CalendarAlertEvent.ALARM_CONSUMED, events().get(0).alarmId);
+        assertEquals(CalendarAlarmEvent.ALARM_CONSUMED, events().get(0).alarmId);
     }
 
     @Test
     public void disablingTheProfileRemovesItsAlarms() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
 
         mProfile.enabled = false;
         mProfile.updateProfile(mCr);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
         assertEquals(1, events().size());
 
         mProfile.enabled = true;
         mProfile.updateProfile(mCr);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
     }
 
     @Test
     public void deletingTheProfileRemovesItsAlarms() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
 
-        CalendarAlertSync.deleteProfile(mContext, mProfile.id);
+        CalendarAlarmSync.deleteProfile(mContext, mProfile.id);
         assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
-        assertTrue(CalendarAlertEvent.getAllEvents(mCr).isEmpty());
+        assertTrue(CalendarAlarmEvent.getAllEvents(mCr).isEmpty());
         assertNull(CalendarProfile.getProfile(mCr, mProfile.id));
     }
 
     @Test
     public void snoozeLimitFollowsTheProfile() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, events().get(0).alarmId).get(0);
 
         instance.mSnoozeCount = 1;
-        assertFalse(CalendarAlertRules.isSnoozeLimitReached(mCr, instance));
+        assertFalse(CalendarAlarmRules.isSnoozeLimitReached(mCr, instance));
         instance.mSnoozeCount = 2;
-        assertTrue(CalendarAlertRules.isSnoozeLimitReached(mCr, instance));
+        assertTrue(CalendarAlarmRules.isSnoozeLimitReached(mCr, instance));
 
         mProfile.maxSnoozeCount = 0;
         mProfile.updateProfile(mCr);
         instance.mSnoozeCount = 50;
-        assertFalse(CalendarAlertRules.isSnoozeLimitReached(mCr, instance));
+        assertFalse(CalendarAlarmRules.isSnoozeLimitReached(mCr, instance));
     }
 
     @Test
     public void lookaheadWindowFollowsTheProfile() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(24 * 20), "Alarm: in 20 days"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertTrue(events().isEmpty());
 
         mProfile.lookaheadDays = 30;
         mProfile.updateProfile(mCr);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(1, events().size());
         assertNotNull(Alarm.getAlarm(mCr, events().get(0).alarmId));
 
@@ -354,7 +354,7 @@ public class CalendarAlertSyncTest {
     @Test
     public void flashlightIsOffByDefaultAndFollowsTheProfile() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: flash"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         final long alarmId = events().get(0).alarmId;
         org.junit.Assert.assertFalse(Alarm.getAlarm(mCr, alarmId).flash);
         org.junit.Assert.assertFalse(com.best.deskclock.provider.AlarmInstance
@@ -362,7 +362,7 @@ public class CalendarAlertSyncTest {
 
         mProfile.flash = true;
         mProfile.updateProfile(mCr);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertTrue(Alarm.getAlarm(mCr, alarmId).flash);
         assertTrue(com.best.deskclock.provider.AlarmInstance
             .getInstancesByAlarmId(mCr, alarmId).get(0).mFlash);
@@ -374,7 +374,7 @@ public class CalendarAlertSyncTest {
         mProfile.vibrateOnly = true;
         mProfile.updateProfile(mCr);
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: quiet"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         final long alarmId = events().get(0).alarmId;
         final com.best.deskclock.provider.AlarmInstance instance = com.best.deskclock.provider.AlarmInstance
             .getInstancesByAlarmId(mCr, alarmId).get(0);
@@ -384,7 +384,7 @@ public class CalendarAlertSyncTest {
         // Turning it off brings the sound back.
         mProfile.vibrateOnly = false;
         mProfile.updateProfile(mCr);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         org.junit.Assert.assertNotEquals(com.best.deskclock.utils.RingtoneUtils.RINGTONE_SILENT,
             Alarm.getAlarm(mCr, alarmId).alert);
     }
@@ -392,14 +392,14 @@ public class CalendarAlertSyncTest {
     @Test
     public void eventMovedByDeleteAndAddLeavesOneAlert() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
 
         // The calendar app deleted event 1 (still waiting to sync) and added event 2 at the new time.
         DELETED_IDS.add(1L);
         EVENTS.add(new FakeEvent(2, CALENDAR_ID, inHours(5), "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
 
-        final List<CalendarAlertEvent> rows = events();
+        final List<CalendarAlarmEvent> rows = events();
         assertEquals(1, rows.size());
         assertEquals(inHours(5), rows.get(0).begin);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
@@ -409,7 +409,7 @@ public class CalendarAlertSyncTest {
     public void switchingTheProfileOffStopsRingingAndScheduledAlarms() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: later"));
         EVENTS.add(new FakeEvent(2, CALENDAR_ID, inHours(4), "Alarm: much later"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(2, Alarm.getAlarms(mCr, null).size());
 
         // The first alarm is ringing right now.
@@ -419,7 +419,7 @@ public class CalendarAlertSyncTest {
 
         mProfile.enabled = false;
         mProfile.updateProfile(mCr);
-        CalendarAlertSync.syncProfile(mContext, mProfile.id);
+        CalendarAlarmSync.syncProfile(mContext, mProfile.id);
 
         assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
         assertTrue(AlarmInstance.getInstances(mCr, null).isEmpty());
@@ -427,7 +427,7 @@ public class CalendarAlertSyncTest {
         // Switching it back on brings the future alarms back.
         mProfile.enabled = true;
         mProfile.updateProfile(mCr);
-        CalendarAlertSync.syncProfile(mContext, mProfile.id);
+        CalendarAlarmSync.syncProfile(mContext, mProfile.id);
         assertEquals(2, Alarm.getAlarms(mCr, null).size());
     }
 
@@ -437,7 +437,7 @@ public class CalendarAlertSyncTest {
         mProfile.flash = false;
         mProfile.updateProfile(mCr);
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: flash only"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, events().get(0).alarmId).get(0);
         assertEquals(com.best.deskclock.utils.RingtoneUtils.RINGTONE_SILENT, instance.mRingtone);
         org.junit.Assert.assertFalse(instance.mVibrate);
@@ -449,7 +449,7 @@ public class CalendarAlertSyncTest {
         mProfile.titleRegex = "Alarm:(";
         mProfile.updateProfile(mCr);
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm:( Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertTrue(events().isEmpty());
     }
 
@@ -457,7 +457,7 @@ public class CalendarAlertSyncTest {
     public void eventStartingSoonIsNotSkipped() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2)
             - (System.currentTimeMillis() % 60000), "Alarm: soon"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
     }
 
@@ -471,8 +471,8 @@ public class CalendarAlertSyncTest {
         second.addProfile(mCr);
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
 
-        CalendarAlertSync.syncAll(mContext);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
 
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
         assertEquals(1, AlarmInstance.getInstances(mCr, null).size());
@@ -484,13 +484,13 @@ public class CalendarAlertSyncTest {
             CalendarContract.Attendees.ATTENDEE_STATUS_DECLINED));
         EVENTS.add(new FakeEvent(2, CALENDAR_ID, inHours(4), "Alarm: maybe", 0,
             CalendarContract.Attendees.ATTENDEE_STATUS_TENTATIVE));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(1, events().size());
         assertEquals("Alarm: maybe", events().get(0).title);
 
         mProfile.skipTentative = true;
         mProfile.updateProfile(mCr);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertTrue(events().isEmpty());
         assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
     }
@@ -506,12 +506,12 @@ public class CalendarAlertSyncTest {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, day.getTimeInMillis(), "Alarm: holiday", 1,
             CalendarContract.Attendees.ATTENDEE_STATUS_NONE));
 
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertTrue(events().isEmpty());
 
         mProfile.allDayMinutes = 8 * 60 + 30;
         mProfile.updateProfile(mCr);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(1, events().size());
         final Calendar expected = Calendar.getInstance();
         expected.clear();
@@ -523,42 +523,42 @@ public class CalendarAlertSyncTest {
     @Test
     public void calendarOfAnotherAccountRemovesAlarms() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
 
         // The account was removed and the calendar id now belongs to someone else.
         CALENDARS.put(CALENDAR_ID, "stranger@example.com");
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
     }
 
     @Test
     public void lostPermissionKeepsScheduledAlarms() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         EVENTS.clear();
 
         Shadows.shadowOf(mContext).denyPermissions(Manifest.permission.READ_CALENDAR);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
     }
 
     @Test
     public void calendarAlarmsAreNotRepeatedWhenMissed() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(0, Alarm.getAlarm(mCr, events().get(0).alarmId).missedAlarmRepeatLimit);
     }
 
     @Test
     public void ignoreCaseMatchesAnyCase() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "ALARM: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertTrue(events().isEmpty());
 
         mProfile.ignoreCase = true;
         mProfile.updateProfile(mCr);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         assertEquals(1, events().size());
     }
 
@@ -566,9 +566,9 @@ public class CalendarAlertSyncTest {
     public void alarmTimeRoundsToTheMinuteButNeverIntoThePast() {
         final long minute = 60_000L;
         final long base = 1_000L * minute;
-        assertEquals(base, CalendarAlertSync.alarmTimeFor(base + 45_000, base - 1));
-        assertEquals(base + minute, CalendarAlertSync.alarmTimeFor(base + 45_000, base + 10_000));
-        assertEquals(base, CalendarAlertSync.alarmTimeFor(base, base - 5_000));
+        assertEquals(base, CalendarAlarmSync.alarmTimeFor(base + 45_000, base - 1));
+        assertEquals(base + minute, CalendarAlarmSync.alarmTimeFor(base + 45_000, base + 10_000));
+        assertEquals(base, CalendarAlarmSync.alarmTimeFor(base, base - 5_000));
     }
 
     @Test
@@ -581,7 +581,7 @@ public class CalendarAlertSyncTest {
         final org.json.JSONArray backup = CalendarProfileRestore.exportProfiles(mCr);
 
         // Lost the profile, and the calendar got another id (for example on a new phone).
-        CalendarAlertSync.deleteProfile(mContext, mProfile.id);
+        CalendarAlarmSync.deleteProfile(mContext, mProfile.id);
         CALENDARS.clear();
         CALENDARS.put(42L, "someone@example.com");
         EVENTS.clear();
@@ -621,18 +621,18 @@ public class CalendarAlertSyncTest {
     @Test
     public void dismissedAlarmStaysDismissedAfterSwitchingTheProfileOffAndOn() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         Alarm.deleteAlarm(mCr, events().get(0).alarmId);
 
         mProfile.enabled = false;
         mProfile.updateProfile(mCr);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         mProfile.enabled = true;
         mProfile.updateProfile(mCr);
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
 
         assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
-        assertEquals(CalendarAlertEvent.ALARM_CONSUMED, events().get(0).alarmId);
+        assertEquals(CalendarAlarmEvent.ALARM_CONSUMED, events().get(0).alarmId);
     }
 
     @Test
@@ -645,7 +645,7 @@ public class CalendarAlertSyncTest {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
         EVENTS.add(new FakeEvent(2, OTHER_CALENDAR_ID, inHours(4), "Alarm: Wrong calendar"));
 
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
 
         assertEquals(CALENDAR_ID, CalendarProfile.getProfile(mCr, mProfile.id).calendarId);
         assertEquals(1, events().size());
@@ -655,14 +655,14 @@ public class CalendarAlertSyncTest {
     @Test
     public void resetRemovesAllProfilesAndEvents() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
-        CalendarAlertSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
         final long alarmId = events().get(0).alarmId;
 
-        CalendarAlertSync.deleteAllProfiles(mContext);
+        CalendarAlarmSync.deleteAllProfiles(mContext);
         Alarm.deleteAlarm(mCr, alarmId);
 
         assertTrue(CalendarProfile.getProfiles(mCr).isEmpty());
-        assertTrue(CalendarAlertEvent.getAllEvents(mCr).isEmpty());
+        assertTrue(CalendarAlarmEvent.getAllEvents(mCr).isEmpty());
         assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
     }
 
@@ -678,15 +678,15 @@ public class CalendarAlertSyncTest {
     public void restoreForgetsTheOtherPhonesCalendarCheckState() {
         final android.content.SharedPreferences prefs =
             com.best.deskclock.DeskClockApplication.getDefaultSharedPreferences(mContext);
-        prefs.edit().putLong(CalendarAlertSync.KEY_LAST_CHECK, 1234L)
+        prefs.edit().putLong(CalendarAlarmSync.KEY_LAST_CHECK, 1234L)
             .putBoolean("key_calendar_alert_permission_notified", true)
-            .putBoolean(CalendarAlertStatus.KEY_CALENDAR_PERMISSION_ASKED, true).commit();
+            .putBoolean(CalendarAlarmStatus.KEY_CALENDAR_PERMISSION_ASKED, true).commit();
         final android.content.SharedPreferences.Editor editor = prefs.edit();
-        CalendarAlertStatus.clearDeviceState(editor);
+        CalendarAlarmStatus.clearDeviceState(editor);
         editor.commit();
-        assertFalse(prefs.contains(CalendarAlertSync.KEY_LAST_CHECK));
+        assertFalse(prefs.contains(CalendarAlarmSync.KEY_LAST_CHECK));
         assertFalse(prefs.contains("key_calendar_alert_permission_notified"));
-        assertFalse(prefs.contains(CalendarAlertStatus.KEY_CALENDAR_PERMISSION_ASKED));
+        assertFalse(prefs.contains(CalendarAlarmStatus.KEY_CALENDAR_PERMISSION_ASKED));
     }
 
     @Test
@@ -694,18 +694,18 @@ public class CalendarAlertSyncTest {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
         EVENTS.add(new FakeEvent(2, CALENDAR_ID, inHours(4), "Alarm: Gym"));
         EVENTS.add(new FakeEvent(3, CALENDAR_ID, inHours(5), "Alarm: Train"));
-        CalendarAlertSync.syncAll(mContext);
-        final List<CalendarAlertEvent> before = events();
+        CalendarAlarmSync.syncAll(mContext);
+        final List<CalendarAlarmEvent> before = events();
         Alarm.deleteAlarm(mCr, before.get(0).alarmId);
-        CalendarAlertSync.setEventEnabled(mContext, before.get(1).id, false);
+        CalendarAlarmSync.setEventEnabled(mContext, before.get(1).id, false);
 
         CalendarProfileRestore.replaceAll(mContext, CalendarProfileRestore.exportProfiles(mCr));
 
         final List<CalendarProfile> profiles = CalendarProfile.getProfiles(mCr);
         assertEquals(1, profiles.size());
-        final List<CalendarAlertEvent> after = CalendarAlertEvent.getEventsForProfile(mCr, profiles.get(0).id);
+        final List<CalendarAlarmEvent> after = CalendarAlarmEvent.getEventsForProfile(mCr, profiles.get(0).id);
         assertEquals(3, after.size());
-        assertEquals(CalendarAlertEvent.ALARM_CONSUMED, after.get(0).alarmId);
+        assertEquals(CalendarAlarmEvent.ALARM_CONSUMED, after.get(0).alarmId);
         assertFalse(after.get(1).userEnabled);
         assertTrue(after.get(2).alarmId >= 0);
         // Only the train still rings.

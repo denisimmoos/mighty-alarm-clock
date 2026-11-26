@@ -34,7 +34,7 @@ import com.best.deskclock.base.AppExecutors;
 import com.best.deskclock.data.DataModel;
 import com.best.deskclock.data.SettingsDAO;
 import com.best.deskclock.events.Events;
-import com.best.deskclock.mighty.calendar.CalendarAlertRules;
+import com.best.deskclock.mighty.calendar.CalendarAlarmRules;
 import com.best.deskclock.mighty.ringtone.TagRingtoneResolver;
 import com.best.deskclock.mighty.stats.DeviceStats;
 import com.best.deskclock.provider.Alarm;
@@ -477,7 +477,7 @@ public final class AlarmStateManager extends BroadcastReceiver {
 
         // Calendar alarms may limit how often they can be snoozed. Once the limit is reached,
         // snoozing dismisses the alarm instead.
-        if (CalendarAlertRules.isSnoozeLimitReached(contentResolver, instance)) {
+        if (CalendarAlarmRules.isSnoozeLimitReached(contentResolver, instance)) {
             LogUtils.i("Snooze limit reached for calendar alarm instance " + instance.mId + ", dismissing");
             deleteInstanceAndUpdateParent(context, instance, true);
             return;

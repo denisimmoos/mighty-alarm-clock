@@ -29,7 +29,7 @@ import java.util.Locale;
 
 /**
  * Writes full backups (the same ZIP as the manual backup in the settings: settings, alarms, tags,
- * calendar alert profiles, fonts and images) into a user-selected folder (via
+ * calendar alarm profiles, fonts and images) into a user-selected folder (via
  * {@code ACTION_OPEN_DOCUMENT_TREE}), so they can be restored with the settings' restore.
  * <p>
  * Two kinds of files are written on every export:

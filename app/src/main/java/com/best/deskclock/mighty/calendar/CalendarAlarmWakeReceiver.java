@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * background checks may be put off for hours. This way an event added shortly before it starts
  * still gets its alarm.
  */
-public final class CalendarAlertWakeReceiver extends BroadcastReceiver {
+public final class CalendarAlarmWakeReceiver extends BroadcastReceiver {
 
     private static final long INTERVAL_MS = TimeUnit.HOURS.toMillis(1);
 
@@ -25,11 +25,11 @@ public final class CalendarAlertWakeReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         final Context appContext = context.getApplicationContext();
         final PendingResult result = goAsync();
-        CalendarAlertSync.EXECUTOR.execute(() -> {
+        CalendarAlarmSync.EXECUTOR.execute(() -> {
             try {
-                CalendarAlertSync.syncAll(appContext);
+                CalendarAlarmSync.syncAll(appContext);
                 // With all profiles switched off there is nothing to check until one is on again.
-                if (CalendarAlertWorker.hasEnabledProfile(appContext)) {
+                if (CalendarAlarmWorker.hasEnabledProfile(appContext)) {
                     schedule(appContext);
                 }
             } finally {
@@ -44,7 +44,7 @@ public final class CalendarAlertWakeReceiver extends BroadcastReceiver {
             am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + INTERVAL_MS,
                 createPendingIntent(context));
         } catch (Exception e) {
-            LogUtils.e("CalendarAlertWakeReceiver: could not schedule the hourly check", e);
+            LogUtils.e("CalendarAlarmWakeReceiver: could not schedule the hourly check", e);
         }
     }
 
@@ -52,12 +52,12 @@ public final class CalendarAlertWakeReceiver extends BroadcastReceiver {
         try {
             context.getSystemService(AlarmManager.class).cancel(createPendingIntent(context));
         } catch (Exception e) {
-            LogUtils.e("CalendarAlertWakeReceiver: could not cancel the hourly check", e);
+            LogUtils.e("CalendarAlarmWakeReceiver: could not cancel the hourly check", e);
         }
     }
 
     private static PendingIntent createPendingIntent(Context context) {
-        final Intent intent = new Intent(context, CalendarAlertWakeReceiver.class);
+        final Intent intent = new Intent(context, CalendarAlarmWakeReceiver.class);
         return PendingIntent.getBroadcast(context, 0, intent,
             PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }

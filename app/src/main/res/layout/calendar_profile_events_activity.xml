@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="@dimen/calendar_alert_list_bottom_padding" />
+            android:paddingBottom="@dimen/calendar_alarm_list_bottom_padding" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/events_empty"

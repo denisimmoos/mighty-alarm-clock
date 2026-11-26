@@ -63,8 +63,9 @@ public class BackupAndRestoreUtils {
 
     public static boolean isRestoringBackupOrIsResettingApp = false;
 
-    /** Key of the calendar alert profiles in the backup's settings.json. */
-    private static final String KEY_CALENDAR_ALERT_PROFILES = "Calendar alert profiles";
+    /** Key of the calendar alarm profiles in the backup's settings.json. */
+    // Name used in backup files, kept so backups made before the rename can still be restored.
+    private static final String KEY_CALENDAR_ALARM_PROFILES = "Calendar alert profiles";
 
     /** Key of the alarm tags in the backup's settings.json. */
     private static final String KEY_TAGS = "Tags";
@@ -239,8 +240,8 @@ public class BackupAndRestoreUtils {
         }
         jsonObject.put(KEY_TAGS, tagsArray);
 
-        // Calendar alert profiles; their alarms are rebuilt from the calendar after a restore.
-        jsonObject.put(KEY_CALENDAR_ALERT_PROFILES,
+        // Calendar alarm profiles; their alarms are rebuilt from the calendar after a restore.
+        jsonObject.put(KEY_CALENDAR_ALARM_PROFILES,
             com.best.deskclock.mighty.calendar.CalendarProfileRestore.exportProfiles(context.getContentResolver()));
 
         out.write(jsonObject.toString(4).getBytes(StandardCharsets.UTF_8));
@@ -381,7 +382,7 @@ public class BackupAndRestoreUtils {
         }
 
         // These describe the calendar checks on the phone the backup came from, not this one.
-        com.best.deskclock.mighty.calendar.CalendarAlertStatus.clearDeviceState(editor);
+        com.best.deskclock.mighty.calendar.CalendarAlarmStatus.clearDeviceState(editor);
 
         editor.commit();
 
@@ -426,13 +427,13 @@ public class BackupAndRestoreUtils {
             }
         }
 
-        // Calendar alert profiles. Backups made before they were included leave them as they are.
+        // Calendar alarm profiles. Backups made before they were included leave them as they are.
         try {
             com.best.deskclock.mighty.calendar.CalendarProfileRestore.replaceAll(context,
-                jsonObject.optJSONArray(KEY_CALENDAR_ALERT_PROFILES));
+                jsonObject.optJSONArray(KEY_CALENDAR_ALARM_PROFILES));
         } catch (Throwable e) {
             // Never let the profiles stop the rest of the restore.
-            LogUtils.e("Could not restore calendar alert profiles", e);
+            LogUtils.e("Could not restore calendar alarm profiles", e);
         }
 
         AlarmStateManager.updateNextAlarm(context);
@@ -597,7 +598,7 @@ public class BackupAndRestoreUtils {
     public static final String BACKUP_JSON_FILE_NAME = "settings.json";
 
     /**
-     * Writes a full backup (settings, alarms, tags, calendar alert profiles, fonts and images) as
+     * Writes a full backup (settings, alarms, tags, calendar alarm profiles, fonts and images) as
      * a ZIP archive. Used by the manual backup in the settings and by the automatic backup, so
      * both can be restored the same way.
      */

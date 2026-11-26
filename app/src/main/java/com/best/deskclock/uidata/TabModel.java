@@ -70,7 +70,7 @@ final class TabModel {
         final boolean isClockTabVisible = SettingsDAO.isClockTabVisible(mPrefs);
         final boolean isTimerTabVisible = SettingsDAO.isTimerTabVisible(mPrefs);
         final boolean isStopwatchTabVisible = SettingsDAO.isStopwatchTabVisible(mPrefs);
-        final boolean isCalendarAlertTabVisible = SettingsDAO.isCalendarAlertTabVisible(mPrefs);
+        final boolean isCalendarAlarmTabVisible = SettingsDAO.isCalendarAlarmTabVisible(mPrefs);
 
         if (isAlarmTabVisible) {
             newActiveTabs.add(Tab.ALARMS);
@@ -88,8 +88,8 @@ final class TabModel {
             newActiveTabs.add(Tab.STOPWATCH);
         }
 
-        if (isCalendarAlertTabVisible) {
-            newActiveTabs.add(Tab.CALENDAR_ALERT);
+        if (isCalendarAlarmTabVisible) {
+            newActiveTabs.add(Tab.CALENDAR_ALARM);
         }
 
         // This shouldn't happen because it's impossible to uncheck all the entries in the "Visible tabs" setting

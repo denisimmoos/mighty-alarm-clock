@@ -719,8 +719,8 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
             }
         }
 
-        // Alarms created from calendar events are managed in the Calendar Alert tab.
-        final String selection = CalendarAlertEvent.buildExcludeCalendarAlarmsSelection(
+        // Alarms created from calendar events are managed in the Calendar Alarm tab.
+        final String selection = CalendarAlarmEvent.buildExcludeCalendarAlarmsSelection(
             ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + _ID);
 
         return new CursorLoader(context, ALARMS_WITH_INSTANCES_URI, QUERY_ALARMS_WITH_INSTANCES_COLUMNS, selection, null, sortOrder) {
@@ -782,7 +782,7 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
      * @return every alarm the user created, leaving out alarms created from calendar events.
      */
     public static List<Alarm> getUserAlarms(ContentResolver cr) {
-        return getAlarms(cr, CalendarAlertEvent.buildExcludeCalendarAlarmsSelection(_ID));
+        return getAlarms(cr, CalendarAlarmEvent.buildExcludeCalendarAlarmsSelection(_ID));
     }
 
     /**

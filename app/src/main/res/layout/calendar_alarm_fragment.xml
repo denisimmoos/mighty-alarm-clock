@@ -29,7 +29,7 @@
                 android:id="@+id/permission_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/calendar_alert_permission_needed"
+                android:text="@string/calendar_alarm_permission_needed"
                 android:textColor="?attr/colorOnErrorContainer"
                 android:textSize="15sp" />
 
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="8dp"
-                android:text="@string/calendar_alert_permission_button" />
+                android:text="@string/calendar_alarm_permission_button" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -64,7 +64,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingTop="4dp"
-            android:paddingBottom="@dimen/calendar_alert_list_bottom_padding" />
+            android:paddingBottom="@dimen/calendar_alarm_list_bottom_padding" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/empty_view"
@@ -74,7 +74,7 @@
             android:drawablePadding="12dp"
             android:gravity="center"
             android:paddingHorizontal="32dp"
-            android:text="@string/calendar_alert_no_profiles"
+            android:text="@string/calendar_alarm_no_profiles"
             android:textColor="?attr/colorOnSurfaceVariant"
             android:textSize="16sp"
             android:visibility="gone"

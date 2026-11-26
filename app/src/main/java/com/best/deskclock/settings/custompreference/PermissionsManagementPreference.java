@@ -204,7 +204,7 @@ public class PermissionsManagementPreference extends Preference {
             titleId = R.string.FSN_dialog_title;
             messageId = R.string.FSN_dialog_text;
         } else if (isCalendarPermissionPreference()) {
-            iconId = R.drawable.ic_tab_calendar_alert;
+            iconId = R.drawable.ic_tab_calendar_alarm;
             titleId = R.string.calendar_permission_dialog_title;
             messageId = R.string.calendar_permission_dialog_text;
         } else {

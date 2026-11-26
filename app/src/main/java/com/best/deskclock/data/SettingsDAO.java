@@ -346,14 +346,14 @@ public final class SettingsDAO {
      * @return the set of currently visible tabs.
      */
     public static Set<String> getVisibleTabs(SharedPreferences prefs) {
-        // The Calendar Alert tab was added after users may already have saved their visible tabs.
+        // The Calendar Alarm tab was added after users may already have saved their visible tabs.
         // Show it once for them; afterwards their own choice is kept.
-        if (!prefs.getBoolean(KEY_CALENDAR_ALERT_TAB_ADDED, false)) {
-            final SharedPreferences.Editor editor = prefs.edit().putBoolean(KEY_CALENDAR_ALERT_TAB_ADDED, true);
+        if (!prefs.getBoolean(KEY_CALENDAR_ALARM_TAB_ADDED, false)) {
+            final SharedPreferences.Editor editor = prefs.edit().putBoolean(KEY_CALENDAR_ALARM_TAB_ADDED, true);
             final Set<String> saved = prefs.getStringSet(KEY_VISIBLE_TABS, null);
-            if (saved != null && !saved.contains(VISIBLE_TAB_CALENDAR_ALERT)) {
+            if (saved != null && !saved.contains(VISIBLE_TAB_CALENDAR_ALARM)) {
                 final Set<String> updated = new java.util.HashSet<>(saved);
-                updated.add(VISIBLE_TAB_CALENDAR_ALERT);
+                updated.add(VISIBLE_TAB_CALENDAR_ALARM);
                 editor.putStringSet(KEY_VISIBLE_TABS, updated);
             }
             editor.apply();
@@ -392,10 +392,10 @@ public final class SettingsDAO {
     }
 
     /**
-     * @return {@code true} if the Calendar Alert tab is visible in the bottom navigation menu. {@code false} otherwise.
+     * @return {@code true} if the Calendar Alarm tab is visible in the bottom navigation menu. {@code false} otherwise.
      */
-    public static boolean isCalendarAlertTabVisible(SharedPreferences prefs) {
-        return getVisibleTabs(prefs).contains(VISIBLE_TAB_CALENDAR_ALERT);
+    public static boolean isCalendarAlarmTabVisible(SharedPreferences prefs) {
+        return getVisibleTabs(prefs).contains(VISIBLE_TAB_CALENDAR_ALARM);
     }
 
     /**

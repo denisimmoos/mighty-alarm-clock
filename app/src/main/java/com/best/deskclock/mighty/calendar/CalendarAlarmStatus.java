@@ -25,22 +25,24 @@ import com.best.deskclock.utils.SdkUtils;
  * Keeps track of how the calendar checks are doing: when the calendar was last read, and a
  * notification when calendar access was taken away while profiles still need it.
  */
-public final class CalendarAlertStatus {
+public final class CalendarAlarmStatus {
 
+    // Stored name from before the feature was called "Calendar Alarm"; kept so existing data still works.
     private static final String KEY_PERMISSION_NOTIFIED = "key_calendar_alert_permission_notified";
     /** Set by the permissions screen once it asked Android for calendar access. */
     public static final String KEY_CALENDAR_PERMISSION_ASKED = "key_calendar_permission_asked";
+    // Stored name from before the feature was called "Calendar Alarm"; kept so existing data still works.
     private static final String CHANNEL_ID = "calendar_alert_status";
     private static final int NOTIFICATION_ID = 0x0CA1;
 
-    private CalendarAlertStatus() {
+    private CalendarAlarmStatus() {
     }
 
     static void update(Context context, boolean canReadCalendar, boolean hasProfiles, long now) {
         final SharedPreferences prefs = DeskClockApplication.getDefaultSharedPreferences(context);
         if (canReadCalendar) {
             prefs.edit()
-                .putLong(CalendarAlertSync.KEY_LAST_CHECK, now)
+                .putLong(CalendarAlarmSync.KEY_LAST_CHECK, now)
                 .putBoolean(KEY_PERMISSION_NOTIFIED, false)
                 .apply();
             NotificationManagerCompat.from(context).cancel(NOTIFICATION_ID);
@@ -55,7 +57,7 @@ public final class CalendarAlertStatus {
      * @return when the calendar was last read, or 0 if never.
      */
     public static long getLastCheck(Context context) {
-        return DeskClockApplication.getDefaultSharedPreferences(context).getLong(CalendarAlertSync.KEY_LAST_CHECK, 0);
+        return DeskClockApplication.getDefaultSharedPreferences(context).getLong(CalendarAlarmSync.KEY_LAST_CHECK, 0);
     }
 
     /**
@@ -75,23 +77,23 @@ public final class CalendarAlertStatus {
             if (SdkUtils.isAtLeastAndroid8()) {
                 final NotificationManager nm = context.getSystemService(NotificationManager.class);
                 nm.createNotificationChannel(new NotificationChannel(CHANNEL_ID,
-                    context.getString(R.string.calendar_alert_status_channel), NotificationManager.IMPORTANCE_DEFAULT));
+                    context.getString(R.string.calendar_alarm_status_channel), NotificationManager.IMPORTANCE_DEFAULT));
             }
             final Intent open = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
             final PendingIntent contentIntent = open == null ? null
                 : PendingIntent.getActivity(context, NOTIFICATION_ID, open, PendingIntent.FLAG_IMMUTABLE);
             final NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_tab_calendar_alert)
-                .setContentTitle(context.getString(R.string.calendar_alert_permission_lost_title))
-                .setContentText(context.getString(R.string.calendar_alert_permission_lost_text))
+                .setSmallIcon(R.drawable.ic_tab_calendar_alarm)
+                .setContentTitle(context.getString(R.string.calendar_alarm_permission_lost_title))
+                .setContentText(context.getString(R.string.calendar_alarm_permission_lost_text))
                 .setStyle(new NotificationCompat.BigTextStyle()
-                    .bigText(context.getString(R.string.calendar_alert_permission_lost_text)))
+                    .bigText(context.getString(R.string.calendar_alarm_permission_lost_text)))
                 .setAutoCancel(true)
                 .setContentIntent(contentIntent);
             NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, builder.build());
             return true;
         } catch (Exception e) {
-            LogUtils.e("CalendarAlertStatus: could not show the permission notification", e);
+            LogUtils.e("CalendarAlarmStatus: could not show the permission notification", e);
             return false;
         }
     }
@@ -101,7 +103,7 @@ public final class CalendarAlertStatus {
      * from another phone were restored.
      */
     public static void clearDeviceState(android.content.SharedPreferences.Editor editor) {
-        editor.remove(CalendarAlertSync.KEY_LAST_CHECK).remove(KEY_PERMISSION_NOTIFIED)
+        editor.remove(CalendarAlarmSync.KEY_LAST_CHECK).remove(KEY_PERMISSION_NOTIFIED)
             // Whether Android was already asked for calendar access on this phone.
             .remove(KEY_CALENDAR_PERMISSION_ASKED);
     }
