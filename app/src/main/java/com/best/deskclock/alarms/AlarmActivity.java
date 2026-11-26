@@ -605,6 +605,8 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
      * Applies the dismiss method and snooze limit of the calendar profile that created this
      * alarm, if any.
      */
+    private boolean mIsCalendarAlarm;
+
     private void applyCalendarProfileRules() {
         if (mAlarm == null || mAlarmInstance == null) {
             return;
@@ -614,6 +616,9 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
         if (profile == null) {
             return;
         }
+
+        // A calendar alarm is removed after it rings anyway, so its button just says "Dismiss".
+        mIsCalendarAlarm = true;
 
         if (profile.isSlideDismissForced()) {
             mIsSwipeActionEnabled = true;
@@ -1417,7 +1422,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
      * {@code false} otherwise.
      */
     private boolean isOccasionalAlarmDeletedAfterUse() {
-        if (mAlarm.isRecurring()) {
+        if (mAlarm.isRecurring() || mIsCalendarAlarm) {
             return false;
         }
 

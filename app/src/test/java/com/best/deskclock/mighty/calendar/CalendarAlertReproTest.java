@@ -227,9 +227,38 @@ public class CalendarAlertReproTest {
         final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
         final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
         AlarmStateManager.setFiredState(mContext, instance);
-        Robolectric.buildActivity(AlarmActivity.class,
+        final AlarmActivity activity = Robolectric.buildActivity(AlarmActivity.class,
             new android.content.Intent(mContext, AlarmActivity.class)
-                .setData(AlarmInstance.getContentUri(instance.mId))).create().start().postCreate(null).resume();
+                .setData(AlarmInstance.getContentUri(instance.mId))).create().start().postCreate(null).resume().get();
+        // Calendar alarms say "Dismiss", not "Delete".
+        final String delete = mContext.getString(com.best.deskclock.R.string.delete);
+        for (int id : new int[] {com.best.deskclock.R.id.dismiss_button, com.best.deskclock.R.id.dismiss_only_button,
+            com.best.deskclock.R.id.dismiss_text}) {
+            final android.view.View v = activity.findViewById(id);
+            if (v instanceof android.widget.TextView) {
+                org.junit.Assert.assertNotEquals(delete, ((android.widget.TextView) v).getText().toString());
+            }
+        }
+    }
+
+    @Test
+    public void notificationSaysDismiss() {
+        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
+        Shadows.shadowOf(mContext).grantPermissions(Manifest.permission.POST_NOTIFICATIONS);
+        com.best.deskclock.alarms.AlarmNotifications.showUpcomingNotification(mContext, instance);
+        final android.app.NotificationManager nm = mContext.getSystemService(android.app.NotificationManager.class);
+        final java.util.List<android.app.Notification> all = Shadows.shadowOf(nm).getAllNotifications();
+        org.junit.Assert.assertFalse(all.isEmpty());
+        boolean found = false;
+        for (android.app.Notification n : all) {
+            if (n.actions == null) continue;
+            for (android.app.Notification.Action a : n.actions) {
+                org.junit.Assert.assertNotEquals(mContext.getString(com.best.deskclock.R.string.alarm_alert_dismiss_and_delete_text), a.title.toString());
+                if (a.title.toString().equals(mContext.getString(com.best.deskclock.R.string.alarm_alert_dismiss_text))) found = true;
+            }
+        }
+        org.junit.Assert.assertTrue(found);
     }
 
     @org.junit.Ignore("AlarmActivity animations keep the looper busy under Robolectric")

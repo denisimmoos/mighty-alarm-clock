@@ -31,6 +31,7 @@ import androidx.core.content.ContextCompat;
 
 import com.best.deskclock.DeskClock;
 import com.best.deskclock.R;
+import com.best.deskclock.mighty.calendar.CalendarAlertRules;
 import com.best.deskclock.provider.Alarm;
 import com.best.deskclock.provider.AlarmInstance;
 import com.best.deskclock.utils.AlarmUtils;
@@ -226,11 +227,11 @@ public final class AlarmNotifications {
 
         final int id = instance.hashCode();
 
-        final String contentTitle = localizedContext.getString(alarm.isDeleteAfterUse()
+        final String contentTitle = localizedContext.getString(isDeleteAfterUseShown(context, alarm)
             ? R.string.occasional_alarm_alert_predismiss_title
             : R.string.alarm_alert_predismiss_title);
 
-        final String dismissActionTitle = localizedContext.getString(alarm.isDeleteAfterUse()
+        final String dismissActionTitle = localizedContext.getString(isDeleteAfterUseShown(context, alarm)
             ? R.string.alarm_alert_dismiss_and_delete_text
             : R.string.alarm_alert_dismiss_text);
 
@@ -287,7 +288,7 @@ public final class AlarmNotifications {
             return;
         }
 
-        String dismissActionTitle = localizedContext.getString(alarm.isDeleteAfterUse()
+        String dismissActionTitle = localizedContext.getString(isDeleteAfterUseShown(context, alarm)
             ? R.string.alarm_alert_dismiss_and_delete_text
             : R.string.alarm_alert_dismiss_text);
 
@@ -412,7 +413,7 @@ public final class AlarmNotifications {
             return;
         }
 
-        String dismissActionTitle = localizedContext.getString(alarm.isDeleteAfterUse()
+        String dismissActionTitle = localizedContext.getString(isDeleteAfterUseShown(context, alarm)
             ? R.string.alarm_alert_dismiss_and_delete_text
             : R.string.alarm_alert_dismiss_text);
 
@@ -543,5 +544,14 @@ public final class AlarmNotifications {
         final String timeKey = SORT_KEY_FORMAT.format(instance.getAlarmTime().getTime());
         final boolean missedAlarm = instance.mAlarmState == AlarmInstance.MISSED_STATE;
         return missedAlarm ? ("MISSED " + timeKey) : timeKey;
+    }
+
+    /**
+     * @return {@code true} if the notification should say the alarm is deleted after use. Calendar
+     * alarms are always removed after they ring, so they read like normal alarms.
+     */
+    private static boolean isDeleteAfterUseShown(Context context, Alarm alarm) {
+        return alarm.isDeleteAfterUse()
+            && CalendarAlertRules.getProfileForAlarm(context.getContentResolver(), alarm.id) == null;
     }
 }
