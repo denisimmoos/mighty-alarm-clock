@@ -67,6 +67,10 @@ public class CalendarAlertReproTest {
     @org.junit.After
     public void drainBackgroundWork() throws Exception {
         com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
+        // Calendar checks started by a screen run on their own thread; let them finish so they
+        // can't change the next test's database.
+        CalendarAlertSync.EXECUTOR.submit(() -> { }).get();
+        com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
         ShadowLooper.idleMainLooper();
         com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
     }
