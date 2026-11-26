@@ -1424,6 +1424,10 @@
         \n\nWe recommend whitelisting this app from battery optimizations.</string>
     <!-- Notifications Permission -->
     <string name="notifications_permission_title">ENABLE NOTIFICATIONS</string>
+    <string name="calendar_permission_title">ALLOW CALENDAR ACCESS</string>
+    <string name="calendar_permission_requirement">Only for calendar alarms</string>
+    <string name="calendar_permission_dialog_title">Calendar</string>
+    <string name="calendar_permission_dialog_text">Calendar alarms read the events of the calendars you choose in your profiles, so they can ring a fullscreen alarm when a matching event starts. The app only reads your calendars, never changes them, and nothing leaves your phone.\n\nWithout this permission, no new calendar alarms are set. Alarms that are already set still ring.</string>
     <string name="notifications_dialog_title">Notifications</string>
     <string name="notifications_dialog_text">In addition to setting alarms, this app also has a timer and a stopwatch mode.
         \n\nIn order for notifications to appear correctly for all modules and especially for the alarm to be triggered, we recommend activating notifications for this application.</string>

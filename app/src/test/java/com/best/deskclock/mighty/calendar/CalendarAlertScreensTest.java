@@ -86,4 +86,19 @@ public class CalendarAlertScreensTest {
             assertNotNull(fragment.getView());
         }
     }
+
+    @Test
+    public void permissionsScreenListsCalendarAccess() {
+        try (ActivityController<com.best.deskclock.settings.PermissionsManagementActivity> controller =
+                 Robolectric.buildActivity(com.best.deskclock.settings.PermissionsManagementActivity.class).setup()) {
+            ShadowLooper.idleMainLooper();
+            final androidx.preference.PreferenceFragmentCompat fragment = (androidx.preference.PreferenceFragmentCompat)
+                controller.get().getSupportFragmentManager().findFragmentById(R.id.content_frame);
+            assertNotNull(fragment);
+            final androidx.preference.Preference pref = fragment.findPreference(
+                com.best.deskclock.settings.PreferencesKeys.KEY_CALENDAR_PERMISSION);
+            assertNotNull(pref);
+            org.junit.Assert.assertTrue(pref.isVisible());
+        }
+    }
 }

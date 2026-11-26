@@ -5,6 +5,7 @@ package com.best.deskclock.settings.custompreference;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.best.deskclock.DeskClockApplication.getDefaultSharedPreferences;
+import static com.best.deskclock.settings.PreferencesKeys.KEY_CALENDAR_PERMISSION;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_FULL_SCREEN_NOTIFICATION_PERMISSION;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_IGNORE_BATTERY_OPTIMIZATIONS;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_NOTIFICATION_PERMISSION;
@@ -73,9 +74,20 @@ public class PermissionsManagementPreference extends Preference {
                 setStatusText(PermissionUtils.areNotificationsEnabled(getContext()));
             } else if (isFullScreenNotificationPermissionPreference()) {
                 setStatusText(PermissionUtils.areFullScreenNotificationsEnabled(getContext()));
+            } else if (isCalendarPermissionPreference()) {
+                setStatusText(com.best.deskclock.mighty.calendar.DeviceCalendars.hasPermission(getContext()));
             }
 
             mBinding.statusState.setVisibility(VISIBLE);
+        }
+
+        if (isCalendarPermissionPreference()) {
+            // Optional: only calendar alarms need it.
+            mBinding.requirementAdvice.setText(getContext().getString(R.string.calendar_permission_requirement));
+            mBinding.requirementAdvice.setTextColor(mBinding.requirementTitle.getTextColors());
+        } else {
+            mBinding.requirementAdvice.setText(getContext().getString(R.string.permission_highly_recommended));
+            mBinding.requirementAdvice.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAlert));
         }
 
         mBinding.detailsButton.setOnClickListener(v -> displayPermissionDetailsDialog());
@@ -156,6 +168,14 @@ public class PermissionsManagementPreference extends Preference {
     }
 
     /**
+     * @return {@code true} if the current preference is related to the calendar permission, which
+     * calendar alarms need; {@code false} otherwise.
+     */
+    private boolean isCalendarPermissionPreference() {
+        return getKey().equals(KEY_CALENDAR_PERMISSION);
+    }
+
+    /**
      * @return {@code true} if the current preference is related to the "Show lockscreen" permission
      * for MIUI devices; {@code false} otherwise.
      */
@@ -183,6 +203,10 @@ public class PermissionsManagementPreference extends Preference {
             iconId = R.drawable.ic_fullscreen;
             titleId = R.string.FSN_dialog_title;
             messageId = R.string.FSN_dialog_text;
+        } else if (isCalendarPermissionPreference()) {
+            iconId = R.drawable.ic_tab_calendar_alert;
+            titleId = R.string.calendar_permission_dialog_title;
+            messageId = R.string.calendar_permission_dialog_text;
         } else {
             iconId = R.drawable.ic_screen_lock;
             titleId = R.string.show_lockscreen_dialog_title;

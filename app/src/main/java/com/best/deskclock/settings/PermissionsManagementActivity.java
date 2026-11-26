@@ -10,6 +10,7 @@ import static android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTI
 import static android.provider.Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT;
 import static android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS;
 import static android.provider.Settings.EXTRA_APP_PACKAGE;
+import static com.best.deskclock.settings.PreferencesKeys.KEY_CALENDAR_PERMISSION;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_ENABLE_FOREGROUND_SERVICE;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_ESSENTIAL_PERMISSIONS_GRANTED;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_FULL_SCREEN_NOTIFICATION_PERMISSION;
@@ -71,6 +72,8 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
         private static final String KEY_SHOW_FOREGROUND_SERVICE_DIALOG = "show_foreground_service_dialog";
         private static final String KEY_SHOW_NOTIF_RATIONALE = "show_notif_rationale";
         private static final String KEY_PENDING_REVOCATION_PREF = "pending_revocation_pref";
+        /** Remembers that the calendar permission was asked for once, to tell "never asked" from "don't ask again". */
+        private static final String KEY_CALENDAR_PERMISSION_ASKED = "key_calendar_permission_asked";
 
         private boolean mShowForegroundServiceDialog = false;
         private boolean mShowNotificationRationaleDialog = false;
@@ -79,11 +82,13 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
         private static final String[] DYNAMIC_PERMISSION_KEYS = {
             KEY_IGNORE_BATTERY_OPTIMIZATIONS,
             KEY_NOTIFICATION_PERMISSION,
+            KEY_CALENDAR_PERMISSION,
             KEY_FULL_SCREEN_NOTIFICATION_PERMISSION
         };
 
         PermissionsManagementPreference mIgnoreBatteryOptimizationsPref;
         PermissionsManagementPreference mNotificationPermissionPref;
+        PermissionsManagementPreference mCalendarPermissionPref;
         PermissionsManagementPreference mFullScreenNotificationPref;
         PermissionsManagementPreference mShowLockScreenPref;
         SwitchPreferenceCompat mEnableForegroundServicePref;
@@ -101,6 +106,7 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
 
             mIgnoreBatteryOptimizationsPref = findPreference(KEY_IGNORE_BATTERY_OPTIMIZATIONS);
             mNotificationPermissionPref = findPreference(KEY_NOTIFICATION_PERMISSION);
+            mCalendarPermissionPref = findPreference(KEY_CALENDAR_PERMISSION);
             mFullScreenNotificationPref = findPreference(KEY_FULL_SCREEN_NOTIFICATION_PERMISSION);
             mShowLockScreenPref = findPreference(KEY_SHOW_LOCKSCREEN_PERMISSION);
             mEnableForegroundServicePref = findPreference(KEY_ENABLE_FOREGROUND_SERVICE);
@@ -140,6 +146,8 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
                         displayRevocationDialog(KEY_IGNORE_BATTERY_OPTIMIZATIONS, getIgnoreBatteryOptimizationsIntentRevoke());
                     case KEY_FULL_SCREEN_NOTIFICATION_PERMISSION ->
                         displayRevocationDialog(KEY_FULL_SCREEN_NOTIFICATION_PERMISSION, getFullScreenNotificationsIntent());
+                    case KEY_CALENDAR_PERMISSION ->
+                        displayRevocationDialog(KEY_CALENDAR_PERMISSION, getAppDetailsIntent());
                 }
             }
 
@@ -148,11 +156,18 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
             for (String key : DYNAMIC_PERMISSION_KEYS) {
                 updateSinglePreference(key);
             }
+
+            if (com.best.deskclock.mighty.calendar.DeviceCalendars.hasPermission(requireContext())) {
+                // Access may have just been given: set the calendar alarms right away.
+                com.best.deskclock.mighty.calendar.CalendarAlertWorker.ensureScheduled(requireContext());
+                com.best.deskclock.mighty.calendar.CalendarAlertWorker.syncNow(requireContext());
+            }
         }
 
         @Override
         public void onDestroy() {
-            nullifyPreferenceListeners(mIgnoreBatteryOptimizationsPref, mNotificationPermissionPref, mFullScreenNotificationPref,
+            nullifyPreferenceListeners(mIgnoreBatteryOptimizationsPref, mNotificationPermissionPref,
+                mCalendarPermissionPref, mFullScreenNotificationPref,
                 mShowLockScreenPref, mEnableForegroundServicePref);
 
             nullifyAllPrefs();
@@ -186,6 +201,7 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
             switch (pref.getKey()) {
                 case KEY_IGNORE_BATTERY_OPTIMIZATIONS -> launchIgnoreBatteryOptimizationsSettings();
                 case KEY_NOTIFICATION_PERMISSION -> grantOrRevokeNotificationsPermission();
+                case KEY_CALENDAR_PERMISSION -> grantOrRevokeCalendarPermission();
                 case KEY_FULL_SCREEN_NOTIFICATION_PERMISSION -> grantOrRevokeFullScreenNotificationsPermission();
                 case KEY_SHOW_LOCKSCREEN_PERMISSION -> grantShowOnLockScreenPermissionXiaomi();
             }
@@ -197,6 +213,8 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
             mIgnoreBatteryOptimizationsPref.setOnPreferenceClickListener(this);
 
             mNotificationPermissionPref.setOnPreferenceClickListener(this);
+
+            mCalendarPermissionPref.setOnPreferenceClickListener(this);
 
             mFullScreenNotificationPref.setVisible(SdkUtils.isAtLeastAndroid14());
             mFullScreenNotificationPref.setOnPreferenceClickListener(this);
@@ -270,6 +288,30 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
                     startActivity(getNotificationSettingsIntent());
                 }
             }
+        }
+
+        /**
+         * Grant or revoke the calendar permission, which calendar alarms need.
+         */
+        private void grantOrRevokeCalendarPermission() {
+            final Context context = requireContext();
+            if (com.best.deskclock.mighty.calendar.DeviceCalendars.hasPermission(context)) {
+                displayRevocationDialog(KEY_CALENDAR_PERMISSION, getAppDetailsIntent());
+            } else if (mPrefs.getBoolean(KEY_CALENDAR_PERMISSION_ASKED, false)
+                && !shouldShowRequestPermissionRationale(android.Manifest.permission.READ_CALENDAR)) {
+                // Android no longer shows the request ("don't ask again"); it can only be given
+                // in the app's system settings.
+                startActivity(getAppDetailsIntent());
+            } else {
+                mPrefs.edit().putBoolean(KEY_CALENDAR_PERMISSION_ASKED, true).apply();
+                requireActivity().requestPermissions(new String[]{android.Manifest.permission.READ_CALENDAR}, 0);
+            }
+        }
+
+        private Intent getAppDetailsIntent() {
+            return new Intent(ACTION_APPLICATION_DETAILS_SETTINGS)
+                .setData(Uri.fromParts("package", requireContext().getPackageName(), null))
+                .addFlags(FLAG_ACTIVITY_NEW_TASK);
         }
 
         private void showNotificationRationaleDialog() {
@@ -391,6 +433,7 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
         private void nullifyAllPrefs() {
             mIgnoreBatteryOptimizationsPref = null;
             mNotificationPermissionPref = null;
+            mCalendarPermissionPref = null;
             mFullScreenNotificationPref = null;
             mShowLockScreenPref = null;
             mEnableForegroundServicePref = null;

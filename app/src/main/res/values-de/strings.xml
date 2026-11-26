@@ -295,6 +295,10 @@
     <string name="ignore_battery_optimizations_title">AKKU-OPTIMIERUNGEN IGNORIEREN</string>
     <string name="ignore_battery_optimizations_dialog_title">Akku-Optimierungen</string>
     <string name="notifications_permission_title">BENACHRICHTIGUNGEN AKTIVIEREN</string>
+    <string name="calendar_permission_title">KALENDERZUGRIFF ERLAUBEN</string>
+    <string name="calendar_permission_requirement">Nur für Kalender-Alarme</string>
+    <string name="calendar_permission_dialog_title">Kalender</string>
+    <string name="calendar_permission_dialog_text">Kalender-Alarme lesen die Termine der Kalender, die du in deinen Profilen auswählst, damit beim Beginn eines passenden Termins ein Vollbild-Wecker klingelt. Die App liest deine Kalender nur, ändert sie nie, und nichts verlässt dein Handy.\n\nOhne diese Berechtigung werden keine neuen Kalender-Alarme gestellt. Bereits gestellte Alarme klingeln trotzdem.</string>
     <string name="notifications_dialog_title">Benachrichtigungen</string>
     <string name="permission_dialog_revoke_title">Berechtigung aufheben</string>
     <string name="ignore_battery_optimizations_dialog_text">Standardmäßig konfiguriert das Android-System alle vom Benutzer installierten Apps so, dass sie optimiert werden, um den Akku zu schonen. \n \nWährend dies für viele Apps akzeptabel ist, ist diese App eine Wecker-App und verursacht oft Probleme, wenn sie für das Schonen des Akkus optimiert ist. Sobald diese Option aktiviert ist, kann das Android-System die App jederzeit beenden und/oder geplante Wecker abbrechen, was sich negativ auf den Betrieb der App auswirken würde. \n \nWir empfehlen, diese App von den Akku-Optimierungen auszuschließen.</string>

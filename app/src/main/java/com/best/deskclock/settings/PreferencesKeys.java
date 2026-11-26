@@ -250,6 +250,7 @@ public class PreferencesKeys {
     // Permission management
     public static final String KEY_IGNORE_BATTERY_OPTIMIZATIONS = "key_ignore_battery_optimizations";
     public static final String KEY_NOTIFICATION_PERMISSION = "key_notification_permission";
+    public static final String KEY_CALENDAR_PERMISSION = "key_calendar_permission";
     public static final String KEY_FULL_SCREEN_NOTIFICATION_PERMISSION = "key_full_screen_notification_permission";
     public static final String KEY_SHOW_LOCKSCREEN_PERMISSION = "key_show_lockscreen_permission";
     public static final String KEY_ENABLE_FOREGROUND_SERVICE = "key_enable_foreground_service";
