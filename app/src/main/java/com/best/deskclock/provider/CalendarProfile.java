@@ -62,6 +62,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         FLASH,
         VIBRATE_ONLY,
         VIBRATION_STRENGTH,
+        FLASH_ONLY,
         CREATED_AT,
         UPDATED_AT
     };
@@ -85,8 +86,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     private static final int FLASH_INDEX = 15;
     private static final int VIBRATE_ONLY_INDEX = 16;
     private static final int VIBRATION_STRENGTH_INDEX = 17;
-    private static final int CREATED_AT_INDEX = 18;
-    private static final int UPDATED_AT_INDEX = 19;
+    private static final int FLASH_ONLY_INDEX = 18;
+    private static final int CREATED_AT_INDEX = 19;
+    private static final int UPDATED_AT_INDEX = 20;
 
     public long id;
     public String name;
@@ -115,6 +117,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public boolean vibrateOnly;
     /** Vibration strength in percent, {@link #MIN_VIBRATION_STRENGTH} to {@link #MAX_VIBRATION_STRENGTH}. */
     public int vibrationStrength;
+    /** Only blink the flashlight, without sound or vibration. Off by default. */
+    public boolean flashOnly;
     public long createdAt;
     public long updatedAt;
 
@@ -137,6 +141,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         flash = false;
         vibrateOnly = false;
         vibrationStrength = DEFAULT_VIBRATION_STRENGTH;
+        flashOnly = false;
         final long now = System.currentTimeMillis();
         createdAt = now;
         updatedAt = now;
@@ -161,6 +166,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         flash = c.getInt(FLASH_INDEX) == 1;
         vibrateOnly = c.getInt(VIBRATE_ONLY_INDEX) == 1;
         vibrationStrength = clampVibrationStrength(c.getInt(VIBRATION_STRENGTH_INDEX));
+        flashOnly = c.getInt(FLASH_ONLY_INDEX) == 1;
         createdAt = c.getLong(CREATED_AT_INDEX);
         updatedAt = c.getLong(UPDATED_AT_INDEX);
     }
@@ -191,6 +197,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         values.put(FLASH, flash ? 1 : 0);
         values.put(VIBRATE_ONLY, vibrateOnly ? 1 : 0);
         values.put(VIBRATION_STRENGTH, clampVibrationStrength(vibrationStrength));
+        values.put(FLASH_ONLY, flashOnly ? 1 : 0);
         values.put(CREATED_AT, createdAt);
         values.put(UPDATED_AT, updatedAt);
         return values;

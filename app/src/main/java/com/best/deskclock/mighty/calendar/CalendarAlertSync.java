@@ -316,11 +316,17 @@ public final class CalendarAlertSync {
     private static void applyProfile(Context context, CalendarProfile profile, CalendarAlertEvent event, Alarm alarm) {
         alarm.label = event.title;
         alarm.daysOfWeek = Weekdays.NONE;
-        alarm.alert = profile.vibrateOnly
-            ? RingtoneUtils.RINGTONE_SILENT
-            : resolveRingtone(context, profile.ringtone);
-        alarm.vibrate = profile.vibrate || profile.vibrateOnly;
-        alarm.flash = profile.flash;
+        if (profile.flashOnly) {
+            alarm.alert = RingtoneUtils.RINGTONE_SILENT;
+            alarm.vibrate = false;
+            alarm.flash = true;
+        } else {
+            alarm.alert = profile.vibrateOnly
+                ? RingtoneUtils.RINGTONE_SILENT
+                : resolveRingtone(context, profile.ringtone);
+            alarm.vibrate = profile.vibrate || profile.vibrateOnly;
+            alarm.flash = profile.flash;
+        }
         alarm.autoSilenceDuration = profile.autoSilenceDuration;
         alarm.snoozeDuration = profile.snoozeDuration;
         alarm.alarmVolume = profile.alarmVolume;

@@ -391,6 +391,19 @@ public class CalendarAlertSyncTest {
     }
 
     @Test
+    public void flashOnlyBlinksWithoutSoundOrVibration() {
+        mProfile.flashOnly = true;
+        mProfile.flash = false;
+        mProfile.updateProfile(mCr);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: flash only"));
+        CalendarAlertSync.syncAll(mContext);
+        final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, events().get(0).alarmId).get(0);
+        assertEquals(com.best.deskclock.utils.RingtoneUtils.RINGTONE_SILENT, instance.mRingtone);
+        org.junit.Assert.assertFalse(instance.mVibrate);
+        assertTrue(instance.mFlash);
+    }
+
+    @Test
     public void invalidRegexMatchesNothing() {
         mProfile.titleRegex = "Alarm:(";
         mProfile.updateProfile(mCr);

@@ -110,6 +110,14 @@
             android:text="@string/calendar_alert_vibrate_only"
             android:textSize="16sp" />
 
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/flash_only_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/calendar_alert_flash_only"
+            android:textSize="16sp" />
+
         <LinearLayout
             android:id="@+id/sound_fields"
             android:layout_width="match_parent"

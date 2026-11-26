@@ -132,7 +132,8 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.regexInput.setText(mProfile.titleRegex);
             mBinding.vibrateSwitch.setChecked(mProfile.vibrate);
             mBinding.flashSwitch.setChecked(mProfile.flash);
-            mBinding.vibrateOnlySwitch.setChecked(mProfile.vibrateOnly);
+            mBinding.vibrateOnlySwitch.setChecked(mProfile.vibrateOnly && !mProfile.flashOnly);
+            mBinding.flashOnlySwitch.setChecked(mProfile.flashOnly);
             // The slider moves in steps of 10.
             mBinding.vibrationStrengthSlider.setValue(
                 Math.round(CalendarProfile.clampVibrationStrength(mProfile.vibrationStrength) / 10f) * 10f);
@@ -173,7 +174,19 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
 
         // Vibrate only hides the sound settings and always vibrates
         updateVibrateOnly();
-        mBinding.vibrateOnlySwitch.setOnCheckedChangeListener((button, checked) -> updateVibrateOnly());
+        mBinding.vibrateOnlySwitch.setOnCheckedChangeListener((button, checked) -> {
+            // Vibrate only and flash only exclude each other.
+            if (checked) {
+                mBinding.flashOnlySwitch.setChecked(false);
+            }
+            updateVibrateOnly();
+        });
+        mBinding.flashOnlySwitch.setOnCheckedChangeListener((button, checked) -> {
+            if (checked) {
+                mBinding.vibrateOnlySwitch.setChecked(false);
+            }
+            updateVibrateOnly();
+        });
 
         // Vibration strength: a short buzz lets the user feel each value
         updateVibrationStrength();
@@ -247,18 +260,29 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         }
     }
 
+    /**
+     * Vibrate only hides the sound settings and always vibrates. Flash only hides the sound and
+     * vibration settings and always blinks the flashlight.
+     */
     private void updateVibrateOnly() {
         final boolean vibrateOnly = mBinding.vibrateOnlySwitch.isChecked();
-        mBinding.soundFields.setVisibility(vibrateOnly ? GONE : VISIBLE);
+        final boolean flashOnly = mBinding.flashOnlySwitch.isChecked();
+        mBinding.soundFields.setVisibility(vibrateOnly || flashOnly ? GONE : VISIBLE);
         if (vibrateOnly) {
             mBinding.vibrateSwitch.setChecked(true);
         }
+        mBinding.vibrateSwitch.setVisibility(flashOnly ? GONE : VISIBLE);
         mBinding.vibrateSwitch.setEnabled(!vibrateOnly);
+        if (flashOnly) {
+            mBinding.flashSwitch.setChecked(true);
+        }
+        mBinding.flashSwitch.setEnabled(!flashOnly);
         updateVibrationStrength();
     }
 
     private void updateVibrationStrength() {
-        final boolean vibrates = mBinding.vibrateSwitch.isChecked() || mBinding.vibrateOnlySwitch.isChecked();
+        final boolean vibrates = !mBinding.flashOnlySwitch.isChecked()
+            && (mBinding.vibrateSwitch.isChecked() || mBinding.vibrateOnlySwitch.isChecked());
         mBinding.vibrationStrengthFields.setVisibility(vibrates ? VISIBLE : GONE);
         updateVibrationStrengthLabel();
     }
@@ -350,6 +374,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mProfile.vibrate = mBinding.vibrateSwitch.isChecked();
         mProfile.flash = mBinding.flashSwitch.isChecked();
         mProfile.vibrateOnly = mBinding.vibrateOnlySwitch.isChecked();
+        mProfile.flashOnly = mBinding.flashOnlySwitch.isChecked();
         mProfile.vibrationStrength = (int) mBinding.vibrationStrengthSlider.getValue();
         mProfile.autoSilenceDuration = maxDurationMinutes > 0
             ? maxDurationMinutes * 60

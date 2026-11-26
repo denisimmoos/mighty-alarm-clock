@@ -652,6 +652,12 @@ public final class ClockContract {
          */
         String VIBRATION_STRENGTH = "vibration_strength";
 
+        /**
+         * True if the alarm should only blink the flashlight, without sound or vibration.
+         * <p>Type: BOOLEAN</p>
+         */
+        String FLASH_ONLY = "flash_only";
+
         String DISMISS_METHOD_DEFAULT = "default";
         String DISMISS_METHOD_SLIDE = "slide";
         String DISMISS_METHOD_BUTTON = "button";

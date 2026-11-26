@@ -33,7 +33,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
     static final String CALENDAR_PROFILES_TABLE_NAME = "calendar_profiles";
     static final String CALENDAR_ALERT_EVENTS_TABLE_NAME = "calendar_alert_events";
 
-    private static final int DATABASE_VERSION = 33;
+    private static final int DATABASE_VERSION = 34;
     private static final int MINIMUM_SUPPORTED_VERSION = 15;
 
     public ClockDatabaseHelper(Context context) {
@@ -172,6 +172,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             ClockContract.CalendarProfilesColumns.FLASH + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.VIBRATE_ONLY + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.VIBRATION_STRENGTH + " INTEGER NOT NULL DEFAULT 100, " +
+            ClockContract.CalendarProfilesColumns.FLASH_ONLY + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.CREATED_AT + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.UPDATED_AT + " INTEGER NOT NULL DEFAULT 0);");
 
@@ -510,6 +511,14 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
                 + " ADD COLUMN " + ClockContract.CalendarProfilesColumns.VIBRATION_STRENGTH
                 + " INTEGER NOT NULL DEFAULT 100;");
             LogUtils.i("Added vibration_strength column for version 33 upgrade.");
+        }
+
+        // Versions 29 to 33 created the profiles table without the flash only column.
+        if (oldVersion >= 29 && oldVersion <= 33) {
+            db.execSQL("ALTER TABLE " + CALENDAR_PROFILES_TABLE_NAME
+                + " ADD COLUMN " + ClockContract.CalendarProfilesColumns.FLASH_ONLY
+                + " INTEGER NOT NULL DEFAULT 0;");
+            LogUtils.i("Added flash_only column for version 34 upgrade.");
         }
     }
 
