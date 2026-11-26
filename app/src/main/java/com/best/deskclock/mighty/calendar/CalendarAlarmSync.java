@@ -404,16 +404,36 @@ public final class CalendarAlarmSync {
         final long now = System.currentTimeMillis();
         final long ringTime = ringTimeFor(profile, event.begin, now);
         final long startTime = alarmTimeFor(event.begin, now);
+        final boolean[] armed = planAlarms(profile, event.begin, now, rearmConsumed);
         event.alarmId = reconcileAlarm(context, profile, event, event.alarmId, ringTime,
-            shouldBeArmed, rearmConsumed, stopRinging);
-        // The second alarm only makes sense if the first one rings before the start.
-        final boolean ringAtStart = profile.ringsEarlyAndAtStart() && ringTime < startTime;
+            shouldBeArmed && armed[0], rearmConsumed, stopRinging);
         final long startAlarmId = reconcileAlarm(context, profile, event, event.startAlarmId, startTime,
-            shouldBeArmed && ringAtStart, rearmConsumed, stopRinging);
+            shouldBeArmed && armed[1], rearmConsumed, stopRinging);
         // Without a second alarm wanted, forget that one was dismissed, so it can come back
         // when the setting is switched on again.
-        event.startAlarmId = !ringAtStart && startAlarmId == CalendarAlarmEvent.ALARM_CONSUMED
+        event.startAlarmId = !profile.ringsEarlyAndAtStart() && startAlarmId == CalendarAlarmEvent.ALARM_CONSUMED
             ? Alarm.INVALID_ID : startAlarmId;
+    }
+
+    /**
+     * @return which alarms an event should have: {@code [early, start]}. The early alarm is the
+     * one at the ring time, which is the start itself without an offset.
+     * <ul>
+     *     <li>With a second alarm at the start, that one is always wanted, also in the last minute
+     *     before the event when the early ring time and the start fall together. Then the early
+     *     alarm is not needed.</li>
+     *     <li>Switching an event on again, after its early ring time has passed, only arms the
+     *     alarm at the start instead of ringing early right away.</li>
+     * </ul>
+     */
+    static boolean[] planAlarms(CalendarProfile profile, long begin, long now, boolean rearm) {
+        if (!profile.ringsEarlyAndAtStart()) {
+            return new boolean[]{true, false};
+        }
+        final boolean earlyPassed = begin - profile.getOffsetMillis() <= now;
+        final boolean early = ringTimeFor(profile, begin, now) < alarmTimeFor(begin, now)
+            && !(rearm && earlyPassed);
+        return new boolean[]{early, true};
     }
 
     /**

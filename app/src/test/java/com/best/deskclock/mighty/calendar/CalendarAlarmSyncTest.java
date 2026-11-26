@@ -2,6 +2,7 @@
 
 package com.best.deskclock.mighty.calendar;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -952,5 +953,48 @@ public class CalendarAlarmSyncTest {
         // The alarm at the start shows nothing.
         assertNull(CalendarEventText.formatTimeUntil(mContext, now + 30_000, now));
         assertNull(CalendarEventText.formatTimeUntil(mContext, now - 60_000, now));
+    }
+
+    @Test
+    public void alarmAtTheStartIsKeptInTheLastMinuteBeforeTheEvent() {
+        final CalendarProfile profile = new CalendarProfile();
+        profile.offsetEnabled = true;
+        profile.offsetMinutes = 10;
+        final long minute = 60_000L;
+        final long begin = 1_000L * minute;
+        // Hours before: both alarms.
+        assertArrayEquals(new boolean[]{true, true}, CalendarAlarmSync.planAlarms(profile, begin, begin - 300 * minute, false));
+        // Between the early alarm and the start: the start alarm stays.
+        assertTrue(CalendarAlarmSync.planAlarms(profile, begin, begin - 5 * minute, false)[1]);
+        // 30 seconds before the start, a check must not drop the alarm at the start.
+        assertArrayEquals(new boolean[]{false, true}, CalendarAlarmSync.planAlarms(profile, begin, begin - 30_000, false));
+        // Switching the event on again after the early time only arms the start.
+        assertArrayEquals(new boolean[]{false, true}, CalendarAlarmSync.planAlarms(profile, begin, begin - 5 * minute, true));
+        // Before the early time, switching it on arms both.
+        assertArrayEquals(new boolean[]{true, true}, CalendarAlarmSync.planAlarms(profile, begin, begin - 20 * minute, true));
+        // Without the second ring, or without an offset, there is one alarm.
+        profile.ringAtStart = false;
+        assertArrayEquals(new boolean[]{true, false}, CalendarAlarmSync.planAlarms(profile, begin, begin - 30_000, false));
+        profile.ringAtStart = true;
+        profile.offsetEnabled = false;
+        assertArrayEquals(new boolean[]{true, false}, CalendarAlarmSync.planAlarms(profile, begin, begin - 300 * minute, false));
+    }
+
+    @Test
+    public void switchingAnEventOnAgainAfterTheEarlyTimeOnlyRingsAtTheStart() {
+        final long begin = Calendar.getInstance().getTimeInMillis() + TimeUnit.MINUTES.toMillis(5);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, "Alarm: Soon"));
+        mProfile.offsetEnabled = true;
+        mProfile.offsetMinutes = 10;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        final long rowId = events().get(0).id;
+        CalendarAlarmSync.setEventEnabled(mContext, rowId, false);
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+        CalendarAlarmSync.setEventEnabled(mContext, rowId, true);
+        final CalendarAlarmEvent row = events().get(0);
+        assertEquals(Alarm.INVALID_ID, row.alarmId);
+        assertTrue(row.startAlarmId >= 0);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
     }
 }
