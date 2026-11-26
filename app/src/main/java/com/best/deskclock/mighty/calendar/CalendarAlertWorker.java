@@ -47,7 +47,7 @@ public final class CalendarAlertWorker extends Worker {
             LogUtils.e("CalendarAlertWorker: sync failed", e);
             return Result.retry();
         } finally {
-            if (getTags().contains(TAG_CHANGE_TRIGGER)) {
+            if (getTags().contains(TAG_CHANGE_TRIGGER) && hasEnabledProfile(getApplicationContext())) {
                 // A content trigger fires once, so watch the calendar again. This work is still
                 // running, so the new request is chained after it instead of replacing it.
                 scheduleOnCalendarChange(getApplicationContext(), ExistingWorkPolicy.APPEND_OR_REPLACE);
@@ -80,7 +80,7 @@ public final class CalendarAlertWorker extends Worker {
         });
     }
 
-    private static boolean hasEnabledProfile(Context context) {
+    static boolean hasEnabledProfile(Context context) {
         for (CalendarProfile profile : CalendarProfile.getProfiles(context.getContentResolver())) {
             if (profile.enabled) {
                 return true;

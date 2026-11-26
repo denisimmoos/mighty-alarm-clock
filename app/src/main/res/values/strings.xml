@@ -1743,7 +1743,8 @@
     <string name="calendar_alert_ignore_case">Ignore upper and lower case</string>
     <string name="calendar_alert_section_events">Which events</string>
     <string name="calendar_alert_skip_declined">Skip events I declined</string>
-    <string name="calendar_alert_show_details_locked">Show description and place on the lock screen</string>
+    <string name="calendar_alert_show_details_locked">Show title, description and place on the lock screen</string>
+    <string name="calendar_alarm_hidden_title">Calendar alarm</string>
     <string name="calendar_alert_skip_tentative">Skip events I answered \"maybe\" to</string>
     <string name="calendar_alert_all_day">Ring for all-day events</string>
     <string name="calendar_alert_all_day_time">All-day events ring at %s</string>

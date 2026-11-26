@@ -393,4 +393,57 @@ public class CalendarAlertReproTest {
         org.junit.Assert.assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
         org.junit.Assert.assertTrue(CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).isEmpty());
     }
+
+    @Test(timeout = 60000)
+    public void hiddenDetailsKeepTheTitleOffTheLockScreenUntilUnlock() throws Exception {
+        mProfile.showDetailsLocked = false;
+        mProfile.updateProfile(mCr);
+        CalendarAlertSyncTest.EVENT_DETAILS.put(1L, new String[]{"Private note", "Somewhere"});
+        final android.app.KeyguardManager keyguard = mContext.getSystemService(android.app.KeyguardManager.class);
+        Shadows.shadowOf(keyguard).setKeyguardLocked(true);
+
+        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
+        AlarmStateManager.setFiredState(mContext, instance);
+        final AlarmActivity activity = Robolectric.buildActivity(AlarmActivity.class,
+            new android.content.Intent(mContext, AlarmActivity.class)
+                .setData(AlarmInstance.getContentUri(instance.mId))).create().start().postCreate(null).resume().get();
+        com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
+        ShadowLooper.idleMainLooper();
+
+        final android.widget.TextView title = activity.findViewById(com.best.deskclock.R.id.alarm_title);
+        assertEquals(mContext.getString(com.best.deskclock.R.string.calendar_alarm_hidden_title), title.getText().toString());
+        assertEquals(android.view.View.GONE,
+            activity.findViewById(com.best.deskclock.R.id.calendar_info).getVisibility());
+
+        // Unlocking shows everything.
+        Shadows.shadowOf(keyguard).setKeyguardLocked(false);
+        mContext.sendBroadcast(new android.content.Intent(android.content.Intent.ACTION_USER_PRESENT));
+        ShadowLooper.idleMainLooper();
+        com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
+        ShadowLooper.idleMainLooper();
+        assertEquals("🔕 Aufstehen %s 100%", title.getText().toString());
+        assertEquals(android.view.View.VISIBLE,
+            activity.findViewById(com.best.deskclock.R.id.calendar_info).getVisibility());
+    }
+
+    @Test
+    public void hiddenDetailsKeepTheTitleOutOfTheLockScreenNotification() {
+        mProfile.showDetailsLocked = false;
+        mProfile.updateProfile(mCr);
+        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
+        Shadows.shadowOf(mContext).grantPermissions(Manifest.permission.POST_NOTIFICATIONS);
+        com.best.deskclock.alarms.AlarmNotifications.showUpcomingNotification(mContext, instance);
+        final android.app.NotificationManager nm = mContext.getSystemService(android.app.NotificationManager.class);
+        boolean found = false;
+        for (android.app.Notification n : Shadows.shadowOf(nm).getAllNotifications()) {
+            if (n.publicVersion == null) continue;
+            found = true;
+            assertEquals(android.app.Notification.VISIBILITY_PRIVATE, n.visibility);
+            assertEquals(mContext.getString(com.best.deskclock.R.string.calendar_alarm_hidden_title),
+                n.publicVersion.extras.getCharSequence(android.app.Notification.EXTRA_TITLE).toString());
+        }
+        org.junit.Assert.assertTrue(found);
+    }
 }

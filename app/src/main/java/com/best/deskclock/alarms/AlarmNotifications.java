@@ -264,6 +264,7 @@ public final class AlarmNotifications {
             context, id, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE));
 
         NotificationManagerCompat nm = NotificationManagerCompat.from(context);
+        hideCalendarDetailsWhenLocked(context, localizedContext, builder, instance);
         final Notification notification = builder.build();
 
         nm.notify(id, notification);
@@ -335,6 +336,7 @@ public final class AlarmNotifications {
         }
 
         NotificationManagerCompat nm = NotificationManagerCompat.from(context);
+        hideCalendarDetailsWhenLocked(context, localizedContext, builder, instance);
         final Notification notification = builder.build();
 
         nm.notify(id, notification);
@@ -394,6 +396,7 @@ public final class AlarmNotifications {
 
         NotificationManagerCompat nm = NotificationManagerCompat.from(context);
 
+        hideCalendarDetailsWhenLocked(context, localizedContext, builder, instance);
         final Notification notification = builder.build();
 
         nm.notify(id, notification);
@@ -483,6 +486,7 @@ public final class AlarmNotifications {
 
         clearNotification(context, instance);
 
+        hideCalendarDetailsWhenLocked(context, localizedContext, notification, instance);
         final Notification builtNotification = notification.build();
 
         if (context instanceof Service) {
@@ -555,5 +559,26 @@ public final class AlarmNotifications {
     private static boolean isDeleteAfterUseShown(Context context, Alarm alarm) {
         return alarm.isDeleteAfterUse()
             && CalendarAlertRules.getProfileForAlarm(context.getContentResolver(), alarm.id) == null;
+    }
+
+    /**
+     * Keeps the event title of a calendar alarm off the lock screen when its profile hides the
+     * event details there. The lock screen then shows only "Calendar alarm" and the time.
+     */
+    private static void hideCalendarDetailsWhenLocked(Context context, Context localizedContext,
+                                                      NotificationCompat.Builder builder, AlarmInstance instance) {
+        final com.best.deskclock.provider.CalendarProfile profile =
+            CalendarAlertRules.getProfileForAlarm(context.getContentResolver(), instance.mAlarmId);
+        if (profile == null || profile.showDetailsLocked) {
+            return;
+        }
+        // Only shown inside the real notification, so its channel doesn't matter.
+        final Notification publicVersion = new NotificationCompat.Builder(context, FIRING_NOTIFICATION_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_tab_alarm_static)
+            .setColor(ContextCompat.getColor(context, R.color.md_theme_primary))
+            .setContentTitle(localizedContext.getString(R.string.calendar_alarm_hidden_title))
+            .setContentText(AlarmUtils.getFormattedTime(localizedContext, instance.getAlarmTime()))
+            .build();
+        builder.setVisibility(NotificationCompat.VISIBILITY_PRIVATE).setPublicVersion(publicVersion);
     }
 }

@@ -28,7 +28,10 @@ public final class CalendarAlertWakeReceiver extends BroadcastReceiver {
         CalendarAlertSync.EXECUTOR.execute(() -> {
             try {
                 CalendarAlertSync.syncAll(appContext);
-                schedule(appContext);
+                // With all profiles switched off there is nothing to check until one is on again.
+                if (CalendarAlertWorker.hasEnabledProfile(appContext)) {
+                    schedule(appContext);
+                }
             } finally {
                 result.finish();
             }

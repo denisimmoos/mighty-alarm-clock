@@ -107,7 +107,7 @@ public final class JsonBackupManager {
             final String dateStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US).format(new Date());
             final String devicePart = ExchangeManager.sanitizeFileNamePart(ExchangeManager.getDeviceName(context));
             writeBackupFile(context, dir, FILE_PREFIX + devicePart + "-" + dateStamp + FILE_SUFFIX);
-            writeBackupFile(context, dir, LATEST_FILE_NAME);
+            writeLatestBackupFile(context, dir);
 
             rotateOldBackups(dir);
 
@@ -138,6 +138,44 @@ public final class JsonBackupManager {
             }
             com.best.deskclock.utils.BackupAndRestoreUtils.writeFullBackup(context,
                 com.best.deskclock.DeskClockApplication.getDefaultSharedPreferences(context), out);
+        }
+    }
+
+    /**
+     * Replaces the latest backup only once the new one is complete, so a failed write never
+     * leaves the folder without it.
+     */
+    private static void writeLatestBackupFile(Context context, DocumentFile dir) throws IOException, JSONException {
+        final String partName = LATEST_FILE_NAME + ".part";
+        final DocumentFile stale = dir.findFile(partName);
+        if (stale != null) {
+            stale.delete();
+        }
+        // A type without a file extension, so the folder keeps the name exactly as given.
+        final DocumentFile part = dir.createFile("application/octet-stream", partName);
+        if (part == null) {
+            writeBackupFile(context, dir, LATEST_FILE_NAME);
+            return;
+        }
+        try (OutputStream out = context.getContentResolver().openOutputStream(part.getUri())) {
+            if (out == null) {
+                throw new IOException("Could not open output stream for: " + partName);
+            }
+            com.best.deskclock.utils.BackupAndRestoreUtils.writeFullBackup(context,
+                com.best.deskclock.DeskClockApplication.getDefaultSharedPreferences(context), out);
+        } catch (IOException | JSONException | RuntimeException e) {
+            part.delete();
+            throw e;
+        }
+
+        final DocumentFile old = dir.findFile(LATEST_FILE_NAME);
+        if (old != null) {
+            old.delete();
+        }
+        if (!part.renameTo(LATEST_FILE_NAME)) {
+            // Some folders can't rename files; write the latest backup directly instead.
+            part.delete();
+            writeBackupFile(context, dir, LATEST_FILE_NAME);
         }
     }
 

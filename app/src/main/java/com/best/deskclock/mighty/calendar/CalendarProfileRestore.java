@@ -11,6 +11,7 @@ import android.net.Uri;
 
 import androidx.annotation.Nullable;
 
+import com.best.deskclock.provider.CalendarAlertEvent;
 import com.best.deskclock.provider.CalendarProfile;
 
 import org.json.JSONArray;
@@ -30,6 +31,13 @@ public final class CalendarProfileRestore {
     /** The JSON key the backup stores the profiles under. */
     public static final String KEY_PROFILES = "calendar_profiles";
 
+    /**
+     * Upcoming events of a profile whose alarm the user switched off or already dismissed, so
+     * they don't ring again after a restore on the same phone. Event ids differ between phones,
+     * so on another phone they simply match nothing.
+     */
+    private static final String KEY_HANDLED_EVENTS = "handled_events";
+
     private CalendarProfileRestore() {
     }
 
@@ -46,9 +54,51 @@ public final class CalendarProfileRestore {
                 final Object value = values.get(key);
                 json.put(key, value == null ? JSONObject.NULL : value);
             }
+            json.put(KEY_HANDLED_EVENTS, exportHandledEvents(cr, profile.id));
             profiles.put(json);
         }
         return profiles;
+    }
+
+    private static JSONArray exportHandledEvents(ContentResolver cr, long profileId) throws JSONException {
+        final JSONArray events = new JSONArray();
+        final long now = System.currentTimeMillis();
+        for (CalendarAlertEvent event : CalendarAlertEvent.getEventsForProfile(cr, profileId)) {
+            final boolean dismissed = event.alarmId == CalendarAlertEvent.ALARM_CONSUMED;
+            if (event.begin > now && (!event.userEnabled || dismissed)) {
+                events.put(new JSONObject()
+                    .put("event_id", event.eventId)
+                    .put("begin", event.begin)
+                    .put("title", event.title == null ? "" : event.title)
+                    .put("switched_off", !event.userEnabled)
+                    .put("dismissed", dismissed));
+            }
+        }
+        return events;
+    }
+
+    private static void restoreHandledEvents(ContentResolver cr, long profileId, @Nullable JSONArray events) {
+        if (events == null) {
+            return;
+        }
+        final long now = System.currentTimeMillis();
+        for (int i = 0; i < events.length(); i++) {
+            final JSONObject json = events.optJSONObject(i);
+            if (json == null || json.optLong("begin") <= now) {
+                continue;
+            }
+            final CalendarAlertEvent event = new CalendarAlertEvent(profileId, json.optLong("event_id"),
+                json.optLong("begin"), json.optString("title"));
+            event.userEnabled = !json.optBoolean("switched_off");
+            if (json.optBoolean("dismissed")) {
+                event.alarmId = CalendarAlertEvent.ALARM_CONSUMED;
+            }
+            try {
+                event.save(cr);
+            } catch (Exception e) {
+                // Only a convenience; the profile itself is restored.
+            }
+        }
     }
 
     /**
@@ -129,10 +179,12 @@ public final class CalendarProfileRestore {
                 continue;
             }
             // Read back and save once more so out-of-range numbers are brought into range.
-            final CalendarProfile profile = CalendarProfile.getProfile(cr, ContentUris.parseId(uri));
+            final long profileId = ContentUris.parseId(uri);
+            final CalendarProfile profile = CalendarProfile.getProfile(cr, profileId);
             if (profile != null) {
                 profile.updateProfile(cr);
             }
+            restoreHandledEvents(cr, profileId, json.optJSONArray(KEY_HANDLED_EVENTS));
         }
     }
 

@@ -176,7 +176,8 @@ public final class CalendarAlertFragment extends DeskClockFragment {
                 long next = -1;
                 for (CalendarAlertEvent event : CalendarAlertEvent.getEventsForProfile(
                     appContext.getContentResolver(), profile.id)) {
-                    if (event.begin > now && event.userEnabled
+                    // A switched off profile rings for nothing.
+                    if (profile.enabled && event.begin > now && event.userEnabled
                         && event.alarmId != CalendarAlertEvent.ALARM_CONSUMED) {
                         count++;
                         if (next < 0) {
@@ -207,10 +208,17 @@ public final class CalendarAlertFragment extends DeskClockFragment {
 
     private void setProfileEnabled(CalendarProfile profile, boolean enabled) {
         final android.content.Context appContext = requireContext().getApplicationContext();
+        final long profileId = profile.id;
         CalendarAlertSync.EXECUTOR.execute(() -> {
-            profile.enabled = enabled;
-            profile.updateProfile(appContext.getContentResolver());
-            CalendarAlertSync.syncProfile(appContext, profile.id);
+            // Change only the switch. The list's copy may be older than what the profile settings
+            // or the calendar check saved since; saving that copy would undo their changes.
+            final CalendarProfile current = CalendarProfile.getProfile(appContext.getContentResolver(), profileId);
+            if (current == null) {
+                return;
+            }
+            current.enabled = enabled;
+            current.updateProfile(appContext.getContentResolver());
+            CalendarAlertSync.syncProfile(appContext, profileId);
             CalendarAlertWorker.ensureScheduled(appContext);
         });
     }

@@ -688,4 +688,27 @@ public class CalendarAlertSyncTest {
         assertFalse(prefs.contains("key_calendar_alert_permission_notified"));
         assertFalse(prefs.contains(CalendarAlertStatus.KEY_CALENDAR_PERMISSION_ASKED));
     }
+
+    @Test
+    public void restoreKeepsDismissedAndSwitchedOffAlarmsOff() throws Exception {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
+        EVENTS.add(new FakeEvent(2, CALENDAR_ID, inHours(4), "Alarm: Gym"));
+        EVENTS.add(new FakeEvent(3, CALENDAR_ID, inHours(5), "Alarm: Train"));
+        CalendarAlertSync.syncAll(mContext);
+        final List<CalendarAlertEvent> before = events();
+        Alarm.deleteAlarm(mCr, before.get(0).alarmId);
+        CalendarAlertSync.setEventEnabled(mContext, before.get(1).id, false);
+
+        CalendarProfileRestore.replaceAll(mContext, CalendarProfileRestore.exportProfiles(mCr));
+
+        final List<CalendarProfile> profiles = CalendarProfile.getProfiles(mCr);
+        assertEquals(1, profiles.size());
+        final List<CalendarAlertEvent> after = CalendarAlertEvent.getEventsForProfile(mCr, profiles.get(0).id);
+        assertEquals(3, after.size());
+        assertEquals(CalendarAlertEvent.ALARM_CONSUMED, after.get(0).alarmId);
+        assertFalse(after.get(1).userEnabled);
+        assertTrue(after.get(2).alarmId >= 0);
+        // Only the train still rings.
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+    }
 }

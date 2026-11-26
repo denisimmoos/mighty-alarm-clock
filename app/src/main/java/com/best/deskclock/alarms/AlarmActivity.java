@@ -612,6 +612,8 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
      * alarm, if any.
      */
     private boolean mIsCalendarAlarm;
+    /** The profile keeps the event title, description and place off the lock screen. */
+    private boolean mHideCalendarDetailsLocked;
 
     private void applyCalendarProfileRules() {
         if (mAlarm == null || mAlarmInstance == null) {
@@ -625,6 +627,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
 
         // A calendar alarm is removed after it rings anyway, so its button just says "Dismiss".
         mIsCalendarAlarm = true;
+        mHideCalendarDetailsLocked = !profile.showDetailsLocked;
 
         if (profile.isSlideDismissForced()) {
             mIsSwipeActionEnabled = true;
@@ -673,10 +676,21 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
         @Override
         public void onReceive(Context context, Intent intent) {
             unregisterUnlockReceiver();
+            if (mBinding != null && mAlarmInstance != null) {
+                mBinding.alarmTitle.setText(mAlarmInstance.getLabelOrDefault(AlarmActivity.this));
+            }
             loadCalendarEventDetails();
         }
     };
     private boolean mUnlockReceiverRegistered;
+
+    private boolean isCalendarTitleHidden() {
+        if (!mHideCalendarDetailsLocked) {
+            return false;
+        }
+        final android.app.KeyguardManager keyguard = getSystemService(android.app.KeyguardManager.class);
+        return keyguard != null && keyguard.isKeyguardLocked();
+    }
 
     private void showCalendarEventDetailsAfterUnlock() {
         if (isFinishing() || isDestroyed() || mUnlockReceiverRegistered) {
@@ -844,7 +858,12 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
      * Initializes the alarm title.
      */
     private void initAlarmTitle() {
-        mBinding.alarmTitle.setText(mAlarmInstance.getLabelOrDefault(this));
+        if (isCalendarTitleHidden()) {
+            // Until the phone is unlocked; see mUnlockReceiver.
+            mBinding.alarmTitle.setText(R.string.calendar_alarm_hidden_title);
+        } else {
+            mBinding.alarmTitle.setText(mAlarmInstance.getLabelOrDefault(this));
+        }
         mBinding.alarmTitle.setTypeface(mGeneralBoldTypeface);
         mBinding.alarmTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, mAlarmTitleFontSize);
         mBinding.alarmTitle.setTextColor(mAlarmTitleColor);

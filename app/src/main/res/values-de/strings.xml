@@ -909,7 +909,8 @@
     <string name="calendar_alert_ignore_case">Groß- und Kleinschreibung ignorieren</string>
     <string name="calendar_alert_section_events">Welche Termine</string>
     <string name="calendar_alert_skip_declined">Abgelehnte Termine überspringen</string>
-    <string name="calendar_alert_show_details_locked">Beschreibung und Ort auf dem Sperrbildschirm zeigen</string>
+    <string name="calendar_alert_show_details_locked">Titel, Beschreibung und Ort auf dem Sperrbildschirm zeigen</string>
+    <string name="calendar_alarm_hidden_title">Kalender-Alarm</string>
     <string name="calendar_alert_skip_tentative">Mit \"Vielleicht\" beantwortete Termine überspringen</string>
     <string name="calendar_alert_all_day">Bei ganztägigen Terminen klingeln</string>
     <string name="calendar_alert_all_day_time">Ganztägige Termine klingeln um %s</string>
