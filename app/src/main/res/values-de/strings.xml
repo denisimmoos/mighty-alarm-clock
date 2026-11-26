@@ -916,6 +916,8 @@
     <string name="calendar_alarm_all_day_time">Ganztägige Termine klingeln um %s</string>
     <string name="calendar_alarm_vibration_strength">Vibrationsstärke: %d%%</string>
     <string name="calendar_alarm_vibration_strength_unsupported">Dieses Telefon kann die Vibrationsstärke nicht ändern und vibriert immer gleich stark.</string>
+    <string name="calendar_alarm_open_in_calendar">In Kalender-App öffnen</string>
+    <string name="calendar_alarm_event_switched_off">Alarm ausgeschaltet</string>
     <string name="calendar_alarm_no_calendar_app">Keine Kalender-App zum Öffnen dieses Termins gefunden</string>
     <string name="calendar_alarm_max_duration">Maximale Weckdauer (Minuten)</string>
     <string name="calendar_alarm_max_duration_help">Leer lassen, damit der Wecker klingelt, bis du ihn beendest.</string>

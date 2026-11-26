@@ -143,6 +143,11 @@
             android:theme="@style/Theme.DeskClock" />
 
         <activity
+            android:name="com.best.deskclock.mighty.calendar.CalendarEventDetailsActivity"
+            android:parentActivityName=".DeskClock"
+            android:theme="@style/Theme.DeskClock" />
+
+        <activity
             android:name="com.best.deskclock.mighty.calendar.CalendarProfileEditActivity"
             android:parentActivityName=".DeskClock"
             android:theme="@style/Theme.DeskClock"

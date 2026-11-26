@@ -5,15 +5,12 @@ package com.best.deskclock.mighty.calendar;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-import android.content.ActivityNotFoundException;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.provider.CalendarContract;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -30,7 +27,6 @@ import com.best.deskclock.databinding.CalendarProfileEventsActivityBinding;
 import com.best.deskclock.provider.CalendarAlarmEvent;
 import com.best.deskclock.provider.CalendarProfile;
 import com.best.deskclock.uicomponents.CollapsingToolbarBaseActivity;
-import com.best.deskclock.uicomponents.toast.CustomToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -202,34 +198,6 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
         CalendarAlarmSync.EXECUTOR.execute(() -> CalendarAlarmSync.setEventEnabled(appContext, event.id, enabled));
     }
 
-    /**
-     * Opens the calendar entry of the event in the device's calendar app.
-     *
-     * <p>The entry opens in a task of its own that holds only this entry. Calendar apps such as
-     * Google Calendar otherwise show the entry on top of their own main screen, so Back stayed in
-     * the calendar. Now Back closes the entry, and with it that task, and returns here. The task
-     * is left out of the recent apps, so opening several entries doesn't fill them up.</p>
-     */
-    static void openInCalendar(Context context, CalendarAlarmEvent event) {
-        startOpenInCalendar(context, createOpenInCalendarIntent(event));
-    }
-
-    static Intent createOpenInCalendarIntent(CalendarAlarmEvent event) {
-        return new Intent(Intent.ACTION_VIEW)
-            .setData(ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, event.eventId))
-            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.begin)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-                | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-    }
-
-    private static void startOpenInCalendar(Context context, Intent intent) {
-        try {
-            context.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            CustomToast.showLong(context, context.getString(R.string.calendar_alarm_no_calendar_app));
-        }
-    }
-
     private final class EventAdapter extends RecyclerView.Adapter<EventViewHolder> {
 
         private final List<CalendarAlarmEvent> mEvents = new ArrayList<>();
@@ -290,7 +258,8 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
             mItem.eventSwitch.setOnCheckedChangeListener((button, checked) -> setEventEnabled(event, checked));
 
             itemView.setAlpha(profileEnabled && event.userEnabled && !consumed ? 1f : 0.6f);
-            itemView.setOnClickListener(v -> openInCalendar(context, event));
+            itemView.setOnClickListener(v -> context.startActivity(
+                CalendarEventDetailsActivity.createIntent(context, event.id)));
         }
     }
 }
