@@ -480,6 +480,9 @@ public class AboutFragment extends ScreenFragment implements Preference.OnPrefer
 
             LogUtils.clearSavedLocalLogs(appContext);
 
+            com.best.deskclock.mighty.calendar.CalendarAlertSync.deleteAllProfiles(appContext);
+            com.best.deskclock.mighty.calendar.CalendarAlertWorker.ensureScheduled(appContext);
+
             final List<Alarm> alarms = Alarm.getAlarms(appContext.getContentResolver(), null);
             for (Alarm alarm : alarms) {
                 AlarmStateManager.deleteAllInstances(appContext, alarm.id);

@@ -211,6 +211,7 @@ public final class CalendarAlertFragment extends DeskClockFragment {
             profile.enabled = enabled;
             profile.updateProfile(appContext.getContentResolver());
             CalendarAlertSync.syncProfile(appContext, profile.id);
+            CalendarAlertWorker.ensureScheduled(appContext);
         });
     }
 

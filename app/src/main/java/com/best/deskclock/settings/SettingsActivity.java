@@ -456,51 +456,9 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
         }
 
         private void backupPreferences(Context context, Uri uri) throws IOException, JSONException {
-            try (OutputStream outputStream = context.getContentResolver().openOutputStream(uri);
-                 ZipOutputStream zipOutputStream = new ZipOutputStream(outputStream)) {
-                // The JSON file that contains all the settings
-                ZipEntry jsonEntry = new ZipEntry(BACKUP_JSON_FILE_NAME);
-                zipOutputStream.putNextEntry(jsonEntry);
-
-                BackupAndRestoreUtils.settingsToJsonStream(context, mPrefs, mPrefs.getAll(), zipOutputStream);
-
-                zipOutputStream.closeEntry();
-
-                // Other files for the general font, alarm font, alarm background image, etc
-                appendFileToZip(zipOutputStream, mPrefs.getString(KEY_GENERAL_FONT, null));
-                appendFileToZip(zipOutputStream, mPrefs.getString(KEY_ALARM_FONT, null));
-                appendFileToZip(zipOutputStream, mPrefs.getString(KEY_ALARM_BACKGROUND_IMAGE, null));
-                appendFileToZip(zipOutputStream, mPrefs.getString(KEY_TIMER_DURATION_FONT, null));
-                appendFileToZip(zipOutputStream, mPrefs.getString(KEY_TIMER_BACKGROUND_IMAGE, null));
-                appendFileToZip(zipOutputStream, mPrefs.getString(KEY_SW_FONT, null));
-                appendFileToZip(zipOutputStream, mPrefs.getString(KEY_DIGITAL_CLOCK_FONT, null));
-                appendFileToZip(zipOutputStream, mPrefs.getString(KEY_SCREENSAVER_DIGITAL_CLOCK_FONT, null));
-                appendFileToZip(zipOutputStream, mPrefs.getString(KEY_SCREENSAVER_BACKGROUND_IMAGE, null));
+            try (OutputStream outputStream = context.getContentResolver().openOutputStream(uri)) {
+                BackupAndRestoreUtils.writeFullBackup(context, mPrefs, outputStream);
             }
-        }
-
-        private void appendFileToZip(ZipOutputStream zipOutputStream, String filePath) throws IOException {
-            if (filePath == null) {
-                return;
-            }
-
-            File file = new File(filePath);
-            if (!file.exists()) {
-                return;
-            }
-
-            ZipEntry zipEntry = new ZipEntry(file.getName());
-            zipOutputStream.putNextEntry(zipEntry);
-
-            try (FileInputStream fileInputStream = new FileInputStream(file)) {
-                byte[] buffer = new byte[4096];
-                int length;
-                while ((length = fileInputStream.read(buffer)) > 0) {
-                    zipOutputStream.write(buffer, 0, length);
-                }
-            }
-
-            zipOutputStream.closeEntry();
         }
 
         @SuppressLint("ApplySharedPref")

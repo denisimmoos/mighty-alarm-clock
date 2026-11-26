@@ -723,7 +723,7 @@
     <string name="mighty_wifi_reevaluate_summary">Wendet Aktivieren-/Deaktivieren-Regeln anhand des verbundenen WLAN an</string>
     <string name="mighty_wifi_reevaluate_toast">WLAN-Regeln geprüft</string>
 
-    <string name="mighty_category_backup">JSON-Backup</string>
+    <string name="mighty_category_backup">Automatisches Backup</string>
     <string name="mighty_backup_folder_title">Backup-Ordner</string>
     <string name="mighty_backup_folder_not_set">Nicht festgelegt</string>
     <string name="mighty_backup_schedule_enabled_title">Automatisches Backup</string>
@@ -905,6 +905,7 @@
     <string name="calendar_alert_ignore_case">Groß- und Kleinschreibung ignorieren</string>
     <string name="calendar_alert_section_events">Welche Termine</string>
     <string name="calendar_alert_skip_declined">Abgelehnte Termine überspringen</string>
+    <string name="calendar_alert_show_details_locked">Beschreibung und Ort auf dem Sperrbildschirm zeigen</string>
     <string name="calendar_alert_skip_tentative">Mit \"Vielleicht\" beantwortete Termine überspringen</string>
     <string name="calendar_alert_all_day">Bei ganztägigen Terminen klingeln</string>
     <string name="calendar_alert_all_day_time">Ganztägige Termine klingeln um %s</string>

@@ -823,9 +823,8 @@ public class RingtonePickerActivity extends CollapsingToolbarBaseActivity
             }
 
             AppExecutors.getMainThread().post(() -> {
-                if (isFinishing() || isDestroyed()) {
-                    return;
-                }
+                // The settings and calendar alarms are updated even if the screen was closed
+                // meanwhile; only the list below needs the screen.
 
                 // Reset the default alarm ringtone if it was just removed.
                 if (removeUri.equals(DataModel.getDataModel().getAlarmRingtoneUriFromSettings())) {
@@ -845,6 +844,10 @@ public class RingtonePickerActivity extends CollapsingToolbarBaseActivity
                 if (syncCalendarAlerts) {
                     com.best.deskclock.mighty.calendar.CalendarAlertSync.EXECUTOR.execute(() ->
                         com.best.deskclock.mighty.calendar.CalendarAlertSync.syncAll(appContext));
+                }
+
+                if (isFinishing() || isDestroyed()) {
+                    return;
                 }
 
                 // Find the ringtone to be removed from the adapter.

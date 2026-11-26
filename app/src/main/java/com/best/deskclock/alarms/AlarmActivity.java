@@ -362,6 +362,8 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void onDestroy() {
+        unregisterUnlockReceiver();
+
         if (mPowerBtnReceiverRegistered) {
             unregisterReceiver(PowerBtnReceiver);
             mPowerBtnReceiverRegistered = false;
@@ -647,14 +649,53 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
         com.best.deskclock.base.AppExecutors.getDiskIO().execute(() -> {
             final com.best.deskclock.provider.CalendarAlertEvent event =
                 com.best.deskclock.provider.CalendarAlertEvent.getEventForAlarm(appContext.getContentResolver(), alarmId);
-            final com.best.deskclock.mighty.calendar.DeviceCalendars.EventDetails details = event == null
-                ? null
-                : com.best.deskclock.mighty.calendar.DeviceCalendars.getEventDetails(appContext, event.eventId);
+            if (event == null) {
+                return;
+            }
+            final com.best.deskclock.provider.CalendarProfile profile =
+                com.best.deskclock.provider.CalendarProfile.getProfile(appContext.getContentResolver(), event.profileId);
+            final android.app.KeyguardManager keyguard = appContext.getSystemService(android.app.KeyguardManager.class);
+            if (profile != null && !profile.showDetailsLocked && keyguard != null && keyguard.isKeyguardLocked()) {
+                // The profile keeps the details private on the lock screen. Show them after unlocking.
+                com.best.deskclock.base.AppExecutors.getMainThread().post(this::showCalendarEventDetailsAfterUnlock);
+                return;
+            }
+            final com.best.deskclock.mighty.calendar.DeviceCalendars.EventDetails details =
+                com.best.deskclock.mighty.calendar.DeviceCalendars.getEventDetails(appContext, event.eventId);
             if (details == null) {
                 return;
             }
             com.best.deskclock.base.AppExecutors.getMainThread().post(() -> showCalendarEventDetails(details));
         });
+    }
+
+    private final android.content.BroadcastReceiver mUnlockReceiver = new android.content.BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            unregisterUnlockReceiver();
+            loadCalendarEventDetails();
+        }
+    };
+    private boolean mUnlockReceiverRegistered;
+
+    private void showCalendarEventDetailsAfterUnlock() {
+        if (isFinishing() || isDestroyed() || mUnlockReceiverRegistered) {
+            return;
+        }
+        final IntentFilter filter = new IntentFilter(Intent.ACTION_USER_PRESENT);
+        if (SdkUtils.isAtLeastAndroid13()) {
+            registerReceiver(mUnlockReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            registerReceiver(mUnlockReceiver, filter);
+        }
+        mUnlockReceiverRegistered = true;
+    }
+
+    private void unregisterUnlockReceiver() {
+        if (mUnlockReceiverRegistered) {
+            unregisterReceiver(mUnlockReceiver);
+            mUnlockReceiverRegistered = false;
+        }
     }
 
     private void showCalendarEventDetails(com.best.deskclock.mighty.calendar.DeviceCalendars.EventDetails details) {
@@ -719,6 +760,11 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
                 }
             });
         } else {
+            if (!SdkUtils.isAtLeastAndroid8() && keyguard != null && keyguard.isKeyguardLocked()) {
+                // Ask Android 6 and 7 to drop a non-secure lock screen, or to ask for the PIN,
+                // so the map isn't opened behind the lock screen.
+                getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+            }
             open.run();
         }
     }

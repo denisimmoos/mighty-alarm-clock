@@ -93,4 +93,12 @@ public final class CalendarAlertStatus {
             return false;
         }
     }
+
+    /**
+     * Removes what this phone remembers about its calendar checks, for example after settings
+     * from another phone were restored.
+     */
+    public static void clearDeviceState(android.content.SharedPreferences.Editor editor) {
+        editor.remove(CalendarAlertSync.KEY_LAST_CHECK).remove(KEY_PERMISSION_NOTIFIED);
+    }
 }

@@ -56,14 +56,15 @@ public final class CalendarAlertWorker extends Worker {
     }
 
     /**
-     * Schedules the periodic sync and the calendar change watch if any profile exists, and
+     * Schedules the periodic sync and the calendar change watch if any profile is on, and
      * cancels them otherwise. Safe to call often.
      */
     public static void ensureScheduled(Context context) {
         final Context appContext = context.getApplicationContext();
         CalendarAlertSync.EXECUTOR.execute(() -> {
             try {
-                if (CalendarProfile.getProfiles(appContext.getContentResolver()).isEmpty()) {
+                if (!hasEnabledProfile(appContext)) {
+                    // Switched-off profiles have no alarms, so nothing needs to be checked.
                     cancelAll(appContext);
                     return;
                 }
@@ -77,6 +78,15 @@ public final class CalendarAlertWorker extends Worker {
                 LogUtils.e("CalendarAlertWorker: failed to schedule", e);
             }
         });
+    }
+
+    private static boolean hasEnabledProfile(Context context) {
+        for (CalendarProfile profile : CalendarProfile.getProfiles(context.getContentResolver())) {
+            if (profile.enabled) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

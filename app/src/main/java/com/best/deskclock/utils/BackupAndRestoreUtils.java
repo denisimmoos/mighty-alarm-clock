@@ -380,6 +380,9 @@ public class BackupAndRestoreUtils {
             editor.putStringSet(TIMER_IDS, timerIds);
         }
 
+        // These describe the calendar checks on the phone the backup came from, not this one.
+        com.best.deskclock.mighty.calendar.CalendarAlertStatus.clearDeviceState(editor);
+
         editor.commit();
 
         final ContentResolver contentResolver = context.getContentResolver();
@@ -589,4 +592,50 @@ public class BackupAndRestoreUtils {
         return false;
     }
 
+
+    /** Name of the settings file inside a full backup. */
+    public static final String BACKUP_JSON_FILE_NAME = "settings.json";
+
+    /**
+     * Writes a full backup (settings, alarms, tags, calendar alert profiles, fonts and images) as
+     * a ZIP archive. Used by the manual backup in the settings and by the automatic backup, so
+     * both can be restored the same way.
+     */
+    public static void writeFullBackup(Context context, SharedPreferences prefs, OutputStream outputStream)
+        throws IOException, JSONException {
+        try (java.util.zip.ZipOutputStream zip = new java.util.zip.ZipOutputStream(outputStream)) {
+            zip.putNextEntry(new java.util.zip.ZipEntry(BACKUP_JSON_FILE_NAME));
+            settingsToJsonStream(context, prefs, prefs.getAll(), zip);
+            zip.closeEntry();
+
+            appendFileToZip(zip, prefs.getString(KEY_GENERAL_FONT, null));
+            appendFileToZip(zip, prefs.getString(KEY_ALARM_FONT, null));
+            appendFileToZip(zip, prefs.getString(KEY_ALARM_BACKGROUND_IMAGE, null));
+            appendFileToZip(zip, prefs.getString(KEY_TIMER_DURATION_FONT, null));
+            appendFileToZip(zip, prefs.getString(KEY_TIMER_BACKGROUND_IMAGE, null));
+            appendFileToZip(zip, prefs.getString(KEY_SW_FONT, null));
+            appendFileToZip(zip, prefs.getString(KEY_DIGITAL_CLOCK_FONT, null));
+            appendFileToZip(zip, prefs.getString(KEY_SCREENSAVER_DIGITAL_CLOCK_FONT, null));
+            appendFileToZip(zip, prefs.getString(KEY_SCREENSAVER_BACKGROUND_IMAGE, null));
+        }
+    }
+
+    private static void appendFileToZip(java.util.zip.ZipOutputStream zip, String filePath) throws IOException {
+        if (filePath == null) {
+            return;
+        }
+        final File file = new File(filePath);
+        if (!file.exists()) {
+            return;
+        }
+        zip.putNextEntry(new java.util.zip.ZipEntry(file.getName()));
+        try (java.io.FileInputStream in = new java.io.FileInputStream(file)) {
+            final byte[] buffer = new byte[4096];
+            int length;
+            while ((length = in.read(buffer)) > 0) {
+                zip.write(buffer, 0, length);
+            }
+        }
+        zip.closeEntry();
+    }
 }

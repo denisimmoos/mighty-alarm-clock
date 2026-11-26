@@ -77,7 +77,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         SKIP_TENTATIVE,
         ALL_DAY_MINUTES,
         CREATED_AT,
-        UPDATED_AT
+        UPDATED_AT,
+        SHOW_DETAILS_LOCKED
     };
 
     // These must be kept in sync with QUERY_COLUMNS above.
@@ -106,6 +107,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     private static final int ALL_DAY_MINUTES_INDEX = 22;
     private static final int CREATED_AT_INDEX = 23;
     private static final int UPDATED_AT_INDEX = 24;
+    private static final int SHOW_DETAILS_LOCKED_INDEX = 25;
 
     public long id;
     public String name;
@@ -142,6 +144,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public boolean skipDeclined;
     /** Give no alarm for events the user answered "maybe" to. */
     public boolean skipTentative;
+    /** Shows the event's description and place on the alarm screen also while the phone is locked. */
+    public boolean showDetailsLocked;
     /** Time of day for all-day events in minutes after midnight, or {@link #ALL_DAY_IGNORED}. */
     public int allDayMinutes;
     public long createdAt;
@@ -171,6 +175,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         skipDeclined = true;
         skipTentative = false;
         allDayMinutes = ALL_DAY_IGNORED;
+        showDetailsLocked = true;
         final long now = System.currentTimeMillis();
         createdAt = now;
         updatedAt = now;
@@ -202,6 +207,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         allDayMinutes = c.getInt(ALL_DAY_MINUTES_INDEX);
         createdAt = c.getLong(CREATED_AT_INDEX);
         updatedAt = c.getLong(UPDATED_AT_INDEX);
+        showDetailsLocked = c.getInt(SHOW_DETAILS_LOCKED_INDEX) == 1;
     }
 
     public ContentValues createContentValues() {
@@ -235,6 +241,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         values.put(SKIP_DECLINED, skipDeclined ? 1 : 0);
         values.put(SKIP_TENTATIVE, skipTentative ? 1 : 0);
         values.put(ALL_DAY_MINUTES, allDayMinutes);
+        values.put(SHOW_DETAILS_LOCKED, showDetailsLocked ? 1 : 0);
         values.put(CREATED_AT, createdAt);
         values.put(UPDATED_AT, updatedAt);
         return values;

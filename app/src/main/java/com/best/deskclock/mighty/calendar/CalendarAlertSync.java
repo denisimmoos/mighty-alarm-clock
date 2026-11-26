@@ -158,6 +158,28 @@ public final class CalendarAlertSync {
     }
 
     /**
+     * Forgets all profiles and their events, for the app reset. The alarms themselves are deleted
+     * by the caller. Must not run on the main thread.
+     */
+    public static void deleteAllProfiles(Context context) {
+        synchronized (LOCK) {
+            final ContentResolver cr = context.getContentResolver();
+            final Set<Long> profileIds = new HashSet<>();
+            for (CalendarProfile profile : CalendarProfile.getProfiles(cr)) {
+                profileIds.add(profile.id);
+            }
+            for (CalendarAlertEvent event : CalendarAlertEvent.getAllEvents(cr)) {
+                profileIds.add(event.profileId);
+            }
+            for (Long profileId : profileIds) {
+                // Events first, so deleting the alarms afterwards doesn't mark them as dismissed.
+                CalendarAlertEvent.deleteEventsForProfile(cr, profileId);
+                CalendarProfile.deleteProfile(cr, profileId);
+            }
+        }
+    }
+
+    /**
      * Switches the alarm of a single event on or off. Must not run on the main thread.
      */
     public static void setEventEnabled(Context context, long eventRowId, boolean enabled) {
@@ -208,11 +230,20 @@ public final class CalendarAlertSync {
         final long until = now + TimeUnit.DAYS.toMillis(CalendarProfile.clampLookaheadDays(profile.lookaheadDays));
         // A removed calendar, or a new calendar that got the number of a removed one, has no
         // events for this profile.
-        final Boolean sameCalendar = DeviceCalendars.isSameCalendar(context, profile.calendarId, profile.accountName);
-        final List<DeviceCalendars.EventInstance> instances = Boolean.FALSE.equals(sameCalendar)
+        final DeviceCalendars.CalendarInfo calendar = DeviceCalendars.findProfileCalendar(context,
+            profile.calendarId, profile.accountName, profile.calendarName);
+        if (calendar != null && calendar.id >= 0
+            && (calendar.id != profile.calendarId || !calendar.displayName.equals(profile.calendarName))) {
+            // The calendar got another number (for example after a restore) or was renamed.
+            LogUtils.i("CalendarAlertSync: profile " + profile.id + " now watches calendar " + calendar.id);
+            profile.calendarId = calendar.id;
+            profile.calendarName = calendar.displayName;
+            profile.updateProfile(context.getContentResolver());
+        }
+        final List<DeviceCalendars.EventInstance> instances = calendar != null && calendar.id < 0
             ? new java.util.ArrayList<>()
             : DeviceCalendars.getEventInstances(context, profile.calendarId, now, until, profile.allDayMinutes);
-        if (sameCalendar == null || instances == null) {
+        if (calendar == null || instances == null) {
             // The calendar could not be read right now. Keep what is scheduled and try again later.
             LogUtils.w("CalendarAlertSync: calendar of profile " + profile.id + " could not be read");
             keepClaims(existing, profile, claimedKeys);
@@ -358,8 +389,9 @@ public final class CalendarAlertSync {
         Alarm alarm = event.alarmId != Alarm.INVALID_ID ? Alarm.getAlarm(cr, event.alarmId) : null;
 
         if (alarm == null && event.alarmId != Alarm.INVALID_ID && !rearmConsumed) {
-            // The alarm existed and is gone: the user already dismissed it. Do not bring it back.
-            return shouldBeArmed ? CalendarAlertEvent.ALARM_CONSUMED : Alarm.INVALID_ID;
+            // The alarm existed and is gone: the user already dismissed it. Do not bring it back,
+            // also not after the profile or the event was switched off and on again.
+            return CalendarAlertEvent.ALARM_CONSUMED;
         }
 
         if (alarm != null && !(stopRinging && !shouldBeArmed) && isRingingOrSnoozed(cr, alarm.id)) {

@@ -227,22 +227,43 @@ public final class DeviceCalendars {
     }
 
     /**
-     * @return {@code true} if the calendar still exists and belongs to the same account. Android
-     * may give the number of a removed calendar to a new one.
+     * Finds the calendar a profile watches. Android may give the number of a removed calendar to a
+     * new one, and a restored backup may carry the number of another calendar of the same account,
+     * so the number alone is not enough.
+     *
+     * @return the calendar, or {@code null} if no calendar can be read right now; a calendar with
+     * id {@code -1} if the profile's calendar is not on this phone.
      */
     @androidx.annotation.Nullable
-    public static Boolean isSameCalendar(Context context, long calendarId, String accountName) {
+    public static CalendarInfo findProfileCalendar(Context context, long calendarId, String accountName,
+                                                   String calendarName) {
         final List<CalendarInfo> calendars = readCalendars(context);
         if (calendars == null) {
             return null;
         }
+        CalendarInfo byId = null;
         for (CalendarInfo info : calendars) {
-            if (info.id == calendarId) {
-                return TextUtils.isEmpty(accountName) || accountName.equals(info.accountName);
+            if (info.id == calendarId
+                && (TextUtils.isEmpty(accountName) || accountName.equals(info.accountName))) {
+                byId = info;
             }
         }
-        return false;
+        if (byId != null && (TextUtils.isEmpty(calendarName) || calendarName.equals(byId.displayName))) {
+            return byId;
+        }
+        if (!TextUtils.isEmpty(calendarName)) {
+            for (CalendarInfo info : calendars) {
+                if (calendarName.equals(info.displayName)
+                    && (TextUtils.isEmpty(accountName) || accountName.equals(info.accountName))) {
+                    return info;
+                }
+            }
+        }
+        // Same account and number, but the calendar was renamed.
+        return byId != null ? byId : MISSING_CALENDAR;
     }
+
+    private static final CalendarInfo MISSING_CALENDAR = new CalendarInfo(-1, "", "", "", 0);
 
     /**
      * Some calendar apps move an event by deleting it and adding a new one. Until the calendar

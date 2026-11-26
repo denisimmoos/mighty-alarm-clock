@@ -119,6 +119,9 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
         collapsing.addView(gear, params);
         // Keep the title clear of the gear.
         collapsing.setExpandedTitleMarginEnd(Math.round(72 * density));
+        // Also in the collapsed bar, where a long title would otherwise run under it.
+        final androidx.appcompat.widget.Toolbar toolbar = mBaseBinding.actionBar;
+        toolbar.setContentInsetsRelative(toolbar.getContentInsetStart(), Math.round(64 * density));
 
         mBaseBinding.appBar.addOnOffsetChangedListener((appBar, offset) -> {
             final int range = appBar.getTotalScrollRange();

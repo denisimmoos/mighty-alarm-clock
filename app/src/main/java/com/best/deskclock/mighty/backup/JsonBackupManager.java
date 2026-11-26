@@ -28,16 +28,16 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Exports alarms, tags and alarm/tag associations as pretty-printed JSON files into a
- * user-selected folder (via {@code ACTION_OPEN_DOCUMENT_TREE}). No ZIP is used; plain
- * {@code .json} files are written directly into the folder.
+ * Writes full backups (the same ZIP as the manual backup in the settings: settings, alarms, tags,
+ * calendar alert profiles, fonts and images) into a user-selected folder (via
+ * {@code ACTION_OPEN_DOCUMENT_TREE}), so they can be restored with the settings' restore.
  * <p>
  * Two kinds of files are written on every export:
  * <ul>
- *     <li>A dated file, e.g. {@code alarms-Pixel-2026-07-22_16-30-00.json}, including the
+ *     <li>A dated file, e.g. {@code backup-Pixel-2026-07-22_16-30-00.zip}, including the
  *     configured exchange device name, rotated so that only the most recent
  *     {@value #MAX_DATED_BACKUPS} dated files are kept.</li>
- *     <li>{@code alarms-latest.json}, always overwritten with the most recent export.</li>
+ *     <li>{@code backup-latest.zip}, always overwritten with the most recent export.</li>
  * </ul>
  */
 public final class JsonBackupManager {
@@ -48,8 +48,10 @@ public final class JsonBackupManager {
     public static final String KEY_INTERVAL_HOURS = "backup_interval_hours";
 
     private static final int MAX_DATED_BACKUPS = 14;
-    private static final String LATEST_FILE_NAME = "alarms-latest.json";
-    private static final String MIME_JSON = "application/json";
+    private static final String FILE_PREFIX = "backup-";
+    private static final String FILE_SUFFIX = ".zip";
+    private static final String LATEST_FILE_NAME = FILE_PREFIX + "latest" + FILE_SUFFIX;
+    private static final String MIME_ZIP = "application/zip";
 
     private JsonBackupManager() {
     }
@@ -102,12 +104,10 @@ public final class JsonBackupManager {
                 return false;
             }
 
-            final JSONObject json = buildJson(context);
-
             final String dateStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US).format(new Date());
             final String devicePart = ExchangeManager.sanitizeFileNamePart(ExchangeManager.getDeviceName(context));
-            writeJsonFile(context, dir, "alarms-" + devicePart + "-" + dateStamp + ".json", json);
-            writeJsonFile(context, dir, LATEST_FILE_NAME, json);
+            writeBackupFile(context, dir, FILE_PREFIX + devicePart + "-" + dateStamp + FILE_SUFFIX);
+            writeBackupFile(context, dir, LATEST_FILE_NAME);
 
             rotateOldBackups(dir);
 
@@ -119,14 +119,14 @@ public final class JsonBackupManager {
         }
     }
 
-    private static void writeJsonFile(Context context, DocumentFile dir, String name, JSONObject json)
+    private static void writeBackupFile(Context context, DocumentFile dir, String name)
         throws IOException, JSONException {
         final DocumentFile existing = dir.findFile(name);
         if (existing != null) {
             existing.delete();
         }
 
-        final DocumentFile file = dir.createFile(MIME_JSON, name);
+        final DocumentFile file = dir.createFile(MIME_ZIP, name);
         if (file == null) {
             throw new IOException("Could not create backup file: " + name);
         }
@@ -136,7 +136,8 @@ public final class JsonBackupManager {
             if (out == null) {
                 throw new IOException("Could not open output stream for: " + name);
             }
-            out.write(json.toString(2).getBytes(StandardCharsets.UTF_8));
+            com.best.deskclock.utils.BackupAndRestoreUtils.writeFullBackup(context,
+                com.best.deskclock.DeskClockApplication.getDefaultSharedPreferences(context), out);
         }
     }
 
@@ -144,82 +145,17 @@ public final class JsonBackupManager {
         final List<DocumentFile> dated = new ArrayList<>();
         for (DocumentFile file : dir.listFiles()) {
             final String name = file.getName();
-            if (name != null && name.startsWith("alarms-") && name.endsWith(".json") && !name.equals(LATEST_FILE_NAME)) {
+            if (name != null && name.startsWith(FILE_PREFIX) && name.endsWith(FILE_SUFFIX) && !name.equals(LATEST_FILE_NAME)) {
                 dated.add(file);
             }
         }
 
-        dated.sort((a, b) -> Long.compare(a.lastModified(), b.lastModified()));
+        // Collections.sort: List.sort needs Android 7, and the app runs on Android 6.
+        java.util.Collections.sort(dated, (a, b) -> Long.compare(a.lastModified(), b.lastModified()));
 
         while (dated.size() > MAX_DATED_BACKUPS) {
             final DocumentFile oldest = dated.remove(0);
             oldest.delete();
         }
-    }
-
-    public static JSONObject buildJson(Context context) throws JSONException {
-        final ContentResolver cr = context.getContentResolver();
-
-        final JSONObject root = new JSONObject();
-
-        final JSONObject metadata = new JSONObject();
-        metadata.put("exportedAt", System.currentTimeMillis());
-        metadata.put("appId", context.getPackageName());
-        metadata.put("formatVersion", 1);
-        root.put("metadata", metadata);
-
-        final List<Alarm> alarms = Alarm.getUserAlarms(cr);
-        final JSONArray alarmsArray = new JSONArray();
-        for (Alarm alarm : alarms) {
-            final JSONObject a = new JSONObject();
-            a.put("id", alarm.id);
-            a.put("stableUuid", alarm.stableUuid);
-            a.put("hour", alarm.hour);
-            a.put("minutes", alarm.minutes);
-            a.put("daysOfWeekBits", alarm.daysOfWeek.getBits());
-            a.put("enabled", alarm.enabled);
-            a.put("label", alarm.label);
-            a.put("ringtone", alarm.alert == null ? JSONObject.NULL : alarm.alert.toString());
-            a.put("vibrate", alarm.vibrate);
-            a.put("snoozeDuration", alarm.snoozeDuration);
-            a.put("ringCount", alarm.ringCount);
-            a.put("repeatIntervalMinutes", alarm.repeatIntervalMinutes);
-            a.put("repeatMaxCount", alarm.repeatMaxCount);
-            a.put("intervalFireCount", alarm.intervalFireCount);
-            a.put("createdAt", alarm.createdAt);
-            a.put("updatedAt", alarm.updatedAt);
-            alarmsArray.put(a);
-        }
-        root.put("alarms", alarmsArray);
-
-        final List<Tag> tags = Tag.getTags(cr);
-        final JSONArray tagsArray = new JSONArray();
-        for (Tag tag : tags) {
-            final JSONObject t = new JSONObject();
-            t.put("id", tag.id);
-            t.put("name", tag.name);
-            t.put("color", tag.color);
-            t.put("ringtoneUri", tag.ringtoneUri == null ? JSONObject.NULL : tag.ringtoneUri);
-            tagsArray.put(t);
-        }
-        root.put("tags", tagsArray);
-
-        final JSONArray alarmTagsArray = new JSONArray();
-        for (Alarm alarm : alarms) {
-            for (Long tagId : Tag.getTagIdsForAlarm(cr, alarm.id)) {
-                final JSONObject at = new JSONObject();
-                at.put("alarmId", alarm.id);
-                at.put("tagId", tagId);
-                alarmTagsArray.put(at);
-            }
-        }
-        root.put("alarm_tags", alarmTagsArray);
-
-        // Calendar alert profiles. Their alarms are not exported: they are rebuilt from the
-        // calendar by the next check.
-        root.put(com.best.deskclock.mighty.calendar.CalendarProfileRestore.KEY_PROFILES,
-            com.best.deskclock.mighty.calendar.CalendarProfileRestore.exportProfiles(cr));
-
-        return root;
     }
 }

@@ -578,7 +578,7 @@ public class CalendarAlertSyncTest {
         mProfile.allDayMinutes = 7 * 60;
         mProfile.updateProfile(mCr);
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "alarm: Dentist"));
-        final org.json.JSONObject backup = com.best.deskclock.mighty.backup.JsonBackupManager.buildJson(mContext);
+        final org.json.JSONArray backup = CalendarProfileRestore.exportProfiles(mCr);
 
         // Lost the profile, and the calendar got another id (for example on a new phone).
         CalendarAlertSync.deleteProfile(mContext, mProfile.id);
@@ -587,13 +587,9 @@ public class CalendarAlertSyncTest {
         EVENTS.clear();
         EVENTS.add(new FakeEvent(1, 42, inHours(3), "alarm: Dentist"));
         // The fake names calendars "Calendar <id>", so keep the old name for id 42.
-        final org.json.JSONObject restoredProfile = backup.getJSONArray("calendar_profiles").getJSONObject(0);
-        restoredProfile.put("calendar_name", "Calendar 42");
+        backup.getJSONObject(0).put("calendar_name", "Calendar 42");
 
-        final CalendarProfileRestore.Result result = CalendarProfileRestore.restore(mContext, backup);
-        assertNotNull(result);
-        assertEquals(1, result.restored());
-        assertEquals(0, result.calendarMissing());
+        CalendarProfileRestore.replaceAll(mContext, backup);
         final List<CalendarProfile> profiles = CalendarProfile.getProfiles(mCr);
         assertEquals(1, profiles.size());
         final CalendarProfile restored = profiles.get(0);
@@ -601,29 +597,93 @@ public class CalendarAlertSyncTest {
         assertEquals("^Alarm:", restored.titleRegex);
         assertTrue(restored.ignoreCase);
         assertEquals(7 * 60, restored.allDayMinutes);
-
-        CalendarAlertSync.syncAll(mContext);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
 
-        // Restoring the same file again adds nothing.
-        final CalendarProfileRestore.Result again = CalendarProfileRestore.restore(mContext, backup);
-        assertEquals(0, again.restored());
-        assertEquals(1, again.skipped());
+        // Restoring the same file again replaces instead of adding.
+        CalendarProfileRestore.replaceAll(mContext, backup);
         assertEquals(1, CalendarProfile.getProfiles(mCr).size());
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
     }
 
     @Test
     public void restoredProfileWithUnknownCalendarWaitsForOneToBeChosen() throws Exception {
-        final org.json.JSONObject backup = com.best.deskclock.mighty.backup.JsonBackupManager.buildJson(mContext);
-        CalendarProfile.deleteProfile(mCr, mProfile.id);
-        final CalendarProfileRestore.Result result = CalendarProfileRestore.restore(mContext, backup);
-        assertEquals(1, result.restored());
-        assertEquals(1, result.calendarMissing());
+        final org.json.JSONArray backup = CalendarProfileRestore.exportProfiles(mCr);
+        CalendarProfileRestore.replaceAll(mContext, backup);
         assertEquals(-1, CalendarProfile.getProfiles(mCr).get(0).calendarId);
     }
 
     @Test
-    public void fileWithoutProfilesIsRejected() {
-        assertNull(CalendarProfileRestore.restore(mContext, new org.json.JSONObject()));
+    public void backupWithoutProfilesKeepsTheExistingOnes() {
+        CalendarProfileRestore.replaceAll(mContext, null);
+        assertEquals(1, CalendarProfile.getProfiles(mCr).size());
+    }
+
+    @Test
+    public void dismissedAlarmStaysDismissedAfterSwitchingTheProfileOffAndOn() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
+        CalendarAlertSync.syncAll(mContext);
+        Alarm.deleteAlarm(mCr, events().get(0).alarmId);
+
+        mProfile.enabled = false;
+        mProfile.updateProfile(mCr);
+        CalendarAlertSync.syncAll(mContext);
+        mProfile.enabled = true;
+        mProfile.updateProfile(mCr);
+        CalendarAlertSync.syncAll(mContext);
+
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+        assertEquals(CalendarAlertEvent.ALARM_CONSUMED, events().get(0).alarmId);
+    }
+
+    @Test
+    public void profileFollowsItsCalendarByNameWhenTheNumberPointsToAnother() {
+        // For example a backup restored without calendar access: the number belongs to another
+        // calendar of the same account on this phone.
+        mProfile.calendarId = OTHER_CALENDAR_ID;
+        mProfile.calendarName = "Calendar " + CALENDAR_ID;
+        mProfile.updateProfile(mCr);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
+        EVENTS.add(new FakeEvent(2, OTHER_CALENDAR_ID, inHours(4), "Alarm: Wrong calendar"));
+
+        CalendarAlertSync.syncAll(mContext);
+
+        assertEquals(CALENDAR_ID, CalendarProfile.getProfile(mCr, mProfile.id).calendarId);
+        assertEquals(1, events().size());
+        assertEquals(1, events().get(0).eventId);
+    }
+
+    @Test
+    public void resetRemovesAllProfilesAndEvents() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
+        CalendarAlertSync.syncAll(mContext);
+        final long alarmId = events().get(0).alarmId;
+
+        CalendarAlertSync.deleteAllProfiles(mContext);
+        Alarm.deleteAlarm(mCr, alarmId);
+
+        assertTrue(CalendarProfile.getProfiles(mCr).isEmpty());
+        assertTrue(CalendarAlertEvent.getAllEvents(mCr).isEmpty());
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+    }
+
+    @Test
+    public void lockScreenDetailsOptionIsSavedAndOnByDefault() {
+        assertTrue(CalendarProfile.getProfile(mCr, mProfile.id).showDetailsLocked);
+        mProfile.showDetailsLocked = false;
+        mProfile.updateProfile(mCr);
+        assertFalse(CalendarProfile.getProfile(mCr, mProfile.id).showDetailsLocked);
+    }
+
+    @Test
+    public void restoreForgetsTheOtherPhonesCalendarCheckState() {
+        final android.content.SharedPreferences prefs =
+            com.best.deskclock.DeskClockApplication.getDefaultSharedPreferences(mContext);
+        prefs.edit().putLong(CalendarAlertSync.KEY_LAST_CHECK, 1234L)
+            .putBoolean("key_calendar_alert_permission_notified", true).commit();
+        final android.content.SharedPreferences.Editor editor = prefs.edit();
+        CalendarAlertStatus.clearDeviceState(editor);
+        editor.commit();
+        assertFalse(prefs.contains(CalendarAlertSync.KEY_LAST_CHECK));
+        assertFalse(prefs.contains("key_calendar_alert_permission_notified"));
     }
 }

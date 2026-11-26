@@ -33,7 +33,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
     static final String CALENDAR_PROFILES_TABLE_NAME = "calendar_profiles";
     static final String CALENDAR_ALERT_EVENTS_TABLE_NAME = "calendar_alert_events";
 
-    private static final int DATABASE_VERSION = 35;
+    private static final int DATABASE_VERSION = 36;
     private static final int MINIMUM_SUPPORTED_VERSION = 15;
 
     public ClockDatabaseHelper(Context context) {
@@ -177,6 +177,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             ClockContract.CalendarProfilesColumns.SKIP_DECLINED + " INTEGER NOT NULL DEFAULT 1, " +
             ClockContract.CalendarProfilesColumns.SKIP_TENTATIVE + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.ALL_DAY_MINUTES + " INTEGER NOT NULL DEFAULT -1, " +
+            ClockContract.CalendarProfilesColumns.SHOW_DETAILS_LOCKED + " INTEGER NOT NULL DEFAULT 1, " +
             ClockContract.CalendarProfilesColumns.CREATED_AT + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.UPDATED_AT + " INTEGER NOT NULL DEFAULT 0);");
 
@@ -517,6 +518,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             {ClockContract.CalendarProfilesColumns.SKIP_DECLINED, "INTEGER NOT NULL DEFAULT 1"},
             {ClockContract.CalendarProfilesColumns.SKIP_TENTATIVE, "INTEGER NOT NULL DEFAULT 0"},
             {ClockContract.CalendarProfilesColumns.ALL_DAY_MINUTES, "INTEGER NOT NULL DEFAULT -1"},
+            {ClockContract.CalendarProfilesColumns.SHOW_DETAILS_LOCKED, "INTEGER NOT NULL DEFAULT 1"},
         };
         for (String[] column : added) {
             if (!columns.contains(column[0])) {

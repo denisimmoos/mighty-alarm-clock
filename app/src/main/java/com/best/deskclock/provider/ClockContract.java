@@ -677,6 +677,13 @@ public final class ClockContract {
         String SKIP_TENTATIVE = "skip_tentative";
 
         /**
+         * True if the event's description and place are shown on the alarm screen while the
+         * phone is locked. If false, they are shown once the phone is unlocked.
+         * <p>Type: BOOLEAN</p>
+         */
+        String SHOW_DETAILS_LOCKED = "show_details_locked";
+
+        /**
          * Time of day for all-day events in minutes after midnight, or -1 to ignore them.
          * <p>Type: INTEGER</p>
          */

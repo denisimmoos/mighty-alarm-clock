@@ -359,6 +359,10 @@ public class HandleApiCalls extends Activity {
         final StringBuilder selection = new StringBuilder();
         final List<String> argsList = new ArrayList<>();
         setSelectionFromIntent(intent, hour, minutes, selection, argsList);
+        // An alarm made by a calendar profile belongs to its event; never reuse it.
+        selection.append(" AND ").append(
+            com.best.deskclock.provider.CalendarAlertEvent.buildExcludeCalendarAlarmsSelection(
+                Alarm._ID));
 
         // Try to locate an existing alarm using the intent data.
         final String[] args = argsList.toArray(new String[0]);

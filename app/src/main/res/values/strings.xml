@@ -1535,7 +1535,7 @@
     <string name="mighty_wifi_reevaluate_summary">Applies enable/disable rules based on the currently connected Wi-Fi network</string>
     <string name="mighty_wifi_reevaluate_toast">Wi-Fi rules re-checked</string>
 
-    <string name="mighty_category_backup">JSON backup</string>
+    <string name="mighty_category_backup">Automatic backup</string>
     <string name="mighty_backup_folder_title">Backup folder</string>
     <string name="mighty_backup_folder_not_set">Not set</string>
     <string name="mighty_backup_schedule_enabled_title">Automatic backup</string>
@@ -1739,6 +1739,7 @@
     <string name="calendar_alert_ignore_case">Ignore upper and lower case</string>
     <string name="calendar_alert_section_events">Which events</string>
     <string name="calendar_alert_skip_declined">Skip events I declined</string>
+    <string name="calendar_alert_show_details_locked">Show description and place on the lock screen</string>
     <string name="calendar_alert_skip_tentative">Skip events I answered \"maybe\" to</string>
     <string name="calendar_alert_all_day">Ring for all-day events</string>
     <string name="calendar_alert_all_day_time">All-day events ring at %s</string>

@@ -118,4 +118,38 @@ public class MainBackupRestoreTest {
         assertEquals("Work", tags.get(0).name);
         com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
     }
+
+    @Test(timeout = 120000)
+    public void automaticBackupIsTheSameFullZipAsTheMainBackup() throws Exception {
+        final Application context = ApplicationProvider.getApplicationContext();
+        final SharedPreferences prefs = DeskClockApplication.getDefaultSharedPreferences(context);
+        final CalendarProfile profile = new CalendarProfile();
+        profile.name = "Zipped";
+        profile.addProfile(context.getContentResolver());
+
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        BackupAndRestoreUtils.writeFullBackup(context, prefs, out);
+
+        String json = null;
+        try (java.util.zip.ZipInputStream zip =
+                 new java.util.zip.ZipInputStream(new ByteArrayInputStream(out.toByteArray()))) {
+            java.util.zip.ZipEntry entry;
+            while ((entry = zip.getNextEntry()) != null) {
+                if (entry.getName().equals(BackupAndRestoreUtils.BACKUP_JSON_FILE_NAME)) {
+                    json = new String(readAll(zip), java.nio.charset.StandardCharsets.UTF_8);
+                }
+            }
+        }
+        assertTrue(json != null && json.contains("Zipped"));
+    }
+
+    private static byte[] readAll(java.io.InputStream in) throws java.io.IOException {
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        final byte[] chunk = new byte[8192];
+        int n;
+        while ((n = in.read(chunk)) > 0) {
+            buffer.write(chunk, 0, n);
+        }
+        return buffer.toByteArray();
+    }
 }

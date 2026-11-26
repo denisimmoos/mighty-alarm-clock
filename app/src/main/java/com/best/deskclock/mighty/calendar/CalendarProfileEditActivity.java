@@ -150,6 +150,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.ignoreCaseSwitch.setChecked(mProfile.ignoreCase);
             mBinding.skipDeclinedSwitch.setChecked(mProfile.skipDeclined);
             mBinding.skipTentativeSwitch.setChecked(mProfile.skipTentative);
+            mBinding.showDetailsLockedSwitch.setChecked(mProfile.showDetailsLocked);
             mBinding.allDaySwitch.setChecked(mProfile.allDayMinutes >= 0);
             mBinding.vibrateSwitch.setChecked(mProfile.vibrate);
             mBinding.flashSwitch.setChecked(mProfile.flash);
@@ -417,6 +418,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mProfile.ignoreCase = mBinding.ignoreCaseSwitch.isChecked();
         mProfile.skipDeclined = mBinding.skipDeclinedSwitch.isChecked();
         mProfile.skipTentative = mBinding.skipTentativeSwitch.isChecked();
+        mProfile.showDetailsLocked = mBinding.showDetailsLockedSwitch.isChecked();
         mProfile.allDayMinutes = mBinding.allDaySwitch.isChecked() ? mAllDayMinutes : CalendarProfile.ALL_DAY_IGNORED;
         mProfile.alarmVolume = (int) mBinding.volumeSlider.getValue();
         mProfile.lookaheadDays = CalendarProfile.clampLookaheadDays((int) mBinding.lookaheadSlider.getValue());
