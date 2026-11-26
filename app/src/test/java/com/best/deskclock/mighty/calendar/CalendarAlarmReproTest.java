@@ -83,8 +83,7 @@ public class CalendarAlarmReproTest {
     }
 
     @Test
-    public void tappingAnEventShowsItInTheAppWithAButtonForTheCalendar() throws Exception {
-        CalendarAlarmSyncTest.EVENT_DETAILS.put(1L, new String[]{"Bring the card", "Bahnhofstrasse 1, Zürich"});
+    public void tappingAnEventOpensTheCalendarEntry() throws Exception {
         final CalendarProfileEventsActivity activity = Robolectric.buildActivity(CalendarProfileEventsActivity.class,
             CalendarProfileEventsActivity.createIntent(mContext, mProfile.id)).setup().get();
         for (int i = 0; i < 5; i++) {
@@ -96,23 +95,7 @@ public class CalendarAlarmReproTest {
         list.layout(0, 0, 1080, 1920);
         org.junit.Assert.assertTrue(list.getChildCount() > 0);
         list.getChildAt(0).performClick();
-        final android.content.Intent details = Shadows.shadowOf(activity).getNextStartedActivity();
-        org.junit.Assert.assertNotNull(details);
-        assertEquals(CalendarEventDetailsActivity.class.getName(), details.getComponent().getClassName());
-
-        // The event screen shows the details, and its button opens the calendar entry.
-        final CalendarEventDetailsActivity screen =
-            Robolectric.buildActivity(CalendarEventDetailsActivity.class, details).setup().get();
-        for (int i = 0; i < 3; i++) {
-            com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
-            ShadowLooper.idleMainLooper();
-        }
-        assertEquals("Bring the card", ((android.widget.TextView) screen.findViewById(
-            com.best.deskclock.R.id.event_description)).getText().toString());
-        assertEquals("Bahnhofstrasse 1, Zürich", ((android.widget.TextView) screen.findViewById(
-            com.best.deskclock.R.id.event_location)).getText().toString());
-        screen.findViewById(com.best.deskclock.R.id.open_in_calendar_button).performClick();
-        final android.content.Intent started = Shadows.shadowOf(screen).getNextStartedActivity();
+        final android.content.Intent started = Shadows.shadowOf(activity).getNextStartedActivity();
         org.junit.Assert.assertNotNull(started);
         assertEquals(android.content.Intent.ACTION_VIEW, started.getAction());
         assertEquals(android.content.ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, 1),

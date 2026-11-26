@@ -1750,8 +1750,6 @@
     <string name="calendar_alarm_all_day_time">All-day events ring at %s</string>
     <string name="calendar_alarm_vibration_strength">Vibration strength: %d%%</string>
     <string name="calendar_alarm_vibration_strength_unsupported">This phone can\'t change how strongly it vibrates, so it always uses its own strength.</string>
-    <string name="calendar_alarm_open_in_calendar">Open in calendar app</string>
-    <string name="calendar_alarm_event_switched_off">Alarm switched off</string>
     <string name="calendar_alarm_no_calendar_app">No calendar app found to open this event</string>
     <string name="calendar_alarm_max_duration">Maximum alarm duration (minutes)</string>
     <string name="calendar_alarm_max_duration_help">Leave empty to ring until you dismiss the alarm.</string>
