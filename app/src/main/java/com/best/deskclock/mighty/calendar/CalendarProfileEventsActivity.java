@@ -76,28 +76,55 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
         mAdapter = new EventAdapter();
         mBinding.eventsList.setLayoutManager(new LinearLayoutManager(this));
         mBinding.eventsList.setAdapter(mAdapter);
+
+        addSettingsGear();
     }
 
-    private static final int MENU_EDIT_PROFILE = 1;
+    /**
+     * Puts a gear on the same line as the large title, at its right end. It opens the profile's
+     * settings and moves into the top bar together with the title when the list is scrolled.
+     */
+    private void addSettingsGear() {
+        final com.google.android.material.appbar.CollapsingToolbarLayout collapsing = mBaseBinding.collapsingToolbar;
+        final float density = getResources().getDisplayMetrics().density;
+        final int size = Math.round(48 * density);
 
-    @Override
-    public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        // A gear next to the title opens the profile's settings.
-        menu.add(0, MENU_EDIT_PROFILE, 0, R.string.calendar_alert_edit_profile)
-            .setIcon(R.drawable.ic_settings)
-            .setShowAsAction(android.view.MenuItem.SHOW_AS_ACTION_ALWAYS);
-        mBaseBinding.actionBar.post(() ->
-            com.best.deskclock.utils.ThemeUtils.applyToolbarTooltips(mBaseBinding.actionBar));
-        return super.onCreateOptionsMenu(menu);
-    }
+        final android.widget.ImageButton gear = new androidx.appcompat.widget.AppCompatImageButton(this);
+        gear.setId(R.id.calendar_profile_settings_gear);
+        gear.setImageResource(R.drawable.ic_settings);
+        final android.util.TypedValue value = new android.util.TypedValue();
+        getTheme().resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, value, true);
+        gear.setBackgroundResource(value.resourceId);
+        gear.setContentDescription(getString(R.string.calendar_alert_edit_profile));
+        androidx.appcompat.widget.TooltipCompat.setTooltipText(gear, getString(R.string.calendar_alert_edit_profile));
+        gear.setOnClickListener(v -> startActivity(CalendarProfileEditActivity.createIntent(this, mProfileId)));
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
-        if (item.getItemId() == MENU_EDIT_PROFILE) {
-            startActivity(CalendarProfileEditActivity.createIntent(this, mProfileId));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        // Line the gear up with the middle of the large title.
+        final android.graphics.Paint paint = new android.graphics.Paint();
+        paint.setTextSize(collapsing.getExpandedTitleTextSize());
+        final android.graphics.Paint.FontMetrics metrics = paint.getFontMetrics();
+        final float titleHeight = metrics.descent - metrics.ascent;
+        // The font's ascent includes room for accents above capitals; the visible letters sit lower.
+        final int expandedBottom = Math.round(collapsing.getExpandedTitleMarginBottom() + titleHeight / 2f
+            - size / 2f - metrics.descent / 2f - 2 * density);
+        // In the collapsed bar the gear sits in the middle of the toolbar instead.
+        final int collapsedBottom = Math.round((mBaseBinding.actionBar.getLayoutParams().height - size) / 2f);
+
+        final com.google.android.material.appbar.CollapsingToolbarLayout.LayoutParams params =
+            new com.google.android.material.appbar.CollapsingToolbarLayout.LayoutParams(size, size,
+                android.view.Gravity.BOTTOM | android.view.Gravity.END);
+        params.setCollapseMode(com.google.android.material.appbar.CollapsingToolbarLayout.LayoutParams.COLLAPSE_MODE_OFF);
+        params.setMarginEnd(Math.round(12 * density));
+        params.bottomMargin = expandedBottom;
+        collapsing.addView(gear, params);
+        // Keep the title clear of the gear.
+        collapsing.setExpandedTitleMarginEnd(Math.round(72 * density));
+
+        mBaseBinding.appBar.addOnOffsetChangedListener((appBar, offset) -> {
+            final int range = appBar.getTotalScrollRange();
+            final float collapsed = range == 0 ? 0f : -offset / (float) range;
+            gear.setTranslationY(collapsed * (expandedBottom - collapsedBottom));
+        });
     }
 
     @Override

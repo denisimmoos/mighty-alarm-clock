@@ -94,12 +94,37 @@ public final class CalendarAlertSync {
 
         CalendarAlertStatus.update(appContext, canReadCalendar, !profiles.isEmpty(), now);
 
-        // Clean up rows left behind by deleted profiles.
+        // Clean up alarms and rows left behind by deleted profiles, ringing ones included.
         for (CalendarAlertEvent event : CalendarAlertEvent.getAllEvents(cr)) {
             if (!profileIds.contains(event.profileId)) {
-                removeEvent(appContext, event, true);
+                deleteEventAndAlarm(appContext, event);
             }
         }
+    }
+
+    /**
+     * Deletes the event row and its alarm, stopping the alarm if it is ringing. A failure to stop
+     * the alarm never keeps the row, so a deleted profile cannot come back.
+     */
+    private static void deleteEventAndAlarm(Context context, CalendarAlertEvent event) {
+        final ContentResolver cr = context.getContentResolver();
+        try {
+            if (alarmExists(cr, event.alarmId)) {
+                deleteAlarm(context, event.alarmId);
+            }
+        } catch (Throwable e) {
+            LogUtils.e("CalendarAlertSync: could not stop alarm " + event.alarmId, e);
+            try {
+                // At least remove the alarm itself so it can't ring any more.
+                for (AlarmInstance instance : AlarmInstance.getInstancesByAlarmId(cr, event.alarmId)) {
+                    AlarmInstance.deleteInstance(cr, instance.mId);
+                }
+                Alarm.deleteAlarm(cr, event.alarmId);
+            } catch (Throwable ignored) {
+                // Nothing more can be done here.
+            }
+        }
+        event.delete(cr);
     }
 
     /**
@@ -118,14 +143,12 @@ public final class CalendarAlertSync {
             try {
                 final Context appContext = context.getApplicationContext();
                 final ContentResolver cr = appContext.getContentResolver();
+                // The profile goes first, so it is gone even if stopping an alarm fails.
+                CalendarProfile.deleteProfile(cr, profileId);
                 for (CalendarAlertEvent event : CalendarAlertEvent.getEventsForProfile(cr, profileId)) {
                     // Also stops an alarm that is ringing or snoozed right now.
-                    if (alarmExists(cr, event.alarmId)) {
-                        deleteAlarm(appContext, event.alarmId);
-                    }
-                    event.delete(cr);
+                    deleteEventAndAlarm(appContext, event);
                 }
-                CalendarProfile.deleteProfile(cr, profileId);
                 // Another profile may match the same events and now gets their alarms.
                 syncAllLocked(appContext);
             } catch (Throwable e) {

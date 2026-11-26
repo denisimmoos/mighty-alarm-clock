@@ -1738,6 +1738,7 @@
     <string name="calendar_alert_flash">Blink flashlight</string>
     <string name="calendar_alert_vibrate_only">Vibrate only (no sound)</string>
     <string name="calendar_alert_flash_only">Flash only (no sound, no vibration)</string>
+    <string name="calendar_alert_profile_deleted">Profile deleted</string>
     <string name="calendar_alert_open_location">Open %s in maps</string>
     <string name="calendar_alert_no_maps_app">No maps app or browser found to show this place</string>
     <string name="calendar_alert_status_channel">Calendar alerts</string>

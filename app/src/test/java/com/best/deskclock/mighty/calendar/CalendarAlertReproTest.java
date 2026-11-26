@@ -362,11 +362,35 @@ public class CalendarAlertReproTest {
         ShadowLooper.idleMainLooper();
         org.junit.Assert.assertNull(activity.findViewById(
             activity.getResources().getIdentifier("edit_profile_button", "id", activity.getPackageName())));
-        final androidx.appcompat.widget.Toolbar toolbar = activity.findViewById(com.best.deskclock.R.id.action_bar);
-        final android.view.MenuItem gear = toolbar.getMenu().getItem(0);
-        assertEquals(mContext.getString(com.best.deskclock.R.string.calendar_alert_edit_profile), gear.getTitle().toString());
-        org.junit.Assert.assertTrue(activity.onOptionsItemSelected(gear));
+        final android.view.View gear = activity.findViewById(com.best.deskclock.R.id.calendar_profile_settings_gear);
+        org.junit.Assert.assertNotNull(gear);
+        gear.performClick();
         final android.content.Intent started = Shadows.shadowOf(activity).getNextStartedActivity();
         assertEquals(CalendarProfileEditActivity.class.getName(), started.getComponent().getClassName());
+    }
+
+    @Test(timeout = 60000)
+    public void deleteButtonDeletesTheProfileAndItsAlarms() throws Exception {
+        // Even a ringing alarm goes away with its profile.
+        final long alarmId = CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        AlarmStateManager.setFiredState(mContext, AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0));
+        final CalendarProfileEditActivity activity = Robolectric.buildActivity(CalendarProfileEditActivity.class,
+            CalendarProfileEditActivity.createIntent(mContext, mProfile.id)).setup().get();
+        ShadowLooper.idleMainLooper();
+        activity.findViewById(com.best.deskclock.R.id.delete_button).performClick();
+        ShadowLooper.idleMainLooper();
+        final android.app.Dialog dialog = org.robolectric.shadows.ShadowDialog.getLatestDialog();
+        org.junit.Assert.assertNotNull(dialog);
+        ((androidx.appcompat.app.AlertDialog) dialog).getButton(android.content.DialogInterface.BUTTON_POSITIVE).performClick();
+        com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
+        ShadowLooper.idleMainLooper();
+        CalendarAlertSync.EXECUTOR.submit(() -> { }).get();
+        ShadowLooper.idleMainLooper();
+
+        org.junit.Assert.assertTrue(activity.isFinishing());
+        org.junit.Assert.assertTrue(AlarmInstance.getInstances(mCr, null).isEmpty());
+        org.junit.Assert.assertNull(CalendarProfile.getProfile(mCr, mProfile.id));
+        org.junit.Assert.assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+        org.junit.Assert.assertTrue(CalendarAlertEvent.getEventsForProfile(mCr, mProfile.id).isEmpty());
     }
 }

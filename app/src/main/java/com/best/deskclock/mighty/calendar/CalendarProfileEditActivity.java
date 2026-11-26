@@ -472,11 +472,19 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
                 mFinishing = true;
                 final Context appContext = getApplicationContext();
                 final long profileId = mProfile.id;
-                CalendarAlertSync.EXECUTOR.execute(() -> {
-                    CalendarAlertSync.deleteProfile(appContext, profileId);
-                    CalendarAlertWorker.ensureScheduled(appContext);
+                // Remove the profile right away, so it is gone from every list even while a
+                // calendar check is still running. Its alarms are cleaned up right after.
+                AppExecutors.getDiskIO().execute(() -> {
+                    CalendarProfile.deleteProfile(appContext.getContentResolver(), profileId);
+                    AppExecutors.getMainThread().post(() -> {
+                        CustomToast.show(appContext, appContext.getString(R.string.calendar_alert_profile_deleted));
+                        finish();
+                    });
+                    CalendarAlertSync.EXECUTOR.execute(() -> {
+                        CalendarAlertSync.deleteProfile(appContext, profileId);
+                        CalendarAlertWorker.ensureScheduled(appContext);
+                    });
                 });
-                finish();
             })
             .setNegativeButton(android.R.string.cancel, null)
             .show();
