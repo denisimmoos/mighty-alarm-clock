@@ -822,4 +822,135 @@ public class CalendarAlarmSyncTest {
         assertEquals(CalendarProfile.DEFAULT_OFFSET_MINUTES, old.offsetMinutes);
         assertFalse(old.escalation);
     }
+
+    @Test
+    public void earlyAlarmAlsoRingsAtTheStartByDefault() {
+        assertTrue(CalendarProfile.getProfile(mCr, mProfile.id).ringAtStart);
+        final long begin = inHours(5);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, "Alarm: Flight"));
+        mProfile.offsetEnabled = true;
+        mProfile.offsetMinutes = 2 * 60 + 15;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+
+        CalendarAlarmEvent row = events().get(0);
+        assertTrue(row.alarmId >= 0);
+        assertTrue(row.startAlarmId >= 0);
+        assertEquals(begin - TimeUnit.MINUTES.toMillis(135),
+            AlarmInstance.getInstancesByAlarmId(mCr, row.alarmId).get(0).getAlarmTime().getTimeInMillis());
+        assertEquals(begin,
+            AlarmInstance.getInstancesByAlarmId(mCr, row.startAlarmId).get(0).getAlarmTime().getTimeInMillis());
+        // Both belong to the event and stay out of the normal alarm list.
+        assertEquals(row.id, CalendarAlarmEvent.getEventForAlarm(mCr, row.startAlarmId).id);
+        assertTrue(Alarm.getUserAlarms(mCr).isEmpty());
+        assertEquals(2, Alarm.getAlarms(mCr, null).size());
+
+        // Dismissing the early alarm keeps the one at the start.
+        Alarm.deleteAlarm(mCr, row.alarmId);
+        CalendarAlarmSync.syncAll(mContext);
+        row = events().get(0);
+        assertEquals(CalendarAlarmEvent.ALARM_CONSUMED, row.alarmId);
+        assertTrue(row.startAlarmId >= 0);
+        assertFalse(row.isDismissed());
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+
+        // Dismissing that one too leaves the event done.
+        Alarm.deleteAlarm(mCr, row.startAlarmId);
+        CalendarAlarmSync.syncAll(mContext);
+        row = events().get(0);
+        assertTrue(row.isDismissed());
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+    }
+
+    @Test
+    public void ringAtStartCanBeSwitchedOff() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(5), "Alarm: Flight"));
+        mProfile.offsetEnabled = true;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        assertEquals(2, Alarm.getAlarms(mCr, null).size());
+
+        mProfile.ringAtStart = false;
+        mProfile.updateProfile(mCr);
+        assertFalse(CalendarProfile.getProfile(mCr, mProfile.id).ringAtStart);
+        CalendarAlarmSync.syncAll(mContext);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+        assertEquals(Alarm.INVALID_ID, events().get(0).startAlarmId);
+
+        // Without an offset there is only ever one alarm.
+        mProfile.ringAtStart = true;
+        mProfile.offsetEnabled = false;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+
+        // Switching the profile off removes both alarms.
+        mProfile.offsetEnabled = true;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        assertEquals(2, Alarm.getAlarms(mCr, null).size());
+        mProfile.enabled = false;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+        CalendarAlarmSync.deleteProfile(mContext, mProfile.id);
+        assertTrue(events().isEmpty());
+    }
+
+    @Test
+    public void offsetGoesUpToTwelveHours() {
+        assertEquals(12 * 60, CalendarProfile.MAX_OFFSET_MINUTES);
+        assertEquals(12 * 60, CalendarProfile.clampOffsetMinutes(13 * 60));
+        final long begin = inHours(20);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, "Alarm: Trip"));
+        mProfile.offsetEnabled = true;
+        mProfile.offsetMinutes = 12 * 60;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        assertEquals(begin - TimeUnit.HOURS.toMillis(12), AlarmInstance.getInstancesByAlarmId(mCr,
+            events().get(0).alarmId).get(0).getAlarmTime().getTimeInMillis());
+    }
+
+    @Test
+    public void earlyDismissedStateAndRingAtStartAreRestored() throws Exception {
+        mProfile.offsetEnabled = true;
+        mProfile.ringAtStart = false;
+        mProfile.updateProfile(mCr);
+        org.json.JSONArray backup = CalendarProfileRestore.exportProfiles(mCr);
+        CalendarAlarmSync.deleteProfile(mContext, mProfile.id);
+        CalendarProfileRestore.replaceAll(mContext, backup);
+        assertFalse(CalendarProfile.getProfiles(mCr).get(0).ringAtStart);
+
+        // The early alarm was dismissed, the one at the start still waits.
+        mProfile = CalendarProfile.getProfiles(mCr).get(0);
+        mProfile.calendarId = CALENDAR_ID;
+        mProfile.calendarName = "Calendar 7";
+        mProfile.ringAtStart = true;
+        mProfile.updateProfile(mCr);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(5), "Alarm: Flight"));
+        CalendarAlarmSync.syncAll(mContext);
+        Alarm.deleteAlarm(mCr, events().get(0).alarmId);
+        backup = CalendarProfileRestore.exportProfiles(mCr);
+        CalendarProfileRestore.replaceAll(mContext, backup);
+
+        final CalendarAlarmEvent row = CalendarAlarmEvent.getEventsForProfile(mCr,
+            CalendarProfile.getProfiles(mCr).get(0).id).get(0);
+        assertEquals(CalendarAlarmEvent.ALARM_CONSUMED, row.alarmId);
+        assertTrue(row.startAlarmId >= 0);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+    }
+
+    @Test
+    public void timeUntilTheEventIsShownInHoursAndMinutes() {
+        final long now = 1_000_000_000L;
+        assertEquals("Event in 10 min", mContext.getString(com.best.deskclock.R.string.calendar_alarm_event_in,
+            CalendarEventText.formatTimeUntil(mContext, now + 10 * 60_000L, now)));
+        assertEquals("2 h 15 min", CalendarEventText.formatTimeUntil(mContext, now + 135 * 60_000L, now));
+        assertEquals("12 h", CalendarEventText.formatTimeUntil(mContext, now + 12 * 3_600_000L, now));
+        // A few seconds after ringing it still says 10 minutes.
+        assertEquals("10 min", CalendarEventText.formatTimeUntil(mContext, now + 10 * 60_000L - 5_000, now));
+        // The alarm at the start shows nothing.
+        assertNull(CalendarEventText.formatTimeUntil(mContext, now + 30_000, now));
+        assertNull(CalendarEventText.formatTimeUntil(mContext, now - 60_000, now));
+    }
 }

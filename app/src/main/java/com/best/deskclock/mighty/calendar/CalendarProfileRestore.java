@@ -64,14 +64,17 @@ public final class CalendarProfileRestore {
         final JSONArray events = new JSONArray();
         final long now = System.currentTimeMillis();
         for (CalendarAlarmEvent event : CalendarAlarmEvent.getEventsForProfile(cr, profileId)) {
-            final boolean dismissed = event.alarmId == CalendarAlarmEvent.ALARM_CONSUMED;
-            if (event.begin > now && (!event.userEnabled || dismissed)) {
+            final boolean dismissed = event.isDismissed();
+            // The early alarm of a profile that rings before the event and again at its start.
+            final boolean earlyDismissed = event.alarmId == CalendarAlarmEvent.ALARM_CONSUMED;
+            if (event.begin > now && (!event.userEnabled || dismissed || earlyDismissed)) {
                 events.put(new JSONObject()
                     .put("event_id", event.eventId)
                     .put("begin", event.begin)
                     .put("title", event.title == null ? "" : event.title)
                     .put("switched_off", !event.userEnabled)
-                    .put("dismissed", dismissed));
+                    .put("dismissed", dismissed)
+                    .put("early_dismissed", earlyDismissed));
             }
         }
         return events;
@@ -91,6 +94,9 @@ public final class CalendarProfileRestore {
                 json.optLong("begin"), json.optString("title"));
             event.userEnabled = !json.optBoolean("switched_off");
             if (json.optBoolean("dismissed")) {
+                event.alarmId = CalendarAlarmEvent.ALARM_CONSUMED;
+                event.startAlarmId = CalendarAlarmEvent.ALARM_CONSUMED;
+            } else if (json.optBoolean("early_dismissed")) {
                 event.alarmId = CalendarAlarmEvent.ALARM_CONSUMED;
             }
             try {
@@ -114,8 +120,9 @@ public final class CalendarProfileRestore {
         }
         final ContentResolver cr = context.getContentResolver();
         for (CalendarProfile profile : CalendarProfile.getProfiles(cr)) {
-            // Their alarms are removed by the calendar check below.
-            CalendarProfile.deleteProfile(cr, profile.id);
+            // Also removes their events and alarms now. The restored profiles often get the same
+            // ids, and a restored event row would otherwise replace one that still has an alarm.
+            CalendarAlarmSync.deleteProfile(context, profile.id);
         }
         insertAll(context, profiles);
         CalendarAlarmSync.syncAll(context);

@@ -95,4 +95,26 @@ public class CalendarProfileUpgradeTest {
         }
         db.close();
     }
+
+    @Test
+    public void upgradeFromVersion37RingsAtTheStartAndAddsTheSecondAlarmColumn() {
+        final SQLiteDatabase db = SQLiteDatabase.create(null);
+        db.execSQL("CREATE TABLE calendar_profiles (_id INTEGER PRIMARY KEY, flash INTEGER NOT NULL DEFAULT 0);");
+        db.execSQL("INSERT INTO calendar_profiles (_id) VALUES (1);");
+        db.execSQL("CREATE TABLE calendar_alert_events (_id INTEGER PRIMARY KEY, alarm_id INTEGER NOT NULL DEFAULT -1);");
+        db.execSQL("INSERT INTO calendar_alert_events (_id, alarm_id) VALUES (1, 5);");
+        final ClockDatabaseHelper helper = new ClockDatabaseHelper(ApplicationProvider.getApplicationContext());
+        helper.onUpgrade(db, 37, 38);
+        helper.onUpgrade(db, 37, 38);
+        try (Cursor c = db.rawQuery("SELECT ring_at_start FROM calendar_profiles", null)) {
+            assertTrue(c.moveToFirst());
+            assertEquals(1, c.getInt(0));
+        }
+        try (Cursor c = db.rawQuery("SELECT alarm_id, start_alarm_id FROM calendar_alert_events", null)) {
+            assertTrue(c.moveToFirst());
+            assertEquals(5, c.getInt(0));
+            assertEquals(-1, c.getInt(1));
+        }
+        db.close();
+    }
 }

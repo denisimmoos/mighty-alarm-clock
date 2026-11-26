@@ -471,12 +471,14 @@ public class ClockProvider extends ContentProvider {
      * deleted alarm's id to a new alarm, and a stale link would then hide or change that alarm.
      */
     private static void markDeletedCalendarAlarms(SQLiteDatabase db) {
-        final ContentValues values = new ContentValues(1);
-        values.put(ClockContract.CalendarAlarmEventsColumns.ALARM_ID, CalendarAlarmEvent.ALARM_CONSUMED);
-        db.update(CALENDAR_ALARM_EVENTS_TABLE_NAME, values,
-            ClockContract.CalendarAlarmEventsColumns.ALARM_ID + " >= 0 AND "
-                + ClockContract.CalendarAlarmEventsColumns.ALARM_ID + " NOT IN (SELECT "
-                + AlarmsColumns._ID + " FROM " + ALARMS_TABLE_NAME + ")", null);
+        for (String column : new String[]{ClockContract.CalendarAlarmEventsColumns.ALARM_ID,
+            ClockContract.CalendarAlarmEventsColumns.START_ALARM_ID}) {
+            final ContentValues values = new ContentValues(1);
+            values.put(column, CalendarAlarmEvent.ALARM_CONSUMED);
+            db.update(CALENDAR_ALARM_EVENTS_TABLE_NAME, values,
+                column + " >= 0 AND " + column + " NOT IN (SELECT "
+                    + AlarmsColumns._ID + " FROM " + ALARMS_TABLE_NAME + ")", null);
+        }
     }
 
     /**

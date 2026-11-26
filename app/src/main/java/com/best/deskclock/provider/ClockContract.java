@@ -702,6 +702,12 @@ public final class ClockContract {
         String ESCALATION = "escalation";
 
         /**
+         * True if a profile with an offset also rings again when the event starts.
+         * <p>Type: BOOLEAN</p>
+         */
+        String RING_AT_START = "ring_at_start";
+
+        /**
          * Time of day for all-day events in minutes after midnight, or -1 to ignore them.
          * <p>Type: INTEGER</p>
          */
@@ -764,5 +770,12 @@ public final class ClockContract {
          * <p>Type: INTEGER (long)</p>
          */
         String ALARM_ID = "alarm_id";
+
+        /**
+         * Id of the second alarm at the start of the event, when the profile rings early and
+         * again at the start, -1 if there is none, or -2 once it was dismissed.
+         * <p>Type: INTEGER (long)</p>
+         */
+        String START_ALARM_ID = "start_alarm_id";
     }
 }

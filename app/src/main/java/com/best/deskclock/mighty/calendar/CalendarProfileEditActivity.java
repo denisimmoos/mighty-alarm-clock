@@ -152,7 +152,10 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.skipTentativeSwitch.setChecked(mProfile.skipTentative);
             mBinding.showDetailsLockedSwitch.setChecked(mProfile.showDetailsLocked);
             mBinding.offsetSwitch.setChecked(mProfile.offsetEnabled);
-            mBinding.offsetMinutesInput.setText(String.valueOf(CalendarProfile.clampOffsetMinutes(mProfile.offsetMinutes)));
+            final int offset = CalendarProfile.clampOffsetMinutes(mProfile.offsetMinutes);
+            mBinding.offsetHoursInput.setText(offset >= 60 ? String.valueOf(offset / 60) : "");
+            mBinding.offsetMinutesInput.setText(String.valueOf(offset % 60));
+            mBinding.ringAtStartSwitch.setChecked(mProfile.ringAtStart);
             mBinding.escalationSwitch.setChecked(mProfile.escalation);
             mBinding.allDaySwitch.setChecked(mProfile.allDayMinutes >= 0);
             mBinding.vibrateSwitch.setChecked(mProfile.vibrate);
@@ -225,9 +228,9 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mBinding.vibrationStrengthHelp.setVisibility(CalendarVibration.hasAmplitudeControl(this) ? GONE : VISIBLE);
 
         // The offset minutes follow the offset switch
-        mBinding.offsetMinutesLayout.setVisibility(mBinding.offsetSwitch.isChecked() ? VISIBLE : GONE);
+        mBinding.offsetFields.setVisibility(mBinding.offsetSwitch.isChecked() ? VISIBLE : GONE);
         mBinding.offsetSwitch.setOnCheckedChangeListener((button, checked) ->
-            mBinding.offsetMinutesLayout.setVisibility(checked ? VISIBLE : GONE));
+            mBinding.offsetFields.setVisibility(checked ? VISIBLE : GONE));
 
         // Snooze fields follow the snooze switch
         mBinding.snoozeFields.setVisibility(mBinding.snoozeSwitch.isChecked() ? VISIBLE : GONE);
@@ -422,7 +425,10 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             return;
         }
 
-        final Integer offsetMinutes = parseOptionalNumber(mBinding.offsetMinutesInput.getText());
+        final Integer offsetHours = parseOptionalNumber(mBinding.offsetHoursInput.getText());
+        final Integer offsetRest = parseOptionalNumber(mBinding.offsetMinutesInput.getText());
+        final Integer offsetMinutes = offsetHours == null || offsetRest == null
+            ? null : offsetHours * 60 + offsetRest;
         final boolean offsetEnabled = mBinding.offsetSwitch.isChecked();
         if (offsetEnabled && (offsetMinutes == null || offsetMinutes < CalendarProfile.MIN_OFFSET_MINUTES
             || offsetMinutes > CalendarProfile.MAX_OFFSET_MINUTES)) {
@@ -443,6 +449,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         if (offsetEnabled) {
             mProfile.offsetMinutes = offsetMinutes;
         }
+        mProfile.ringAtStart = mBinding.ringAtStartSwitch.isChecked();
         // Flash only cannot escalate, see updateVibrateOnly().
         mProfile.escalation = mBinding.escalationSwitch.isChecked() && !mBinding.flashOnlySwitch.isChecked();
         mProfile.allDayMinutes = mBinding.allDaySwitch.isChecked() ? mAllDayMinutes : CalendarProfile.ALL_DAY_IGNORED;

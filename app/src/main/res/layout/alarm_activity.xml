@@ -108,6 +108,19 @@
             tools:visibility="visible">
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/calendar_countdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="Event in 2 h 15 min"
+                tools:visibility="visible" />
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/calendar_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

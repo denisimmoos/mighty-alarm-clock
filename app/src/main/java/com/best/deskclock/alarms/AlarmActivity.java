@@ -362,6 +362,9 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void onDestroy() {
+        if (mBinding != null) {
+            mBinding.calendarCountdown.removeCallbacks(mCountdownUpdater);
+        }
         unregisterUnlockReceiver();
 
         if (mPowerBtnReceiverRegistered) {
@@ -657,6 +660,12 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             }
             final com.best.deskclock.provider.CalendarProfile profile =
                 com.best.deskclock.provider.CalendarProfile.getProfile(appContext.getContentResolver(), event.profileId);
+            if (profile != null && profile.offsetEnabled && event.alarmId == alarmId) {
+                // The early alarm says how long until the event. This is not private, so it
+                // shows also on the lock screen.
+                final long begin = event.begin;
+                com.best.deskclock.base.AppExecutors.getMainThread().post(() -> showCalendarCountdown(begin));
+            }
             final android.app.KeyguardManager keyguard = appContext.getSystemService(android.app.KeyguardManager.class);
             if (profile != null && !profile.showDetailsLocked && keyguard != null && keyguard.isKeyguardLocked()) {
                 // The profile keeps the details private on the lock screen. Show them after unlocking.
@@ -670,6 +679,43 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             }
             com.best.deskclock.base.AppExecutors.getMainThread().post(() -> showCalendarEventDetails(details));
         });
+    }
+
+    private long mCalendarEventBegin;
+
+    /** Keeps "Event in …" up to date while the alarm screen is shown. */
+    private final Runnable mCountdownUpdater = this::updateCalendarCountdown;
+
+    /**
+     * Shows how long until the event starts, for an alarm that rings before the event.
+     */
+    private void showCalendarCountdown(long begin) {
+        if (isFinishing() || isDestroyed() || mBinding == null) {
+            return;
+        }
+        mCalendarEventBegin = begin;
+        if (mIsTextShadowDisplayed) {
+            mBinding.calendarCountdown.setShadowLayer(mShadowRadius, mShadowOffset, mShadowOffset, mShadowColor);
+        }
+        mBinding.calendarCountdown.setTextColor(mAlarmTitleColor);
+        updateCalendarCountdown();
+    }
+
+    private void updateCalendarCountdown() {
+        if (isFinishing() || isDestroyed() || mBinding == null) {
+            return;
+        }
+        final String timeLeft = com.best.deskclock.mighty.calendar.CalendarEventText.formatTimeUntil(
+            this, mCalendarEventBegin, System.currentTimeMillis());
+        mBinding.calendarCountdown.removeCallbacks(mCountdownUpdater);
+        if (timeLeft == null) {
+            mBinding.calendarCountdown.setVisibility(GONE);
+            return;
+        }
+        mBinding.calendarCountdown.setText(getString(R.string.calendar_alarm_event_in, timeLeft));
+        mBinding.calendarCountdown.setVisibility(VISIBLE);
+        mBinding.calendarInfo.setVisibility(VISIBLE);
+        mBinding.calendarCountdown.postDelayed(mCountdownUpdater, 15_000);
     }
 
     private final android.content.BroadcastReceiver mUnlockReceiver = new android.content.BroadcastReceiver() {

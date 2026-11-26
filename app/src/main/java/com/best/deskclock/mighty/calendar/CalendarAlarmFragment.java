@@ -178,7 +178,7 @@ public final class CalendarAlarmFragment extends DeskClockFragment {
                     appContext.getContentResolver(), profile.id)) {
                     // A switched off profile rings for nothing.
                     if (profile.enabled && event.begin > now && event.userEnabled
-                        && event.alarmId != CalendarAlarmEvent.ALARM_CONSUMED) {
+                        && !event.isDismissed()) {
                         count++;
                         if (next < 0) {
                             next = event.begin;

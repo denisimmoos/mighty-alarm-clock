@@ -2,6 +2,7 @@
 
 package com.best.deskclock.mighty.calendar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -45,6 +46,36 @@ public final class CalendarEventText {
      * @return ways to show the place, best first: Google Maps, any maps app, then the Google Maps
      * website.
      */
+    /**
+     * @return the whole minutes until the event, rounded up, so an alarm 10 minutes before says
+     * 10 minutes and not 9.
+     */
+    public static long minutesUntil(long begin, long now) {
+        final long ms = begin - now;
+        return ms <= 0 ? 0 : (ms + 59_999) / 60_000;
+    }
+
+    /**
+     * @return for example "2 h 15 min" for the time until the event, or {@code null} once less
+     * than a minute is left, as for the alarm at the event start.
+     */
+    @androidx.annotation.Nullable
+    public static String formatTimeUntil(Context context, long begin, long now) {
+        if (begin - now < 60_000) {
+            return null;
+        }
+        final long minutes = minutesUntil(begin, now);
+        final long hours = minutes / 60;
+        final long rest = minutes % 60;
+        if (hours == 0) {
+            return context.getString(com.best.deskclock.R.string.calendar_alarm_duration_minutes, rest);
+        }
+        if (rest == 0) {
+            return context.getString(com.best.deskclock.R.string.calendar_alarm_duration_hours, hours);
+        }
+        return context.getString(com.best.deskclock.R.string.calendar_alarm_duration_hours_minutes, hours, rest);
+    }
+
     public static List<Intent> createMapIntents(String location) {
         final List<Intent> intents = new ArrayList<>(3);
         final Uri geo = Uri.parse("geo:0,0?q=" + Uri.encode(location));

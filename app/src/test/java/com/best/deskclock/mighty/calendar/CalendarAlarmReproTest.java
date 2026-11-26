@@ -360,6 +360,30 @@ public class CalendarAlarmReproTest {
     }
 
     @Test
+    public void earlyAlarmShowsHowLongUntilTheEvent() throws Exception {
+        mProfile.offsetEnabled = true;
+        mProfile.offsetMinutes = 10;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        final CalendarAlarmEvent event = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0);
+        final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, event.alarmId).get(0);
+        AlarmStateManager.setFiredState(mContext, instance);
+        final AlarmActivity activity = Robolectric.buildActivity(AlarmActivity.class,
+            new android.content.Intent(mContext, AlarmActivity.class)
+                .setData(AlarmInstance.getContentUri(instance.mId))).create().start().postCreate(null).resume().get();
+        com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
+        ShadowLooper.idleMainLooper();
+        final android.widget.TextView countdown = activity.findViewById(com.best.deskclock.R.id.calendar_countdown);
+        assertEquals(android.view.View.VISIBLE, countdown.getVisibility());
+        final String expected = mContext.getString(com.best.deskclock.R.string.calendar_alarm_event_in,
+            CalendarEventText.formatTimeUntil(mContext, event.begin, System.currentTimeMillis()));
+        assertEquals(expected, countdown.getText().toString());
+        assertEquals(android.view.View.VISIBLE,
+            activity.findViewById(com.best.deskclock.R.id.calendar_info).getVisibility());
+        activity.finish();
+    }
+
+    @Test
     public void gearInTheTitleBarOpensTheProfileSettings() {
         final CalendarProfileEventsActivity activity = Robolectric.buildActivity(CalendarProfileEventsActivity.class,
             CalendarProfileEventsActivity.createIntent(mContext, mProfile.id)).setup().get();

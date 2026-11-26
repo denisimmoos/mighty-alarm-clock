@@ -44,7 +44,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public static final int DEFAULT_VIBRATION_STRENGTH = 100;
 
     public static final int MIN_OFFSET_MINUTES = 1;
-    public static final int MAX_OFFSET_MINUTES = 240;
+    public static final int MAX_OFFSET_MINUTES = 12 * 60;
     public static final int DEFAULT_OFFSET_MINUTES = 10;
 
     /** {@link #allDayMinutes} value meaning all-day events get no alarm. */
@@ -85,7 +85,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         SHOW_DETAILS_LOCKED,
         OFFSET_ENABLED,
         OFFSET_MINUTES,
-        ESCALATION
+        ESCALATION,
+        RING_AT_START
     };
 
     // These must be kept in sync with QUERY_COLUMNS above.
@@ -118,6 +119,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     private static final int OFFSET_ENABLED_INDEX = 26;
     private static final int OFFSET_MINUTES_INDEX = 27;
     private static final int ESCALATION_INDEX = 28;
+    private static final int RING_AT_START_INDEX = 29;
 
     public long id;
     public String name;
@@ -162,6 +164,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public int offsetMinutes;
     /** Starts quietly, then gets louder and vibrates stronger. Off by default. */
     public boolean escalation;
+    /** With an offset, also rings again when the event starts. On by default. */
+    public boolean ringAtStart;
     /** Time of day for all-day events in minutes after midnight, or {@link #ALL_DAY_IGNORED}. */
     public int allDayMinutes;
     public long createdAt;
@@ -195,6 +199,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         offsetEnabled = false;
         offsetMinutes = DEFAULT_OFFSET_MINUTES;
         escalation = false;
+        ringAtStart = true;
         final long now = System.currentTimeMillis();
         createdAt = now;
         updatedAt = now;
@@ -230,6 +235,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         offsetEnabled = c.getInt(OFFSET_ENABLED_INDEX) == 1;
         offsetMinutes = clampOffsetMinutes(c.getInt(OFFSET_MINUTES_INDEX));
         escalation = c.getInt(ESCALATION_INDEX) == 1;
+        ringAtStart = c.getInt(RING_AT_START_INDEX) == 1;
     }
 
     public ContentValues createContentValues() {
@@ -267,6 +273,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         values.put(OFFSET_ENABLED, offsetEnabled ? 1 : 0);
         values.put(OFFSET_MINUTES, clampOffsetMinutes(offsetMinutes));
         values.put(ESCALATION, escalation ? 1 : 0);
+        values.put(RING_AT_START, ringAtStart ? 1 : 0);
         values.put(CREATED_AT, createdAt);
         values.put(UPDATED_AT, updatedAt);
         return values;
@@ -370,6 +377,13 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     /**
      * @return how many milliseconds before the event the alarm rings, 0 without an offset.
      */
+    /**
+     * @return {@code true} if the profile rings before the event and again at its start.
+     */
+    public boolean ringsEarlyAndAtStart() {
+        return offsetEnabled && ringAtStart;
+    }
+
     public long getOffsetMillis() {
         return offsetEnabled ? clampOffsetMinutes(offsetMinutes) * 60_000L : 0L;
     }

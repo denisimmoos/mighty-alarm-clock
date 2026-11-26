@@ -34,7 +34,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
     // Stored name from before the feature was called "Calendar Alarm"; kept so existing data still works.
     static final String CALENDAR_ALARM_EVENTS_TABLE_NAME = "calendar_alert_events";
 
-    private static final int DATABASE_VERSION = 37;
+    private static final int DATABASE_VERSION = 38;
     private static final int MINIMUM_SUPPORTED_VERSION = 15;
 
     public ClockDatabaseHelper(Context context) {
@@ -182,6 +182,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             ClockContract.CalendarProfilesColumns.OFFSET_ENABLED + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.OFFSET_MINUTES + " INTEGER NOT NULL DEFAULT 10, " +
             ClockContract.CalendarProfilesColumns.ESCALATION + " INTEGER NOT NULL DEFAULT 0, " +
+            ClockContract.CalendarProfilesColumns.RING_AT_START + " INTEGER NOT NULL DEFAULT 1, " +
             ClockContract.CalendarProfilesColumns.CREATED_AT + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.UPDATED_AT + " INTEGER NOT NULL DEFAULT 0);");
 
@@ -198,6 +199,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             ClockContract.CalendarAlarmEventsColumns.BEGIN + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarAlarmEventsColumns.USER_ENABLED + " INTEGER NOT NULL DEFAULT 1, " +
             ClockContract.CalendarAlarmEventsColumns.ALARM_ID + " INTEGER NOT NULL DEFAULT -1, " +
+            ClockContract.CalendarAlarmEventsColumns.START_ALARM_ID + " INTEGER NOT NULL DEFAULT -1, " +
             "UNIQUE(" + ClockContract.CalendarAlarmEventsColumns.PROFILE_ID + ", " +
                 ClockContract.CalendarAlarmEventsColumns.EVENT_KEY + "));");
 
@@ -493,6 +495,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
         // safe to run again, for example after going back to an older test build and forward again.
         if (oldVersion >= 29) {
             addCalendarProfileColumnsIfMissing(db);
+            addCalendarAlarmEventColumnsIfMissing(db);
         }
     }
 
@@ -526,12 +529,34 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             {ClockContract.CalendarProfilesColumns.OFFSET_ENABLED, "INTEGER NOT NULL DEFAULT 0"},
             {ClockContract.CalendarProfilesColumns.OFFSET_MINUTES, "INTEGER NOT NULL DEFAULT 10"},
             {ClockContract.CalendarProfilesColumns.ESCALATION, "INTEGER NOT NULL DEFAULT 0"},
+            {ClockContract.CalendarProfilesColumns.RING_AT_START, "INTEGER NOT NULL DEFAULT 1"},
         };
         for (String[] column : added) {
             if (!columns.contains(column[0])) {
                 db.execSQL("ALTER TABLE " + CALENDAR_PROFILES_TABLE_NAME + " ADD COLUMN " + column[0] + " " + column[1] + ";");
                 LogUtils.i("Added calendar profile column " + column[0]);
             }
+        }
+    }
+
+    private static void addCalendarAlarmEventColumnsIfMissing(SQLiteDatabase db) {
+        boolean hasStartAlarmId = false;
+        boolean hasTable = false;
+        try (android.database.Cursor c = db.rawQuery("PRAGMA table_info(" + CALENDAR_ALARM_EVENTS_TABLE_NAME + ")", null)) {
+            while (c.moveToNext()) {
+                hasTable = true;
+                if (ClockContract.CalendarAlarmEventsColumns.START_ALARM_ID.equals(
+                    c.getString(c.getColumnIndexOrThrow("name")))) {
+                    hasStartAlarmId = true;
+                }
+            }
+        }
+        if (!hasTable) {
+            createCalendarAlarmEventsTable(db);
+        } else if (!hasStartAlarmId) {
+            db.execSQL("ALTER TABLE " + CALENDAR_ALARM_EVENTS_TABLE_NAME + " ADD COLUMN "
+                + ClockContract.CalendarAlarmEventsColumns.START_ALARM_ID + " INTEGER NOT NULL DEFAULT -1;");
+            LogUtils.i("Added calendar alarm event column start_alarm_id");
         }
     }
 

@@ -114,20 +114,22 @@ public final class CalendarAlarmSync {
      */
     private static void deleteEventAndAlarm(Context context, CalendarAlarmEvent event) {
         final ContentResolver cr = context.getContentResolver();
-        try {
-            if (alarmExists(cr, event.alarmId)) {
-                deleteAlarm(context, event.alarmId);
-            }
-        } catch (Throwable e) {
-            LogUtils.e("CalendarAlarmSync: could not stop alarm " + event.alarmId, e);
+        for (long alarmId : new long[]{event.alarmId, event.startAlarmId}) {
             try {
-                // At least remove the alarm itself so it can't ring any more.
-                for (AlarmInstance instance : AlarmInstance.getInstancesByAlarmId(cr, event.alarmId)) {
-                    AlarmInstance.deleteInstance(cr, instance.mId);
+                if (alarmExists(cr, alarmId)) {
+                    deleteAlarm(context, alarmId);
                 }
-                Alarm.deleteAlarm(cr, event.alarmId);
-            } catch (Throwable ignored) {
-                // Nothing more can be done here.
+            } catch (Throwable e) {
+                LogUtils.e("CalendarAlarmSync: could not stop alarm " + alarmId, e);
+                try {
+                    // At least remove the alarm itself so it can't ring any more.
+                    for (AlarmInstance instance : AlarmInstance.getInstancesByAlarmId(cr, alarmId)) {
+                        AlarmInstance.deleteInstance(cr, instance.mId);
+                    }
+                    Alarm.deleteAlarm(cr, alarmId);
+                } catch (Throwable ignored) {
+                    // Nothing more can be done here.
+                }
             }
         }
         event.delete(cr);
@@ -203,7 +205,7 @@ public final class CalendarAlarmSync {
                 }
                 event.userEnabled = enabled;
                 // Switching an alarm off also stops it if it is ringing or snoozed right now.
-                event.alarmId = reconcileAlarm(appContext, profile, event, profile.enabled && enabled, true, !enabled);
+                reconcileAlarms(appContext, profile, event, profile.enabled && enabled, true, !enabled);
                 event.save(cr);
             } catch (Throwable e) {
                 LogUtils.e("CalendarAlarmSync: failed to switch event " + eventRowId, e);
@@ -292,7 +294,8 @@ public final class CalendarAlarmSync {
                     // The event was deleted, moved, renamed so it no longer matches, or the profile
                     // now points to another calendar or regex.
                     removeEvent(context, event, false);
-                } else if (event.begin < now - PAST_EVENT_RETENTION_MS || !alarmExists(cr, event.alarmId)) {
+                } else if (event.begin < now - PAST_EVENT_RETENTION_MS
+                    || (!alarmExists(cr, event.alarmId) && !alarmExists(cr, event.startAlarmId))) {
                     removeEvent(context, event, false);
                 }
             } catch (Throwable e) {
@@ -315,7 +318,7 @@ public final class CalendarAlarmSync {
                     event.title = instance.title;
                 }
 
-                event.alarmId = reconcileAlarm(context, profile, event, profile.enabled && event.userEnabled);
+                reconcileAlarms(context, profile, event, profile.enabled && event.userEnabled, false, false);
                 event.save(cr);
                 if (profile.enabled && event.userEnabled) {
                     claimedKeys.add(key);
@@ -329,7 +332,7 @@ public final class CalendarAlarmSync {
     private static void keepClaims(List<CalendarAlarmEvent> existing, CalendarProfile profile, Set<String> claimedKeys) {
         if (profile.enabled) {
             for (CalendarAlarmEvent event : existing) {
-                if (event.userEnabled && event.alarmId >= 0) {
+                if (event.userEnabled && (event.alarmId >= 0 || event.startAlarmId >= 0)) {
                     claimedKeys.add(event.eventKey);
                 }
             }
@@ -355,16 +358,25 @@ public final class CalendarAlarmSync {
         final ContentResolver cr = context.getContentResolver();
         for (CalendarAlarmEvent event : existing) {
             try {
-                if (!alarmExists(cr, event.alarmId)) {
+                final boolean early = alarmExists(cr, event.alarmId);
+                final boolean start = alarmExists(cr, event.startAlarmId);
+                if (!early && !start) {
                     // Nothing scheduled. A dismissed event stays dismissed.
                     continue;
                 }
-                deleteAlarm(context, event.alarmId);
-                LogUtils.i("CalendarAlarmSync: profile off, removed alarm " + event.alarmId);
+                if (early) {
+                    deleteAlarm(context, event.alarmId);
+                    LogUtils.i("CalendarAlarmSync: profile off, removed alarm " + event.alarmId);
+                    event.alarmId = Alarm.INVALID_ID;
+                }
+                if (start) {
+                    deleteAlarm(context, event.startAlarmId);
+                    LogUtils.i("CalendarAlarmSync: profile off, removed alarm " + event.startAlarmId);
+                    event.startAlarmId = Alarm.INVALID_ID;
+                }
                 if (event.begin <= now) {
                     event.delete(cr);
                 } else {
-                    event.alarmId = Alarm.INVALID_ID;
                     event.save(cr);
                 }
             } catch (Throwable e) {
@@ -378,23 +390,47 @@ public final class CalendarAlarmSync {
      *
      * @return the id of the event's alarm afterwards, or {@link Alarm#INVALID_ID} if it has none
      */
-    private static long reconcileAlarm(Context context, CalendarProfile profile, CalendarAlarmEvent event,
-                                       boolean shouldBeArmed) {
-        return reconcileAlarm(context, profile, event, shouldBeArmed, false, false);
+    /**
+     * Brings both alarms of an event up to date: the alarm at the ring time (the event start, or
+     * the offset before it), and with an offset that also rings at the start, a second alarm then.
+     *
+     * @param rearmConsumed {@code true} to create new alarms even if the event's alarms were already
+     *                      used up (dismissed early from the notification, or rang and were dismissed)
+     * @param stopRinging   {@code true} to also remove alarms that are ringing or snoozed, when they
+     *                      should no longer be armed
+     */
+    private static void reconcileAlarms(Context context, CalendarProfile profile, CalendarAlarmEvent event,
+                                        boolean shouldBeArmed, boolean rearmConsumed, boolean stopRinging) {
+        final long now = System.currentTimeMillis();
+        final long ringTime = ringTimeFor(profile, event.begin, now);
+        final long startTime = alarmTimeFor(event.begin, now);
+        event.alarmId = reconcileAlarm(context, profile, event, event.alarmId, ringTime,
+            shouldBeArmed, rearmConsumed, stopRinging);
+        // The second alarm only makes sense if the first one rings before the start.
+        final boolean ringAtStart = profile.ringsEarlyAndAtStart() && ringTime < startTime;
+        final long startAlarmId = reconcileAlarm(context, profile, event, event.startAlarmId, startTime,
+            shouldBeArmed && ringAtStart, rearmConsumed, stopRinging);
+        // Without a second alarm wanted, forget that one was dismissed, so it can come back
+        // when the setting is switched on again.
+        event.startAlarmId = !ringAtStart && startAlarmId == CalendarAlarmEvent.ALARM_CONSUMED
+            ? Alarm.INVALID_ID : startAlarmId;
     }
 
     /**
-     * @param rearmConsumed {@code true} to create a new alarm even if the event's alarm was already
-     *                      used up (dismissed early from the notification, or rang and was dismissed)
-     * @param stopRinging   {@code true} to also remove an alarm that is ringing or snoozed, when it
-     *                      should no longer be armed
+     * Brings one alarm of an event up to date.
+     *
+     * @param alarmId  the alarm's current id, {@link Alarm#INVALID_ID} or
+     *                 {@link CalendarAlarmEvent#ALARM_CONSUMED}
+     * @param ringTime when the alarm rings
+     * @return the alarm's new id, {@link Alarm#INVALID_ID} or {@link CalendarAlarmEvent#ALARM_CONSUMED}
      */
     private static long reconcileAlarm(Context context, CalendarProfile profile, CalendarAlarmEvent event,
-                                       boolean shouldBeArmed, boolean rearmConsumed, boolean stopRinging) {
+                                       long alarmId, long ringTime, boolean shouldBeArmed,
+                                       boolean rearmConsumed, boolean stopRinging) {
         final ContentResolver cr = context.getContentResolver();
-        Alarm alarm = event.alarmId != Alarm.INVALID_ID ? Alarm.getAlarm(cr, event.alarmId) : null;
+        Alarm alarm = alarmId >= 0 ? Alarm.getAlarm(cr, alarmId) : null;
 
-        if (alarm == null && event.alarmId != Alarm.INVALID_ID && !rearmConsumed) {
+        if (alarm == null && alarmId != Alarm.INVALID_ID && !rearmConsumed) {
             // The alarm existed and is gone: the user already dismissed it. Do not bring it back,
             // also not after the profile or the event was switched off and on again.
             return CalendarAlarmEvent.ALARM_CONSUMED;
@@ -413,7 +449,7 @@ public final class CalendarAlarmSync {
         }
 
         final Calendar start = Calendar.getInstance();
-        start.setTimeInMillis(ringTimeFor(profile, event.begin, System.currentTimeMillis()));
+        start.setTimeInMillis(ringTime);
 
         if (alarm == null) {
             alarm = new Alarm(start.get(Calendar.YEAR), start.get(Calendar.MONTH),
@@ -536,15 +572,20 @@ public final class CalendarAlarmSync {
 
     private static void removeEvent(Context context, CalendarAlarmEvent event, boolean force) {
         final ContentResolver cr = context.getContentResolver();
-        if (event.alarmId != Alarm.INVALID_ID && alarmExists(cr, event.alarmId)) {
-            if (isRingingOrSnoozed(cr, event.alarmId)) {
+        final long[] alarmIds = {event.alarmId, event.startAlarmId};
+        for (long alarmId : alarmIds) {
+            if (alarmExists(cr, alarmId) && isRingingOrSnoozed(cr, alarmId)) {
                 // Leave a ringing or snoozed alarm alone. It deletes itself once dismissed.
                 if (force) {
                     event.delete(cr);
                 }
                 return;
             }
-            deleteAlarm(context, event.alarmId);
+        }
+        for (long alarmId : alarmIds) {
+            if (alarmExists(cr, alarmId)) {
+                deleteAlarm(context, alarmId);
+            }
         }
         event.delete(cr);
     }
@@ -555,7 +596,7 @@ public final class CalendarAlarmSync {
     }
 
     private static boolean alarmExists(ContentResolver cr, long alarmId) {
-        return alarmId != Alarm.INVALID_ID && Alarm.getAlarm(cr, alarmId) != null;
+        return alarmId >= 0 && Alarm.getAlarm(cr, alarmId) != null;
     }
 
     private static boolean isRingingOrSnoozed(ContentResolver cr, long alarmId) {

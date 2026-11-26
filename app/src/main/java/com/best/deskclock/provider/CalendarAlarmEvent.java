@@ -36,7 +36,8 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
         TITLE,
         BEGIN,
         USER_ENABLED,
-        ALARM_ID
+        ALARM_ID,
+        START_ALARM_ID
     };
 
     private static final int ID_INDEX = 0;
@@ -47,6 +48,7 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
     private static final int BEGIN_INDEX = 5;
     private static final int USER_ENABLED_INDEX = 6;
     private static final int ALARM_ID_INDEX = 7;
+    private static final int START_ALARM_ID_INDEX = 8;
 
     public long id;
     public long profileId;
@@ -55,7 +57,13 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
     public String title;
     public long begin;
     public boolean userEnabled;
+    /** The alarm at the ring time: the event start, or the offset before it. */
     public long alarmId;
+    /**
+     * The second alarm at the event start, if the profile rings early and again at the start.
+     * Uses the same values as {@link #alarmId}.
+     */
+    public long startAlarmId;
 
     public CalendarAlarmEvent(long profileId, long eventId, long begin, String title) {
         this.id = INVALID_ID;
@@ -66,6 +74,7 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
         this.eventKey = buildKey(eventId, begin);
         this.userEnabled = true;
         this.alarmId = Alarm.INVALID_ID;
+        this.startAlarmId = Alarm.INVALID_ID;
     }
 
     public CalendarAlarmEvent(Cursor c) {
@@ -77,6 +86,15 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
         begin = c.getLong(BEGIN_INDEX);
         userEnabled = c.getInt(USER_ENABLED_INDEX) == 1;
         alarmId = c.getLong(ALARM_ID_INDEX);
+        startAlarmId = c.getLong(START_ALARM_ID_INDEX);
+    }
+
+    /**
+     * @return {@code true} if the user dismissed the event's alarm and no alarm is left to ring
+     * for it.
+     */
+    public boolean isDismissed() {
+        return alarmId == ALARM_CONSUMED && startAlarmId < 0;
     }
 
     /**
@@ -99,6 +117,7 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
         values.put(BEGIN, begin);
         values.put(USER_ENABLED, userEnabled ? 1 : 0);
         values.put(ALARM_ID, alarmId);
+        values.put(START_ALARM_ID, startAlarmId);
         return values;
     }
 
@@ -136,7 +155,9 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
         if (alarmId == Alarm.INVALID_ID) {
             return null;
         }
-        final List<CalendarAlarmEvent> events = query(cr, ALARM_ID + "=?", new String[]{String.valueOf(alarmId)});
+        final String id = String.valueOf(alarmId);
+        final List<CalendarAlarmEvent> events = query(cr, ALARM_ID + "=? OR " + START_ALARM_ID + "=?",
+            new String[]{id, id});
         return events.isEmpty() ? null : events.get(0);
     }
 
@@ -179,14 +200,16 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
      * alarms table, or of the alarms joined with instances, where calendar alarms must not show.
      */
     public static String buildExcludeCalendarAlarmsSelection(String alarmIdColumn) {
-        return alarmIdColumn + " NOT IN (SELECT " + ALARM_ID + " FROM "
-            + ClockDatabaseHelper.CALENDAR_ALARM_EVENTS_TABLE_NAME + ")";
+        return "(" + alarmIdColumn + " NOT IN (SELECT " + ALARM_ID + " FROM "
+            + ClockDatabaseHelper.CALENDAR_ALARM_EVENTS_TABLE_NAME + ") AND "
+            + alarmIdColumn + " NOT IN (SELECT " + START_ALARM_ID + " FROM "
+            + ClockDatabaseHelper.CALENDAR_ALARM_EVENTS_TABLE_NAME + "))";
     }
 
     @NonNull
     @Override
     public String toString() {
         return "CalendarAlarmEvent{id=" + id + ", profileId=" + profileId + ", key='" + eventKey
-            + "', begin=" + begin + ", userEnabled=" + userEnabled + ", alarmId=" + alarmId + "}";
+            + "', begin=" + begin + ", userEnabled=" + userEnabled + ", alarmId=" + alarmId + ", startAlarmId=" + startAlarmId + "}";
     }
 }
