@@ -5,12 +5,15 @@ package com.best.deskclock.mighty.calendar;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.content.ActivityNotFoundException;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.CalendarContract;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -27,6 +30,7 @@ import com.best.deskclock.databinding.CalendarProfileEventsActivityBinding;
 import com.best.deskclock.provider.CalendarAlertEvent;
 import com.best.deskclock.provider.CalendarProfile;
 import com.best.deskclock.uicomponents.CollapsingToolbarBaseActivity;
+import com.best.deskclock.uicomponents.toast.CustomToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,6 +153,20 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
         AppExecutors.getDiskIO().execute(() -> CalendarAlertSync.setEventEnabled(appContext, event.id, enabled));
     }
 
+    /**
+     * Opens the calendar entry of the event in the device's calendar app.
+     */
+    static void openInCalendar(Context context, CalendarAlertEvent event) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW)
+            .setData(ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, event.eventId))
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.begin);
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            CustomToast.showLong(context, context.getString(R.string.calendar_alert_no_calendar_app));
+        }
+    }
+
     private final class EventAdapter extends RecyclerView.Adapter<EventViewHolder> {
 
         private final List<CalendarAlertEvent> mEvents = new ArrayList<>();
@@ -209,6 +227,7 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
             mItem.eventSwitch.setOnCheckedChangeListener((button, checked) -> setEventEnabled(event, checked));
 
             itemView.setAlpha(profileEnabled && event.userEnabled && !consumed ? 1f : 0.6f);
+            itemView.setOnClickListener(v -> openInCalendar(context, event));
         }
     }
 }

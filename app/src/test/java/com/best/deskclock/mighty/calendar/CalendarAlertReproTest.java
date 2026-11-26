@@ -78,6 +78,26 @@ public class CalendarAlertReproTest {
     }
 
     @Test
+    public void tappingAnEventOpensTheCalendarEntry() throws Exception {
+        final CalendarProfileEventsActivity activity = Robolectric.buildActivity(CalendarProfileEventsActivity.class,
+            CalendarProfileEventsActivity.createIntent(mContext, mProfile.id)).setup().get();
+        for (int i = 0; i < 5; i++) {
+            com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
+            ShadowLooper.idleMainLooper();
+        }
+        final androidx.recyclerview.widget.RecyclerView list = activity.findViewById(com.best.deskclock.R.id.events_list);
+        list.measure(1080, 1920);
+        list.layout(0, 0, 1080, 1920);
+        org.junit.Assert.assertTrue(list.getChildCount() > 0);
+        list.getChildAt(0).performClick();
+        final android.content.Intent started = Shadows.shadowOf(activity).getNextStartedActivity();
+        org.junit.Assert.assertNotNull(started);
+        assertEquals(android.content.Intent.ACTION_VIEW, started.getAction());
+        assertEquals(android.content.ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, 1),
+            started.getData());
+    }
+
+    @Test
     public void openEditScreenAndSave() {
         final CalendarProfileEditActivity activity = Robolectric.buildActivity(CalendarProfileEditActivity.class,
             CalendarProfileEditActivity.createIntent(mContext, mProfile.id)).setup().get();

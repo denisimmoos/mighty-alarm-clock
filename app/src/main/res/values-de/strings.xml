@@ -892,6 +892,7 @@
     <string name="calendar_alert_vibrate">Vibration</string>
     <string name="calendar_alert_flash">Taschenlampe blinken</string>
     <string name="calendar_alert_vibrate_only">Nur vibrieren (kein Ton)</string>
+    <string name="calendar_alert_no_calendar_app">Keine Kalender-App zum Öffnen dieses Termins gefunden</string>
     <string name="calendar_alert_max_duration">Maximale Weckdauer (Minuten)</string>
     <string name="calendar_alert_max_duration_help">Leer lassen, damit der Wecker klingelt, bis du ihn beendest.</string>
     <string name="calendar_alert_section_snooze">Schlummern</string>
