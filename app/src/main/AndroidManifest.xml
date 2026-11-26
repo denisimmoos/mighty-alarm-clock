@@ -135,18 +135,16 @@
             </intent-filter>
         </activity>
 
+        <!-- The calendar screens stay in the app's own task, so Back from a calendar entry
+             opened from the alarm list comes back here. -->
         <activity
             android:name="com.best.deskclock.mighty.calendar.CalendarProfileEventsActivity"
-            android:excludeFromRecents="true"
             android:parentActivityName=".DeskClock"
-            android:taskAffinity=""
             android:theme="@style/Theme.DeskClock" />
 
         <activity
             android:name="com.best.deskclock.mighty.calendar.CalendarProfileEditActivity"
-            android:excludeFromRecents="true"
             android:parentActivityName=".DeskClock"
-            android:taskAffinity=""
             android:theme="@style/Theme.DeskClock"
             android:windowSoftInputMode="adjustResize" />
 
