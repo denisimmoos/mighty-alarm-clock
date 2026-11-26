@@ -76,6 +76,7 @@ public class MightyFeaturesFragment extends ScreenFragment
     SwitchPreferenceCompat mBackupScheduleEnabledPref;
     ListPreference mBackupIntervalPref;
     Preference mBackupNowPref;
+    Preference mRestoreCalendarProfilesPref;
     Preference mExchangeDeviceNamePref;
     Preference mExchangeAddFolderPref;
     Preference mExchangeFoldersPref;
@@ -97,6 +98,34 @@ public class MightyFeaturesFragment extends ScreenFragment
                 Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             JsonBackupManager.setTreeUri(requireContext(), treeUri);
             refreshSummaries();
+        });
+
+    private final ActivityResultLauncher<String[]> mRestoreFilePicker = registerForActivityResult(
+        new ActivityResultContracts.OpenDocument(), uri -> {
+            if (uri == null || getContext() == null) {
+                return;
+            }
+            final Context context = requireContext();
+            final Context appContext = context.getApplicationContext();
+            com.best.deskclock.mighty.calendar.CalendarAlertSync.EXECUTOR.execute(() -> {
+                final com.best.deskclock.mighty.calendar.CalendarProfileRestore.Result result =
+                    com.best.deskclock.mighty.calendar.CalendarProfileRestore.restore(appContext, uri);
+                AppExecutors.getMainThread().post(() -> {
+                    if (result == null) {
+                        CustomToast.showLong(appContext, appContext.getString(R.string.mighty_restore_calendar_profiles_failure));
+                        return;
+                    }
+                    String message = appContext.getResources().getQuantityString(
+                        R.plurals.mighty_restore_calendar_profiles_done, result.restored(),
+                        result.restored(), result.skipped());
+                    if (result.calendarMissing() > 0) {
+                        message += ". " + appContext.getResources().getQuantityString(
+                            R.plurals.mighty_restore_calendar_profiles_missing, result.calendarMissing(),
+                            result.calendarMissing());
+                    }
+                    CustomToast.showLong(appContext, message);
+                });
+            });
         });
 
     private final ActivityResultLauncher<Intent> mExchangeFolderPicker = registerForActivityResult(
@@ -143,6 +172,7 @@ public class MightyFeaturesFragment extends ScreenFragment
         mBackupScheduleEnabledPref = findPreference(KEY_MIGHTY_BACKUP_SCHEDULE_ENABLED);
         mBackupIntervalPref = findPreference(KEY_MIGHTY_BACKUP_INTERVAL_HOURS);
         mBackupNowPref = findPreference(KEY_MIGHTY_BACKUP_NOW);
+        mRestoreCalendarProfilesPref = findPreference(KEY_MIGHTY_RESTORE_CALENDAR_PROFILES);
         mExchangeDeviceNamePref = findPreference(KEY_MIGHTY_EXCHANGE_DEVICE_NAME);
         mExchangeAddFolderPref = findPreference(KEY_MIGHTY_EXCHANGE_ADD_FOLDER);
         mExchangeFoldersPref = findPreference(KEY_MIGHTY_EXCHANGE_FOLDERS);
@@ -179,7 +209,7 @@ public class MightyFeaturesFragment extends ScreenFragment
     @Override
     public void onDestroy() {
         nullifyPreferenceListeners(mDeviceStatsPref, mViewEventLogPref, mExportEventLogPref, mGlobalMutePref, mWifiReevaluatePref, mBackupFolderPref,
-            mBackupScheduleEnabledPref, mBackupIntervalPref, mBackupNowPref, mExchangeDeviceNamePref, mExchangeAddFolderPref,
+            mBackupScheduleEnabledPref, mBackupIntervalPref, mBackupNowPref, mRestoreCalendarProfilesPref, mExchangeDeviceNamePref, mExchangeAddFolderPref,
             mExchangeFoldersPref, mExchangeScanNowPref, mExchangeInboxPref, mManageTagsPref, mDisplayTimezoneGlobePref);
 
         nullifyAllPrefs();
@@ -197,6 +227,7 @@ public class MightyFeaturesFragment extends ScreenFragment
         mBackupScheduleEnabledPref.setOnPreferenceChangeListener(this);
         mBackupIntervalPref.setOnPreferenceChangeListener(this);
         mBackupNowPref.setOnPreferenceClickListener(this);
+        mRestoreCalendarProfilesPref.setOnPreferenceClickListener(this);
         mExchangeDeviceNamePref.setOnPreferenceClickListener(this);
         mExchangeAddFolderPref.setOnPreferenceClickListener(this);
         mExchangeFoldersPref.setOnPreferenceClickListener(this);
@@ -274,6 +305,10 @@ public class MightyFeaturesFragment extends ScreenFragment
                         CustomToast.show(context, success ? R.string.mighty_backup_now_success : R.string.mighty_backup_now_failure));
                 });
             }
+
+            case KEY_MIGHTY_RESTORE_CALENDAR_PROFILES ->
+                // Some file managers label .json files as plain text or as unknown binary data.
+                mRestoreFilePicker.launch(new String[]{"application/json", "text/plain", "application/octet-stream"});
 
             case KEY_MIGHTY_EXCHANGE_DEVICE_NAME -> showExchangeDeviceNameDialog();
 
@@ -920,6 +955,7 @@ public class MightyFeaturesFragment extends ScreenFragment
         mGlobalMutePref = null;
         mWifiReevaluatePref = null;
         mBackupFolderPref = null;
+        mRestoreCalendarProfilesPref = null;
         mBackupScheduleEnabledPref = null;
         mBackupIntervalPref = null;
         mBackupNowPref = null;

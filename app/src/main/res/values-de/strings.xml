@@ -731,6 +731,17 @@
     <string name="mighty_backup_now_title">Jetzt sichern</string>
     <string name="mighty_backup_now_success">Backup abgeschlossen</string>
     <string name="mighty_backup_now_failure">Backup fehlgeschlagen; prüfen Sie, ob ein Ordner gewählt ist</string>
+    <string name="mighty_restore_calendar_profiles_title">Kalender-Alarm-Profile wiederherstellen</string>
+    <string name="mighty_restore_calendar_profiles_summary">Wählen Sie eine Backup-Datei (zum Beispiel alarms-latest.json). Vorhandene Profile bleiben erhalten und werden nicht doppelt angelegt.</string>
+    <string name="mighty_restore_calendar_profiles_failure">Diese Datei konnte nicht gelesen werden oder enthält keine Kalender-Alarm-Profile</string>
+    <plurals name="mighty_restore_calendar_profiles_done">
+        <item quantity="one">%1$d Profil wiederhergestellt, %2$d bereits vorhanden</item>
+        <item quantity="other">%1$d Profile wiederhergestellt, %2$d bereits vorhanden</item>
+    </plurals>
+    <plurals name="mighty_restore_calendar_profiles_missing">
+        <item quantity="one">%d Profil braucht einen Kalender, weil sein Kalender nicht auf diesem Telefon ist</item>
+        <item quantity="other">%d Profile brauchen einen Kalender, weil ihr Kalender nicht auf diesem Telefon ist</item>
+    </plurals>
 
     <string name="mighty_category_exchange">Austausch</string>
     <string name="mighty_exchange_device_name_title">Gerätename</string>

@@ -557,4 +557,60 @@ public class CalendarAlertSyncTest {
         assertEquals(base + minute, CalendarAlertSync.alarmTimeFor(base + 45_000, base + 10_000));
         assertEquals(base, CalendarAlertSync.alarmTimeFor(base, base - 5_000));
     }
+
+    @Test
+    public void profilesCanBeRestoredFromTheBackupFile() throws Exception {
+        mProfile.calendarName = "Calendar 7";
+        mProfile.ignoreCase = true;
+        mProfile.allDayMinutes = 7 * 60;
+        mProfile.updateProfile(mCr);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "alarm: Dentist"));
+        final org.json.JSONObject backup = com.best.deskclock.mighty.backup.JsonBackupManager.buildJson(mContext);
+
+        // Lost the profile, and the calendar got another id (for example on a new phone).
+        CalendarAlertSync.deleteProfile(mContext, mProfile.id);
+        CALENDARS.clear();
+        CALENDARS.put(42L, "someone@example.com");
+        EVENTS.clear();
+        EVENTS.add(new FakeEvent(1, 42, inHours(3), "alarm: Dentist"));
+        // The fake names calendars "Calendar <id>", so keep the old name for id 42.
+        final org.json.JSONObject restoredProfile = backup.getJSONArray("calendar_profiles").getJSONObject(0);
+        restoredProfile.put("calendar_name", "Calendar 42");
+
+        final CalendarProfileRestore.Result result = CalendarProfileRestore.restore(mContext, backup);
+        assertNotNull(result);
+        assertEquals(1, result.restored());
+        assertEquals(0, result.calendarMissing());
+        final List<CalendarProfile> profiles = CalendarProfile.getProfiles(mCr);
+        assertEquals(1, profiles.size());
+        final CalendarProfile restored = profiles.get(0);
+        assertEquals(42, restored.calendarId);
+        assertEquals("^Alarm:", restored.titleRegex);
+        assertTrue(restored.ignoreCase);
+        assertEquals(7 * 60, restored.allDayMinutes);
+
+        CalendarAlertSync.syncAll(mContext);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+
+        // Restoring the same file again adds nothing.
+        final CalendarProfileRestore.Result again = CalendarProfileRestore.restore(mContext, backup);
+        assertEquals(0, again.restored());
+        assertEquals(1, again.skipped());
+        assertEquals(1, CalendarProfile.getProfiles(mCr).size());
+    }
+
+    @Test
+    public void restoredProfileWithUnknownCalendarWaitsForOneToBeChosen() throws Exception {
+        final org.json.JSONObject backup = com.best.deskclock.mighty.backup.JsonBackupManager.buildJson(mContext);
+        CalendarProfile.deleteProfile(mCr, mProfile.id);
+        final CalendarProfileRestore.Result result = CalendarProfileRestore.restore(mContext, backup);
+        assertEquals(1, result.restored());
+        assertEquals(1, result.calendarMissing());
+        assertEquals(-1, CalendarProfile.getProfiles(mCr).get(0).calendarId);
+    }
+
+    @Test
+    public void fileWithoutProfilesIsRejected() {
+        assertNull(CalendarProfileRestore.restore(mContext, new org.json.JSONObject()));
+    }
 }

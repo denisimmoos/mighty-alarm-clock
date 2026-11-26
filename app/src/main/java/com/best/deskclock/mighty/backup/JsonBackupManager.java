@@ -157,7 +157,7 @@ public final class JsonBackupManager {
         }
     }
 
-    private static JSONObject buildJson(Context context) throws JSONException {
+    public static JSONObject buildJson(Context context) throws JSONException {
         final ContentResolver cr = context.getContentResolver();
 
         final JSONObject root = new JSONObject();

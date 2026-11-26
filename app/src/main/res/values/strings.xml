@@ -1543,6 +1543,17 @@
     <string name="mighty_backup_now_title">Back up now</string>
     <string name="mighty_backup_now_success">Backup completed</string>
     <string name="mighty_backup_now_failure">Backup failed; check that a folder is selected</string>
+    <string name="mighty_restore_calendar_profiles_title">Restore calendar alert profiles</string>
+    <string name="mighty_restore_calendar_profiles_summary">Choose a backup file (for example alarms-latest.json). Profiles you already have are kept and not copied twice.</string>
+    <string name="mighty_restore_calendar_profiles_failure">This file could not be read or has no calendar alert profiles</string>
+    <plurals name="mighty_restore_calendar_profiles_done">
+        <item quantity="one">%1$d profile restored, %2$d already there</item>
+        <item quantity="other">%1$d profiles restored, %2$d already there</item>
+    </plurals>
+    <plurals name="mighty_restore_calendar_profiles_missing">
+        <item quantity="one">%d profile needs a calendar chosen, because its calendar is not on this phone</item>
+        <item quantity="other">%d profiles need a calendar chosen, because their calendar is not on this phone</item>
+    </plurals>
 
     <string name="mighty_category_exchange">Exchange</string>
     <string name="mighty_exchange_device_name_title">Device name</string>
