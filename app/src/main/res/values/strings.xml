@@ -8,7 +8,7 @@
     tools:ignore="MissingTranslation">
     <!-- Label shown on launcher icon -->
     <!-- Label for the application displayed on-screen when this application must be represented to the user. -->
-    <string name="app_label">AlarmClock Deluxe (Wecker, Uhr, Timer, Stoppuhr)</string>
+    <string name="app_label">MightyCalendarAlarmClock</string>
     <!-- Default label to display for an alarm -->
     <string name="default_label">Alarm</string>
     <!-- Label title in the alarm editing panel to schedule alarm -->
@@ -1692,8 +1692,8 @@
     <string name="mighty_sample_alarm_future_interval">Vehicle inspection reminder (sample)</string>
 
     <!-- Calendar Alert tab -->
-    <string name="menu_calendar_alert">Calendar Alert</string>
-    <string name="calendar_alert_permission_needed">Calendar Alert needs access to your calendars to find events and set alarms for them.</string>
+    <string name="menu_calendar_alert">Calendar</string>
+    <string name="calendar_alert_permission_needed">Calendar Alarm needs access to your calendars to find events and set alarms for them.</string>
     <string name="calendar_alert_permission_button">Allow calendar access</string>
     <string name="calendar_alert_permission_denied">Without calendar access, no calendar alarms can be set.</string>
     <string name="calendar_alert_no_profiles">No profiles yet. Tap + to create one and choose which calendar events should ring as alarms.</string>
@@ -1730,8 +1730,8 @@
     <string name="calendar_alert_profile_deleted">Profile deleted</string>
     <string name="calendar_alert_open_location">Open %s in maps</string>
     <string name="calendar_alert_no_maps_app">No maps app or browser found to show this place</string>
-    <string name="calendar_alert_status_channel">Calendar alerts</string>
-    <string name="calendar_alert_permission_lost_title">Calendar alerts can\'t read your calendar</string>
+    <string name="calendar_alert_status_channel">Calendar alarms</string>
+    <string name="calendar_alert_permission_lost_title">Calendar alarms can\'t read your calendar</string>
     <string name="calendar_alert_permission_lost_text">Calendar access was turned off. Alarms that are already set will still ring, even for events you change or delete. Open the app to allow access again.</string>
     <string name="calendar_alert_last_check">Calendar last checked at %s</string>
     <string name="calendar_alert_never_checked">Calendar not checked yet</string>
@@ -1746,7 +1746,7 @@
     <string name="calendar_alert_vibration_strength">Vibration strength: %d%%</string>
     <string name="calendar_alert_vibration_strength_unsupported">This phone can\'t change how strongly it vibrates, so it always uses its own strength.</string>
     <string name="calendar_alert_no_calendar_app">No calendar app found to open this event</string>
-    <string name="calendar_alert_max_duration">Maximum alert duration (minutes)</string>
+    <string name="calendar_alert_max_duration">Maximum alarm duration (minutes)</string>
     <string name="calendar_alert_max_duration_help">Leave empty to ring until you dismiss the alarm.</string>
     <string name="calendar_alert_section_snooze">Snooze</string>
     <string name="calendar_alert_allow_snooze">Allow snooze</string>

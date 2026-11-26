@@ -4,7 +4,7 @@
     modified
     SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_label" msgid="6674495003718166674">AlarmClock Deluxe (Wecker, Uhr, Timer, Stoppuhr)</string>
+    <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarmClock</string>
     <string name="default_label" msgid="5590025289805630372">Wecker</string>
     <string name="alarm_vibrate" msgid="3476686921490362230">"Vibrieren"</string>
     <string name="time_picker_dialog_title">Weckzeit auswählen</string>
@@ -858,10 +858,10 @@
     <string name="mighty_sample_alarm_future_interval">TÜV-Erinnerung (Beispiel)</string>
 
     <!-- Calendar Alert tab -->
-    <string name="menu_calendar_alert">Calendar Alert</string>
-    <string name="calendar_alert_permission_needed">Calendar Alert braucht Zugriff auf deine Kalender, um Termine zu finden und Wecker dafür zu stellen.</string>
+    <string name="menu_calendar_alert">Kalender</string>
+    <string name="calendar_alert_permission_needed">Calendar Alarm braucht Zugriff auf deine Kalender, um Termine zu finden und Wecker dafür zu stellen.</string>
     <string name="calendar_alert_permission_button">Kalenderzugriff erlauben</string>
-    <string name="calendar_alert_permission_denied">Ohne Kalenderzugriff können keine Kalender-Wecker gestellt werden.</string>
+    <string name="calendar_alert_permission_denied">Ohne Kalenderzugriff können keine Kalender-Alarme gestellt werden.</string>
     <string name="calendar_alert_no_profiles">Noch keine Profile. Tippe auf +, um eines anzulegen und festzulegen, welche Termine als Wecker klingeln.</string>
     <string name="calendar_alert_add_profile">Profil hinzufügen</string>
     <string name="calendar_alert_edit_profile">Profil bearbeiten</string>

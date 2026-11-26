@@ -1,4 +1,4 @@
-AlarmClock Deluxe (Wecker, Uhr, Timer, Stoppuhr) (de.huttersoft.mightyalarmclock)
+MightyCalendarAlarmClock (de.huttersoft.mightyalarmclock)
 ist ein Fork von BlackyHawkys Clock (basierend auf AOSP) und steht unter der
 GNU General Public License v3.0 (GPL-3.0).
 
@@ -8,8 +8,8 @@ Die Standortberechtigung wird nur verwendet, um die SSID des verbundenen WLANs
 für optionale WLAN-Regeln pro Wecker auszulesen. Es werden keine Standortdaten
 erfasst oder gesendet; die App kann nicht auf das Internet zugreifen.
 
-Zusätzlich zum Funktionsumfang der ursprünglichen Clock-App bietet AlarmClock
-Deluxe:
+Zusätzlich zum Funktionsumfang der ursprünglichen Clock-App bietet
+MightyCalendarAlarmClock:
 <ul>
   <li>Eine Klingel-Warteschlange: mehrere nah beieinander liegende Wecker werden nacheinander angezeigt, statt als verpasst zu gelten;</li>
   <li>Progressives Schlummern (jedes Schlummern kann automatisch länger werden) sowie manuelle Schlummerdauer;</li>
