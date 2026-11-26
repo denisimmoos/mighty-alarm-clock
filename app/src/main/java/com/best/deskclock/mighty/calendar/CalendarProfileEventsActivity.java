@@ -204,11 +204,25 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
 
     /**
      * Opens the calendar entry of the event in the device's calendar app.
+     *
+     * <p>The entry opens in a task of its own that holds only this entry. Calendar apps such as
+     * Google Calendar otherwise show the entry on top of their own main screen, so Back stayed in
+     * the calendar. Now Back closes the entry, and with it that task, and returns here. The task
+     * is left out of the recent apps, so opening several entries doesn't fill them up.</p>
      */
     static void openInCalendar(Context context, CalendarAlarmEvent event) {
-        final Intent intent = new Intent(Intent.ACTION_VIEW)
+        startOpenInCalendar(context, createOpenInCalendarIntent(event));
+    }
+
+    static Intent createOpenInCalendarIntent(CalendarAlarmEvent event) {
+        return new Intent(Intent.ACTION_VIEW)
             .setData(ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, event.eventId))
-            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.begin);
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.begin)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+    }
+
+    private static void startOpenInCalendar(Context context, Intent intent) {
         try {
             context.startActivity(intent);
         } catch (ActivityNotFoundException e) {

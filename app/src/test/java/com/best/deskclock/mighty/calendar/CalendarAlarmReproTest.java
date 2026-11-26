@@ -100,6 +100,11 @@ public class CalendarAlarmReproTest {
         assertEquals(android.content.Intent.ACTION_VIEW, started.getAction());
         assertEquals(android.content.ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, 1),
             started.getData());
+        // Its own task with only the entry in it, so Back comes back to this app.
+        final int flags = started.getFlags();
+        org.junit.Assert.assertTrue((flags & android.content.Intent.FLAG_ACTIVITY_NEW_DOCUMENT) != 0);
+        org.junit.Assert.assertTrue((flags & android.content.Intent.FLAG_ACTIVITY_MULTIPLE_TASK) != 0);
+        org.junit.Assert.assertTrue((flags & android.content.Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS) != 0);
     }
 
     @Test
