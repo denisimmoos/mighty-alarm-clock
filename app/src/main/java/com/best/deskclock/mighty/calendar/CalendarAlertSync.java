@@ -56,7 +56,7 @@ public final class CalendarAlertSync {
         synchronized (LOCK) {
             try {
                 syncAllLocked(context.getApplicationContext());
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 LogUtils.e("CalendarAlertSync: sync failed", e);
             }
         }
@@ -73,7 +73,7 @@ public final class CalendarAlertSync {
             profileIds.add(profile.id);
             try {
                 syncProfile(appContext, profile, now, canReadCalendar);
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 LogUtils.e("CalendarAlertSync: failed to sync profile " + profile.id, e);
             }
         }
@@ -98,7 +98,7 @@ public final class CalendarAlertSync {
                     syncProfile(appContext, profile, System.currentTimeMillis(),
                         DeviceCalendars.hasPermission(appContext));
                 }
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 LogUtils.e("CalendarAlertSync: failed to sync profile " + profileId, e);
             }
         }
@@ -116,7 +116,7 @@ public final class CalendarAlertSync {
                     removeEvent(appContext, event, true);
                 }
                 CalendarProfile.deleteProfile(cr, profileId);
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 LogUtils.e("CalendarAlertSync: failed to delete profile " + profileId, e);
             }
         }
@@ -141,7 +141,7 @@ public final class CalendarAlertSync {
                 event.userEnabled = enabled;
                 event.alarmId = reconcileAlarm(appContext, profile, event, profile.enabled && enabled, true);
                 event.save(cr);
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 LogUtils.e("CalendarAlertSync: failed to switch event " + eventRowId, e);
             }
         }
@@ -244,7 +244,7 @@ public final class CalendarAlertSync {
         if (alarm == null) {
             alarm = new Alarm(start.get(Calendar.YEAR), start.get(Calendar.MONTH),
                 start.get(Calendar.DAY_OF_MONTH), start.get(Calendar.HOUR_OF_DAY), start.get(Calendar.MINUTE));
-            applyProfile(profile, event, alarm);
+            applyProfile(context, profile, event, alarm);
             alarm.enabled = true;
             alarm.addAlarm(cr);
             scheduleInstance(context, alarm);
@@ -258,7 +258,7 @@ public final class CalendarAlertSync {
         alarm.day = start.get(Calendar.DAY_OF_MONTH);
         alarm.hour = start.get(Calendar.HOUR_OF_DAY);
         alarm.minutes = start.get(Calendar.MINUTE);
-        applyProfile(profile, event, alarm);
+        applyProfile(context, profile, event, alarm);
 
         final boolean hasInstance = !AlarmInstance.getInstancesByAlarmId(cr, alarm.id).isEmpty();
         if (!alarm.enabled || !hasInstance || hasChanged(before, alarm)) {
@@ -271,10 +271,10 @@ public final class CalendarAlertSync {
         return alarm.id;
     }
 
-    private static void applyProfile(CalendarProfile profile, CalendarAlertEvent event, Alarm alarm) {
+    private static void applyProfile(Context context, CalendarProfile profile, CalendarAlertEvent event, Alarm alarm) {
         alarm.label = event.title;
         alarm.daysOfWeek = Weekdays.NONE;
-        alarm.alert = resolveRingtone(profile.ringtone);
+        alarm.alert = resolveRingtone(context, profile.ringtone);
         alarm.vibrate = profile.vibrate;
         alarm.autoSilenceDuration = profile.autoSilenceDuration;
         alarm.snoozeDuration = profile.snoozeDuration;
@@ -287,8 +287,8 @@ public final class CalendarAlertSync {
         alarm.wifiRuleEnabled = false;
     }
 
-    private static Uri resolveRingtone(@Nullable Uri ringtone) {
-        return ringtone != null ? ringtone : DataModel.getDataModel().getAlarmRingtoneUriFromSettings();
+    private static Uri resolveRingtone(Context context, @Nullable Uri ringtone) {
+        return ringtone != null ? ringtone : DataModel.readAlarmRingtoneUriFromSettings(context);
     }
 
     private static boolean hasChanged(Alarm a, Alarm b) {

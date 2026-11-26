@@ -28,6 +28,12 @@ import org.robolectric.shadows.ShadowLooper;
 @Config(sdk = 35)
 public class CalendarAlertScreensTest {
 
+    @org.junit.After
+    public void drainBackgroundWork() throws Exception {
+        com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
+    }
+
+
     @Test
     public void editScreenOpensForNewAndExistingProfile() {
         final Application context = ApplicationProvider.getApplicationContext();

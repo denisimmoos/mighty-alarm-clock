@@ -44,7 +44,7 @@ public final class CalendarAlertWorker extends Worker {
         try {
             CalendarAlertSync.syncAll(getApplicationContext());
             return Result.success();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             LogUtils.e("CalendarAlertWorker: sync failed", e);
             return Result.retry();
         } finally {
@@ -73,7 +73,7 @@ public final class CalendarAlertWorker extends Worker {
                 WorkManager.getInstance(appContext)
                     .enqueueUniquePeriodicWork(PERIODIC_WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, request);
                 scheduleOnCalendarChange(appContext, ExistingWorkPolicy.KEEP);
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 LogUtils.e("CalendarAlertWorker: failed to schedule", e);
             }
         });

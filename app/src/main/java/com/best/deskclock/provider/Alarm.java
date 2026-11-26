@@ -349,7 +349,11 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         this.daysOfWeek = Weekdays.NONE;
         this.label = "";
         this.syncByLabel = false;
-        this.alert = DataModel.getDataModel().getAlarmRingtoneUriFromSettings();
+        // DataModel may only be used on the main thread. Calendar alarms are built in the
+        // background and set their own ringtone right after.
+        this.alert = android.os.Looper.myLooper() == android.os.Looper.getMainLooper()
+            ? DataModel.getDataModel().getAlarmRingtoneUriFromSettings()
+            : android.provider.Settings.System.DEFAULT_ALARM_ALERT_URI;
         this.deleteAfterUse = DEFAULT_ENABLE_DELETE_OCCASIONAL_ALARM_BY_DEFAULT;
         this.autoSilenceDuration = DEFAULT_AUTO_SILENCE_DURATION;
         this.snoozeDuration = DEFAULT_ALARM_SNOOZE_DURATION;

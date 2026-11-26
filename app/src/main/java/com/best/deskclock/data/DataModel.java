@@ -561,6 +561,15 @@ public final class DataModel {
     }
 
     /**
+     * Same as {@link #getAlarmRingtoneUriFromSettings()}, but reads the preference directly so it
+     * may be called from a background thread.
+     */
+    public static Uri readAlarmRingtoneUriFromSettings(Context context) {
+        return SettingsDAO.getAlarmRingtoneUriFromSettings(
+            DeskClockApplication.getDefaultSharedPreferences(context), android.provider.Settings.System.DEFAULT_ALARM_ALERT_URI);
+    }
+
+    /**
      * @return the title of the ringtone that is played for all alarms
      */
     public String getAlarmRingtoneTitle() {
