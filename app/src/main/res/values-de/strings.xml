@@ -732,11 +732,16 @@
     <string name="mighty_backup_now_success">Backup abgeschlossen</string>
     <string name="mighty_backup_now_failure">Backup fehlgeschlagen; prüfen Sie, ob ein Ordner gewählt ist</string>
     <string name="mighty_restore_calendar_profiles_title">Kalender-Alarm-Profile wiederherstellen</string>
-    <string name="mighty_restore_calendar_profiles_summary">Wählen Sie eine Backup-Datei (zum Beispiel alarms-latest.json). Vorhandene Profile bleiben erhalten und werden nicht doppelt angelegt.</string>
-    <string name="mighty_restore_calendar_profiles_failure">Diese Datei konnte nicht gelesen werden oder enthält keine Kalender-Alarm-Profile</string>
+    <string name="mighty_restore_calendar_profiles_summary">Wählen Sie eine Backup-Datei (zum Beispiel alarms-latest.json). Noch vorhandene Profile erhalten ihre gesicherten Einstellungen zurück statt einer zweiten Kopie.</string>
+    <string name="mighty_restore_calendar_profiles_failure">Diese Datei konnte nicht gelesen werden. Wählen Sie eine Backup-Datei dieser App, zum Beispiel alarms-latest.json im Backup-Ordner.</string>
+    <string name="mighty_restore_calendar_profiles_none">Dieses Backup enthält keine Kalender-Alarm-Profile. Backups von vor dieser Version enthalten sie nicht. Tippen Sie auf \"Jetzt sichern\", um ein Backup mit Profilen zu erstellen.</string>
     <plurals name="mighty_restore_calendar_profiles_done">
-        <item quantity="one">%1$d Profil wiederhergestellt, %2$d bereits vorhanden</item>
-        <item quantity="other">%1$d Profile wiederhergestellt, %2$d bereits vorhanden</item>
+        <item quantity="one">%d Profil wiederhergestellt</item>
+        <item quantity="other">%d Profile wiederhergestellt</item>
+    </plurals>
+    <plurals name="mighty_restore_calendar_profiles_updated">
+        <item quantity="one">%d vorhandenes Profil hat seine gesicherten Einstellungen zurückerhalten</item>
+        <item quantity="other">%d vorhandene Profile haben ihre gesicherten Einstellungen zurückerhalten</item>
     </plurals>
     <plurals name="mighty_restore_calendar_profiles_missing">
         <item quantity="one">%d Profil braucht einen Kalender, weil sein Kalender nicht auf diesem Telefon ist</item>

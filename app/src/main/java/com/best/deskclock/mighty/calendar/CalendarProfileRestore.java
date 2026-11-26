@@ -29,8 +29,8 @@ import java.util.Objects;
  * Restores calendar alert profiles from a JSON backup file written by
  * {@link com.best.deskclock.mighty.backup.JsonBackupManager}.
  *
- * <p>Profiles that already exist (same name, calendar, account and title pattern) are skipped, so
- * restoring the same file twice does not create copies. The alarms themselves are not in the
+ * <p>A profile that already exists (same name, calendar, account and title pattern) gets the
+ * settings from the backup instead of a second copy. The alarms themselves are not in the
  * backup; they are rebuilt from the calendar right after the restore.</p>
  */
 public final class CalendarProfileRestore {
@@ -45,12 +45,15 @@ public final class CalendarProfileRestore {
      * What a restore did.
      *
      * @param restored profiles added
-     * @param skipped  profiles that already existed
+     * @param skipped  profiles that already existed and got the backup's settings again
      * @param calendarMissing restored profiles whose calendar is not on this phone; they need a
      *                        calendar chosen before they ring
      */
     public record Result(int restored, int skipped, int calendarMissing) {
     }
+
+    /** The file is a backup, but holds no calendar alert profiles. */
+    public static final Result NO_PROFILES = new Result(0, 0, 0);
 
     private CalendarProfileRestore() {
     }
@@ -58,7 +61,8 @@ public final class CalendarProfileRestore {
     /**
      * Reads the backup file and adds its profiles. Must not run on the main thread.
      *
-     * @return the result, or {@code null} if the file can't be read or holds no calendar profiles.
+     * @return the result, {@link #NO_PROFILES} if the file is a backup without calendar alert
+     * profiles (made before they were backed up), or {@code null} if the file can't be read.
      */
     @Nullable
     public static Result restore(Context context, Uri file) {
@@ -68,7 +72,7 @@ public final class CalendarProfileRestore {
                 return null;
             }
             final Result result = restore(context, new JSONObject(readAll(in)));
-            if (result != null && result.restored() > 0) {
+            if (result != null && result != NO_PROFILES) {
                 CalendarAlertSync.syncAll(context);
                 CalendarAlertWorker.ensureScheduled(context);
             }
@@ -85,8 +89,9 @@ public final class CalendarProfileRestore {
     @Nullable
     static Result restore(Context context, JSONObject backup) {
         final JSONArray profiles = backup.optJSONArray(KEY_PROFILES);
-        if (profiles == null) {
-            return null;
+        if (profiles == null || profiles.length() == 0) {
+            // A backup of this app, but from before profiles were included, or without any.
+            return backup.has("alarms") || backup.has("metadata") ? NO_PROFILES : null;
         }
 
         final ContentResolver cr = context.getContentResolver();
@@ -126,10 +131,7 @@ public final class CalendarProfileRestore {
             final String account = values.getAsString(CalendarProfile.ACCOUNT_NAME);
             final String calendarName = values.getAsString(CalendarProfile.CALENDAR_NAME);
             final String regex = values.getAsString(CalendarProfile.TITLE_REGEX);
-            if (isDuplicate(existing, name, account, calendarName, regex)) {
-                skipped++;
-                continue;
-            }
+            final CalendarProfile match = findExisting(existing, name, account, calendarName, regex);
 
             // Calendar ids differ between phones. Find the same calendar by account and name.
             final Long storedId = values.getAsLong(CalendarProfile.CALENDAR_ID);
@@ -149,32 +151,51 @@ public final class CalendarProfileRestore {
                 values.putNull(CalendarProfile.RINGTONE);
             }
 
-            final Uri uri = cr.insert(CalendarProfile.CONTENT_URI, values);
-            if (uri == null) {
-                continue;
+            final long profileId;
+            if (match != null) {
+                // Bring back the backup's settings, but keep a calendar the user chose since.
+                if (calendar == null && match.calendarId >= 0) {
+                    values.put(CalendarProfile.CALENDAR_ID, match.calendarId);
+                    if (calendars != null) {
+                        calendarMissing--;
+                    }
+                }
+                values.remove(CalendarProfile.CREATED_AT);
+                cr.update(CalendarProfile.getContentUri(match.id), values, null, null);
+                profileId = match.id;
+                skipped++;
+            } else {
+                final Uri uri = cr.insert(CalendarProfile.CONTENT_URI, values);
+                if (uri == null) {
+                    continue;
+                }
+                profileId = ContentUris.parseId(uri);
+                restored++;
             }
             // Read back and save once more so out-of-range numbers are brought into range.
-            final CalendarProfile profile = CalendarProfile.getProfile(cr, ContentUris.parseId(uri));
+            final CalendarProfile profile = CalendarProfile.getProfile(cr, profileId);
             if (profile != null) {
                 profile.updateProfile(cr);
-                existing.add(profile);
+                if (match == null) {
+                    existing.add(profile);
+                }
             }
-            restored++;
         }
         return new Result(restored, skipped, calendarMissing);
     }
 
-    private static boolean isDuplicate(List<CalendarProfile> existing, String name, String account,
-                                       String calendarName, String regex) {
+    @Nullable
+    private static CalendarProfile findExisting(List<CalendarProfile> existing, String name, String account,
+                                                String calendarName, String regex) {
         for (CalendarProfile profile : existing) {
             if (Objects.equals(profile.name, name)
                 && Objects.equals(profile.accountName, account)
                 && Objects.equals(profile.calendarName, calendarName)
                 && Objects.equals(profile.titleRegex, regex)) {
-                return true;
+                return profile;
             }
         }
-        return false;
+        return null;
     }
 
     @Nullable

@@ -111,19 +111,41 @@ public class MightyFeaturesFragment extends ScreenFragment
                 final com.best.deskclock.mighty.calendar.CalendarProfileRestore.Result result =
                     com.best.deskclock.mighty.calendar.CalendarProfileRestore.restore(appContext, uri);
                 AppExecutors.getMainThread().post(() -> {
+                    final String message;
                     if (result == null) {
-                        CustomToast.showLong(appContext, appContext.getString(R.string.mighty_restore_calendar_profiles_failure));
-                        return;
+                        message = appContext.getString(R.string.mighty_restore_calendar_profiles_failure);
+                    } else if (result == com.best.deskclock.mighty.calendar.CalendarProfileRestore.NO_PROFILES) {
+                        message = appContext.getString(R.string.mighty_restore_calendar_profiles_none);
+                    } else {
+                        final StringBuilder text = new StringBuilder();
+                        if (result.restored() > 0) {
+                            text.append(appContext.getResources().getQuantityString(
+                                R.plurals.mighty_restore_calendar_profiles_done, result.restored(), result.restored()));
+                        }
+                        if (result.skipped() > 0) {
+                            if (text.length() > 0) {
+                                text.append('\n');
+                            }
+                            text.append(appContext.getResources().getQuantityString(
+                                R.plurals.mighty_restore_calendar_profiles_updated, result.skipped(), result.skipped()));
+                        }
+                        if (result.calendarMissing() > 0) {
+                            text.append("\n\n").append(appContext.getResources().getQuantityString(
+                                R.plurals.mighty_restore_calendar_profiles_missing, result.calendarMissing(),
+                                result.calendarMissing()));
+                        }
+                        message = text.toString();
                     }
-                    String message = appContext.getResources().getQuantityString(
-                        R.plurals.mighty_restore_calendar_profiles_done, result.restored(),
-                        result.restored(), result.skipped());
-                    if (result.calendarMissing() > 0) {
-                        message += ". " + appContext.getResources().getQuantityString(
-                            R.plurals.mighty_restore_calendar_profiles_missing, result.calendarMissing(),
-                            result.calendarMissing());
+                    if (isAdded()) {
+                        // A dialog stays until it is read, unlike a short message at the bottom.
+                        new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(R.string.mighty_restore_calendar_profiles_title)
+                            .setMessage(message)
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show();
+                    } else {
+                        CustomToast.showLong(appContext, message);
                     }
-                    CustomToast.showLong(appContext, message);
                 });
             });
         });
@@ -307,8 +329,9 @@ public class MightyFeaturesFragment extends ScreenFragment
             }
 
             case KEY_MIGHTY_RESTORE_CALENDAR_PROFILES ->
-                // Some file managers label .json files as plain text or as unknown binary data.
-                mRestoreFilePicker.launch(new String[]{"application/json", "text/plain", "application/octet-stream"});
+                // File managers label .json files differently (JSON, plain text, unknown data), and a
+                // file that doesn't match is greyed out. Show all files; the content is checked.
+                mRestoreFilePicker.launch(new String[]{"*/*"});
 
             case KEY_MIGHTY_EXCHANGE_DEVICE_NAME -> showExchangeDeviceNameDialog();
 

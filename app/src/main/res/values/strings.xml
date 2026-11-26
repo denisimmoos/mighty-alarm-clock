@@ -1544,11 +1544,16 @@
     <string name="mighty_backup_now_success">Backup completed</string>
     <string name="mighty_backup_now_failure">Backup failed; check that a folder is selected</string>
     <string name="mighty_restore_calendar_profiles_title">Restore calendar alert profiles</string>
-    <string name="mighty_restore_calendar_profiles_summary">Choose a backup file (for example alarms-latest.json). Profiles you already have are kept and not copied twice.</string>
-    <string name="mighty_restore_calendar_profiles_failure">This file could not be read or has no calendar alert profiles</string>
+    <string name="mighty_restore_calendar_profiles_summary">Choose a backup file (for example alarms-latest.json). Profiles you still have get their saved settings back instead of a second copy.</string>
+    <string name="mighty_restore_calendar_profiles_failure">This file could not be read. Choose a backup file made by this app, for example alarms-latest.json in your backup folder.</string>
+    <string name="mighty_restore_calendar_profiles_none">This backup has no calendar alert profiles. Backups made before this version don\'t include them. Tap \"Back up now\" to make a backup that does.</string>
     <plurals name="mighty_restore_calendar_profiles_done">
-        <item quantity="one">%1$d profile restored, %2$d already there</item>
-        <item quantity="other">%1$d profiles restored, %2$d already there</item>
+        <item quantity="one">%d profile restored</item>
+        <item quantity="other">%d profiles restored</item>
+    </plurals>
+    <plurals name="mighty_restore_calendar_profiles_updated">
+        <item quantity="one">%d existing profile got its saved settings back</item>
+        <item quantity="other">%d existing profiles got their saved settings back</item>
     </plurals>
     <plurals name="mighty_restore_calendar_profiles_missing">
         <item quantity="one">%d profile needs a calendar chosen, because its calendar is not on this phone</item>
