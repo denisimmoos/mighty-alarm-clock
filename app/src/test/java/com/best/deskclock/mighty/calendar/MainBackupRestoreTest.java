@@ -80,4 +80,42 @@ public class MainBackupRestoreTest {
         assertEquals(1, CalendarProfile.getProfiles(context.getContentResolver()).size());
         com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
     }
+
+    @Test(timeout = 120000)
+    public void mainBackupKeepsTagsAndMightyAlarmOptions() throws Exception {
+        final Application context = ApplicationProvider.getApplicationContext();
+        final android.content.ContentResolver cr = context.getContentResolver();
+        final SharedPreferences prefs = DeskClockApplication.getDefaultSharedPreferences(context);
+        final com.best.deskclock.provider.Tag tag = new com.best.deskclock.provider.Tag("Work", 0xFF336699);
+        tag.addTag(cr);
+        final com.best.deskclock.provider.Alarm alarm = new com.best.deskclock.provider.Alarm();
+        alarm.hour = 6;
+        alarm.minutes = 45;
+        alarm.label = "Gym";
+        alarm.repeatIntervalMinutes = 10;
+        alarm.repeatMaxCount = 3;
+        alarm.wifiRuleEnabled = true;
+        alarm.wifiSsid = "Home";
+        alarm.addAlarm(cr);
+        com.best.deskclock.provider.Tag.addTagToAlarm(cr, alarm.id, tag.id);
+
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        BackupAndRestoreUtils.settingsToJsonStream(context, prefs, prefs.getAll(), out);
+        com.best.deskclock.provider.Tag.deleteTag(cr, tag.id);
+
+        BackupAndRestoreUtils.readJson(context, prefs, new ByteArrayInputStream(out.toByteArray()));
+
+        final List<com.best.deskclock.provider.Alarm> alarms = com.best.deskclock.provider.Alarm.getUserAlarms(cr);
+        assertEquals(1, alarms.size());
+        final com.best.deskclock.provider.Alarm restored = alarms.get(0);
+        assertEquals("Gym", restored.label);
+        assertEquals(10, restored.repeatIntervalMinutes);
+        assertEquals(3, restored.repeatMaxCount);
+        assertTrue(restored.wifiRuleEnabled);
+        assertEquals("Home", restored.wifiSsid);
+        final List<com.best.deskclock.provider.Tag> tags = com.best.deskclock.provider.Tag.getTagsForAlarm(cr, restored.id);
+        assertEquals(1, tags.size());
+        assertEquals("Work", tags.get(0).name);
+        com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
+    }
 }

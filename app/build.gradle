@@ -61,7 +61,7 @@ android {
 
         debug {
             manifestPlaceholders = [appName: "@string/app_label_debug"]
-            versionNameSuffix = "-debug"
+            versionNameSuffix = "-debug-${buildCommit}"
             applicationIdSuffix = ".debug"
             buildConfigField "boolean", "IS_DEBUG_BUILD", "true"
             buildConfigField "boolean", "IS_NIGHTLY_BUILD", "false"

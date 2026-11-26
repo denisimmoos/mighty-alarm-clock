@@ -65,6 +65,12 @@ public class BackupAndRestoreUtils {
 
     /** Key of the calendar alert profiles in the backup's settings.json. */
     private static final String KEY_CALENDAR_ALERT_PROFILES = "Calendar alert profiles";
+
+    /** Key of the alarm tags in the backup's settings.json. */
+    private static final String KEY_TAGS = "Tags";
+
+    /** Tag ids in the backup mapped to the ids of the restored tags, used while restoring. */
+    private static final Map<Long, Long> sRestoredTagIds = new HashMap<>();
     public static boolean appNeedsRestart = false;
 
     /**
@@ -191,6 +197,20 @@ public class BackupAndRestoreUtils {
             alarmObject.put("manualSortOrder", alarm.manualSortOrder);
             alarmObject.put("pauseStartDate", alarm.pauseStartDate);
             alarmObject.put("pauseEndDate", alarm.pauseEndDate);
+            // Mighty features of the alarm, so a restore brings back everything.
+            alarmObject.put("stableUuid", alarm.stableUuid);
+            alarmObject.put("ringCount", alarm.ringCount);
+            alarmObject.put("snoozeExtendEnabled", alarm.snoozeExtendEnabled);
+            alarmObject.put("snoozeExtendMinutes", alarm.snoozeExtendMinutes);
+            alarmObject.put("snoozeExtendMaxMinutes", alarm.snoozeExtendMaxMinutes);
+            alarmObject.put("wifiRuleEnabled", alarm.wifiRuleEnabled);
+            alarmObject.put("wifiSsid", alarm.wifiSsid == null ? JSONObject.NULL : alarm.wifiSsid);
+            alarmObject.put("wifiCondition", alarm.wifiCondition == null ? JSONObject.NULL : alarm.wifiCondition);
+            alarmObject.put("wifiAction", alarm.wifiAction == null ? JSONObject.NULL : alarm.wifiAction);
+            alarmObject.put("repeatIntervalMinutes", alarm.repeatIntervalMinutes);
+            alarmObject.put("repeatMaxCount", alarm.repeatMaxCount);
+            alarmObject.put("tagIds", new JSONArray(
+                com.best.deskclock.provider.Tag.getTagIdsForAlarm(context.getContentResolver(), alarm.id)));
 
             if (alarm.daysOfWeek.isRepeating() || !alarm.isSpecifiedDate()) {
                 alarmsArray.put(alarmObject);
@@ -206,6 +226,18 @@ public class BackupAndRestoreUtils {
         jsonObject.put("Alarms", alarmsArray);
 
         jsonObject.put("Alarms with specified date", alarmsWithDateArray);
+
+        // Alarm tags.
+        final JSONArray tagsArray = new JSONArray();
+        for (com.best.deskclock.provider.Tag tag : com.best.deskclock.provider.Tag.getTags(context.getContentResolver())) {
+            final JSONObject tagObject = new JSONObject();
+            tagObject.put("id", tag.id);
+            tagObject.put("name", tag.name);
+            tagObject.put("color", tag.color);
+            tagObject.put("ringtoneUri", tag.ringtoneUri == null ? JSONObject.NULL : tag.ringtoneUri);
+            tagsArray.put(tagObject);
+        }
+        jsonObject.put(KEY_TAGS, tagsArray);
 
         // Calendar alert profiles; their alarms are rebuilt from the calendar after a restore.
         jsonObject.put(KEY_CALENDAR_ALERT_PROFILES,
@@ -358,6 +390,23 @@ public class BackupAndRestoreUtils {
             Alarm.deleteAlarm(contentResolver, alarm.id);
         }
 
+        // Tags. Backups made before they were included leave the current tags as they are.
+        sRestoredTagIds.clear();
+        final JSONArray tagsArray = jsonObject.optJSONArray(KEY_TAGS);
+        if (tagsArray != null) {
+            for (com.best.deskclock.provider.Tag tag : com.best.deskclock.provider.Tag.getTags(contentResolver)) {
+                com.best.deskclock.provider.Tag.deleteTag(contentResolver, tag.id);
+            }
+            for (int i = 0; i < tagsArray.length(); i++) {
+                final JSONObject tagObject = tagsArray.getJSONObject(i);
+                final com.best.deskclock.provider.Tag tag = new com.best.deskclock.provider.Tag(
+                    tagObject.optString("name", ""), tagObject.optInt("color", 0));
+                tag.ringtoneUri = tagObject.isNull("ringtoneUri") ? null : tagObject.optString("ringtoneUri", null);
+                tag.addTag(contentResolver);
+                sRestoredTagIds.put(tagObject.optLong("id", -1), tag.id);
+            }
+        }
+
         if (jsonObject.has("Alarms")) {
             JSONArray alarmsArray = jsonObject.getJSONArray("Alarms");
             for (int i = 0; i < alarmsArray.length(); i++) {
@@ -384,6 +433,13 @@ public class BackupAndRestoreUtils {
         }
 
         AlarmStateManager.updateNextAlarm(context);
+    }
+
+    private static String optNullableString(JSONObject object, String key, String fallback) {
+        if (!object.has(key)) {
+            return fallback;
+        }
+        return object.isNull(key) ? null : object.optString(key, fallback);
     }
 
     /**
@@ -454,7 +510,30 @@ public class BackupAndRestoreUtils {
             Weekdays.fromBits(daysOfWeek), label, syncAlarmByLabel, alarmRingtone, deleteAfterUse, autoSilenceDuration, snoozeDuration,
             missedAlarmRepeatLimit, crescendoDuration, alarmVolume, manualSortOrder, pauseStartDate, pauseEndDate);
 
+        // Mighty features; older backups don't have them and keep the defaults.
+        restoredAlarm.stableUuid = alarmObject.optString("stableUuid", restoredAlarm.stableUuid);
+        restoredAlarm.ringCount = alarmObject.optInt("ringCount", restoredAlarm.ringCount);
+        restoredAlarm.snoozeExtendEnabled = alarmObject.optBoolean("snoozeExtendEnabled", restoredAlarm.snoozeExtendEnabled);
+        restoredAlarm.snoozeExtendMinutes = alarmObject.optInt("snoozeExtendMinutes", restoredAlarm.snoozeExtendMinutes);
+        restoredAlarm.snoozeExtendMaxMinutes = alarmObject.optInt("snoozeExtendMaxMinutes", restoredAlarm.snoozeExtendMaxMinutes);
+        restoredAlarm.wifiRuleEnabled = alarmObject.optBoolean("wifiRuleEnabled", restoredAlarm.wifiRuleEnabled);
+        restoredAlarm.wifiSsid = optNullableString(alarmObject, "wifiSsid", restoredAlarm.wifiSsid);
+        restoredAlarm.wifiCondition = optNullableString(alarmObject, "wifiCondition", restoredAlarm.wifiCondition);
+        restoredAlarm.wifiAction = optNullableString(alarmObject, "wifiAction", restoredAlarm.wifiAction);
+        restoredAlarm.repeatIntervalMinutes = alarmObject.optInt("repeatIntervalMinutes", restoredAlarm.repeatIntervalMinutes);
+        restoredAlarm.repeatMaxCount = alarmObject.optInt("repeatMaxCount", restoredAlarm.repeatMaxCount);
+
         restoredAlarm.addAlarm(contentResolver);
+
+        final JSONArray tagIds = alarmObject.optJSONArray("tagIds");
+        if (tagIds != null) {
+            for (int i = 0; i < tagIds.length(); i++) {
+                final Long tagId = sRestoredTagIds.get(tagIds.optLong(i, -1));
+                if (tagId != null) {
+                    com.best.deskclock.provider.Tag.addTagToAlarm(contentResolver, restoredAlarm.id, tagId);
+                }
+            }
+        }
 
         if (restoredAlarm.enabled) {
             AlarmInstance alarmInstance = restoredAlarm.createInstanceAfter(Calendar.getInstance());
