@@ -640,6 +640,12 @@ public final class ClockContract {
          */
         String FLASH = "flash";
 
+        /**
+         * True if the alarm should only vibrate, without any sound.
+         * <p>Type: BOOLEAN</p>
+         */
+        String VIBRATE_ONLY = "vibrate_only";
+
         String DISMISS_METHOD_DEFAULT = "default";
         String DISMISS_METHOD_SLIDE = "slide";
         String DISMISS_METHOD_BUTTON = "button";

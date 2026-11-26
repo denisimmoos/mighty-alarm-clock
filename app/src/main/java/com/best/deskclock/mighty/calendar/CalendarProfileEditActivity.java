@@ -132,6 +132,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.regexInput.setText(mProfile.titleRegex);
             mBinding.vibrateSwitch.setChecked(mProfile.vibrate);
             mBinding.flashSwitch.setChecked(mProfile.flash);
+            mBinding.vibrateOnlySwitch.setChecked(mProfile.vibrateOnly);
             mBinding.maxDurationInput.setText(mProfile.autoSilenceDuration > 0
                 ? String.valueOf(Math.max(1, mProfile.autoSilenceDuration / 60)) : "");
 
@@ -166,6 +167,10 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         }
         updateLookaheadLabel();
         mBinding.lookaheadSlider.addOnChangeListener((slider, value, fromUser) -> updateLookaheadLabel());
+
+        // Vibrate only hides the sound settings and always vibrates
+        updateVibrateOnly();
+        mBinding.vibrateOnlySwitch.setOnCheckedChangeListener((button, checked) -> updateVibrateOnly());
 
         // Snooze fields follow the snooze switch
         mBinding.snoozeFields.setVisibility(mBinding.snoozeSwitch.isChecked() ? VISIBLE : GONE);
@@ -226,6 +231,15 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         } else {
             mBinding.calendarButton.setText(mProfile.calendarName + "\n" + mProfile.accountName);
         }
+    }
+
+    private void updateVibrateOnly() {
+        final boolean vibrateOnly = mBinding.vibrateOnlySwitch.isChecked();
+        mBinding.soundFields.setVisibility(vibrateOnly ? GONE : VISIBLE);
+        if (vibrateOnly) {
+            mBinding.vibrateSwitch.setChecked(true);
+        }
+        mBinding.vibrateSwitch.setEnabled(!vibrateOnly);
     }
 
     private void bindRingtone() {
@@ -309,6 +323,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mProfile.lookaheadDays = CalendarProfile.clampLookaheadDays((int) mBinding.lookaheadSlider.getValue());
         mProfile.vibrate = mBinding.vibrateSwitch.isChecked();
         mProfile.flash = mBinding.flashSwitch.isChecked();
+        mProfile.vibrateOnly = mBinding.vibrateOnlySwitch.isChecked();
         mProfile.autoSilenceDuration = maxDurationMinutes > 0
             ? maxDurationMinutes * 60
             : CalendarProfile.RING_UNTIL_DISMISSED;

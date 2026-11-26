@@ -315,6 +315,27 @@ public class CalendarAlertSyncTest {
     }
 
     @Test
+    public void vibrateOnlyMakesTheAlarmSilentAndVibrating() {
+        mProfile.vibrate = false;
+        mProfile.vibrateOnly = true;
+        mProfile.updateProfile(mCr);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: quiet"));
+        CalendarAlertSync.syncAll(mContext);
+        final long alarmId = events().get(0).alarmId;
+        final com.best.deskclock.provider.AlarmInstance instance = com.best.deskclock.provider.AlarmInstance
+            .getInstancesByAlarmId(mCr, alarmId).get(0);
+        assertEquals(com.best.deskclock.utils.RingtoneUtils.RINGTONE_SILENT, instance.mRingtone);
+        assertTrue(instance.mVibrate);
+
+        // Turning it off brings the sound back.
+        mProfile.vibrateOnly = false;
+        mProfile.updateProfile(mCr);
+        CalendarAlertSync.syncAll(mContext);
+        org.junit.Assert.assertNotEquals(com.best.deskclock.utils.RingtoneUtils.RINGTONE_SILENT,
+            Alarm.getAlarm(mCr, alarmId).alert);
+    }
+
+    @Test
     public void invalidRegexMatchesNothing() {
         mProfile.titleRegex = "Alarm:(";
         mProfile.updateProfile(mCr);

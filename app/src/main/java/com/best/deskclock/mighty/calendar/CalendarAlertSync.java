@@ -16,6 +16,7 @@ import com.best.deskclock.provider.AlarmInstance;
 import com.best.deskclock.provider.CalendarAlertEvent;
 import com.best.deskclock.provider.CalendarProfile;
 import com.best.deskclock.utils.LogUtils;
+import com.best.deskclock.utils.RingtoneUtils;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -274,8 +275,10 @@ public final class CalendarAlertSync {
     private static void applyProfile(Context context, CalendarProfile profile, CalendarAlertEvent event, Alarm alarm) {
         alarm.label = event.title;
         alarm.daysOfWeek = Weekdays.NONE;
-        alarm.alert = resolveRingtone(context, profile.ringtone);
-        alarm.vibrate = profile.vibrate;
+        alarm.alert = profile.vibrateOnly
+            ? RingtoneUtils.RINGTONE_SILENT
+            : resolveRingtone(context, profile.ringtone);
+        alarm.vibrate = profile.vibrate || profile.vibrateOnly;
         alarm.flash = profile.flash;
         alarm.autoSilenceDuration = profile.autoSilenceDuration;
         alarm.snoozeDuration = profile.snoozeDuration;

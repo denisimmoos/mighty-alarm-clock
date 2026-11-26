@@ -56,6 +56,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         DISMISS_METHOD,
         LOOKAHEAD_DAYS,
         FLASH,
+        VIBRATE_ONLY,
         CREATED_AT,
         UPDATED_AT
     };
@@ -77,8 +78,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     private static final int DISMISS_METHOD_INDEX = 13;
     private static final int LOOKAHEAD_DAYS_INDEX = 14;
     private static final int FLASH_INDEX = 15;
-    private static final int CREATED_AT_INDEX = 16;
-    private static final int UPDATED_AT_INDEX = 17;
+    private static final int VIBRATE_ONLY_INDEX = 16;
+    private static final int CREATED_AT_INDEX = 17;
+    private static final int UPDATED_AT_INDEX = 18;
 
     public long id;
     public String name;
@@ -103,6 +105,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public int lookaheadDays;
     /** Blink the camera flashlight while ringing. Off by default. */
     public boolean flash;
+    /** Only vibrate, without any sound. Off by default. */
+    public boolean vibrateOnly;
     public long createdAt;
     public long updatedAt;
 
@@ -123,6 +127,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         dismissMethod = DISMISS_METHOD_DEFAULT;
         lookaheadDays = DEFAULT_LOOKAHEAD_DAYS;
         flash = false;
+        vibrateOnly = false;
         final long now = System.currentTimeMillis();
         createdAt = now;
         updatedAt = now;
@@ -145,6 +150,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         dismissMethod = c.getString(DISMISS_METHOD_INDEX);
         lookaheadDays = clampLookaheadDays(c.getInt(LOOKAHEAD_DAYS_INDEX));
         flash = c.getInt(FLASH_INDEX) == 1;
+        vibrateOnly = c.getInt(VIBRATE_ONLY_INDEX) == 1;
         createdAt = c.getLong(CREATED_AT_INDEX);
         updatedAt = c.getLong(UPDATED_AT_INDEX);
     }
@@ -173,6 +179,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         values.put(DISMISS_METHOD, dismissMethod == null ? DISMISS_METHOD_DEFAULT : dismissMethod);
         values.put(LOOKAHEAD_DAYS, clampLookaheadDays(lookaheadDays));
         values.put(FLASH, flash ? 1 : 0);
+        values.put(VIBRATE_ONLY, vibrateOnly ? 1 : 0);
         values.put(CREATED_AT, createdAt);
         values.put(UPDATED_AT, updatedAt);
         return values;

@@ -102,35 +102,50 @@
             style="@style/CalendarAlertSectionTitle"
             android:text="@string/calendar_alert_section_sound" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/ringtone_button"
-            style="@style/Widget.Material3.Button.OutlinedButton"
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/vibrate_only_switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start|center_vertical"
-            app:icon="@drawable/ic_ringtone" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/volume_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:minHeight="48dp"
+            android:text="@string/calendar_alert_vibrate_only"
             android:textSize="16sp" />
 
-        <com.google.android.material.slider.Slider
-            android:id="@+id/volume_slider"
+        <LinearLayout
+            android:id="@+id/sound_fields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stepSize="1"
-            android:valueFrom="0"
-            android:valueTo="7" />
+            android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/calendar_alert_volume_help"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:textSize="13sp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ringtone_button"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start|center_vertical"
+                app:icon="@drawable/ic_ringtone" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/volume_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textSize="16sp" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/volume_slider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stepSize="1"
+                android:valueFrom="0"
+                android:valueTo="7" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/calendar_alert_volume_help"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="13sp" />
+        </LinearLayout>
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/vibrate_switch"

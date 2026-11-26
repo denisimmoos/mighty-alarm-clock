@@ -1725,6 +1725,7 @@
     <string name="calendar_alert_volume_help">Used when per-alarm volume is turned on in the alarm settings.</string>
     <string name="calendar_alert_vibrate">Vibrate</string>
     <string name="calendar_alert_flash">Blink flashlight</string>
+    <string name="calendar_alert_vibrate_only">Vibrate only (no sound)</string>
     <string name="calendar_alert_max_duration">Maximum alert duration (minutes)</string>
     <string name="calendar_alert_max_duration_help">Leave empty to ring until you dismiss the alarm.</string>
     <string name="calendar_alert_section_snooze">Snooze</string>
