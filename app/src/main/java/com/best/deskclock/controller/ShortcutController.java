@@ -30,6 +30,8 @@ import com.best.deskclock.data.Stopwatch;
 import com.best.deskclock.data.StopwatchListener;
 import com.best.deskclock.events.Events;
 import com.best.deskclock.events.ShortcutEventTracker;
+import com.best.deskclock.mighty.calendar.CalendarProfileEditActivity;
+import com.best.deskclock.provider.CalendarProfile;
 import com.best.deskclock.screensaver.ScreensaverActivity;
 import com.best.deskclock.stopwatch.StopwatchService;
 import com.best.deskclock.uidata.UiDataModel;
@@ -68,6 +70,9 @@ class ShortcutController {
             List<ShortcutInfo> dynamicShortcuts = new ArrayList<>();
             List<String> disabledShortcutIds = new ArrayList<>();
 
+            // The Calendar tab is always there, so this shortcut is too.
+            dynamicShortcuts.add(createNewProfileShortcut());
+
             if (SettingsDAO.isTimerTabVisible(prefs)) {
                 dynamicShortcuts.add(createNewTimerShortcut());
             } else {
@@ -98,6 +103,29 @@ class ShortcutController {
         } catch (IllegalStateException e) {
             LogUtils.wtf(e);
         }
+    }
+
+    /**
+     * Opens the editor for a new calendar profile, on top of the app so Back returns to it.
+     */
+    private ShortcutInfo createNewProfileShortcut() {
+        Context appContext = Utils.getLocalizedContext(DeskClockApplication.getAppContext());
+
+        final Intent main = new Intent(Intent.ACTION_MAIN)
+            .setClass(appContext, DeskClock.class)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        final Intent edit = CalendarProfileEditActivity.createIntent(appContext, CalendarProfile.INVALID_ID)
+            .setAction(Intent.ACTION_VIEW);
+        final String shortcutId = UiDataModel.getUiDataModel().getShortcutId(R.string.category_alarm, R.string.action_create);
+
+        return new ShortcutInfo.Builder(appContext, shortcutId)
+            .setIcon(Icon.createWithResource(appContext, R.drawable.shortcut_new_profile))
+            .setActivity(mComponentName)
+            .setShortLabel(appContext.getString(R.string.shortcut_new_profile_short))
+            .setLongLabel(appContext.getString(R.string.shortcut_new_profile_long))
+            .setIntents(new Intent[]{main, edit})
+            .setRank(0)
+            .build();
     }
 
     private ShortcutInfo createNewTimerShortcut() {

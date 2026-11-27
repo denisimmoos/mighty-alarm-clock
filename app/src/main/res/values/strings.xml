@@ -872,6 +872,10 @@
          (longer translations may be truncated). -->
     <!-- Short label for a shortcut to create a new timer. The maximum length is ~10 characters
          (longer translations may be truncated). -->
+    <!-- Short label of the app shortcut that creates a new calendar profile. -->
+    <string name="shortcut_new_profile_short">New profile</string>
+    <!-- Long label of the app shortcut that creates a new calendar profile. -->
+    <string name="shortcut_new_profile_long">Create new profile</string>
     <string name="shortcut_new_timer_short">New timer</string>
     <!-- Long label for a shortcut to create a new timer. The maximum length is ~25 characters
     (longer translations may be truncated). -->
