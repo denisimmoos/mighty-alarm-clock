@@ -11,6 +11,7 @@ import static android.provider.Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT
 import static android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS;
 import static android.provider.Settings.EXTRA_APP_PACKAGE;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_CALENDAR_PERMISSION;
+import static com.best.deskclock.settings.PreferencesKeys.KEY_LOCATION_PERMISSION;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_ENABLE_FOREGROUND_SERVICE;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_ESSENTIAL_PERMISSIONS_GRANTED;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_FULL_SCREEN_NOTIFICATION_PERMISSION;
@@ -76,6 +77,9 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
         private static final String KEY_CALENDAR_PERMISSION_ASKED =
             com.best.deskclock.mighty.calendar.CalendarAlarmStatus.KEY_CALENDAR_PERMISSION_ASKED;
 
+        /** Remembers that the location permission was asked for once, like the calendar one. */
+        private static final String KEY_LOCATION_PERMISSION_ASKED = "key_location_permission_asked";
+
         private boolean mShowForegroundServiceDialog = false;
         private boolean mShowNotificationRationaleDialog = false;
         private String mPendingRevocationPrefKey = null;
@@ -84,12 +88,14 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
             KEY_IGNORE_BATTERY_OPTIMIZATIONS,
             KEY_NOTIFICATION_PERMISSION,
             KEY_CALENDAR_PERMISSION,
+            KEY_LOCATION_PERMISSION,
             KEY_FULL_SCREEN_NOTIFICATION_PERMISSION
         };
 
         PermissionsManagementPreference mIgnoreBatteryOptimizationsPref;
         PermissionsManagementPreference mNotificationPermissionPref;
         PermissionsManagementPreference mCalendarPermissionPref;
+        PermissionsManagementPreference mLocationPermissionPref;
         PermissionsManagementPreference mFullScreenNotificationPref;
         PermissionsManagementPreference mShowLockScreenPref;
         SwitchPreferenceCompat mEnableForegroundServicePref;
@@ -108,6 +114,7 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
             mIgnoreBatteryOptimizationsPref = findPreference(KEY_IGNORE_BATTERY_OPTIMIZATIONS);
             mNotificationPermissionPref = findPreference(KEY_NOTIFICATION_PERMISSION);
             mCalendarPermissionPref = findPreference(KEY_CALENDAR_PERMISSION);
+            mLocationPermissionPref = findPreference(KEY_LOCATION_PERMISSION);
             mFullScreenNotificationPref = findPreference(KEY_FULL_SCREEN_NOTIFICATION_PERMISSION);
             mShowLockScreenPref = findPreference(KEY_SHOW_LOCKSCREEN_PERMISSION);
             mEnableForegroundServicePref = findPreference(KEY_ENABLE_FOREGROUND_SERVICE);
@@ -149,10 +156,14 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
                         displayRevocationDialog(KEY_FULL_SCREEN_NOTIFICATION_PERMISSION, getFullScreenNotificationsIntent());
                     case KEY_CALENDAR_PERMISSION ->
                         displayRevocationDialog(KEY_CALENDAR_PERMISSION, getAppDetailsIntent());
+                    case KEY_LOCATION_PERMISSION ->
+                        displayRevocationDialog(KEY_LOCATION_PERMISSION, getAppDetailsIntent());
                 }
             }
 
             updateEssentialPermissionsPref();
+
+            updateLocationPrefVisibility();
 
             for (String key : DYNAMIC_PERMISSION_KEYS) {
                 updateSinglePreference(key);
@@ -168,7 +179,7 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
         @Override
         public void onDestroy() {
             nullifyPreferenceListeners(mIgnoreBatteryOptimizationsPref, mNotificationPermissionPref,
-                mCalendarPermissionPref, mFullScreenNotificationPref,
+                mCalendarPermissionPref, mLocationPermissionPref, mFullScreenNotificationPref,
                 mShowLockScreenPref, mEnableForegroundServicePref);
 
             nullifyAllPrefs();
@@ -203,6 +214,7 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
                 case KEY_IGNORE_BATTERY_OPTIMIZATIONS -> launchIgnoreBatteryOptimizationsSettings();
                 case KEY_NOTIFICATION_PERMISSION -> grantOrRevokeNotificationsPermission();
                 case KEY_CALENDAR_PERMISSION -> grantOrRevokeCalendarPermission();
+                case KEY_LOCATION_PERMISSION -> grantOrRevokeLocationPermission();
                 case KEY_FULL_SCREEN_NOTIFICATION_PERMISSION -> grantOrRevokeFullScreenNotificationsPermission();
                 case KEY_SHOW_LOCKSCREEN_PERMISSION -> grantShowOnLockScreenPermissionXiaomi();
             }
@@ -216,6 +228,9 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
             mNotificationPermissionPref.setOnPreferenceClickListener(this);
 
             mCalendarPermissionPref.setOnPreferenceClickListener(this);
+
+            mLocationPermissionPref.setOnPreferenceClickListener(this);
+            updateLocationPrefVisibility();
 
             mFullScreenNotificationPref.setVisible(SdkUtils.isAtLeastAndroid14());
             mFullScreenNotificationPref.setOnPreferenceClickListener(this);
@@ -306,6 +321,79 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
             } else {
                 mPrefs.edit().putBoolean(KEY_CALENDAR_PERMISSION_ASKED, true).apply();
                 requireActivity().requestPermissions(new String[]{android.Manifest.permission.READ_CALENDAR}, 0);
+            }
+        }
+
+        /**
+         * Shows the location entry only when it matters: a profile uses the Wi-Fi condition, or
+         * location was already given (so it can be taken back here too).
+         */
+        private void updateLocationPrefVisibility() {
+            final Context context = requireContext();
+            mLocationPermissionPref.setVisible(isLocationPermissionNeeded(context)
+                || com.best.deskclock.mighty.calendar.CalendarWifi.hasForegroundPermission(context));
+        }
+
+        /**
+         * @return {@code true} if at least one calendar profile only rings near a chosen Wi-Fi.
+         */
+        public static boolean isLocationPermissionNeeded(Context context) {
+            for (com.best.deskclock.provider.CalendarProfile profile
+                : com.best.deskclock.provider.CalendarProfile.getProfiles(context.getContentResolver())) {
+                if (profile.wifiCheck) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Grant or revoke the location permission, which the Wi-Fi condition of calendar profiles
+         * needs. Android 10 and newer also need "Allow all the time", because the check runs when
+         * an alarm is about to ring, with the app in the background.
+         */
+        private void grantOrRevokeLocationPermission() {
+            final Context context = requireContext();
+            if (com.best.deskclock.mighty.calendar.CalendarWifi.hasBackgroundPermission(context)) {
+                displayRevocationDialog(KEY_LOCATION_PERMISSION, getAppDetailsIntent());
+            } else if (!com.best.deskclock.mighty.calendar.CalendarWifi.hasForegroundPermission(context)) {
+                if (mPrefs.getBoolean(KEY_LOCATION_PERMISSION_ASKED, false)
+                    && !shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    // "Don't ask again": it can only be given in the app's system settings.
+                    startActivity(getAppDetailsIntent());
+                } else {
+                    mPrefs.edit().putBoolean(KEY_LOCATION_PERMISSION_ASKED, true).apply();
+                    requireActivity().requestPermissions(new String[]{
+                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+                }
+            } else {
+                // Location is allowed while the app is open, but not all the time.
+                mActiveDialog = CustomDialog.create(
+                    context,
+                    null,
+                    AppCompatResources.getDrawable(context, R.drawable.ic_calendar_wifi),
+                    getString(R.string.calendar_alarm_wifi_background_title),
+                    getString(R.string.calendar_alarm_wifi_background_message),
+                    null,
+                    getString(android.R.string.ok),
+                    (d, w) -> {
+                        if (SdkUtils.isAtLeastAndroid11()) {
+                            // Android 11 and newer only offer "Allow all the time" in the app's settings.
+                            startActivity(getAppDetailsIntent());
+                        } else {
+                            requireActivity().requestPermissions(new String[]{
+                                android.Manifest.permission.ACCESS_BACKGROUND_LOCATION}, 0);
+                        }
+                    },
+                    getString(android.R.string.cancel),
+                    null,
+                    null,
+                    null,
+                    null,
+                    CustomDialog.SoftInputMode.NONE
+                );
+                mActiveDialog.show();
             }
         }
 
@@ -435,6 +523,7 @@ public class PermissionsManagementActivity extends CollapsingToolbarBaseActivity
             mIgnoreBatteryOptimizationsPref = null;
             mNotificationPermissionPref = null;
             mCalendarPermissionPref = null;
+            mLocationPermissionPref = null;
             mFullScreenNotificationPref = null;
             mShowLockScreenPref = null;
             mEnableForegroundServicePref = null;

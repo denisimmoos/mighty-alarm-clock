@@ -91,13 +91,33 @@ A simple timer: type the duration on the keypad and start it. Next to it are the
 * Light, dark or system theme, AMOLED mode, accent colors (Blue by default)
 * English and German
 
+# 🔒 Privacy and permissions
+
+**The app has no internet permission.** It never connects to Google or any other server.
+
+It reads the calendars that are stored on your phone, through Android's calendar storage (the
+same one your calendar apps use). Your Google account keeps that storage in sync with Google
+Calendar, which is done by Android itself, not by this app. To pick up changes to shared
+calendars sooner, the app only asks Android to sync (when you open the Calendar tab or a
+profile, and about once an hour).
+
+| Permission | What it is used for |
+| --- | --- |
+| Calendar (read) | Find the events that match your profiles. Required for calendar alarms. |
+| Calendar (write) | Only for **Snoozing the end alarm extends the event**: the app moves the end of that one event. Asked for only when you switch the option on. |
+| Location, "Allow all the time" | Only for the **Wi‑Fi condition**. Android shows Wi‑Fi names and MAC addresses only to apps with location access, and the check runs just before an alarm rings, in the background. No location is read or stored. |
+| Notifications, full screen, alarms, battery | Show the alarm on time, also on the lock screen. |
+
+All of them can be checked and changed under **Settings > Permissions management** in the app. The location
+entry appears there once a profile uses the Wi‑Fi condition.
+
 # 📥 Install
 
 There are no store builds yet. Build the app from this branch with Android Studio, or install an APK built from it.
 
 Application ID: `redpantyhose.claude.mightycalendaralarm` (debug builds add `.debug`). The app installs side by side with the original Clock app.
 
-The app needs access to your calendar. For the Wi‑Fi condition it also needs location access, which Android requires to see Wi‑Fi networks; no location data is collected or sent.
+See [Privacy and permissions](#-privacy-and-permissions) for what the app asks for.
 
 # 🐞 Common issues
 

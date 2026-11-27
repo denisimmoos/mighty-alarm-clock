@@ -87,6 +87,17 @@ public class CalendarWifiTest {
         com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
     }
 
+    /** The permissions screen shows the location entry only once a profile uses the Wi-Fi condition. */
+    @Test
+    public void locationEntryIsNeededOnlyWithWifiCondition() {
+        assertFalse(com.best.deskclock.settings.PermissionsManagementActivity.PermissionsManagementFragment
+            .isLocationPermissionNeeded(mContext));
+        mProfile.wifiCheck = true;
+        mProfile.updateProfile(mCr);
+        assertTrue(com.best.deskclock.settings.PermissionsManagementActivity.PermissionsManagementFragment
+            .isLocationPermissionNeeded(mContext));
+    }
+
     private void connect(String ssid, String bssid) {
         final WifiInfo info = ShadowWifiInfo.newInstance();
         if (ssid != null) {

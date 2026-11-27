@@ -8,6 +8,7 @@ import static com.best.deskclock.DeskClockApplication.getDefaultSharedPreference
 import static com.best.deskclock.settings.PreferencesKeys.KEY_CALENDAR_PERMISSION;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_FULL_SCREEN_NOTIFICATION_PERMISSION;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_IGNORE_BATTERY_OPTIMIZATIONS;
+import static com.best.deskclock.settings.PreferencesKeys.KEY_LOCATION_PERMISSION;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_NOTIFICATION_PERMISSION;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_SHOW_LOCKSCREEN_PERMISSION;
 
@@ -76,6 +77,9 @@ public class PermissionsManagementPreference extends Preference {
                 setStatusText(PermissionUtils.areFullScreenNotificationsEnabled(getContext()));
             } else if (isCalendarPermissionPreference()) {
                 setStatusText(com.best.deskclock.mighty.calendar.DeviceCalendars.hasPermission(getContext()));
+            } else if (isLocationPermissionPreference()) {
+                // Granted only with "Allow all the time", which the Wi-Fi check needs.
+                setStatusText(com.best.deskclock.mighty.calendar.CalendarWifi.hasBackgroundPermission(getContext()));
             }
 
             mBinding.statusState.setVisibility(VISIBLE);
@@ -84,6 +88,10 @@ public class PermissionsManagementPreference extends Preference {
         if (isCalendarPermissionPreference()) {
             // Optional: only calendar alarms need it.
             mBinding.requirementAdvice.setText(getContext().getString(R.string.calendar_permission_requirement));
+            mBinding.requirementAdvice.setTextColor(mBinding.requirementTitle.getTextColors());
+        } else if (isLocationPermissionPreference()) {
+            // Optional: only profiles with a Wi-Fi condition need it.
+            mBinding.requirementAdvice.setText(getContext().getString(R.string.location_permission_requirement));
             mBinding.requirementAdvice.setTextColor(mBinding.requirementTitle.getTextColors());
         } else {
             mBinding.requirementAdvice.setText(getContext().getString(R.string.permission_highly_recommended));
@@ -176,6 +184,14 @@ public class PermissionsManagementPreference extends Preference {
     }
 
     /**
+     * @return {@code true} if the current preference is related to the location permission, which
+     * the Wi-Fi condition of calendar profiles needs; {@code false} otherwise.
+     */
+    private boolean isLocationPermissionPreference() {
+        return getKey().equals(KEY_LOCATION_PERMISSION);
+    }
+
+    /**
      * @return {@code true} if the current preference is related to the "Show lockscreen" permission
      * for MIUI devices; {@code false} otherwise.
      */
@@ -207,6 +223,10 @@ public class PermissionsManagementPreference extends Preference {
             iconId = R.drawable.ic_tab_calendar_alarm;
             titleId = R.string.calendar_permission_dialog_title;
             messageId = R.string.calendar_permission_dialog_text;
+        } else if (isLocationPermissionPreference()) {
+            iconId = R.drawable.ic_calendar_wifi;
+            titleId = R.string.location_permission_dialog_title;
+            messageId = R.string.location_permission_dialog_text;
         } else {
             iconId = R.drawable.ic_screen_lock;
             titleId = R.string.show_lockscreen_dialog_title;

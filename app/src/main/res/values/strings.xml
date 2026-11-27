@@ -1276,7 +1276,11 @@
     <string name="calendar_permission_title">ALLOW CALENDAR ACCESS</string>
     <string name="calendar_permission_requirement">Only for calendar alarms</string>
     <string name="calendar_permission_dialog_title">Calendar</string>
-    <string name="calendar_permission_dialog_text">Calendar alarms read the events of the calendars you choose in your profiles, so they can ring a fullscreen alarm when a matching event starts. The app only reads your calendars, never changes them, and nothing leaves your phone.\n\nWithout this permission, no new calendar alarms are set. Alarms that are already set still ring.</string>
+    <string name="calendar_permission_dialog_text">Calendar alarms read the events of the calendars you choose in your profiles, so they can ring a fullscreen alarm when a matching event starts. The app only changes an event when you use “Extend the event when snoozed”, and nothing leaves your phone.\n\nWithout this permission, no new calendar alarms are set. Alarms that are already set still ring.</string>
+    <string name="location_permission_title">ALLOW LOCATION ALL THE TIME</string>
+    <string name="location_permission_requirement">Only for profiles with a Wi-Fi condition</string>
+    <string name="location_permission_dialog_title">Location for Wi-Fi</string>
+    <string name="location_permission_dialog_text">A profile can ring only when your phone is near a chosen Wi-Fi. Android only tells apps which Wi-Fi networks are near when they may use the location, and the check runs just before an alarm rings, when the app is in the background. That is why it needs “Allow all the time”.\n\nThe app only reads Wi-Fi names and MAC addresses. It does not track where you are, and nothing leaves your phone.\n\nWithout this permission, profiles with a Wi-Fi condition do not ring.</string>
     <string name="notifications_dialog_title">Notifications</string>
     <string name="notifications_dialog_text">In addition to setting alarms, this app also has a timer and a stopwatch mode.
         \n\nIn order for notifications to appear correctly for all modules and especially for the alarm to be triggered, we recommend activating notifications for this application.</string>
