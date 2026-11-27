@@ -34,7 +34,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
     // Stored name from before the feature was called "Calendar Alarm"; kept so existing data still works.
     static final String CALENDAR_ALARM_EVENTS_TABLE_NAME = "calendar_alert_events";
 
-    private static final int DATABASE_VERSION = 40;
+    private static final int DATABASE_VERSION = 41;
     private static final int MINIMUM_SUPPORTED_VERSION = 15;
 
     public ClockDatabaseHelper(Context context) {
@@ -187,6 +187,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             ClockContract.CalendarProfilesColumns.WIFI_CHECK + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.WIFI_OFF_RINGS + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.RING_AT_END + " INTEGER NOT NULL DEFAULT 0, " +
+            ClockContract.CalendarProfilesColumns.EXTEND_ON_SNOOZE + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.CREATED_AT + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.UPDATED_AT + " INTEGER NOT NULL DEFAULT 0);");
 
@@ -540,6 +541,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             {ClockContract.CalendarProfilesColumns.WIFI_CHECK, "INTEGER NOT NULL DEFAULT 0"},
             {ClockContract.CalendarProfilesColumns.WIFI_OFF_RINGS, "INTEGER NOT NULL DEFAULT 0"},
             {ClockContract.CalendarProfilesColumns.RING_AT_END, "INTEGER NOT NULL DEFAULT 0"},
+            {ClockContract.CalendarProfilesColumns.EXTEND_ON_SNOOZE, "INTEGER NOT NULL DEFAULT 0"},
         };
         for (String[] column : added) {
             if (!columns.contains(column[0])) {

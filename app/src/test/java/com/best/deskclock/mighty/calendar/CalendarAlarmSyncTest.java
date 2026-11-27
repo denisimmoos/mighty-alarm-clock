@@ -81,6 +81,14 @@ public class CalendarAlarmSyncTest {
                 }
                 return calendars;
             }
+            if (uri.getPathSegments().get(0).equals("events") && uri.getPathSegments().size() == 2
+                && CalendarContract.Events.RRULE.equals(projection[0])) {
+                // Whether the event repeats.
+                final MatrixCursor rule = new MatrixCursor(projection);
+                final long id = Long.parseLong(uri.getLastPathSegment());
+                rule.addRow(new Object[]{RECURRING.contains(id) ? "FREQ=WEEKLY" : null, null});
+                return rule;
+            }
             if (uri.getPathSegments().get(0).equals("events") && uri.getPathSegments().size() == 2) {
                 // One event: its description and location.
                 final MatrixCursor details = new MatrixCursor(projection);
@@ -131,7 +139,9 @@ public class CalendarAlarmSyncTest {
 
         @Override
         public Uri insert(@NonNull Uri uri, ContentValues values) {
-            return null;
+            // A changed occurrence of a repeating event becomes a new event.
+            CHANGES.add(uri + " " + values);
+            return Uri.parse("content://" + CalendarContract.AUTHORITY + "/events/" + EXCEPTION_ID);
         }
 
         @Override
@@ -141,7 +151,8 @@ public class CalendarAlarmSyncTest {
 
         @Override
         public int update(@NonNull Uri uri, ContentValues values, String selection, String[] args) {
-            return 0;
+            CHANGES.add(uri + " " + values);
+            return 1;
         }
     }
 
@@ -168,6 +179,11 @@ public class CalendarAlarmSyncTest {
 
     static final java.util.Set<Long> DELETED_IDS = new java.util.HashSet<>();
 
+    /** Repeating events, and what was written to the calendar. */
+    static final java.util.Set<Long> RECURRING = new java.util.HashSet<>();
+    static final List<String> CHANGES = new ArrayList<>();
+    static final long EXCEPTION_ID = 99;
+
     static final java.util.Map<Long, String> CALENDARS = new java.util.TreeMap<>();
 
     /** Description and location by event id. */
@@ -177,6 +193,8 @@ public class CalendarAlarmSyncTest {
         EVENTS.clear();
         EVENT_DETAILS.clear();
         DELETED_IDS.clear();
+        RECURRING.clear();
+        CHANGES.clear();
         CALENDARS.clear();
         CALENDARS.put(CALENDAR_ID, "someone@example.com");
         CALENDARS.put(OTHER_CALENDAR_ID, "someone@example.com");
@@ -1116,5 +1134,66 @@ public class CalendarAlarmSyncTest {
         mProfile.updateProfile(mCr);
         CalendarAlarmSync.syncAll(mContext);
         assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+    }
+
+    @Test
+    public void snoozingTheEndAlarmExtendsTheEventOnlyWhenAsked() {
+        Shadows.shadowOf(mContext).grantPermissions(Manifest.permission.WRITE_CALENDAR);
+        mProfile.ringAtEnd = true;
+        mProfile.updateProfile(mCr);
+        assertFalse(CalendarProfile.getProfile(mCr, mProfile.id).extendOnSnooze);
+        final long begin = inHours(3);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, "Alarm: Meeting"));
+        CalendarAlarmSync.syncAll(mContext);
+        final CalendarAlarmEvent row = events().get(0);
+        final long newEnd = row.end + TimeUnit.MINUTES.toMillis(5);
+
+        // Off by default; and the alarm at the start never extends the event.
+        assertFalse(CalendarEventExtender.extend(mContext, row.endAlarmId, newEnd));
+        mProfile.extendOnSnooze = true;
+        mProfile.updateProfile(mCr);
+        assertTrue(CalendarProfile.getProfile(mCr, mProfile.id).extendOnSnooze);
+        assertFalse(CalendarEventExtender.extend(mContext, row.alarmId, newEnd));
+        assertTrue(CHANGES.isEmpty());
+
+        assertTrue(CalendarEventExtender.extend(mContext, row.endAlarmId, newEnd));
+        assertEquals(1, CHANGES.size());
+        assertTrue(CHANGES.get(0), CHANGES.get(0).contains("/events/1 ") && CHANGES.get(0).contains("dtend=" + newEnd));
+        assertEquals(newEnd, events().get(0).end);
+    }
+
+    @Test
+    public void snoozingTheEndAlarmOfARepeatingEventOnlyChangesThatOccurrence() {
+        Shadows.shadowOf(mContext).grantPermissions(Manifest.permission.WRITE_CALENDAR);
+        mProfile.ringAtEnd = true;
+        mProfile.extendOnSnooze = true;
+        mProfile.updateProfile(mCr);
+        RECURRING.add(1L);
+        final long begin = inHours(3);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, "Alarm: Standup"));
+        CalendarAlarmSync.syncAll(mContext);
+        final CalendarAlarmEvent row = events().get(0);
+        final long newEnd = row.end + TimeUnit.MINUTES.toMillis(5);
+
+        assertTrue(CalendarEventExtender.extend(mContext, row.endAlarmId, newEnd));
+        assertEquals(1, CHANGES.size());
+        assertTrue(CHANGES.get(0), CHANGES.get(0).contains("exception/1")
+            && CHANGES.get(0).contains("originalInstanceTime=" + begin));
+        // The snoozed alarm now belongs to the changed occurrence.
+        final CalendarAlarmEvent changed = events().get(0);
+        assertEquals(EXCEPTION_ID, changed.eventId);
+        assertEquals(row.endAlarmId, changed.endAlarmId);
+    }
+
+    @Test
+    public void extendingNeedsPermissionToChangeTheCalendar() {
+        mProfile.ringAtEnd = true;
+        mProfile.extendOnSnooze = true;
+        mProfile.updateProfile(mCr);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Meeting"));
+        CalendarAlarmSync.syncAll(mContext);
+        final CalendarAlarmEvent row = events().get(0);
+        assertFalse(CalendarEventExtender.extend(mContext, row.endAlarmId, row.end + 60_000));
+        assertTrue(CHANGES.isEmpty());
     }
 }

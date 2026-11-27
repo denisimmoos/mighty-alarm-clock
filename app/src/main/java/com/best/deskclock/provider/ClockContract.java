@@ -734,6 +734,13 @@ public final class ClockContract {
         String RING_AT_END = "ring_at_end";
 
         /**
+         * True if snoozing the alarm at the end of an event extends the event until the alarm
+         * rings again. Off by default.
+         * <p>Type: BOOLEAN</p>
+         */
+        String EXTEND_ON_SNOOZE = "extend_on_snooze";
+
+        /**
          * Time of day for all-day events in minutes after midnight, or -1 to ignore them.
          * <p>Type: INTEGER</p>
          */

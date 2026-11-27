@@ -225,6 +225,15 @@
             android:text="@string/calendar_alarm_ring_at_end"
             android:textSize="16sp" />
 
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/extend_on_snooze_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:minHeight="48dp"
+            android:text="@string/calendar_alarm_extend_on_snooze"
+            android:textSize="16sp" />
+
         <!-- Wi-Fi -->
         <com.google.android.material.textview.MaterialTextView
             style="@style/CalendarAlarmSectionTitle"

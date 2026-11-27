@@ -90,7 +90,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         WIFI_NETWORKS,
         WIFI_CHECK,
         WIFI_OFF_RINGS,
-        RING_AT_END
+        RING_AT_END,
+        EXTEND_ON_SNOOZE
     };
 
     // These must be kept in sync with QUERY_COLUMNS above.
@@ -128,6 +129,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     private static final int WIFI_CHECK_INDEX = 31;
     private static final int WIFI_OFF_RINGS_INDEX = 32;
     private static final int RING_AT_END_INDEX = 33;
+    private static final int EXTEND_ON_SNOOZE_INDEX = 34;
 
     public long id;
     public String name;
@@ -185,6 +187,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public boolean wifiOffRings;
     /** Also rings when the event ends. Off by default. */
     public boolean ringAtEnd;
+    /** Snoozing the alarm at the end extends the calendar event. Off by default. */
+    public boolean extendOnSnooze;
     /** Time of day for all-day events in minutes after midnight, or {@link #ALL_DAY_IGNORED}. */
     public int allDayMinutes;
     public long createdAt;
@@ -223,6 +227,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         wifiCheck = false;
         wifiOffRings = false;
         ringAtEnd = false;
+        extendOnSnooze = false;
         final long now = System.currentTimeMillis();
         createdAt = now;
         updatedAt = now;
@@ -263,6 +268,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         wifiCheck = c.getInt(WIFI_CHECK_INDEX) == 1;
         wifiOffRings = c.getInt(WIFI_OFF_RINGS_INDEX) == 1;
         ringAtEnd = c.getInt(RING_AT_END_INDEX) == 1;
+        extendOnSnooze = c.getInt(EXTEND_ON_SNOOZE_INDEX) == 1;
     }
 
     public ContentValues createContentValues() {
@@ -305,6 +311,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         values.put(WIFI_CHECK, wifiCheck ? 1 : 0);
         values.put(WIFI_OFF_RINGS, wifiOffRings ? 1 : 0);
         values.put(RING_AT_END, ringAtEnd ? 1 : 0);
+        values.put(EXTEND_ON_SNOOZE, extendOnSnooze ? 1 : 0);
         values.put(CREATED_AT, createdAt);
         values.put(UPDATED_AT, updatedAt);
         return values;

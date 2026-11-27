@@ -145,9 +145,10 @@ public class CalendarProfileUpgradeTest {
         final ClockDatabaseHelper helper = new ClockDatabaseHelper(ApplicationProvider.getApplicationContext());
         helper.onUpgrade(db, 39, 40);
         helper.onUpgrade(db, 39, 40);
-        try (Cursor c = db.rawQuery("SELECT ring_at_end FROM calendar_profiles", null)) {
+        try (Cursor c = db.rawQuery("SELECT ring_at_end, extend_on_snooze FROM calendar_profiles", null)) {
             assertTrue(c.moveToFirst());
             assertEquals(0, c.getInt(0));
+            assertEquals(0, c.getInt(1));
         }
         try (Cursor c = db.rawQuery("SELECT start_alarm_id, event_end, end_alarm_id FROM calendar_alert_events", null)) {
             assertTrue(c.moveToFirst());

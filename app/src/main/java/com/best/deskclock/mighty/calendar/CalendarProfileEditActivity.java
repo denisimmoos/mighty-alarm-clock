@@ -99,6 +99,14 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
     private final ActivityResultLauncher<String> mBackgroundLocationLauncher = registerForActivityResult(
         new ActivityResultContracts.RequestPermission(), granted -> updateWifiPermission());
 
+    private final ActivityResultLauncher<String> mWriteCalendarLauncher = registerForActivityResult(
+        new ActivityResultContracts.RequestPermission(), granted -> {
+            if (!granted && mBinding != null) {
+                mBinding.extendOnSnoozeSwitch.setChecked(false);
+                CustomToast.showLong(this, getString(R.string.calendar_alarm_extend_permission));
+            }
+        });
+
     private final ActivityResultLauncher<String> mPermissionLauncher = registerForActivityResult(
         new ActivityResultContracts.RequestPermission(), granted -> {
             if (granted) {
@@ -195,6 +203,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.offsetMinutesInput.setText(String.valueOf(offset % 60));
             mBinding.ringAtStartSwitch.setChecked(mProfile.ringAtStart);
             mBinding.ringAtEndSwitch.setChecked(mProfile.ringAtEnd);
+            mBinding.extendOnSnoozeSwitch.setChecked(mProfile.extendOnSnooze);
             mBinding.escalationSwitch.setChecked(mProfile.escalation);
             mBinding.wifiSwitch.setChecked(mProfile.wifiCheck);
             mBinding.wifiOffRingsSwitch.setChecked(mProfile.wifiOffRings);
@@ -272,6 +281,16 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mBinding.offsetFields.setVisibility(mBinding.offsetSwitch.isChecked() ? VISIBLE : GONE);
         mBinding.offsetSwitch.setOnCheckedChangeListener((button, checked) ->
             mBinding.offsetFields.setVisibility(checked ? VISIBLE : GONE));
+
+        // Extending the event on snooze belongs to the alarm at the end, and needs calendar write access.
+        mBinding.extendOnSnoozeSwitch.setVisibility(mBinding.ringAtEndSwitch.isChecked() ? VISIBLE : GONE);
+        mBinding.ringAtEndSwitch.setOnCheckedChangeListener((button, checked) ->
+            mBinding.extendOnSnoozeSwitch.setVisibility(checked ? VISIBLE : GONE));
+        mBinding.extendOnSnoozeSwitch.setOnCheckedChangeListener((button, checked) -> {
+            if (checked && !CalendarEventExtender.hasPermission(this)) {
+                mWriteCalendarLauncher.launch(Manifest.permission.WRITE_CALENDAR);
+            }
+        });
 
         // Wi-Fi: the networks and the permission hint follow the Wi-Fi switch
         mBinding.wifiFields.setVisibility(mBinding.wifiSwitch.isChecked() ? VISIBLE : GONE);
@@ -721,6 +740,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         }
         mProfile.ringAtStart = mBinding.ringAtStartSwitch.isChecked();
         mProfile.ringAtEnd = mBinding.ringAtEndSwitch.isChecked();
+        mProfile.extendOnSnooze = mBinding.extendOnSnoozeSwitch.isChecked();
         mProfile.wifiCheck = mBinding.wifiSwitch.isChecked();
         mProfile.wifiOffRings = mBinding.wifiOffRingsSwitch.isChecked();
         mProfile.wifiNetworks = CalendarWifi.toJson(mWifiNetworks);
