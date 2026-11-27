@@ -302,19 +302,23 @@ public class CalendarAlarmReproTest {
         for (int i = 0; i < ids.length; i++) {
             assertEquals(labels[i], ((android.widget.TextView) activity.findViewById(ids[i])).getText().toString());
         }
-        // No other way to snooze: no snooze picker, no snooze button, and the slider only dismisses.
+        // No slider, no snooze picker, no other buttons: a big Dismiss bubble above the snooze bubbles.
         assertEquals(android.view.View.GONE,
             activity.findViewById(com.best.deskclock.R.id.snooze_selector_layout).getVisibility());
         assertEquals(android.view.View.GONE,
-            activity.findViewById(com.best.deskclock.R.id.snooze_button).getVisibility());
-        final String dismiss = mContext.getString(com.best.deskclock.R.string.button_action_dismiss);
-        if (activity.findViewById(com.best.deskclock.R.id.slide_zone_layout).getVisibility() == android.view.View.VISIBLE) {
-            assertEquals(dismiss, ((android.widget.TextView) activity.findViewById(
-                com.best.deskclock.R.id.snooze_text)).getText().toString());
-        } else {
-            assertEquals(dismiss, ((android.widget.TextView) activity.findViewById(
-                com.best.deskclock.R.id.dismiss_only_button)).getText().toString());
+            activity.findViewById(com.best.deskclock.R.id.slide_zone_layout).getVisibility());
+        for (int id : new int[]{com.best.deskclock.R.id.snooze_button, com.best.deskclock.R.id.dismiss_button,
+            com.best.deskclock.R.id.dismiss_only_button}) {
+            assertEquals(android.view.View.GONE, activity.findViewById(id).getVisibility());
         }
+        assertEquals(android.view.View.VISIBLE,
+            activity.findViewById(com.best.deskclock.R.id.calendar_actions).getVisibility());
+        assertEquals(mContext.getString(com.best.deskclock.R.string.button_action_dismiss),
+            ((android.widget.TextView) activity.findViewById(com.best.deskclock.R.id.calendar_dismiss_button))
+                .getText().toString());
+        // This profile doesn't extend events, so no line about it.
+        assertEquals(android.view.View.GONE,
+            activity.findViewById(com.best.deskclock.R.id.calendar_extend_hint).getVisibility());
 
         final long before = System.currentTimeMillis();
         activity.findViewById(com.best.deskclock.R.id.calendar_snooze_choice_3).performClick();
@@ -322,6 +326,18 @@ public class CalendarAlarmReproTest {
         assertEquals(AlarmInstance.SNOOZE_STATE, snoozed.mAlarmState);
         final long expected = before + java.util.concurrent.TimeUnit.MINUTES.toMillis(20);
         org.junit.Assert.assertTrue(Math.abs(snoozed.getAlarmTime().getTimeInMillis() - expected) < 61_000);
+    }
+
+    @Test(timeout = 60000)
+    public void bigDismissBubbleDismisses() {
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
+        AlarmStateManager.setFiredState(mContext, instance);
+        final AlarmActivity activity = Robolectric.buildActivity(AlarmActivity.class,
+            new android.content.Intent(mContext, AlarmActivity.class)
+                .setData(AlarmInstance.getContentUri(instance.mId))).create().start().postCreate(null).resume().get();
+        activity.findViewById(com.best.deskclock.R.id.calendar_dismiss_button).performClick();
+        org.junit.Assert.assertNull(AlarmInstance.getInstance(mCr, instance.mId));
     }
 
     @Test

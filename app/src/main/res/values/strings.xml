@@ -1828,7 +1828,7 @@
     <string name="calendar_alarm_snooze_action">+%d</string>
     <string name="calendar_alarm_max_snoozes">Max snoozes</string>
     <string name="calendar_alarm_max_snoozes_help">Empty = unlimited</string>
-    <string name="calendar_alarm_section_dismiss">Lock screen and dismiss</string>
+    <string name="calendar_alarm_section_dismiss">Lock screen</string>
     <string name="calendar_alarm_dismiss_label">Dismiss by</string>
     <string name="calendar_alarm_dismiss_default">Same as other alarms</string>
     <string name="calendar_alarm_dismiss_slide">Slide</string>

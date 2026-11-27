@@ -568,7 +568,8 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <!-- Lock screen and dismiss -->
+        <!-- Lock screen. A calendar alarm is always dismissed with its Dismiss bubble, so the
+             old "Dismiss by" choice is hidden; profiles keep it for backups. -->
         <com.google.android.material.textview.MaterialTextView
             style="@style/CalendarAlarmSectionTitle"
             android:text="@string/calendar_alarm_section_dismiss" />
@@ -586,12 +587,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/calendar_alarm_dismiss_label"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <RadioGroup
             android:id="@+id/dismiss_group"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/dismiss_default"

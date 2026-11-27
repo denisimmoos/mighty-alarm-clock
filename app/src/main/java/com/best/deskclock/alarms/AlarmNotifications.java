@@ -467,6 +467,15 @@ public final class AlarmNotifications {
                 context.getPackageName(), R.layout.calendar_alarm_notification);
             content.setTextViewText(R.id.title, instance.getLabelOrDefault(localizedContext));
             content.setTextViewText(R.id.time, AlarmUtils.getFormattedTime(localizedContext, instance.getAlarmTime()));
+            // Below the bubbles: snoozing extends the event, if the profile does that.
+            final com.best.deskclock.provider.CalendarAlarmEvent calendarEvent =
+                com.best.deskclock.provider.CalendarAlarmEvent.getEventForAlarm(context.getContentResolver(), alarm.id);
+            if (calendarEvent != null && calendarEvent.endAlarmId == alarm.id && calendarProfile.extendOnSnooze
+                && com.best.deskclock.mighty.calendar.CalendarEventExtender.hasPermission(context)) {
+                content.setTextViewText(R.id.extend_hint,
+                    localizedContext.getString(R.string.calendar_alarm_snooze_extends));
+                content.setViewVisibility(R.id.extend_hint, android.view.View.VISIBLE);
+            }
             final int[] buttons = {R.id.snooze_1, R.id.snooze_2, R.id.snooze_3};
             for (int i = 0; i < buttons.length; i++) {
                 final Intent snoozeIntent = AlarmStateManager.createStateChangeIntent(

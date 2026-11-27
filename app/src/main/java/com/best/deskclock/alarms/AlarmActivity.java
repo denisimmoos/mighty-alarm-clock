@@ -286,7 +286,9 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             loadCalendarEventDetails();
         }
 
-        if (mIsSwipeActionEnabled) {
+        if (mIsCalendarAlarm) {
+            initCalendarActionsUI();
+        } else if (mIsSwipeActionEnabled) {
             initSlideModeUI();
         } else {
             initButtonModeUI();
@@ -637,11 +639,10 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
         mIsCalendarAlarm = true;
         mHideCalendarDetailsLocked = !profile.showDetailsLocked;
 
-        if (profile.isSlideDismissForced()) {
-            mIsSwipeActionEnabled = true;
-        } else if (profile.isButtonDismissForced()) {
-            mIsSwipeActionEnabled = false;
-        }
+        // A calendar alarm has its own bubbles: a big Dismiss and the profile's snooze lengths.
+        // No slider, and no general snooze picker.
+        mIsSwipeActionEnabled = false;
+        mIsSnoozeSelectorDisplayed = false;
 
         if (CalendarAlarmRules.isSnoozeLimitReached(profile, mAlarmInstance)) {
             mDefaultSnoozeMinutes = ALARM_SNOOZE_DURATION_DISABLED;
@@ -654,6 +655,29 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
                 mIsSnoozeSelectorDisplayed = false;
             }
         }
+    }
+
+    /**
+     * Shows the calendar alarm's big Dismiss bubble in place of the slider and the usual buttons.
+     * The snooze bubbles below it are set up by {@link #initCalendarSnoozeChoices()}.
+     */
+    private void initCalendarActionsUI() {
+        mBinding.slideZoneLayout.setVisibility(GONE);
+        mBinding.disableHintText.setVisibility(GONE);
+        mBinding.snoozeButton.setVisibility(GONE);
+        mBinding.dismissButton.setVisibility(GONE);
+        mBinding.dismissOnlyButton.setVisibility(GONE);
+
+        final com.google.android.material.button.MaterialButton dismiss = mBinding.calendarDismissButton;
+        dismiss.setBackgroundColor(SettingsDAO.getDismissButtonColor(mPrefs, this));
+        dismiss.setTypeface(mGeneralBoldTypeface);
+        dismiss.setContentDescription(getString(R.string.description_dismiss_button));
+        dismiss.setOnClickListener(v -> {
+            if (!mAlarmHandled) {
+                dismiss();
+            }
+        });
+        mBinding.calendarActions.setVisibility(VISIBLE);
     }
 
     /**
@@ -787,10 +811,15 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
         }
         mBinding.calendarCountdown.setTextColor(mAlarmTitleColor);
         final String ends = getString(R.string.calendar_alarm_event_ends);
-        // The event is extended by the snooze length picked, so the line names no number.
-        mBinding.calendarCountdown.setText(extendsOnSnooze
-            ? ends + "\n" + getString(R.string.calendar_alarm_snooze_extends)
-            : ends);
+        mBinding.calendarCountdown.setText(ends);
+        // Below the snooze bubbles: the event is extended by the length picked.
+        if (extendsOnSnooze && mBinding.calendarSnoozeChoices.getVisibility() == VISIBLE) {
+            mBinding.calendarExtendHint.setTextColor(SettingsDAO.getSnoozeTitleColor(mPrefs));
+            if (mIsTextShadowDisplayed) {
+                mBinding.calendarExtendHint.setShadowLayer(mShadowRadius, mShadowOffset, mShadowOffset, mShadowColor);
+            }
+            mBinding.calendarExtendHint.setVisibility(VISIBLE);
+        }
         mBinding.calendarCountdown.setVisibility(VISIBLE);
         mBinding.calendarInfo.setVisibility(VISIBLE);
     }
