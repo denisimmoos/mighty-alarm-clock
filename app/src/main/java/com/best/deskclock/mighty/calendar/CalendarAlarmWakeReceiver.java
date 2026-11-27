@@ -27,6 +27,9 @@ public final class CalendarAlarmWakeReceiver extends BroadcastReceiver {
         final PendingResult result = goAsync();
         CalendarAlarmSync.EXECUTOR.execute(() -> {
             try {
+                // Fetch changes others made in shared calendars at least once an hour; when they
+                // arrive, the calendar change check picks them up.
+                DeviceCalendars.requestSyncForProfiles(appContext);
                 CalendarAlarmSync.syncAll(appContext);
                 // With all profiles switched off there is nothing to check until one is on again.
                 if (CalendarAlarmWorker.hasEnabledProfile(appContext)) {

@@ -177,7 +177,11 @@ public final class CalendarAlarmFragment extends DeskClockFragment {
     private void syncAndReload() {
         reload();
         final android.content.Context appContext = requireContext().getApplicationContext();
-        CalendarAlarmSync.EXECUTOR.execute(() -> CalendarAlarmSync.syncAll(appContext));
+        CalendarAlarmSync.EXECUTOR.execute(() -> {
+            // Also fetch the latest changes others made (shared calendars).
+            DeviceCalendars.requestSyncForProfiles(appContext);
+            CalendarAlarmSync.syncAll(appContext);
+        });
     }
 
     private void reload() {

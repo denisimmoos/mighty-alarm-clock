@@ -113,42 +113,16 @@ public final class CalendarEventExtender {
     }
 
     /**
-     * Asks Android to send the calendar to its account (for example Google) right away, so the
-     * longer event shows up everywhere without waiting for the next regular sync.
-     *
-     * @return {@code true} if a sync was requested.
+     * Asks Android to sync the calendar's account right away, so the longer event reaches Google
+     * without waiting for the next regular sync. Written to the event log.
      */
     static boolean requestSync(Context context, long calendarId) {
-        final ContentResolver cr = context.getContentResolver();
-        String name = null;
-        String type = null;
-        try (Cursor c = cr.query(CalendarContract.Calendars.CONTENT_URI, new String[]{
-            CalendarContract.Calendars._ID, CalendarContract.Calendars.ACCOUNT_NAME,
-            CalendarContract.Calendars.ACCOUNT_TYPE}, null, null, null)) {
-            while (c != null && c.moveToNext()) {
-                if (c.getLong(0) == calendarId) {
-                    name = c.getString(1);
-                    type = c.getString(2);
-                    break;
-                }
-            }
+        final boolean requested = DeviceCalendars.requestSync(context, calendarId);
+        if (requested) {
+            EventLogStore.logEvent(context.getContentResolver(), "CALENDAR_SYNC_REQUESTED", null, null,
+                "calendar " + calendarId);
         }
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(type)
-            || CalendarContract.ACCOUNT_TYPE_LOCAL.equals(type)) {
-            // A calendar only on this phone has nothing to sync.
-            return false;
-        }
-        final android.os.Bundle extras = new android.os.Bundle();
-        extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
-        extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-        try {
-            ContentResolver.requestSync(new android.accounts.Account(name, type), CalendarContract.AUTHORITY, extras);
-        } catch (RuntimeException e) {
-            LogUtils.w("CalendarEventExtender: could not request a calendar sync: " + e);
-            return false;
-        }
-        EventLogStore.logEvent(cr, "CALENDAR_SYNC_REQUESTED", null, null, "calendar " + calendarId + " (" + type + ")");
-        return true;
+        return requested;
     }
 
     /** What happened when an alarm was snoozed. */

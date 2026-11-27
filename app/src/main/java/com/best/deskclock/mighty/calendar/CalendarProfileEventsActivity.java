@@ -161,7 +161,16 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
         reload();
         final Context appContext = getApplicationContext();
         final long profileId = mProfileId;
-        CalendarAlarmSync.EXECUTOR.execute(() -> CalendarAlarmSync.syncProfile(appContext, profileId));
+        CalendarAlarmSync.EXECUTOR.execute(() -> {
+            // Also fetch the latest changes others made (shared calendars). When they arrive, the
+            // calendar change check updates the list.
+            final com.best.deskclock.provider.CalendarProfile profile =
+                com.best.deskclock.provider.CalendarProfile.getProfile(appContext.getContentResolver(), profileId);
+            if (profile != null) {
+                DeviceCalendars.requestSync(appContext, profile.calendarId);
+            }
+            CalendarAlarmSync.syncProfile(appContext, profileId);
+        });
     }
 
     @Override

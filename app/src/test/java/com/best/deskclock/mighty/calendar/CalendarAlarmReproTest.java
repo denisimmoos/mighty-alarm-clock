@@ -83,6 +83,16 @@ public class CalendarAlarmReproTest {
     }
 
     @Test
+    public void openingTheEventsListFetchesChangesOthersMade() throws Exception {
+        Robolectric.buildActivity(CalendarProfileEventsActivity.class,
+            CalendarProfileEventsActivity.createIntent(mContext, mProfile.id)).setup();
+        CalendarAlarmSync.EXECUTOR.submit(() -> { }).get();
+        final android.accounts.Account account = new android.accounts.Account("denis@example.com", "com.google");
+        org.junit.Assert.assertTrue(org.robolectric.shadows.ShadowContentResolver.getStatus(
+            account, CalendarContract.AUTHORITY).syncRequests > 0);
+    }
+
+    @Test
     public void tappingAnEventOpensTheCalendarEntry() throws Exception {
         final CalendarProfileEventsActivity activity = Robolectric.buildActivity(CalendarProfileEventsActivity.class,
             CalendarProfileEventsActivity.createIntent(mContext, mProfile.id)).setup().get();

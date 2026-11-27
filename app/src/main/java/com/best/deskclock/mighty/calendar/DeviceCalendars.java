@@ -222,6 +222,65 @@ public final class DeviceCalendars {
         return dropDeletedEvents(cr, result);
     }
 
+    /**
+     * Asks Android to sync the calendar's account (for example Google) with the phone right away,
+     * in both directions: changes made here reach Google, and changes made by others, for example
+     * in a shared calendar, reach the phone without waiting for the next regular sync.
+     *
+     * @return {@code true} if a sync was requested.
+     */
+    public static boolean requestSync(Context context, long calendarId) {
+        final ContentResolver cr = context.getContentResolver();
+        if (!hasPermission(context)) {
+            return false;
+        }
+        String name = null;
+        String type = null;
+        try (Cursor c = cr.query(CalendarContract.Calendars.CONTENT_URI, new String[]{
+            CalendarContract.Calendars._ID, CalendarContract.Calendars.ACCOUNT_NAME,
+            CalendarContract.Calendars.ACCOUNT_TYPE}, null, null, null)) {
+            while (c != null && c.moveToNext()) {
+                if (c.getLong(0) == calendarId) {
+                    name = c.getString(1);
+                    type = c.getString(2);
+                    break;
+                }
+            }
+        } catch (RuntimeException e) {
+            LogUtils.w("DeviceCalendars: could not read the calendar's account: " + e);
+            return false;
+        }
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(type)
+            || CalendarContract.ACCOUNT_TYPE_LOCAL.equals(type)) {
+            // A calendar only on this phone has nothing to sync.
+            return false;
+        }
+        final android.os.Bundle extras = new android.os.Bundle();
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        try {
+            ContentResolver.requestSync(new android.accounts.Account(name, type), CalendarContract.AUTHORITY, extras);
+        } catch (RuntimeException e) {
+            LogUtils.w("DeviceCalendars: could not request a calendar sync: " + e);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Asks Android to sync the calendars of all switched-on profiles right away, so events that
+     * others added or changed in a shared calendar show up soon. Each account is synced once.
+     */
+    public static void requestSyncForProfiles(Context context) {
+        final java.util.Set<Long> done = new java.util.HashSet<>();
+        for (com.best.deskclock.provider.CalendarProfile profile
+                : com.best.deskclock.provider.CalendarProfile.getProfiles(context.getContentResolver())) {
+            if (profile.enabled && profile.calendarId >= 0 && done.add(profile.calendarId)) {
+                requestSync(context, profile.calendarId);
+            }
+        }
+    }
+
     private static final long DAY_MS = 24L * 60 * 60 * 1000;
 
     /**
