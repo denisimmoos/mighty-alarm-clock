@@ -368,6 +368,16 @@ public final class CalendarAlarmFragment extends DeskClockFragment {
 
             mItem.getRoot().setOnClickListener(v -> openProfileEvents(profile));
             mItem.profileSettings.setOnClickListener(v -> openProfileEditor(profile.id));
+            mItem.getRoot().setOnLongClickListener(v -> {
+                final android.widget.PopupMenu menu = new android.widget.PopupMenu(context, v);
+                menu.getMenu().add(R.string.calendar_alarm_clone_profile);
+                menu.setOnMenuItemClickListener(item -> {
+                    startActivity(CalendarProfileEditActivity.createCloneIntent(context, profile.id));
+                    return true;
+                });
+                menu.show();
+                return true;
+            });
 
             itemView.setAlpha(profile.enabled ? 1f : 0.6f);
         }

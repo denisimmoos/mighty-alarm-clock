@@ -40,6 +40,7 @@ import java.util.List;
 public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActivity {
 
     private static final String EXTRA_PROFILE_ID = "extra_profile_id";
+    private static final String EXTRA_CLONE_FROM = "extra_clone_from";
     private static final String STATE_CALENDAR_ID = "state_calendar_id";
     private static final String STATE_ACCOUNT_NAME = "state_account_name";
     private static final String STATE_CALENDAR_NAME = "state_calendar_name";
@@ -120,6 +121,14 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         return new Intent(context, CalendarProfileEditActivity.class).putExtra(EXTRA_PROFILE_ID, profileId);
     }
 
+    /**
+     * @return an intent that opens a new profile with all settings of the given one, except its
+     * title pattern, which the user enters next.
+     */
+    public static Intent createCloneIntent(Context context, long sourceProfileId) {
+        return new Intent(context, CalendarProfileEditActivity.class).putExtra(EXTRA_CLONE_FROM, sourceProfileId);
+    }
+
     @Override
     protected String getActivityTitle() {
         return getString(mIsNew ? R.string.calendar_alarm_new_profile : R.string.calendar_alarm_edit_profile);
@@ -139,6 +148,23 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mIsNew = stored == null;
         mProfile = stored != null ? stored : new CalendarProfile();
 
+        final long cloneFrom = getIntent().getLongExtra(EXTRA_CLONE_FROM, CalendarProfile.INVALID_ID);
+        final CalendarProfile source = cloneFrom == CalendarProfile.INVALID_ID
+            ? null : CalendarProfile.getProfile(getContentResolver(), cloneFrom);
+        final boolean cloning = mIsNew && source != null;
+        if (cloning) {
+            // A copy with every setting, saved as a new profile. Only the title pattern is left
+            // empty, so the copy matches other events.
+            final long now = System.currentTimeMillis();
+            source.id = CalendarProfile.INVALID_ID;
+            source.name = getString(R.string.calendar_alarm_clone_name,
+                source.name.isEmpty() ? source.calendarName : source.name);
+            source.titleRegex = "";
+            source.createdAt = now;
+            source.updatedAt = now;
+            mProfile = source;
+        }
+
         if (savedInstanceState != null) {
             mProfile.calendarId = savedInstanceState.getLong(STATE_CALENDAR_ID, mProfile.calendarId);
             mProfile.accountName = savedInstanceState.getString(STATE_ACCOUNT_NAME, mProfile.accountName);
@@ -156,6 +182,11 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         }
 
         bindForm(savedInstanceState == null);
+        if (cloning && savedInstanceState == null) {
+            // Ready to type the new pattern.
+            mBinding.regexInput.requestFocus();
+            getWindow().setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        }
     }
 
     @Override

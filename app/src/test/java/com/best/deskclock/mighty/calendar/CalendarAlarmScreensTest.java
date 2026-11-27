@@ -64,6 +64,48 @@ public class CalendarAlarmScreensTest {
     }
 
     @Test
+    public void cloneKeepsTheSettingsWithAnEmptyPatternAndSavesAsNewProfile() throws Exception {
+        final Application context = ApplicationProvider.getApplicationContext();
+        final CalendarProfile profile = new CalendarProfile();
+        profile.name = "Work";
+        profile.calendarId = 3;
+        profile.calendarName = "Work";
+        profile.accountName = "someone@example.com";
+        profile.titleRegex = "^Alarm:";
+        profile.ringAtEnd = true;
+        profile.offsetEnabled = true;
+        profile.snoozeDuration = 7;
+        profile.addProfile(context.getContentResolver());
+
+        try (ActivityController<CalendarProfileEditActivity> controller = Robolectric.buildActivity(
+            CalendarProfileEditActivity.class,
+            CalendarProfileEditActivity.createCloneIntent(context, profile.id)).setup()) {
+            final CalendarProfileEditActivity activity = controller.get();
+            final TextView name = activity.findViewById(R.id.name_input);
+            final TextView regex = activity.findViewById(R.id.regex_input);
+            assertEquals("Work (clone)", name.getText().toString());
+            assertEquals("", regex.getText().toString());
+            org.junit.Assert.assertTrue(regex.hasFocus());
+
+            regex.setText("^Meeting:");
+            activity.findViewById(R.id.save_button).performClick();
+            CalendarAlarmSync.EXECUTOR.submit(() -> { }).get();
+        }
+
+        final java.util.List<CalendarProfile> profiles = CalendarProfile.getProfiles(context.getContentResolver());
+        assertEquals(2, profiles.size());
+        final CalendarProfile original = CalendarProfile.getProfile(context.getContentResolver(), profile.id);
+        assertEquals("^Alarm:", original.titleRegex);
+        final CalendarProfile clone = profiles.get(0).id == profile.id ? profiles.get(1) : profiles.get(0);
+        assertEquals("Work (clone)", clone.name);
+        assertEquals("^Meeting:", clone.titleRegex);
+        assertEquals(3, clone.calendarId);
+        org.junit.Assert.assertTrue(clone.ringAtEnd);
+        org.junit.Assert.assertTrue(clone.offsetEnabled);
+        assertEquals(7, clone.snoozeDuration);
+    }
+
+    @Test
     public void eventsScreenOpens() {
         final Application context = ApplicationProvider.getApplicationContext();
         final CalendarProfile profile = new CalendarProfile();
