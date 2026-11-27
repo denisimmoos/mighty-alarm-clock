@@ -61,7 +61,55 @@ public final class CalendarEventExtender {
                 result = Result.FAILED;
             }
             report(appContext, result, newEnd);
+            if (result == Result.EXTENDED) {
+                // Look again a little later: a calendar sync could put the old end back.
+                new Handler(Looper.getMainLooper()).postDelayed(() -> CalendarAlarmSync.EXECUTOR.execute(() -> {
+                    try {
+                        verifyLater(appContext, alarmId, newEnd);
+                    } catch (Throwable e) {
+                        LogUtils.e("CalendarEventExtender: could not check the extended event", e);
+                    }
+                }), VERIFY_DELAY_MS);
+            }
         });
+    }
+
+    /** How long after extending the event its end is checked again. */
+    static final long VERIFY_DELAY_MS = 90_000;
+
+    /**
+     * Checks that the calendar still has the new end of an extended event, and tells the user if
+     * something (usually a calendar sync) put the old end back.
+     */
+    static boolean verifyLater(Context context, long alarmId, long newEnd) {
+        final ContentResolver cr = context.getContentResolver();
+        final CalendarAlarmEvent event = CalendarAlarmEvent.getEventForAlarm(cr, alarmId);
+        if (event == null) {
+            return true;
+        }
+        final Uri uri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, event.eventId);
+        final String details;
+        final boolean kept;
+        try (Cursor c = cr.query(uri, new String[]{CalendarContract.Events.DTEND,
+            CalendarContract.Events.DURATION, CalendarContract.Events.DIRTY}, null, null, null)) {
+            if (c == null || !c.moveToFirst()) {
+                return true;
+            }
+            final long end = c.isNull(0) ? 0 : c.getLong(0);
+            kept = c.isNull(0) || end == newEnd;
+            details = "event " + event.eventId + ": end " + end + ", wanted " + newEnd
+                + ", length " + c.getString(1) + ", not yet synced " + c.getString(2);
+            if (!kept) {
+                final String message = context.getString(R.string.calendar_alarm_extend_reverted,
+                    android.text.format.DateFormat.getTimeFormat(context).format(new java.util.Date(end)));
+                EventLogStore.logEvent(cr, "CALENDAR_EVENT_EXTEND_UNDONE", null, null, message + " (" + details + ")");
+                new Handler(Looper.getMainLooper()).post(() ->
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show());
+                return false;
+            }
+        }
+        EventLogStore.logEvent(cr, "CALENDAR_EVENT_EXTEND_CHECKED", null, null, details);
+        return true;
     }
 
     /** What happened when an alarm was snoozed. */
@@ -166,12 +214,19 @@ public final class CalendarEventExtender {
             return Result.FAILED;
         }
         // Check that the calendar took the new end.
+        String stored = "?";
         try (Cursor c = cr.query(changedUri, new String[]{CalendarContract.Events.DTEND}, null, null, null)) {
-            if (c != null && c.moveToFirst() && !c.isNull(0) && c.getLong(0) != newEnd) {
-                LogUtils.w("CalendarEventExtender: event " + changedId + " still ends at " + c.getLong(0));
-                return Result.FAILED;
+            if (c != null && c.moveToFirst() && !c.isNull(0)) {
+                stored = String.valueOf(c.getLong(0));
+                if (c.getLong(0) != newEnd) {
+                    LogUtils.w("CalendarEventExtender: event " + changedId + " still ends at " + c.getLong(0));
+                    return Result.FAILED;
+                }
             }
         }
+        // Written to the event log, so a calendar that doesn't show the change can be looked into.
+        EventLogStore.logEvent(cr, "CALENDAR_EVENT_EXTEND_DETAILS", null, null, "event " + changedId
+            + ": end " + event.end + " -> " + newEnd + ", calendar now has " + stored);
         event.end = newEnd;
         event.save(cr);
         LogUtils.i("CalendarEventExtender: event " + event.eventId + " now ends at " + newEnd);

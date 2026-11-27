@@ -1795,6 +1795,7 @@
     <string name="calendar_alarm_extended_until">Event extended until %s</string>
     <string name="calendar_alarm_extend_no_permission">Event not extended: no permission to change the calendar</string>
     <string name="calendar_alarm_extend_failed">The calendar did not accept the longer event</string>
+    <string name="calendar_alarm_extend_reverted">The calendar set the event end back to %s</string>
     <string name="calendar_alarm_snooze_extends">Snoozing extends the event by the snooze time</string>
     <string name="calendar_alarm_event_ends">Event ends now</string>
     <string name="calendar_alarm_rings_at_and_end">Rings at %s and at the end</string>

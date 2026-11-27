@@ -93,7 +93,9 @@ public class CalendarAlarmSyncTest {
                 && CalendarContract.Events.DTEND.equals(projection[0])) {
                 // The stored end of one event.
                 final MatrixCursor end = new MatrixCursor(projection);
-                end.addRow(new Object[]{DTENDS.get(Long.parseLong(uri.getLastPathSegment()))});
+                final Object[] row = new Object[projection.length];
+                row[0] = DTENDS.get(Long.parseLong(uri.getLastPathSegment()));
+                end.addRow(row);
                 return end;
             }
             if (uri.getPathSegments().get(0).equals("events") && uri.getPathSegments().size() == 2) {
@@ -1252,6 +1254,30 @@ public class CalendarAlarmSyncTest {
         assertEquals(CalendarEventExtender.Result.FAILED,
             CalendarEventExtender.extend(mContext, row.endAlarmId, row.end + 60_000));
         assertEquals(row.end, events().get(0).end);
+    }
+
+    @Test
+    public void endPutBackByTheCalendarIsReported() {
+        Shadows.shadowOf(mContext).grantPermissions(Manifest.permission.WRITE_CALENDAR);
+        mProfile.ringAtEnd = true;
+        mProfile.extendOnSnooze = true;
+        mProfile.updateProfile(mCr);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Meeting"));
+        CalendarAlarmSync.syncAll(mContext);
+        final CalendarAlarmEvent row = events().get(0);
+        final long newEnd = row.end + 600_000;
+        assertEquals(CalendarEventExtender.Result.EXTENDED,
+            CalendarEventExtender.extend(mContext, row.endAlarmId, newEnd));
+        assertTrue(CalendarEventExtender.verifyLater(mContext, row.endAlarmId, newEnd));
+        // A sync puts the old end back.
+        DTENDS.put(1L, row.end);
+        assertFalse(CalendarEventExtender.verifyLater(mContext, row.endAlarmId, newEnd));
+        boolean logged = false;
+        for (com.best.deskclock.provider.EventLogStore.EventLogEntry entry
+                : com.best.deskclock.provider.EventLogStore.getEvents(mCr)) {
+            logged |= "CALENDAR_EVENT_EXTEND_UNDONE".equals(entry.eventType);
+        }
+        assertTrue(logged);
     }
 
     @Test
