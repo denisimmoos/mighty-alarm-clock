@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"Alarma"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"Vibrar"</string>
-    <string name="time_picker_dialog_title">Seleccionar la hora</string>
-    <string name="date_picker_dialog_title">Selecciona una fecha</string>
     <string name="delete" msgid="5732434972457000541">"Eliminar"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">"Sonido de alarma predeterminado"</string>
     <string name="alarm_sound" msgid="8754499591391638405">"Sonido de la alarma"</string>
@@ -35,7 +32,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">"Pospuesta hasta: <xliff:g id="TIME">%s</xliff:g>"</string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"Próxima alarma"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"Se han eliminado las alarmas perdidas"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"Queda menos de 1 minuto"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="REMAINING"> %3$s</xliff:g> <xliff:g id="HOURS">%1$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="REMAINING"> %3$s</xliff:g> <xliff:g id="MINUTES">%2$s</xliff:g>"</string>
@@ -91,15 +87,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"Reloj analógico"</string>
     <string name="digital_widget" msgid="2326954556720571358">"Reloj digital"</string>
     <string name="settings" msgid="5849739030579520686">"Ajustes"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"Repetir alarma después de"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"Subir volumen gradualmente"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"Silenciar después de"</string>
     <string name="label_never" msgid="4821982647348750809">"Nunca"</string>
     <string name="label_off">Apagar</string>
-    <string name="week_start_title" msgid="4268917518596832096">"La semana empieza el"</string>
-    <string name="week_start_saturday">Sábado</string>
-    <string name="week_start_sunday">Domingo</string>
-    <string name="week_start_monday">Lunes</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"Volumen de la alarma"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"Silencio"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"Desconocido"</string>
@@ -111,13 +102,10 @@
     <string name="button_action_dismiss">Descartar</string>
     <string name="button_action_control_volume">Controlar volumen</string>
     <string name="button_action_nothing">Nada</string>
-    <string name="label_description" msgid="8736179296142915727">"Nombre"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"Tono de llamada"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"Alarma"</string>
     <string name="menu_timer" msgid="6459070074762877114">"Temporizador"</string>
     <string name="menu_clock" msgid="5612760670606829805">"Reloj"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Cronómetro"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"Añadir alarma"</string>
     <string name="button_cities" msgid="4555761857494501363">"Ciudades"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"Salvapantallas"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Ordenar por hora"</string>
@@ -176,8 +164,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"Zona horaria de casa"</string>
     <string name="city_checked" msgid="616847871968019">"Has seleccionado <xliff:g id="CITY_NAME">%s</xliff:g>"</string>
     <string name="city_unchecked" msgid="710212932781145918">"No has seleccionado <xliff:g id="CITY_NAME">%s</xliff:g>"</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"Nueva alarma"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"Crear alarma"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"Nuevo temporizador"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"Crear temporizador"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"Iniciar"</string>
@@ -195,8 +181,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Vibración del temporizador"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Temporizador pausado"</string>
     <string name="timers_in_use" msgid="5570729467344408506">"<xliff:g id="NUMBER">%d</xliff:g> temporizadores"</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"Deshacer"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"Alarma eliminada"</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="label">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">"<xliff:g id="TIME">%1$s</xliff:g> más"</string>
     <string name="world_time_behind" msgid="5395771290726167865">"<xliff:g id="TIME">%1$s</xliff:g> menos"</string>
@@ -205,15 +189,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">"Mañana, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">"Ayer, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="next_alarm_description" msgid="2650244835760747046">"Próxima alarma: <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
-    <string name="no_alarms" msgid="6429431324842022917">"No hay alarmas"</string>
-    <string name="invalid_time" msgid="2782334750243998633">"La hora <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g> <xliff:g id="INVALID_AMPM">%3$s</xliff:g> no es válida"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">"No hay ninguna alarma a las <xliff:g id="ALARM_TIME_HOUR">%1$d</xliff:g>:<xliff:g id="ALARM_TIME_MINUTES">%2$d</xliff:g>"</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"No hay ninguna alarma programada"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"No se ha especificado ningún nombre"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"No hay ninguna alarma con ese nombre"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"No hay ninguna alarma programada para esta hora"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">"Alarma de las <xliff:g id="ALARM_TIME">%s</xliff:g> ignorada"</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">"Alarma establecida a las <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
     <string name="timer_created" msgid="4381027137335885547">"Temporizador creado"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="other"><xliff:g id="NUMBER">%d</xliff:g> temporizadores ignorados</item>
@@ -223,15 +199,9 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"Duración de temporizador no válida"</string>
     <string name="invalid_timer" msgid="900957020728335675">"El temporizador seleccionado no es válido"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"No hay temporizadores agotados"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">"Aún no se puede ignorar la alarma de las <xliff:g id="ALARM_TIME">%s</xliff:g> porque quedan más de 24 horas"</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"Descartar alarma"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"Indica la alarma que quieras ignorar"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"No hay ninguna alarma activada"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">"Alarma de las <xliff:g id="ALARM_TIME">%s</xliff:g> pospuesta 10 minutos"</string>
     <string name="flip_action_title">Acción de voltear dispositivo</string>
     <string name="shake_action_title">Agitar dispositivo</string>
     <string name="alarm_label_box_title">Etiqueta para la alarma</string>
-    <string name="duplicate">Duplicar</string>
     <string name="selected">Seleccionado</string>
     <string name="more_options">Más opciones</string>
     <string name="vertical_widget">Reloj digital vertical</string>
@@ -254,7 +224,6 @@
     <string name="label_default">Predeterminado</string>
     <string name="alarm_alert_dismiss_and_delete_text">Descartar y Borrar</string>
     <string name="alarm_alert_off_and_deleted_text">Alarma apagada y borrada</string>
-    <string name="delete_occasional_alarm_after_use_title">Borrar alarma una vez descartada</string>
     <string name="minute_color_title">Color de los minutos</string>
     <string name="date_default_color_title">Utilizar el color por defecto para la fecha</string>
     <string name="digital_widget_message_summary">Para acceder a esta configuración, es necesario desactivar la opción «Mostrar las ciudades»</string>
@@ -275,7 +244,6 @@
     <string name="whats_new_title">Qué hay de nuevo</string>
     <string name="about_github_link">Ver en GitHub</string>
     <string name="features_title">Funcionalidades principales</string>
-    <string name="enable_alarm_vibrations_by_default_setting_title">Activar la vibración cuando se active la alarma</string>
     <string name="settings_vibration_title">Activar vibración</string>
     <string name="settings_vibration_summary">Sólo algunos botones de la interfaz se ven afectados (e.g.: el botón de reanudar/pausar del temporizador o los interruptores)</string>
     <string name="dismiss_button_color">Color del botón de \"Descartar\"</string>
@@ -293,7 +261,6 @@
     <string name="first_launch_important_info_message">Para garantizar que la aplicación funcione correctamente, &lt;b&gt;es necesario cambiar algunos ajustes del dispositivo:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;BATTERY OPTIMIZATION;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;NOTIFICATIONS;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;Dependiendo de la versión de Android del dispositivo, algunos de estos ajustes ya están optmizados (e.g. notificaciones).&lt;/i&gt; &lt;br&gt; &lt;br&gt; Puedes cambiarlas ahora o después en configuración de gestión de permisos:</string>
     <string name="display_city_title">Mostrar las ciudades</string>
     <string name="add_label">Agregar una etiqueta</string>
-    <string name="material_time_picker_style_title">Estilo del selector de hora</string>
     <string name="first_launch_dialog_message">¿Estás seguro de querer abandonar la aplicación?</string>
     <string name="whats_new_dialog_message">Descubre que hay de nuevo\n\n%s</string>
     <string name="background_color_title">Color de fondo</string>
@@ -304,8 +271,6 @@
     <string name="FSN_permission_title">PERMITIR NOTIFICACIONES DE PANTALLA COMPLETA</string>
     <string name="FSN_dialog_text">Desde Android 14, para que la alarma se active cuando la pantalla está apagada, es imprescindible que el permiso de \"Notificaciones de Pantalla Completa\" esté activado.</string>
     <string name="dialog_close">Cerrar</string>
-    <string name="enable_delete_occasional_alarm_by_default_setting_title">Activar borrado automático de alarmas ocasionales por defecto</string>
-    <string name="alarm_settings_general_summary">Esta configuración se puede modificar para cada alarma en el panel de edición de alarmas</string>
     <string name="hour_default_color_title">Utiliza el color predeterminado para las horas</string>
     <string name="snooze_button_color">Color del botón de \"posponer\"</string>
     <string name="max_clock_font_size_title">Tamaño máximo de fuente del reloj principal</string>
@@ -393,7 +358,6 @@
     <string name="next_alarm_widget_title_no_alarm">No hay alarma próxima</string>
     <string name="permission_management_settings">Gestión de permisos</string>
     <string name="permission_management_summary">Mostrar los permisos necesarios para que la aplicación funcione correctamente</string>
-    <string name="turn_on_back_flash_for_triggered_alarm_title">Enciende el flash trasero cuando se activa la alarma</string>
     <string name="swipe_action_title">Desliza el dedo para apagar o posponer las alarmas</string>
     <string name="revoke_permission_dialog_message">¿Confirma que quiere revocar este permiso?</string>
     <string name="ignore_battery_optimizations_title">IGNORAR LAS OPTIMIZACIONES DE LA BATERÍA</string>
@@ -410,7 +374,6 @@
     <string name="warning_dialog_title">Eliminar temporizador</string>
     <string name="warning_dialog_message">¿Confirma que quiere eliminar el temporizador «%s»?</string>
     <string name="sort_manually">Manualmente (arrastrando)</string>
-    <string name="alarm_flash">Flash</string>
     <string name="description_direction_both_for_non_repeatable_alarm">Deslice el dedo a izquierda o derecha para descartar</string>
     <string name="display_background_border_summary">Muestra un borde de fondo para algunos elementos de la aplicación (alarmas, ciudades, botón del temporizador, etc.)</string>
     <string name="sw_long_press_volume_up_action_title">Subir volumen (tras pulsación larga)</string>
@@ -429,40 +392,24 @@
     <string name="permission_denied">Denegado</string>
     <string name="settings_language_title">Idioma</string>
     <string name="settings_language_system">Idioma del sistema</string>
-    <string name="settings_language_french">Francés</string>
-    <string name="settings_language_estonian">Estonio</string>
-    <string name="settings_language_italian">Italiano</string>
-    <string name="settings_language_polish">Polaco</string>
-    <string name="settings_language_portuguese">Portugués</string>
-    <string name="settings_language_serbian">Serbio</string>
-    <string name="settings_language_dutch">Neerlandés</string>
     <string name="clock_style_analog_material">Análogo (Material)</string>
     <string name="settings_language_german">Alemán</string>
     <string name="settings_language_english_us">Inglés (EE. UU.)</string>
-    <string name="settings_language_russian">Ruso</string>
     <string name="permission_info_title">Solo para dispositivos Xiaomi</string>
     <string name="show_lockscreen_permission_title">Mostrar en la pantalla de bloqueo</string>
     <string name="show_lockscreen_dialog_title">Mostrar en la pantalla de bloqueo</string>
     <string name="show_lockscreen_dialog_text">En los dispositivos Xiaomi, debes activar manualmente el permiso «Mostrar en la pantalla de bloqueo» desde los ajustes del dispositivo para que la aplicación funcione correctamente.</string>
-    <string name="settings_language_chinese_simplified_cn">Chino (simplificado, RPC)</string>
-    <string name="settings_language_spanish">Español</string>
-    <string name="settings_language_ukrainian">Ucraniano</string>
     <string name="last_tab_used_title">Última pestaña abierta</string>
-    <string name="settings_language_turkish">Turco</string>
     <string name="settings_tab_to_display">Pestaña a mostrar cuando se abre la aplicación</string>
     <string name="reset_settings_title">Reiniciar configuraciones</string>
     <string name="reset_settings_message">Estás seguro que deseas reiniciar todas las configuraciones?</string>
     <string name="blue_accent_color">Azul</string>
-    <string name="settings_language_korean">Coreano</string>
     <string name="timer_button_time_minutes_warning_box_text">Ingresa un valor desde 0 hasta 60 minutos</string>
     <string name="restart_app_dialog_title_for_reset">Reinicio completo</string>
     <string name="shake_intensity_title">Intensidad de sacudida</string>
     <string name="clock_style_spinner">Spinner</string>
     <string name="timer_time_warning_box_title">Valor incorrecto ingresado</string>
-    <string name="schedule_alarm_title">Alarma programada</string>
-    <string name="delay_picker_dialog_title">Alarma en…</string>
     <string name="sync_alarm_by_label_title">Sincronizar las alarmas con la misma etiqueta</string>
-    <string name="label_indefinitely">Indefinidamente</string>
     <string name="label_new_image">Nueva imagen</string>
     <string name="label_new_font">Nueva fuente</string>
     <string name="warning">Advertencia</string>
@@ -472,8 +419,6 @@
     <string name="confirm_action_prompt">\n\n¿Quieres continuar?</string>
     <string name="button_tip_title">Mantén pulsado el botón «+» para añadir una carpeta</string>
     <string name="progress_ringtones">Añadiendo tonos de llamada… (%1$d/%2$d)</string>
-    <string name="alarm_scheduled_for">Programado para %s</string>
-    <string name="alarm_alert_dismiss_and_delete_text_button">Descartar y\nEliminar</string>
     <string name="colors_category_title">Colores</string>
     <string name="permissions_category_title">Permisos</string>
     <string name="custom_font_title">Selecciona una fuente personalizada</string>
@@ -483,31 +428,12 @@
     <string name="custom_font_toast_message_deleted">La fuente se ha eliminado correctamente</string>
     <string name="vibration_category_title">Vibración</string>
     <string name="display_settings_title">Ajustes de pantalla</string>
-    <string name="settings_language_czech">Checo</string>
-    <string name="settings_language_chinese_traditional_tw">Chino (tradicional, Taiwán)</string>
-    <string name="settings_language_bulgarian">Búlgaro</string>
-    <string name="settings_language_tamil">Tamil</string>
-    <string name="settings_language_arabic">Árabe</string>
-    <string name="settings_language_hungarian">Húngaro</string>
     <string name="settings_toolbar_title">Mostrar el título en la barra de herramientas</string>
     <string name="settings_tab_title_visibility_title">Mostrar el título de las pestañas</string>
     <string name="tab_title_visibility_always">Siempre</string>
     <string name="tab_title_visibility_when_selected">Cuando se selecciona</string>
     <string name="settings_keep_screen_on_title">Mantener la pantalla encendida</string>
     <string name="settings_keep_screen_on_summary">Nota: La pantalla permanecerá siempre encendida si hay un temporizador o un cronómetro en marcha y se muestra la pestaña correspondiente, independientemente del estado de esta configuración</string>
-    <string name="enable_per_alarm_snooze_duration_title">Establece una duración de repetición personalizada para cada alarma</string>
-    <string name="enable_per_alarm_snooze_duration_dialog_message">Se restablecerán los tiempos de repetición personalizados de las alarmas.%s</string>
-    <string name="enable_per_alarm_volume_title">Usar un volumen personalizado en cada alarma</string>
-    <string name="enable_per_alarm_volume_dialog_message">El volumen personalizado de las alarmas de reiniciará.%s</string>
-    <string name="display_dismiss_button_title">Mostrar el botón «Desactivar» en cuanto se active la alarma</string>
-    <string name="display_dismiss_button_summary">Si se desactiva, el botón aparecerá al mismo tiempo que la notificación de recordatorio</string>
-    <string name="enable_per_alarm_missed_repeat_limit_title">Utiliza un número personalizado de repeticiones de alarma perdida para cada alarma</string>
-    <string name="enable_per_alarm_missed_repeat_limit_dialog_message">Se restablecerá el recuento personalizado de repeticiones de alarmas perdidas.%s</string>
-    <string name="missed_alarm_repeat_limit_title">Repetir alarmas perdidas</string>
-    <string name="missed_alarm_repeat_limit_1_time">1 vez</string>
-    <string name="missed_alarm_repeat_limit_3_times">3 veces</string>
-    <string name="missed_alarm_repeat_limit_5_times">5 veces</string>
-    <string name="missed_alarm_repeat_limit_10_times">10 veces</string>
     <string name="advanced_audio_playback_title">Utilizar reproducción de audio avanzada</string>
     <string name="advanced_audio_playback_summary">Mejora la compatibilidad con dispositivos de audio externos y evita las interrupciones de sonido durante la repetición\n\nNota: Algunos tonos de llamada pueden presentar ligeros fallos de audio</string>
     <string name="auto_routing_to_external_audio_device_title">Habilitar el envío automático de tonos de llamada a dispositivos de audio externos</string>
@@ -516,9 +442,6 @@
     <string name="external_audio_device_volume_title">Volumen de la alarma para dispositivos de audio externos</string>
     <string name="connect_external_audio_device_title">Conecta un dispositivo de audio externo para acceder a esta configuración</string>
     <string name="disconnect_external_audio_device_title">Desconecta el dispositivo de audio externo para acceder a esta configuración</string>
-    <string name="enable_alarm_vibrations_by_default_dialog_message">Se desactivarán las vibraciones para todas las alarmas.%s</string>
-    <string name="enable_per_alarm_vibration_pattern_title">Utiliza un patrón de vibración personalizado para cada alarma</string>
-    <string name="enable_per_alarm_vibration_pattern_dialog_message">Los patrones de vibración personalizados se restablecerán.%s</string>
     <string name="vibration_pattern_title">Patrón de vibración</string>
     <string name="vibration_pattern_soft">Suave</string>
     <string name="vibration_pattern_strong">Fuerte</string>
@@ -528,19 +451,7 @@
     <string name="vibration_start_delay_title">Retardo antes de que comience la vibración</string>
     <string name="vibration_start_delay_none">Nada</string>
     <string name="vibration_start_delay_warning_box_text">Ingresa un valor entre 0 y 10 minutos</string>
-    <string name="enable_delete_occasional_alarm_by_default_dialog_message">La función \"Eliminar la alarma una vez desactivada\" se desactivará para todas las alarmas.%s</string>
     <string name="display_low_alarm_volume_warning_title">Mostrar una advertencia cuando el volumen de la alarma esté ajustado al mínimo</string>
-    <string name="date_picker_style_title">Estilo del selector de fecha</string>
-    <string name="sort_alarm_title">Ordenar las alarmas</string>
-    <string name="sort_alarm_time">Por hora de la alarma</string>
-    <string name="sort_next_alarm_time">Por hora de la siguiente alarma</string>
-    <string name="sort_descending_creation_order">Por orden de creación (de mayor a menor)</string>
-    <string name="sort_ascending_creation_order">Por orden de creación (de menor a mayor)</string>
-    <string name="display_enabled_alarms_first_title">Mostrar primero las alarmas activadas</string>
-    <string name="enable_alarm_fab_long_press_title">Activa la función de pulsación prolongada del botón de acción para crear alarmas con retraso</string>
-    <string name="enable_alarm_fab_long_press_summary">Si se desactiva, aparecerán dos botones para crear alarmas</string>
-    <string name="date_picker_style_calendar">Calendario</string>
-    <string name="date_picker_style_text">Texto</string>
     <string name="slide_zone_color_title">Color de la zona de deslizamiento</string>
     <string name="snooze_title_color">Color del título de \"posponer\"</string>
     <string name="dismiss_title_color">Color del título de \"Descartar\"</string>
@@ -562,10 +473,6 @@
     <string name="background_image_toast_message_selected">Imagen seleccionada correctamente</string>
     <string name="background_image_toast_message_deleted">Imagen eliminada correctamente</string>
     <string name="enable_blur_effect_title">Aplicar difuminado a la imagen de fondo</string>
-    <string name="enable_per_alarm_crescendo_duration_title">Utiliza una duración personalizada para el aumento de volumen de cada alarma</string>
-    <string name="enable_per_alarm_crescendo_duration_dialog_message">Se restablecerán los tiempos personalizados de aumento del volumen de las alarmas.%s</string>
-    <string name="enable_per_alarm_auto_silence_title">Utiliza una duración de parada personalizada para cada alarma</string>
-    <string name="enable_per_alarm_auto_silence_dialog_message">Se restablecerán las duraciones personalizadas de la pausa de la alarma.%s</string>
     <string name="random_ringtone_title">Tono aleatorio</string>
     <string name="alarm_volume_low">El volumen de la alarma es bajo</string>
     <string name="fix_alarm_volume">Arreglar</string>
@@ -654,8 +561,6 @@
     <string name="toast_message_backup_error">Error en la copia de seguridad</string>
     <string name="toast_message_restore_error">Restauración fallida</string>
     <string name="alarm_minutes_warning_box_text">Introduce un valor entre 0 y 59 minutos</string>
-    <string name="pause_alarm_title">Pausar alarma</string>
-    <string name="pause_alarm_range">Pausada: %1$s</string>
     <string name="tabs_category_title">Pestañas</string>
     <string name="visible_tabs_title">Pestañas visibles</string>
     <string name="shortcut_disabled">Pestaña oculta</string>
@@ -675,5 +580,4 @@
     <string name="invert_timer_button_positions_title">Invertir la posición de los botones del temporizador</string>
     <string name="display_timer_end_time_title">Mostrar la hora de finalización del temporizador</string>
     <string name="timer_missed_channel">Temporizadores no activados</string>
-    <string name="settings_language_hebrew">Hebreo</string>
 </resources>

@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"Siqnal"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"Vibrasiya"</string>
-    <string name="time_picker_dialog_title">Vaxt seçin</string>
-    <string name="date_picker_dialog_title">Tarix seçin</string>
     <string name="delete" msgid="5732434972457000541">"Sil"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">"Defolt siqnal səsi"</string>
     <string name="alarm_sound" msgid="8754499591391638405">"Siqnal səsi"</string>
@@ -34,7 +31,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">"<xliff:g id="TIME">%s</xliff:g> qədər təxirə salma"</string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"Gələcək zənglər"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"Buraxdığınız zəng silindi"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"Bir dəqiqədən az qaldı."</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="HOURS">%1$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="MINUTES">%2$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
@@ -84,15 +80,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"Analoq saat"</string>
     <string name="digital_widget" msgid="2326954556720571358">"Rəqəmsal saat"</string>
     <string name="settings" msgid="5849739030579520686">"Ayarlar"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"Ertələmə intervalı"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"Tədricən həcmi artırın"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"Avtomatik susma"</string>
     <string name="label_never" msgid="4821982647348750809">"Heç vaxt"</string>
     <string name="label_off">Qapalı</string>
-    <string name="week_start_title" msgid="4268917518596832096">"Həftə bu gündən başlasın:"</string>
-    <string name="week_start_saturday">Şənbə</string>
-    <string name="week_start_sunday">Bazar</string>
-    <string name="week_start_monday">Bazar Ertəsi</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"Siqnal səsi"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"Səssiz"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"Naməlum"</string>
@@ -104,13 +95,10 @@
     <string name="button_action_dismiss">Kənarlaşdır</string>
     <string name="button_action_control_volume">Səsə nəzarət edin</string>
     <string name="button_action_nothing">Heç biri</string>
-    <string name="label_description" msgid="8736179296142915727">"Etiket"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"Zəng səsi"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"Zəng"</string>
     <string name="menu_timer" msgid="6459070074762877114">"Vaxtölçən"</string>
     <string name="menu_clock" msgid="5612760670606829805">"Saat"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Saniyəölçən"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"Siqnal əlavə edin"</string>
     <string name="button_cities" msgid="4555761857494501363">"Şəhərlər"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"Ekran qoruyucu"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Vaxta görə sırala"</string>
@@ -169,8 +157,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"Əsas saat qurşağı"</string>
     <string name="city_checked" msgid="616847871968019">"<xliff:g id="CITY_NAME">%s</xliff:g> yoxlandı"</string>
     <string name="city_unchecked" msgid="710212932781145918">"<xliff:g id="CITY_NAME">%s</xliff:g> yoxlanmadı"</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"Yeni siqnal"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"Yeni siqnal yaradın"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"Yeni taymer"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"Yeni taymer yaradın"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"Başladın"</string>
@@ -188,8 +174,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Taymer vibrasiyası"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Taymer durdurulub"</string>
     <string name="timers_in_use" msgid="5570729467344408506">"<xliff:g id="NUMBER">%d</xliff:g> vaxtölçən"</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"geri gətir"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"Siqnal silindi."</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="LABEL">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">"<xliff:g id="TIME">%1$s</xliff:g> irəlidə"</string>
     <string name="world_time_behind" msgid="5395771290726167865">"<xliff:g id="TIME">%1$s</xliff:g> geridə"</string>
@@ -198,15 +182,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">"Sabah saat <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">"Dünən, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="next_alarm_description" msgid="2650244835760747046">"Sonrakı Siqnal: <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
-    <string name="no_alarms" msgid="6429431324842022917">"Zəng yoxdur"</string>
-    <string name="invalid_time" msgid="2782334750243998633">"Yanlış vaxt <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g> <xliff:g id="INVALID_AMPM">%3$s</xliff:g>"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">"<xliff:g id="ALARM_TIME_HOUR">%1$d</xliff:g>:<xliff:g id="ALARM_TIME_MINUTES">%2$d</xliff:g> vaxtına siqnal yoxdur"</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"Planlaşdırılmış siqnal yoxdur"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"Heç bir etiket təyin edilməyib."</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"Etiketə aid heç bir alarm yoxdur"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"Bu vaxt üçün heç bir siqnal təyin olunmayıb"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">"<xliff:g id="ALARM_TIME">%s</xliff:g> siqnal deaktiv edildi"</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">"Alarm <xliff:g id="ALARM_TIME">%s</xliff:g> üçün qurulub"</string>
     <string name="timer_created" msgid="4381027137335885547">"Vaxtölçən yaradıldı"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="other"><xliff:g id="NUMBER">%d</xliff:g> taymer silindi</item>
@@ -215,11 +191,6 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"Yanlış vaxtölçən müddəti"</string>
     <string name="invalid_timer" msgid="900957020728335675">"Yanlış taymer seçildi"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"Vaxtı bitmiş taymer yoxdur"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">"<xliff:g id="ALARM_TIME">%s</xliff:g> siqnalı hələ deaktiv edilə bilməz, 24 saatdan artıq vaxt qalıb."</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"Zəngli saatı ləğv edin"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"Kənarlaşdırmaq üçün siqnal seçin"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"Heç bir yanğın siqnalı yoxdur"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">"<xliff:g id="ALARM_TIME">%s</xliff:g> siqnal 10 dəqiqəlik ertələndi"</string>
     <string name="flip_action_title">Cihazı çevirmə hərəkəti</string>
     <string name="shake_action_title">Cihaz silkələmə hərəkəti</string>
     <string name="firing_alarms_timers_channel">Vacib zəngli saatlar və vaxtölçənlər</string>

@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"Զարթուցիչ"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"Թրթռոց"</string>
-    <string name="time_picker_dialog_title">Ժամանակի ընտրություն</string>
-    <string name="date_picker_dialog_title">Ընտրեք ամսաթիվը</string>
     <string name="delete" msgid="5732434972457000541">"Ջնջել"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">"Զարթուցիչի կանխադրված ձայնը"</string>
     <string name="alarm_sound" msgid="8754499591391638405">"Զարթուցիչի ազդանշան"</string>
@@ -34,7 +31,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">"Հետաձգվում է մինչև <xliff:g id="TIME">%s</xliff:g>"</string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"Սպասվող ազդանշան"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"Ձեր բաց թողած ազդանշանը հեռացված է"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"Մնացել է մեկ րոպեից քիչ:"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="HOURS">%1$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="MINUTES">%2$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
@@ -84,15 +80,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"Անալոգային ժամացույց"</string>
     <string name="digital_widget" msgid="2326954556720571358">"Թվային ժամացույց"</string>
     <string name="settings" msgid="5849739030579520686">"Կարգավորումներ"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"Հետաձգման տևողությունը"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"Աստիճանաբար բարձրացնել ձայնը"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"Որքան ժամանակից անջատվի"</string>
     <string name="label_never" msgid="4821982647348750809">"Երբեք"</string>
     <string name="label_off">Անջատված</string>
-    <string name="week_start_title" msgid="4268917518596832096">"Շաբաթվա առաջին օրը"</string>
-    <string name="week_start_saturday">Շաբաթ</string>
-    <string name="week_start_sunday">Կիրակի</string>
-    <string name="week_start_monday">Երկուշաբթի</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"Զարթուցիչի ձայնը"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"Անձայն"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"Անհայտ"</string>
@@ -103,13 +94,10 @@
     <string name="button_action_snooze">Հետաձգել</string>
     <string name="button_action_dismiss">Անջատել</string>
     <string name="button_action_control_volume">Կառավարել ձայնի ուժգնությունը</string>
-    <string name="label_description" msgid="8736179296142915727">"Պիտակ"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"Զանգերանգ"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"Զարթուցիչ"</string>
     <string name="menu_timer" msgid="6459070074762877114">"Ժամաչափ"</string>
     <string name="menu_clock" msgid="5612760670606829805">"Ժամացույց"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Վայրկենաչափ"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"Ավելացնել զարթուցիչ"</string>
     <string name="button_cities" msgid="4555761857494501363">"Քաղաքներ"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"Էկրանապահ"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Դասակարգել ըստ ժամանակի"</string>
@@ -168,8 +156,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"Տեղական ժամային գոտի"</string>
     <string name="city_checked" msgid="616847871968019">"Նշված է <xliff:g id="CITY_NAME">%s</xliff:g> քաղաքը"</string>
     <string name="city_unchecked" msgid="710212932781145918">"<xliff:g id="CITY_NAME">%s</xliff:g> քաղաքը նշված չէ"</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"Նոր զարթուցիչ"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"Ստեղծել նոր զարթուցիչ"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"Նոր ժամաչափ"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"Ստեղծել նոր ժամաչափ"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"Գործարկել"</string>
@@ -187,8 +173,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Ժամաչափի թրթռոց"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Ժամաչափը դադարեցված է"</string>
     <string name="timers_in_use" msgid="5570729467344408506">"<xliff:g id="NUMBER">%d</xliff:g> ժամաչափ"</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"հետարկել"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"Զարթուցիչը ջնջված է"</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="LABEL">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">"<xliff:g id="TIME">%1$s</xliff:g> առաջ է"</string>
     <string name="world_time_behind" msgid="5395771290726167865">"<xliff:g id="TIME">%1$s</xliff:g> հետ է"</string>
@@ -197,15 +181,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">"Վաղը, <xliff:g id="TIME">%1$s</xliff:g>-ին"</string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">"Երեկ, <xliff:g id="TIME">%1$s</xliff:g>-ին"</string>
     <string name="next_alarm_description" msgid="2650244835760747046">"Հաջորդ զարթուցիչը՝ <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
-    <string name="no_alarms" msgid="6429431324842022917">"Զարթուցիչներ չկան"</string>
-    <string name="invalid_time" msgid="2782334750243998633">"Անվավեր ժամանակ՝ <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g> <xliff:g id="INVALID_AMPM">%3$s</xliff:g>"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">"<xliff:g id="ALARM_TIME_HOUR">%1$d</xliff:g>:<xliff:g id="ALARM_TIME_MINUTES">%2$d</xliff:g>-ի համար նշանակված զարթուցիչ չկա"</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"Հերթագրված զարթուցիչներ չկան"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"Նշված պիտակ չկա"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"Ոչ մի զարթուցիչ պիտակ չունի"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"Այս ժամանակի համար նշանակված զարթուցիչ չկա"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">"Ժ. <xliff:g id="ALARM_TIME">%s</xliff:g>-ի զարթուցիչը անտեսված է"</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">"Զարթուցիչը դրված է <xliff:g id="ALARM_TIME">%s</xliff:g>-ին"</string>
     <string name="timer_created" msgid="4381027137335885547">"Ժամաչափը ստեղծված է"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="one"><xliff:g id="NUMBER">%d</xliff:g> ժամաչափ անջատվեց</item>
@@ -214,9 +190,4 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"Ժամաչափի տևողությունը սխալ է"</string>
     <string name="invalid_timer" msgid="900957020728335675">"Ընտրված է անվավեր ժամաչափ"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"Ժամկետանց ժամաչափեր չկան"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">"Չեք կարող անտեսել ժ. <xliff:g id="ALARM_TIME">%s</xliff:g>-ի զարթուցիչը, քանի որ դեռ 24 ժամ կա դրան"</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"Փակել զարթուցիչը"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"Ընտրեք՝ որ զարթուցիչը փակել"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"Զանգող զարթուցիչներ չկան այս պահին"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">"Ժ. <xliff:g id="ALARM_TIME">%s</xliff:g>-ի զարթուցիչը նիրհեցված է 10 րոպեով"</string>
 </resources>

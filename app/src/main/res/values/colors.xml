@@ -319,7 +319,6 @@
     <!-- Used e.g. for slider buttons -->
     <color name="colorDisabled">#611D1B20</color>
     <!-- https://m2.material.io/design/color/the-color-system.html#tools-for-picking-colors : Green 50 n°600 -->
-    <color name="calendarDotColor">#43A047</color>
 
     <!-- NIGHT MODE BACKGROUND COLORS -->
     <color name="nightDefaultColorBackground">#1A1B20</color>

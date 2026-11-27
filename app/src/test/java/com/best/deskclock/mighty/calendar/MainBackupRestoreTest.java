@@ -82,40 +82,49 @@ public class MainBackupRestoreTest {
     }
 
     @Test(timeout = 120000)
-    public void mainBackupKeepsTagsAndMightyAlarmOptions() throws Exception {
+    public void backupLeavesOutNormalAlarmsAndOldBackupsImportWithoutThem() throws Exception {
         final Application context = ApplicationProvider.getApplicationContext();
         final android.content.ContentResolver cr = context.getContentResolver();
         final SharedPreferences prefs = DeskClockApplication.getDefaultSharedPreferences(context);
-        final com.best.deskclock.provider.Tag tag = new com.best.deskclock.provider.Tag("Work", 0xFF336699);
-        tag.addTag(cr);
-        final com.best.deskclock.provider.Alarm alarm = new com.best.deskclock.provider.Alarm();
-        alarm.hour = 6;
-        alarm.minutes = 45;
-        alarm.label = "Gym";
-        alarm.repeatIntervalMinutes = 10;
-        alarm.repeatMaxCount = 3;
-        alarm.wifiRuleEnabled = true;
-        alarm.wifiSsid = "Home";
-        alarm.addAlarm(cr);
-        com.best.deskclock.provider.Tag.addTagToAlarm(cr, alarm.id, tag.id);
+        final CalendarProfile profile = new CalendarProfile();
+        profile.name = "Meetings";
+        profile.addProfile(cr);
 
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         BackupAndRestoreUtils.settingsToJsonStream(context, prefs, prefs.getAll(), out);
-        com.best.deskclock.provider.Tag.deleteTag(cr, tag.id);
+        final org.json.JSONObject json = new org.json.JSONObject(out.toString("UTF-8"));
+        // A new backup has no normal alarms, tags or exchange settings.
+        assertTrue(!json.has("Alarms") && !json.has("Alarms with specified date") && !json.has("Tags"));
+        assertTrue(!json.getJSONObject("Mighty settings").has("exchange"));
 
-        BackupAndRestoreUtils.readJson(context, prefs, new ByteArrayInputStream(out.toByteArray()));
+        // A backup from the old app with normal alarms, tags and their settings.
+        final org.json.JSONObject alarm = new org.json.JSONObject().put("id", 7).put("enabled", true)
+            .put("hour", 6).put("minutes", 45).put("label", "Gym").put("daysOfWeek", 0);
+        json.put("Alarms", new org.json.JSONArray().put(alarm));
+        json.put("Alarms with specified date", new org.json.JSONArray());
+        json.put("Tags", new org.json.JSONArray().put(new org.json.JSONObject().put("id", 1).put("name", "Work")));
+        json.getJSONObject("Boolean settings").put("key_display_enabled_alarms_first", true);
+        json.getJSONObject("String settings").put("key_sort_alarm", "2").put("key_tab_to_display", "0");
+        json.put("Visible tabs", new org.json.JSONArray().put("alarm").put("clock").put("calendar_alarm"));
 
-        final List<com.best.deskclock.provider.Alarm> alarms = com.best.deskclock.provider.Alarm.getUserAlarms(cr);
-        assertEquals(1, alarms.size());
-        final com.best.deskclock.provider.Alarm restored = alarms.get(0);
-        assertEquals("Gym", restored.label);
-        assertEquals(10, restored.repeatIntervalMinutes);
-        assertEquals(3, restored.repeatMaxCount);
-        assertTrue(restored.wifiRuleEnabled);
-        assertEquals("Home", restored.wifiSsid);
-        final List<com.best.deskclock.provider.Tag> tags = com.best.deskclock.provider.Tag.getTagsForAlarm(cr, restored.id);
-        assertEquals(1, tags.size());
-        assertEquals("Work", tags.get(0).name);
+        BackupAndRestoreUtils.readJson(context, prefs, new ByteArrayInputStream(json.toString().getBytes("UTF-8")));
+
+        assertTrue(com.best.deskclock.provider.Alarm.getUserAlarms(cr).isEmpty());
+        assertTrue(!prefs.contains("key_display_enabled_alarms_first"));
+        assertTrue(!prefs.contains("key_sort_alarm"));
+        final java.util.Set<String> tabs = com.best.deskclock.data.SettingsDAO.getVisibleTabs(prefs);
+        assertTrue(!tabs.contains("alarm"));
+        assertTrue(com.best.deskclock.data.SettingsDAO.isCalendarAlarmTabVisible(prefs));
+        assertTrue(com.best.deskclock.data.SettingsDAO.isClockTabVisible(prefs));
+        // The removed Alarm tab as start tab opens the Calendar tab.
+        assertEquals(com.best.deskclock.uidata.UiDataModel.Tab.CALENDAR_ALARM,
+            com.best.deskclock.uidata.UiDataModel.Tab.fromStoredId(
+                com.best.deskclock.data.SettingsDAO.getTabToDisplay(prefs)));
+        boolean found = false;
+        for (CalendarProfile restored : CalendarProfile.getProfiles(cr)) {
+            found |= "Meetings".equals(restored.name);
+        }
+        assertTrue(found);
         com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();
     }
 
@@ -206,34 +215,26 @@ public class MainBackupRestoreTest {
     }
 
     @Test(timeout = 120000)
-    public void backupAndExchangeSettingsSurviveTheMainBackup() throws Exception {
+    public void backupSettingsSurviveTheMainBackup() throws Exception {
         final Application context = ApplicationProvider.getApplicationContext();
         final SharedPreferences prefs = DeskClockApplication.getDefaultSharedPreferences(context);
         com.best.deskclock.mighty.backup.JsonBackupManager.setScheduleEnabled(context, true);
         com.best.deskclock.mighty.backup.JsonBackupManager.setIntervalHours(context, 72);
-        com.best.deskclock.mighty.exchange.ExchangeManager.setDeviceName(context, "Kitchen phone");
         // A normal setting too.
         prefs.edit().putBoolean("key_test_backup_flag", true).putInt("key_test_backup_number", 42).apply();
 
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         BackupAndRestoreUtils.settingsToJsonStream(context, prefs, prefs.getAll(), out);
         final org.json.JSONObject json = new org.json.JSONObject(out.toString("UTF-8"));
-        // A folder this phone has no access to is not taken over.
-        json.getJSONObject("Mighty settings").getJSONObject("exchange").getJSONArray("folders")
-            .put(new org.json.JSONObject().put("name", "Gone").put("treeUri", "content://nowhere/tree/x")
-                .put("importPolicy", "ASK"));
 
         com.best.deskclock.mighty.backup.JsonBackupManager.setScheduleEnabled(context, false);
         com.best.deskclock.mighty.backup.JsonBackupManager.setIntervalHours(context, 24);
-        com.best.deskclock.mighty.exchange.ExchangeManager.setDeviceName(context, "Other");
         prefs.edit().remove("key_test_backup_flag").remove("key_test_backup_number").apply();
 
         BackupAndRestoreUtils.readJson(context, prefs, new ByteArrayInputStream(json.toString().getBytes("UTF-8")));
 
         assertTrue(com.best.deskclock.mighty.backup.JsonBackupManager.isScheduleEnabled(context));
         assertEquals(72, com.best.deskclock.mighty.backup.JsonBackupManager.getIntervalHours(context));
-        assertEquals("Kitchen phone", com.best.deskclock.mighty.exchange.ExchangeManager.getDeviceName(context));
-        assertTrue(com.best.deskclock.mighty.exchange.ExchangeManager.getFolders(context).isEmpty());
         assertTrue(prefs.getBoolean("key_test_backup_flag", false));
         assertEquals(42, prefs.getInt("key_test_backup_number", 0));
         com.best.deskclock.base.AppExecutors.getDiskIO().submit(() -> { }).get();

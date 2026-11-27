@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"Ξυπνητήρι"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"Δόνηση"</string>
-    <string name="time_picker_dialog_title">Επιλέξτε ώρα</string>
-    <string name="date_picker_dialog_title">Επιλογή ημερομηνίας</string>
     <string name="delete" msgid="5732434972457000541">"Διαγραφή"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">"Προεπιλεγμένος ήχος ειδοποίησης"</string>
     <string name="alarm_sound" msgid="8754499591391638405">"Ήχος ξυπνητηριού"</string>
@@ -34,7 +31,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">"Αναβολή έως τις <xliff:g id="TIME">%s</xliff:g>"</string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"Επόμενο ξυπνητήρι"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"Η ειδοποίηση που παραβλέψατε έχει διαγραφεί"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"Απομένει λιγότερο από ένα λεπτό"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="HOURS">%1$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="MINUTES">%2$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
@@ -84,15 +80,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"Αναλογικό ρολόι"</string>
     <string name="digital_widget" msgid="2326954556720571358">"Ψηφιακό ρολόι"</string>
     <string name="settings" msgid="5849739030579520686">"Ρυθμίσεις"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"Διάρκεια αναβολής"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"Σταδιακή αύξηση της έντασης"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"Σίγαση μετά"</string>
     <string name="label_never" msgid="4821982647348750809">"Ποτέ"</string>
     <string name="label_off">Απενεργοποίηση</string>
-    <string name="week_start_title" msgid="4268917518596832096">"Έναρξη εβδομάδας"</string>
-    <string name="week_start_saturday">Σάββατο</string>
-    <string name="week_start_sunday">Κυριακή</string>
-    <string name="week_start_monday">Δευτέρα</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"Ένταση ήχου ξυπνητηριού"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"Αθόρυβο"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"Άγνωστο"</string>
@@ -104,13 +95,10 @@
     <string name="button_action_dismiss">Παράβλεψη</string>
     <string name="button_action_control_volume">Έλεγχος έντασης ήχου</string>
     <string name="button_action_nothing">Καμία</string>
-    <string name="label_description" msgid="8736179296142915727">"Ετικέτα"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"Ήχος κλήσης"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"Ξυπνητήρι"</string>
     <string name="menu_timer" msgid="6459070074762877114">"Χρονοδιακόπτης"</string>
     <string name="menu_clock" msgid="5612760670606829805">"Ρολόι"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Χρονόμετρο"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"Προσθήκη ξυπνητηριού"</string>
     <string name="button_cities" msgid="4555761857494501363">"Πόλεις"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"Προφύλαξη οθόνης"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Ταξινόμηση κατά ώρα"</string>
@@ -169,8 +157,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"Βασική ζώνη ώρας"</string>
     <string name="city_checked" msgid="616847871968019">"Έχει επιλεχθεί η πόλη <xliff:g id="CITY_NAME">%s</xliff:g>"</string>
     <string name="city_unchecked" msgid="710212932781145918">"Έχει καταργηθεί η επιλογή της πόλης <xliff:g id="CITY_NAME">%s</xliff:g>"</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"Νέο ξυπν."</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"Δημιουρ. νέου ξυπνητηριού"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"Νέος χρονοδιακόπτης"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"Δημ. νέου χρονοδιακόπτη"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"Έναρξη"</string>
@@ -188,8 +174,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Δόνηση χρονοδιακόπτη"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Χρονοδιακόπτης σε παύση"</string>
     <string name="timers_in_use" msgid="5570729467344408506">"<xliff:g id="NUMBER">%d</xliff:g> χρονόμετρα"</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"αναίρεση"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"Ξυπν/ρι διαγράφ."</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="LABEL">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">"<xliff:g id="TIME">%1$s</xliff:g> μπροστά"</string>
     <string name="world_time_behind" msgid="5395771290726167865">"<xliff:g id="TIME">%1$s</xliff:g> πίσω"</string>
@@ -198,15 +182,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">"Αύριο, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">"Χθες, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="next_alarm_description" msgid="2650244835760747046">"Επόμενο ξυπνητήρι: <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
-    <string name="no_alarms" msgid="6429431324842022917">"Δεν υπάρχουν ξυπνητήρια"</string>
-    <string name="invalid_time" msgid="2782334750243998633">"Μη έγκυρη ώρα <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g> <xliff:g id="INVALID_AMPM">%3$s</xliff:g>"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">"Δεν υπάρχει ξυπνητήρι στις <xliff:g id="ALARM_TIME_HOUR">%1$d</xliff:g>:<xliff:g id="ALARM_TIME_MINUTES">%2$d</xliff:g>"</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"Δεν υπάρχουν προγραμματισμένα ξυπνητήρια"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"Δεν έχει καθοριστεί ετικέτα"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"Δεν υπάρχουν ειδοποιήσεις που περιέχουν την ετικέτα"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"Δεν προγραμματίστηκε κανένα ξυπνητήρι γι\' αυτήν την ώρα"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">"Έγινε παράβλεψη του ξυπνητηριού <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">"Το ξυπνητήρι ορίστηκε στις <xliff:g id="ALARM_TIME">%s</xliff:g>."</string>
     <string name="timer_created" msgid="4381027137335885547">"Δημιουργήθηκε αντίστροφη μέτρηση"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="other"><xliff:g id="NUMBER">%d</xliff:g> χρονόμετρα παραβλέφθηκαν</item>
@@ -215,11 +191,6 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"Μη έγκυρη διάρκεια αντίστροφης μέτρησης"</string>
     <string name="invalid_timer" msgid="900957020728335675">"Επιλέχθηκε μη έγκυρο χρονόμετρο"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"Δεν υπάρχουν χρονόμετρα που έληξαν"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">"Δεν είναι δυνατή η παράβλεψη του ξυπνητηριού <xliff:g id="ALARM_TIME">%s</xliff:g> ακόμη, καθώς απομένουν περισσότερες από 24 ώρες γι΄αυτό"</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"Παράβλεψη ξυπνητηριού"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"Επιλέξτε τα ξυπνητήρια που θέλετε να παραβλέψετε"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"Δεν υπάρχουν ενεργοποιημένα ξυπνητήρια"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">"Έγινε αναβολή του ξυπνητηριού <xliff:g id="ALARM_TIME">%s</xliff:g> για 10 λεπτά"</string>
     <string name="flip_action_title">Ενέργεια αναποδογυρίσματος συσκευής</string>
     <string name="shake_action_title">Ενέργεια κουνήματος συσκευής</string>
     <string name="firing_alarms_timers_channel">Ξυπνητήρια &amp; χρονοδιακόπτες</string>

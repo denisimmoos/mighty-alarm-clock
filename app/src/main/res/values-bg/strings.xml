@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"Будилник"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"Вибриране"</string>
-    <string name="time_picker_dialog_title">Избиране на час</string>
-    <string name="date_picker_dialog_title">Избиране на дата</string>
     <string name="delete" msgid="5732434972457000541">Премахване</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">Стандартен звук на будилника</string>
     <string name="alarm_sound" msgid="8754499591391638405">"Звук на будилника"</string>
@@ -34,7 +31,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">Отложено до <xliff:g id="TIME">%s</xliff:g></string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"Предстоящ будилник"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">Пропуснатият будилник е премахнат</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"Остава по-малко от минута"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138"><xliff:g id="REMAINING">%3$s</xliff:g>: <xliff:g id="HOURS">%1$s</xliff:g></string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893"><xliff:g id="REMAINING">%3$s</xliff:g>: <xliff:g id="MINUTES">%2$s</xliff:g></string>
@@ -84,15 +80,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"Аналогов часовник"</string>
     <string name="digital_widget" msgid="2326954556720571358">"Цифров часовник"</string>
     <string name="settings" msgid="5849739030579520686">"Настройки"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">Продължителност на отлагане</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"Постепенно увеличаване на силата на звука"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">Самоизключване</string>
     <string name="label_never" msgid="4821982647348750809">"Никога"</string>
     <string name="label_off">Изкл.</string>
-    <string name="week_start_title" msgid="4268917518596832096">Начало на седмицата</string>
-    <string name="week_start_saturday">Събота</string>
-    <string name="week_start_sunday">Неделя</string>
-    <string name="week_start_monday">Понеделник</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"Сила на звука на будилника"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">Без звук</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"Неизвестно"</string>
@@ -104,13 +95,10 @@
     <string name="button_action_dismiss">Изключване</string>
     <string name="button_action_control_volume">Променяне на силата на звука</string>
     <string name="button_action_nothing">Нищо</string>
-    <string name="label_description" msgid="8736179296142915727">Наименование</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"Мелодия"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"Будилник"</string>
     <string name="menu_timer" msgid="6459070074762877114">Отброяване</string>
     <string name="menu_clock" msgid="5612760670606829805">"Часовник"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Хронометър"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"Добавяне на будилник"</string>
     <string name="button_cities" msgid="4555761857494501363">"Градове"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">Заставка</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">Сортиране по часови пояс</string>
@@ -169,8 +157,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">Часови пояс у дома</string>
     <string name="city_checked" msgid="616847871968019"><xliff:g id="city_name">%s</xliff:g>, избран</string>
     <string name="city_unchecked" msgid="710212932781145918"><xliff:g id="city_name">%s</xliff:g> отменен избор</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"Нов будилник"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">Създаване на будилник</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">Ново отброяване</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">Създаване на отброяване</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"Старт"</string>
@@ -188,8 +174,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">Вибриране при отброяване</string>
     <string name="timer_paused" msgid="5941160896040771462">Спряно на пауза</string>
     <string name="timers_in_use" msgid="5570729467344408506"><xliff:g id="number">%d</xliff:g> отброявания</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"отмяна"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">Будилникът е премахнат</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="label">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652"><xliff:g id="time">%1$s</xliff:g> напред</string>
     <string name="world_time_behind" msgid="5395771290726167865"><xliff:g id="time">%1$s</xliff:g> назад</string>
@@ -198,15 +182,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">Утре, <xliff:g id="time">%1$s</xliff:g></string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">Вчера, <xliff:g id="time">%1$s</xliff:g></string>
     <string name="next_alarm_description" msgid="2650244835760747046">Следващ будилник: <xliff:g id="alarm_time">%s</xliff:g></string>
-    <string name="no_alarms" msgid="6429431324842022917">"Няма будилници"</string>
-    <string name="invalid_time" msgid="2782334750243998633">Указаният час (<xliff:g example="25" id="invalid_hour">%1$d</xliff:g>:<xliff:g example="63" id="invalid_minutes">%2$d</xliff:g> <xliff:g example="PM" id="invalid_ampm">%3$s</xliff:g>) е недействителен</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">Няма будилник в <xliff:g id="alarm_time_hour">%1$d</xliff:g>:<xliff:g id="alarm_time_minutes">%2$d</xliff:g></string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"Няма насрочени будилници"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">Не е избрано наименование</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">Няма будилник с такова наименование</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"Няма насрочен будилник за този час"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">Будилникът в <xliff:g id="alarm_time">%s</xliff:g> е премахнат</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">Будилникът е насрочен за <xliff:g id="alarm_time">%s</xliff:g></string>
     <string name="timer_created" msgid="4381027137335885547">Отброяването е създадено</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="one">Отброяването е изключено</item>
@@ -215,11 +191,6 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">Недействителна продължителност за отброяване</string>
     <string name="invalid_timer" msgid="900957020728335675">Избрано е недействително отброяване</string>
     <string name="no_expired_timers" msgid="4624192298397846876">Няма изтекли отброявания</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">Будилникът за <xliff:g id="alarm_time">%s</xliff:g> не може да бъде изключен. Ще звъни след повече от 24 часа</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">Изключване на будилник</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">Изберете кой будилник да изключите</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">Няма звънящи будилници</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">Будилникът в <xliff:g id="alarm_time">%s</xliff:g> е отложен с 10 минути</string>
     <string name="flip_action_title">Действие при обръщане на устройството</string>
     <string name="shake_action_title">Действие при разклащане на устройството</string>
     <string name="firing_alarms_timers_channel">Звънящи будилници и отброявания</string>
@@ -228,13 +199,8 @@
     <string name="alarm_upcoming_channel">Предстоящи будилници</string>
     <string name="stopwatch_channel">Хронометър</string>
     <string name="timer_channel">Отброяване</string>
-    <string name="schedule_alarm_title">Задаване на график</string>
-    <string name="alarm_flash">Светлинни импулси</string>
-    <string name="delete_occasional_alarm_after_use_title">Премахване на будилника след изключване</string>
-    <string name="delay_picker_dialog_title">Будилник след…</string>
     <string name="alarm_label_box_title">Наименование</string>
     <string name="label_default">Стандартно</string>
-    <string name="duplicate">Копиране</string>
     <string name="label_new_image">Ново изображение</string>
     <string name="warning">Предупреждение</string>
     <string name="label_hours">Часове</string>
@@ -244,7 +210,6 @@
     <string name="selected">Избрано</string>
     <string name="more_options">Повече настройки</string>
     <string name="progress_ringtones">Добавяне на звуци… (%1$d/%2$d)</string>
-    <string name="alarm_scheduled_for">Настроено за %s</string>
     <string name="alarm_alert_dismiss_and_delete_text">Изключване и премахване</string>
     <string name="alarm_alert_off_and_deleted_text">Будилникът е изключен и премахнат</string>
     <string name="occasional_alarm_alert_predismiss_title">Предстоящ случаен будилник</string>
@@ -288,22 +253,7 @@
     <string name="settings_language_title">Език</string>
     <string name="settings_language_system">Език на системата</string>
     <string name="settings_language_english_us">Английски (САЩ)</string>
-    <string name="settings_language_french">Френски</string>
     <string name="settings_language_german">Немски</string>
-    <string name="settings_language_chinese_simplified_cn">Китайски (опростен, КНР)</string>
-    <string name="settings_language_estonian">Естонски</string>
-    <string name="settings_language_italian">Италиански</string>
-    <string name="settings_language_polish">Полски</string>
-    <string name="settings_language_portuguese">Португалски</string>
-    <string name="settings_language_serbian">Сръбски</string>
-    <string name="settings_language_spanish">Испански</string>
-    <string name="settings_language_ukrainian">Украински</string>
-    <string name="settings_language_dutch">Холандски</string>
-    <string name="settings_language_russian">Руски</string>
-    <string name="settings_language_turkish">Турски</string>
-    <string name="settings_language_korean">Корейски</string>
-    <string name="settings_language_czech">Чешки</string>
-    <string name="settings_language_chinese_traditional_tw">Китайски (традиционен, Тайван)</string>
     <string name="settings_tab_to_display">Отворен раздел при старт на приложението</string>
     <string name="last_tab_used_title">Последният използван</string>
     <string name="settings_vibration_title">Включване на вибрирането</string>
@@ -316,19 +266,6 @@
     <string name="settings_fade_transitions_title">Полупрозрачни преходи при смяна на екран</string>
     <string name="settings_keep_screen_on_title">Поддържане на екрана включен</string>
     <string name="settings_keep_screen_on_summary">Забележка: Екранът ще бъде включен, независимо от тази настройка, ако има работещо отброяване или секундомер и съответният раздел е отворен</string>
-    <string name="enable_per_alarm_snooze_duration_title">Различна продължителност на отлагане за всеки будилник</string>
-    <string name="enable_per_alarm_snooze_duration_dialog_message">Продължителността на отлагане на будилниците ще бъде нулирана. %s</string>
-    <string name="enable_per_alarm_volume_title">Различна сила на звука за всеки будилник</string>
-    <string name="enable_per_alarm_volume_dialog_message">Силата на звука на будилниците ще бъде нулирана. %s</string>
-    <string name="display_dismiss_button_title">Показване на бутон за изключване на будилник с включването му</string>
-    <string name="display_dismiss_button_summary">Когато е отметнато бутонът ще се появи заедно с известието</string>
-    <string name="enable_per_alarm_missed_repeat_limit_title">Различен брой на повтаряне на изпуснат будилник за всеки будилник</string>
-    <string name="enable_per_alarm_missed_repeat_limit_dialog_message">Различният брой на повтаряне на изпуснат будилник ще бъде нулиран. %s</string>
-    <string name="missed_alarm_repeat_limit_title">Повтаряне на изпуснат будилник</string>
-    <string name="missed_alarm_repeat_limit_1_time">веднъж</string>
-    <string name="missed_alarm_repeat_limit_3_times">3 пъти</string>
-    <string name="missed_alarm_repeat_limit_5_times">5 пъти</string>
-    <string name="missed_alarm_repeat_limit_10_times">10 пъти</string>
     <string name="alarm_notification_reminder_title">Напомняне с известие</string>
     <string name="advanced_audio_playback_title">Разширени възможности за възпроизвеждане на аудио</string>
     <string name="advanced_audio_playback_summary">Подобрява съвместимостта с външни аудио устройства и предотвратява прекъсване на звука при повтаряне.\n\nЗабележка: Някои мелодии може да имат незначителни звукови артефакти</string>
@@ -338,7 +275,6 @@
     <string name="external_audio_device_volume_title">Сила на алармата за външни аудио устройства</string>
     <string name="connect_external_audio_device_title">Свържете външно аудио устройство, за да получите достъп до тази настройка</string>
     <string name="disconnect_external_audio_device_title">Изключете външното аудио устройство, за да получите достъп до тази настройка</string>
-    <string name="enable_alarm_vibrations_by_default_setting_title">Включване на вибрацията при създаване на будилник</string>
     <string name="vibration_pattern_title">Вид на вибрацията</string>
     <string name="vibration_pattern_soft">Лека</string>
     <string name="vibration_pattern_strong">Силна</string>
@@ -350,22 +286,7 @@
     <string name="vibration_start_delay_warning_box_text">Въведете стойност между 0 и 10 минути</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">Вибриране при отложен или изключен будилник</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Двойно вибриране при отложен будилник и единично при изключен</string>
-    <string name="turn_on_back_flash_for_triggered_alarm_title">Включване на задното фенерче при задействане на будилник</string>
-    <string name="enable_delete_occasional_alarm_by_default_setting_title">Премахване на случайните будилници по подразбиране</string>
-    <string name="material_time_picker_style_title">Стил на избора на време</string>
-    <string name="date_picker_style_title">Стил на избора на дата</string>
-    <string name="sort_alarm_title">Сортиране на будилниците</string>
-    <string name="sort_alarm_time">По време на будилника</string>
-    <string name="sort_next_alarm_time">По време на следващия будилник</string>
     <string name="sort_name">По име</string>
-    <string name="sort_descending_creation_order">По ред на създаване (новите отгоре)</string>
-    <string name="sort_ascending_creation_order">По ред на създаване (старите отгоре)</string>
-    <string name="display_enabled_alarms_first_title">Включените будилници се показват първи</string>
-    <string name="enable_alarm_fab_long_press_title">Задържане върху бутона за будилници за след период</string>
-    <string name="enable_alarm_fab_long_press_summary">Когато е изключено, ще бъдат показани два бутона за създаване на будилници</string>
-    <string name="date_picker_style_calendar">Календар</string>
-    <string name="date_picker_style_text">Текст</string>
-    <string name="alarm_settings_general_summary">Настройката може да бъде променена за всеки будилник поотделно в разширения преглед</string>
     <string name="slide_zone_color_title">Цвят на мястото за плъзване</string>
     <string name="snooze_title_color">Цвят на заглавието „Отлагане“</string>
     <string name="snooze_button_color">Цвят на бутона „Отлагане“</string>
@@ -386,10 +307,6 @@
     <string name="background_image_toast_message_selected">Изображението е избрано</string>
     <string name="background_image_toast_message_deleted">Изображението е премахнато</string>
     <string name="enable_blur_effect_title">Замъгляване на фоновото изображение</string>
-    <string name="enable_per_alarm_crescendo_duration_title">Отделни стойности на времето за увеличаване на звука за всеки будилник</string>
-    <string name="enable_per_alarm_crescendo_duration_dialog_message">Потребителското време за увеличаване на звука ще бъде нулирано.%s</string>
-    <string name="enable_per_alarm_auto_silence_title">Отделни стойности на самоизключване за всеки будилник</string>
-    <string name="enable_per_alarm_auto_silence_dialog_message">Потребителското време за самоизключване ще бъде нулирано.%s</string>
     <string name="auto_silence_end_of_ringtone">На края на мелодията</string>
     <string name="snooze_duration_none">Без</string>
     <string name="random_ringtone_title">Случайна мелодия</string>
@@ -585,11 +502,7 @@
     <string name="custom_font_toast_message_deleted">Шрифтът е премахнат</string>
     <string name="vibration_category_title">Вибриране</string>
     <string name="display_settings_title">Настройки на показване</string>
-    <string name="settings_language_bulgarian">Български</string>
     <string name="display_battery_title">Ниво на батерията</string>
-    <string name="settings_language_tamil">Тамилски</string>
-    <string name="enable_per_alarm_vibration_pattern_title">Различна вибрация за всеки будилник</string>
-    <string name="enable_per_alarm_vibration_pattern_dialog_message">Потребителските вибрации ще бъдат нулирани. %s</string>
     <string name="sw_laps_title">Обиколки</string>
     <string name="sw_split_title">Отсечка</string>
     <string name="sw_total_title">Общо</string>
@@ -599,7 +512,5 @@
     <string name="screensaver_bold_battery_title">Нивото на батерията в получер шрифт</string>
     <string name="screensaver_italic_battery_title">Нивото на батерията в наклонен шрифт</string>
     <string name="sync_alarm_by_label_title">Синхронизиране на будилниците с еднакви етикети</string>
-    <string name="label_indefinitely">Без край</string>
     <string name="button_tip_title">Докоснете бутона с „+“ за добавяне на папка</string>
-    <string name="alarm_alert_dismiss_and_delete_text_button">Затваряне и\nПремахвае</string>
 </resources>

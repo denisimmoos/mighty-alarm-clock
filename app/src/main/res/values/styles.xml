@@ -139,21 +139,12 @@
     <!-- ======================= -->
     <!--   SPINNER TIME PICKER   -->
     <!-- ======================= -->
-    <style name="SpinnerDialogTheme">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/AppMaterialTimePickerTitleStyle</item>
-    </style>
 
     <style name="NumberPickerStyle">
         <item name="android:textSize">28sp</item>
         <item name="android:colorControlNormal">?attr/colorPrimary</item>
     </style>
 
-    <style name="AmPmStyle">
-        <item name="android:textSize">16sp</item>
-        <item name="android:colorControlNormal">?attr/colorPrimary</item>
-    </style>
 
     <!-- ================= -->
     <!--    TIME PICKER    -->
@@ -179,14 +170,7 @@
     <!-- ======================= -->
     <!--   SPINNER DATE PICKER   -->
     <!-- ======================= -->
-    <style name="SpinnerDateTheme">
-        <item name="android:editTextStyle">@style/DatePickerEditText</item>
-        <item name="colorControlNormal">?attr/colorPrimary</item>
-    </style>
 
-    <style name="DatePickerEditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textSize">22sp</item>
-    </style>
 
     <!-- ================= -->
     <!--    DATE PICKER    -->

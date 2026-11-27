@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">Wecker</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"Vibrieren"</string>
-    <string name="time_picker_dialog_title">Weckzeit auswählen</string>
-    <string name="date_picker_dialog_title">Datum auswählen</string>
     <string name="delete" msgid="5732434972457000541">"Löschen"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">Standard-Weckton</string>
     <string name="alarm_sound" msgid="8754499591391638405">Weckton</string>
@@ -36,7 +33,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">Schlummern bis <xliff:g id="time">%s</xliff:g></string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">Anstehender Wecker</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">Der entgangene Wecker wurde gelöscht</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"Nur noch weniger als eine Minute"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="REMAINING"> %3$s</xliff:g> <xliff:g id="HOURS">%1$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="REMAINING"> %3$s</xliff:g> <xliff:g id="MINUTES">%2$s</xliff:g>"</string>
@@ -86,15 +82,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"Analoguhr"</string>
     <string name="digital_widget" msgid="2326954556720571358">"Digitaluhr"</string>
     <string name="settings" msgid="5849739030579520686">"Einstellungen"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">Schlummer-Dauer</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"Lautstärke schrittweise erhöhen"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"Stummschalten nach"</string>
     <string name="label_never" msgid="4821982647348750809">"Nie"</string>
     <string name="label_off">Aus</string>
-    <string name="week_start_title" msgid="4268917518596832096">"Wochenbeginn am"</string>
-    <string name="week_start_saturday">Samstag</string>
-    <string name="week_start_sunday">Sonntag</string>
-    <string name="week_start_monday">Montag</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">Wecker-Lautstärke</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"Lautlos"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"Unbekannt"</string>
@@ -107,13 +98,10 @@
     <string name="button_action_disable">Dauerhaft ausschalten</string>
     <string name="button_action_control_volume">Lautstärke regeln</string>
     <string name="button_action_nothing">Keine Aktion</string>
-    <string name="label_description" msgid="8736179296142915727">"Name"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">Weckton</string>
     <string name="menu_alarm" msgid="4772010125376647519">Wecker</string>
     <string name="menu_timer" msgid="6459070074762877114">"Timer"</string>
     <string name="menu_clock" msgid="5612760670606829805">"Uhr"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Stoppuhr"</string>
-    <string name="button_alarms" msgid="3907838219512538763">Wecker hinzufügen</string>
     <string name="button_cities" msgid="4555761857494501363">"Städte"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"Bildschirmschoner"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">Nach Zeit sortieren</string>
@@ -172,8 +160,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"Heimatzeitzone"</string>
     <string name="city_checked" msgid="616847871968019">"<xliff:g id="CITY_NAME">%s</xliff:g> ausgewählt"</string>
     <string name="city_unchecked" msgid="710212932781145918"><xliff:g id="CITY_NAME">%s</xliff:g> abgewählt</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">Neuer Wecker</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">Neuen Wecker erstellen</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"Neuer Timer"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"Neuen Timer erstellen"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">Starten</string>
@@ -193,8 +179,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Vibrationsalarm des Timers"</string>
     <string name="timer_paused" msgid="5941160896040771462">Angehalten</string>
     <string name="timers_in_use" msgid="5570729467344408506">"<xliff:g id="NUMBER">%d</xliff:g> Timer"</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"Rückgängig"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">Wecker gelöscht</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="label">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652"><xliff:g example="6 hours" id="time">%1$s</xliff:g> voraus</string>
     <string name="world_time_behind" msgid="5395771290726167865"><xliff:g example="4 hours" id="time">%1$s</xliff:g> zurück</string>
@@ -203,16 +187,8 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">Morgen, <xliff:g example="6 hours ahead" id="time">%1$s</xliff:g></string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">Gestern, <xliff:g example="4 hours behind" id="time">%1$s</xliff:g></string>
     <string name="next_alarm_description" msgid="2650244835760747046">Nächster Wecker: <xliff:g example="Wed 8:00am" id="alarm_time">%s</xliff:g></string>
-    <string name="no_alarms" msgid="6429431324842022917">Kein Wecker eingerichtet</string>
-    <string name="invalid_time" msgid="2782334750243998633">Ungültige Zeit: <xliff:g example="25" id="invalid_hour">%1$d</xliff:g>:<xliff:g example="63" id="invalid_minutes">%2$d</xliff:g> <xliff:g example="PM" id="invalid_ampm">%3$s</xliff:g></string>
-    <string name="no_alarm_at" msgid="8140632482969193119">Kein Wecker um <xliff:g example="14" id="alarm_time_hour">%1$d</xliff:g>:<xliff:g example="23" id="alarm_time_minutes">%2$d</xliff:g> vorhanden</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">Keine eingerichteten Wecker</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"Kein Name angegeben"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">Es existiert kein Wecker mit diesem Namen</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">Für diese Zeit ist kein Wecker gestellt</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">Der Wecker um <xliff:g example="14:20" id="alarm_time">%s</xliff:g> wurde verworfen</string>
     <string name="alarm_is_disabled">Der Wecker um <xliff:g example="14:20" id="alarm_time">%s</xliff:g> wurde dauerhaft ausgeschaltet</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">Wecker gestellt für <xliff:g example="14:20" id="alarm_time">%s</xliff:g></string>
     <string name="timer_created" msgid="4381027137335885547">"Timer erstellt"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="one">Timer verworfen</item>
@@ -221,11 +197,6 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"Ungültige Dauer für Timer"</string>
     <string name="invalid_timer" msgid="900957020728335675">"Ungültiger Timer ausgewählt"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"Keine abgelaufenen Timer"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">Der Wecker um <xliff:g example="14:20" id="alarm_time">%s</xliff:g> kann noch nicht verworfen werden, da bis zum Auslösen noch mehr als 24 Stunden fehlen</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">Wecker verwerfen</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">Zu verwerfenden Wecker auswählen</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">Keine aktiven Wecker</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">Der Wecker um <xliff:g id="ALARM_TIME">%s</xliff:g> schlummert für 10 Minuten</string>
     <string name="flip_action_title">Aktion beim Umdrehen</string>
     <string name="shake_action_title">Aktion beim Schütteln</string>
     <string name="firing_alarms_timers_channel">Starten von Weckern &amp; Timern</string>
@@ -246,7 +217,6 @@
     <string name="display_card_background_summary">Hintergrund für einige Elemente der App anzeigen (Wecker, Städte, Timer usw.)</string>
     <string name="power_button_title">Ein/Aus-Taste</string>
     <string name="add_label">Name hinzufügen</string>
-    <string name="duplicate">Duplizieren</string>
     <string name="display_background_border_summary">Rahmen für einige Elemente der App anzeigen (Wecker, Städte, Timer usw.)</string>
     <string name="swipe_action_title">Wischen zum Verwerfen oder Schlummern von Weckern</string>
     <string name="style_category_title">Stil</string>
@@ -258,7 +228,6 @@
     <string name="display_card_background_title">Kartenhintergründe anzeigen</string>
     <string name="display_background_border_title">Hintergrundrahmen anzeigen</string>
     <string name="alarm_notification_reminder_title">Benachrichtigung über anstehende Wecker</string>
-    <string name="enable_alarm_vibrations_by_default_setting_title">Vibration für alle Wecker standardmäßig aktivieren</string>
     <string name="auto_silence_end_of_ringtone">Ende des Wecktons</string>
     <string name="timer_label_box_title">Timer-Name</string>
     <string name="timer_button_time_box_title">Minuten, die dem Timer hinzugefügt werden</string>
@@ -341,7 +310,6 @@
     <string name="FSN_dialog_title">Vollbild-​Benachrichtigungen</string>
     <string name="first_launch_main_feature_message">► Helles, dunkles oder System-Thema; &lt;br&gt; &lt;br&gt; ► Anpassbarer Bildschirmschoner; &lt;br&gt; &lt;br&gt; ► Anpassbare Widgets; &lt;br&gt; &lt;br&gt; ► Unterstützung für Kacheln in den Schnelleinstellungen (für Android 7+); &lt;br&gt; &lt;br&gt; ► Sichern und Wiederherstellen von Einstellungen (außer benutzerdefinierte Wecktöne); &lt;br&gt; &lt;br&gt; ► Material-Design und dynamische Farben; &lt;br&gt; &lt;br&gt; ► Stellen der Wecker auf ein bestimmtes Datum; &lt;br&gt; &lt;br&gt; ► Wischen, um einen Wecker zu löschen; &lt;br&gt; &lt;br&gt; ► Duplizieren eines Weckers; &lt;br&gt; &lt;br&gt; ► Kippen und Schütteln zum Verwerfen/Aufschieben eines Weckers; &lt;br&gt; &lt;br&gt; ► Verwerfen/Aufschieben des Weckers mit der Power- oder den Lautstärketasten; &lt;br&gt; &lt;br&gt; ► %s</string>
     <string name="first_launch_important_info_message">Um sicherzustellen, dass die Anwendung ordnungsgemäß funktioniert, &lt;b&gt;müssen einige Ihrer Geräteeinstellungen geändert werden:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;AKKU-OPTIMIERUNG;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;BENACHRICHTIGUNGEN;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;Abhängig von der Android-Version Ihres Geräts sind einige dieser Einstellungen bereits optimiert (z. B. Benachrichtigungen).&lt;/i&gt; &lt;br&gt; &lt;br&gt; Sie können sie jetzt oder später in den Einstellungen zur Berechtigungsverwaltung ändern:</string>
-    <string name="material_time_picker_style_title">Zeitauswahl-Stil</string>
     <string name="snooze_button_color">Farbe des „Schlummern“-Buttons</string>
     <string name="dismiss_button_color">Farbe des „Verwerfen“-Buttons</string>
     <string name="alarm_button_color">Farbe des Schiebereglers</string>
@@ -403,9 +371,6 @@
     <string name="day_accent_color_title">Akzentfarbe für Tag-Modus</string>
     <string name="indigo_accent_color">Indigo</string>
     <string name="amoled_dark_theme_mode">AMOLED</string>
-    <string name="delete_occasional_alarm_after_use_title">Wecker löschen, sobald er verworfen wurde</string>
-    <string name="enable_delete_occasional_alarm_by_default_setting_title">Standardmäßig automatisches Löschen von einzelnen Weckern aktivieren</string>
-    <string name="alarm_settings_general_summary">Diese Einstellung kann für jeden Wecker individuell im jeweiligen Bearbeitungsmenü geändert werden</string>
     <string name="description_direction_both_for_occasional_alarm">Zum Schlummern nach links oder zum Verwerfen und Löschen des Weckers nach rechts wischen</string>
     <string name="description_direction_both_for_occasional_non_repeatable_alarm">Nach links oder rechts wischen, um den Wecker zu verwerfen und zu löschen</string>
     <string name="occasional_alarm_alert_predismiss_title">Anstehender einmaliger Wecker</string>
@@ -423,24 +388,13 @@
     <string name="warning_dialog_message">Sind Sie sicher, dass Sie den Timer „%s“ löschen wollen?</string>
     <string name="sort_manually">Manuell (durch Verschieben)</string>
     <string name="display_ringtone_title">Name des Wecktons anzeigen</string>
-    <string name="alarm_flash">LED-Blitzlicht</string>
     <string name="shake_intensity_title">Intensität des Schüttelns</string>
     <string name="settings_language_title">Sprache</string>
     <string name="settings_language_system">Systemsprache</string>
-    <string name="settings_language_french">Französisch</string>
-    <string name="settings_language_estonian">Estnisch</string>
-    <string name="settings_language_italian">Italienisch</string>
-    <string name="settings_language_polish">Polnisch</string>
-    <string name="settings_language_portuguese">Portugiesisch</string>
-    <string name="settings_language_serbian">Serbisch</string>
-    <string name="settings_language_spanish">Spanisch</string>
-    <string name="settings_language_ukrainian">Ukrainisch</string>
     <string name="settings_language_german">Deutsch</string>
-    <string name="settings_language_chinese_simplified_cn">Chinesisch (vereinfacht, Volksrepublik)</string>
     <string name="settings_language_english_us">Englisch (US)</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">Vibration aktivieren, wenn der Wecker schlummert oder verworfen wird</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Doppelte Vibration beim Schlummern des Weckers und einfache Vibration beim Verwerfen des Weckers</string>
-    <string name="turn_on_back_flash_for_triggered_alarm_title">Blitzlicht einschalten, wenn der Wecker klingelt</string>
     <string name="about_translate_link">Auf Codeberg übersetzen</string>
     <string name="translate_dialog_message">Besuchen Sie die Codeberg-Seite:\n\n%s</string>
     <string name="permission_info_title">Nur für Xiaomi-Geräte</string>
@@ -448,30 +402,24 @@
     <string name="show_lockscreen_permission_title">AUF DEM SPERRBILDSCHIRM ANZEIGEN</string>
     <string name="show_lockscreen_dialog_text">Auf Xiaomi-Geräten müssen Sie die Berechtigung „Auf dem Sperrbildschirm anzeigen“ manuell in den Geräteeinstellungen aktivieren, damit die Anwendung ordnungsgemäß funktioniert.</string>
     <string name="clock_style_analog_material">Analog (Material)</string>
-    <string name="settings_language_dutch">Niederländisch</string>
-    <string name="settings_language_russian">Russisch</string>
     <string name="clock_style_spinner">Scrollen</string>
     <string name="settings_tab_to_display">Tab, der beim Öffnen der App angezeigt wird</string>
     <string name="timer_button_time_minutes_warning_box_text">Gib einen Wert von 0 bis und 60 Minuten ein</string>
     <string name="last_tab_used_title">Zuletzt verwendeter Tab</string>
     <string name="timer_time_warning_box_title">Falscher Wert eingegeben</string>
-    <string name="settings_language_turkish">Türkisch</string>
     <string name="reset_settings_title">Einstellungen zurücksetzen</string>
     <string name="reset_settings_message">Sind Sie sicher, dass Sie alle App-Einstellungen zurücksetzen wollen?</string>
     <string name="blue_accent_color">Blau</string>
     <string name="restart_app_dialog_title_for_reset">Zurücksetzen abgeschlossen</string>
-    <string name="settings_language_korean">Koreanisch</string>
     <string name="display_date_title">Datum anzeigen</string>
     <string name="settings_toolbar_title">Titel in der Symbolleiste anzeigen</string>
     <string name="settings_tab_title_visibility_title">Tab-Titel anzeigen</string>
     <string name="tab_title_visibility_always">Immer</string>
     <string name="tab_title_visibility_when_selected">Wenn ausgewählt</string>
-    <string name="settings_language_czech">Tschechisch</string>
     <string name="settings_keep_screen_on_title">Bildschirm eingeschaltet lassen</string>
     <string name="settings_keep_screen_on_summary">Hinweis: Der Bildschirm ist immer eingeschaltet, wenn ein Timer oder eine Stoppuhr läuft und der entsprechende Tab angezeigt wird, unabhängig vom Status dieser Einstellung</string>
     <string name="display_next_alarm_title">Nächsten Wecker anzeigen</string>
     <string name="ringtone_title_color">Farbe des Weckton-Namens</string>
-    <string name="settings_language_chinese_traditional_tw">Chinesisch (traditionell, Taiwan)</string>
     <string name="alarm_is_dismissed_and_deleted">Der Wecker um <xliff:g example="14:20" id="alarm_time">%s</xliff:g> wurde verworfen und gelöscht</string>
     <string name="slide_zone_color_title">Farbe der Wischzone</string>
     <string name="snooze_title_color">Schriftfarbe „Schlummern“</string>
@@ -480,11 +428,6 @@
     <string name="description_dismiss_button_with_disable">Tippen zum Verwerfen; lange drücken zum dauerhaften Ausschalten</string>
     <string name="description_snooze_button">Zum Schlummern des Weckers tippen</string>
     <string name="description_dismiss_button_for_occasional_alarm">Zum Verwerfen und Löschen des Weckers tippen</string>
-    <string name="date_picker_style_title">Datumsauswahl-Stil</string>
-    <string name="date_picker_style_calendar">Kalender</string>
-    <string name="date_picker_style_text">Tastatur</string>
-    <string name="schedule_alarm_title">Datum</string>
-    <string name="alarm_scheduled_for">Geplant für %s</string>
     <string name="random_ringtone_title">Zufälliger Weckton</string>
     <string name="warning">Warnung</string>
     <string name="timer_button_time_seconds_warning_box_text">Gib einen Wert von 0 bis 59 Sekunden ein</string>
@@ -507,8 +450,6 @@
     <string name="system_media_volume_title">Medienlautstärke des Systems verwenden</string>
     <string name="system_media_volume_summary">Funktioniert nur, wenn ein externes Audiogerät angeschlossen ist</string>
     <string name="widget_apply_horizontal_padding_title">Abstand zu den Widget-Seiten hinzufügen</string>
-    <string name="enable_per_alarm_volume_title">Für jeden Wecker eine eigene Lautstärke verwenden</string>
-    <string name="delay_picker_dialog_title">Wecker in…</string>
     <string name="colors_category_title">Farben</string>
     <string name="clock_dial_flower">Blume</string>
     <string name="clock_dial_sun">Sonne</string>
@@ -516,10 +457,6 @@
     <string name="clock_dial_without_numbers">Ohne Ziffern</string>
     <string name="clock_second_hand_title">Sekundenzeiger</string>
     <string name="clock_second_hand_vintage">Klassisch</string>
-    <string name="sort_alarm_title">Weckzeiten sortieren</string>
-    <string name="sort_alarm_time">Nach Stunden</string>
-    <string name="sort_next_alarm_time">Nach nächster Weckzeit</string>
-    <string name="display_enabled_alarms_first_title">Aktivierte Weckzeiten zuerst anzeigen</string>
     <string name="clock_dial_title">Zifferblatt</string>
     <string name="sort_cities_title">Städte sortieren</string>
     <string name="sort_cities_ascending_time_zone">Nach Zeitzone (aufsteigend)</string>
@@ -532,8 +469,6 @@
     <string name="background_default_color_title">Standardfarbe für Hintergrund verwenden</string>
     <string name="dial_color_title">Zifferblattfarbe</string>
     <string name="hour_hand_color_title">Stundenzeigerfarbe</string>
-    <string name="sort_descending_creation_order">Nach Erstellungsreihenfolge (älteste zuletzt)</string>
-    <string name="sort_ascending_creation_order">Nach Erstellungsreihenfolge (älteste zuerst)</string>
     <string name="city_search_hint">Suche nach einer Stadt</string>
     <string name="enable_city_note_title">Städten eine persönliche Notiz hinzufügen</string>
     <string name="enable_city_note_summary">Tippen Sie auf eine Stadt, um eine persönliche Notiz hinzuzufügen oder zu bearbeiten</string>
@@ -548,31 +483,13 @@
     <string name="vibration_pattern_strong">Stark</string>
     <string name="background_image_toast_message_selected">Bild erfolgreich ausgewählt</string>
     <string name="confirm_action_prompt">\n\nWillst du fortsetzen?</string>
-    <string name="enable_per_alarm_snooze_duration_title">Für jeden Wecker eine eigene Schlummer-Dauer verwenden</string>
-    <string name="enable_per_alarm_snooze_duration_dialog_message">Individuelle Wecker-Schlummerzeiten werden zurückgesetzt.%s</string>
-    <string name="enable_per_alarm_volume_dialog_message">Individuelle Wecker-Lautstärken werden zurückgesetzt.%s</string>
-    <string name="display_dismiss_button_title">Verwerfen-Button anzeigen, sobald der Wecker aktiviert ist</string>
-    <string name="display_dismiss_button_summary">Wenn deaktiviert, wird der Button zur selben Zeit angezeigt wie die Benachrichtigungserinnerung</string>
-    <string name="enable_per_alarm_missed_repeat_limit_title">Für jeden Wecker eine benutzerdefinierte Anzahl von Wiederholungen bei Weckerversäumnis verwenden</string>
-    <string name="enable_per_alarm_missed_repeat_limit_dialog_message">Individuelle Anzahl an Wiederholungen für verpasste Wecker wird zurückgesetzt.%s</string>
-    <string name="missed_alarm_repeat_limit_title">Verpasste Wecker wiederholen</string>
-    <string name="missed_alarm_repeat_limit_1_time">Einmal</string>
-    <string name="missed_alarm_repeat_limit_3_times">Dreimal</string>
-    <string name="missed_alarm_repeat_limit_5_times">Fünfmal</string>
-    <string name="missed_alarm_repeat_limit_10_times">Zehnmal</string>
     <string name="vibration_start_delay_warning_box_text">Gib einen Wert zwischen 0 und 10 Minuten ein</string>
-    <string name="enable_alarm_fab_long_press_title">Langes Drücken der Aktionstaste aktivieren, um Wecker mit Verzögerung zu erstellen</string>
-    <string name="enable_alarm_fab_long_press_summary">Wenn deaktiviert, werden zum Erstellen von Weckern zwei Buttons angezeigt</string>
     <string name="display_text_shadow_title">Textschatten anzeigen</string>
     <string name="shadow_color_title">Schattenfarbe</string>
     <string name="shadow_offset_title">Schattenabstand</string>
     <string name="blur_intensity_title">Stärke der Unschärfe</string>
     <string name="background_image_title">Ein Hintergrundbild auswählen</string>
     <string name="enable_blur_effect_title">Unschärfeeffekt auf das Hintergrundbild anwenden</string>
-    <string name="enable_per_alarm_crescendo_duration_title">Für jeden Wecker eine individuelle Lautstärkeerhöhungsdauer verwenden</string>
-    <string name="enable_per_alarm_crescendo_duration_dialog_message">Individuelle Lautstärkeerhöhungsdauern werden zurückgesetzt.%s</string>
-    <string name="enable_per_alarm_auto_silence_title">Für jeden Wecker eine individuelle Dauer bis zum Stummschalten verwenden</string>
-    <string name="enable_per_alarm_auto_silence_dialog_message">Individuelle Stummschaltdauern werden zurückgesetzt.%s</string>
     <string name="features_dialog_message">Seite mit den wichtigsten Funktionen besuchen:\n\n%s</string>
     <string name="repetitive_alarm_is_dismissed">Wecker verworfen. <xliff:g example="Nächster Wecker am Montag" id="alarm_day">Neu geplant für %s.</xliff:g></string>
     <string name="progress_ringtones">Klingeltöne hinzufügen… (%1$d/%2$d)</string>
@@ -593,9 +510,6 @@
     <string name="custom_font_toast_message_deleted">Schriftart erfolgreich entfernt</string>
     <string name="vibration_category_title">Vibration</string>
     <string name="display_settings_title">Anzeigeeinstellungen</string>
-    <string name="settings_language_bulgarian">Bulgarisch</string>
-    <string name="settings_language_tamil">Tamil</string>
-    <string name="enable_per_alarm_vibration_pattern_title">Verwende ein eigenes Vibrationsmuster für jeden Wecker</string>
     <string name="background_image_title_variant">Ändere oder entferne das Hintergrundbild</string>
     <string name="background_image_dialog_title">Hintergrundbild</string>
     <string name="background_image_toast_message_deleted">Bild erfolgreich entfernt</string>
@@ -612,13 +526,8 @@
     <string name="battery_color_title">Akkustandsfarbe</string>
     <string name="screensaver_bold_battery_title">Batteriestand in fett</string>
     <string name="screensaver_italic_battery_title">Batteriestand in kursiv</string>
-    <string name="enable_per_alarm_vibration_pattern_dialog_message">Eigene Vibrationsmuster werden zurückgesetzt.%s</string>
     <string name="sync_alarm_by_label_title">Ein- und Ausschalten mit anderen Weckern synchronisieren, die den gleichen Namen haben</string>
-    <string name="label_indefinitely">Unendlich</string>
-    <string name="alarm_alert_dismiss_and_delete_text_button">Verwerfen &amp;\nLöschen</string>
     <string name="permissions_category_title">Berechtigungen</string>
-    <string name="enable_alarm_vibrations_by_default_dialog_message">Vibration wird für alle Wecker deaktiviert.%s</string>
-    <string name="enable_delete_occasional_alarm_by_default_dialog_message">Die Funktion \"Wecker löschen, sobald er verworfen wurde\" wird für alle Wecker deaktiviert.%s</string>
     <string name="snooze_plus_symbol_color_title">Farbe des „+“ Symbols</string>
     <string name="snooze_minus_symbol_color_title">Farbe des „-“ Symbols</string>
     <string name="clock_dial_with_roman_numbers">Mit römischen Ziffern</string>
@@ -648,8 +557,6 @@
     <string name="foreground_service_channel">Dauerhafte Benachrichtigung</string>
     <string name="foreground_service_title">Dauerhafte Benachrichtigung anzeigen</string>
     <string name="fix_alarm_volume">Korrigieren</string>
-    <string name="settings_language_arabic">Arabisch</string>
-    <string name="settings_language_hungarian">Ungarisch</string>
     <string name="city_note_default_color_title">Standardfarbe für Notizen zu Städten verwenden</string>
     <string name="city_note_color_title">Farbe für Notizen zu Städten der Weltzeituhr</string>
     <string name="display_next_alarm_title_setting_title">Name des nächsten Weckers anzeigen</string>
@@ -661,8 +568,6 @@
     <string name="alarm_minutes_warning_box_text">Gib einen Wert von 0 bis 59 Minuten ein</string>
     <string name="display_top_date_title">Datum oberhalb der Zeit anzeigen</string>
     <string name="display_alarm_action_message_title">Nach dem Schlummern oder Verwerfen eines Weckers eine Nachricht anzeigen</string>
-    <string name="pause_alarm_title">Wecker anhalten</string>
-    <string name="pause_alarm_range">Angehalten: %1$s</string>
     <string name="tabs_category_title">Tabs</string>
     <string name="visible_tabs_title">Sichtbare Tabs</string>
     <string name="restart_app_dialog_message">Die App muss neu gestartet werden, um die Änderungen zu übernehmen.</string>
@@ -675,22 +580,8 @@
     <!-- **     MIGHTY ADDITIONS      ** -->
     <!-- ******************************* -->
 
-    <string name="mighty_new_alarm_name_title">Namen für diesen Wecker</string>
-    <string name="mighty_new_alarm_time_date_title">Zeit, Wiederholung und Datum</string>
-    <string name="mighty_new_alarm_repeat_label">Wiederholen an</string>
-    <string name="mighty_new_alarm_set_date">Bestimmtes Datum festlegen</string>
-    <string name="mighty_new_alarm_pick_date">Datum wählen</string>
-    <string name="mighty_new_alarm_category_title">Kategorie</string>
-    <string name="mighty_new_alarm_category_none">Keine Kategorie</string>
-    <string name="mighty_new_alarm_category_empty">Noch keine Kategorien. Ohne Kategorie fortfahren?</string>
     <string name="mighty_choose_snooze_duration_title">Schlummern für…</string>
-    <string name="mighty_copy_suffix">(Kopie)</string>
 
-    <string name="mighty_search_alarms_hint">Wecker suchen…</string>
-    <string name="mighty_filter_enabled">Aktiv</string>
-    <string name="mighty_filter_repeating">Wiederholend</string>
-    <string name="mighty_filter_one_shot">Einmalig</string>
-    <string name="mighty_filter_reset">Filter zurücksetzen</string>
 
     <string name="mighty_features_title">Mighty-Funktionen</string>
     <string name="mighty_features_summary">Globaler Stummmodus, WLAN-Regeln, Backup, Austausch, Statistiken und mehr</string>
@@ -722,10 +613,6 @@
     <string name="mighty_mute_until_tomorrow_vibrate">Bis morgen 8 Uhr stumm (nur vibrieren)</string>
     <string name="mighty_mute_disable">Globalen Stummmodus beenden</string>
 
-    <string name="mighty_category_wifi_rules">WLAN-Regeln</string>
-    <string name="mighty_wifi_reevaluate_title">WLAN-Regeln jetzt prüfen</string>
-    <string name="mighty_wifi_reevaluate_summary">Wendet Aktivieren-/Deaktivieren-Regeln anhand des verbundenen WLAN an</string>
-    <string name="mighty_wifi_reevaluate_toast">WLAN-Regeln geprüft</string>
 
     <string name="mighty_category_backup">Automatisches Backup</string>
     <string name="mighty_backup_folder_title">Backup-Ordner</string>
@@ -736,130 +623,22 @@
     <string name="mighty_backup_now_success">Backup abgeschlossen</string>
     <string name="mighty_backup_now_failure">Backup fehlgeschlagen; prüfen Sie, ob ein Ordner gewählt ist</string>
 
-    <string name="mighty_category_exchange">Austausch</string>
-    <string name="mighty_exchange_device_name_title">Gerätename</string>
-    <string name="mighty_exchange_device_name_hint">Name, der anderen Geräten angezeigt wird</string>
-    <string name="mighty_exchange_device_name_dialog_title">Gerätenamen bearbeiten</string>
-    <string name="mighty_exchange_add_folder_title">Austauschordner hinzufügen</string>
-    <string name="mighty_exchange_folder_name_hint">Ordnername</string>
-    <string name="mighty_exchange_folders_title">Konfigurierte Ordner</string>
-    <string name="mighty_exchange_folders_summary">%1$d Ordner</string>
-    <string name="mighty_exchange_folders_empty">Keine Austauschordner konfiguriert</string>
-    <string name="mighty_exchange_nudge_syncthing_title">Syncthing vor Exchange-Scan starten</string>
-    <string name="mighty_exchange_nudge_syncthing_summary">Sendet vor jedem Scan ein Startsignal an Syncthing Fork. Remote-Steuerung unter Syncthing → Einstellungen → Experimentell aktivieren und Akku auf Uneingeschränkt setzen.</string>
-    <string name="mighty_exchange_nudge_syncthing_toggle">Syncthing vor Scan: %1$s</string>
-    <string name="mighty_exchange_nudge_syncthing_on">an</string>
-    <string name="mighty_exchange_nudge_syncthing_off">aus</string>
-    <string name="mighty_exchange_nudge_syncthing_enabled_toast">Syncthing wird vor jedem Exchange-Scan angestoßen</string>
-    <string name="mighty_exchange_nudge_syncthing_disabled_toast">Syncthing-Anstoß vor Exchange-Scan deaktiviert</string>
-    <string name="mighty_exchange_open_syncthing">Syncthing öffnen</string>
-    <string name="mighty_exchange_syncthing_not_installed">Syncthing Fork ist nicht installiert</string>
-    <string name="mighty_exchange_inbox_pending_hint">%1$d neue Wecker im Austausch-Posteingang</string>
-    <string name="mighty_exchange_inbox_show_action">Anzeigen</string>
-    <string name="mighty_exchange_inbox_after_scan">%1$d Wecker warten im Austausch-Posteingang</string>
-    <string name="mighty_exchange_folder_list_item">%1$s\n%2$s</string>
-    <string name="mighty_exchange_import_policy_ask">Vor dem Import nachfragen</string>
-    <string name="mighty_exchange_import_policy_auto">Automatisch importieren</string>
-    <string name="mighty_exchange_folder_actions_title">Austauschordner</string>
-    <string name="mighty_exchange_folder_change_policy">Import-Verhalten</string>
-    <string name="mighty_exchange_folder_deleted">Austauschordner entfernt</string>
-    <string name="mighty_exchange_scan_now_title">Jetzt scannen</string>
-    <string name="mighty_exchange_inbox_title">Posteingang</string>
-    <string name="mighty_exchange_inbox_summary">%1$d ausstehend</string>
-    <string name="mighty_exchange_inbox_empty">Posteingang ist leer</string>
-    <string name="mighty_exchange_inbox_item_message">Ordner „%1$s“\nVon: %2$s\n\n%3$s</string>
-    <string name="mighty_exchange_inbox_item_message_to">Ordner „%1$s“\nVon: %2$s\nAn: %3$s\n\n%4$s</string>
-    <string name="mighty_exchange_unknown_sender">Unbekanntes Gerät</string>
-    <string name="mighty_accept">Annehmen</string>
-    <string name="mighty_reject">Ablehnen</string>
 
     <string name="mighty_category_clock">Uhr</string>
-    <string name="mighty_category_tags">Tags</string>
-    <string name="mighty_tags_section_title">Tags</string>
-    <string name="mighty_tags_edit_button">Tags zuweisen</string>
-    <string name="mighty_tags_none">Keine Tags</string>
-    <string name="mighty_tags_assign_title">Tags zuweisen</string>
-    <string name="mighty_tags_with_count">%1$s (%2$d)</string>
-    <string name="mighty_tags_create_first">Legen Sie zuerst Tags unter Einstellungen → Mighty-Funktionen an</string>
-    <string name="mighty_manage_tags_title">Tags verwalten</string>
-    <string name="mighty_manage_tags_summary">Wecker-Tags erstellen, einfärben oder löschen</string>
-    <string name="mighty_tags_add_title">Neues Tag</string>
-    <string name="mighty_tags_add_hint">Tag-Name</string>
-    <string name="mighty_tags_empty">Noch keine Tags. Tippen Sie auf Hinzufügen.</string>
-    <string name="mighty_tags_deleted">Tag gelöscht</string>
-    <string name="mighty_tags_created">Tag erstellt</string>
-    <string name="mighty_tags_change_color">Farbe ändern</string>
-    <string name="mighty_tags_color_updated">Tag-Farbe aktualisiert</string>
-    <string name="mighty_tags_add">Hinzufügen</string>
-    <string name="mighty_tags_delete">Löschen</string>
     <string name="mighty_display_timezone_globe_title">Zeitzonen-Globus anzeigen</string>
 
-    <string name="mighty_sort_by_ring_count">Sortieren: Klingelanzahl</string>
-    <string name="mighty_sort_by_created_date">Sortieren: Erstellungsdatum</string>
-    <string name="mighty_sort_by_updated_date">Sortieren: Änderungsdatum</string>
-    <string name="mighty_sort_by_next_alarm">Sortieren: Nächster Klingeltermin</string>
 
     <string name="mighty_backup_interval_6h">Alle 6 Stunden</string>
     <string name="mighty_backup_interval_12h">Alle 12 Stunden</string>
     <string name="mighty_backup_interval_24h">Alle 24 Stunden</string>
     <string name="mighty_backup_interval_48h">Alle 48 Stunden</string>
 
-    <string name="mighty_snooze_extend_title">Schlummer-Verlängerung</string>
-    <string name="mighty_snooze_extend_enabled_title">Schlummer jedes Mal verlängern</string>
-    <string name="mighty_snooze_extend_minutes_label">Verlängern um</string>
-    <string name="mighty_snooze_extend_max_minutes_label">Maximale Verlängerung</string>
-    <string name="mighty_snooze_extend_no_max">Kein Limit</string>
 
-    <string name="mighty_wifi_rule_title">WLAN-Regel</string>
-    <string name="mighty_wifi_rule_enabled_title">WLAN-Regel für diesen Wecker aktivieren</string>
-    <string name="mighty_wifi_ssid_hint">WLAN-Name (SSID)</string>
-    <string name="mighty_wifi_condition_label">Wenn Netzwerk</string>
-    <string name="mighty_wifi_condition_present">Vorhanden</string>
-    <string name="mighty_wifi_condition_absent">Nicht vorhanden</string>
-    <string name="mighty_wifi_action_label">Dann</string>
-    <string name="mighty_wifi_action_enable">Wecker aktivieren</string>
-    <string name="mighty_wifi_action_disable">Wecker deaktivieren</string>
 
-    <string name="mighty_move_to_exchange_button">In Austausch verschieben…</string>
-    <string name="mighty_move_to_exchange_title">Austauschordner wählen</string>
-    <string name="mighty_move_to_exchange_recipient_title">Empfänger wählen</string>
-    <string name="mighty_move_to_exchange_any_device">Beliebiges Gerät</string>
-    <string name="mighty_move_to_exchange_success">Wecker in Austauschordner verschoben</string>
-    <string name="mighty_move_to_exchange_failure">Verschieben in Austauschordner fehlgeschlagen</string>
-    <string name="mighty_exchange_no_folders_configured">Keine Austauschordner konfiguriert. Fügen Sie einen unter Mighty-Funktionen hinzu.</string>
 
-    <string name="mighty_tag_filter_all">Alle Tags</string>
-    <string name="mighty_tag_filter_untagged">Ohne Tag</string>
-    <string name="mighty_tag_filter_labeled">Tags: %1$s</string>
 
-    <string name="mighty_interval_repeat_title">Intervall-Wiederholung</string>
-    <string name="mighty_interval_repeat_enabled">In Intervallen wiederholen</string>
-    <string name="mighty_interval_value_label">Intervall</string>
-    <string name="mighty_interval_unit_label">Einheit</string>
-    <string name="mighty_interval_unit_minutes">Minuten</string>
-    <string name="mighty_interval_unit_hours">Stunden</string>
-    <string name="mighty_interval_max_count_label">Maximale Wiederholungen</string>
-    <string name="mighty_interval_max_unlimited">Unbegrenzt</string>
-    <string name="mighty_interval_summary_minutes">Alle %1$d Min</string>
-    <string name="mighty_interval_summary_hours">Alle %1$d Std</string>
-    <string name="mighty_interval_summary_with_max">%1$s · max. %2$d×</string>
-    <string name="mighty_interval_summary_with_date">%1$s · %2$s</string>
 
-    <string name="mighty_skip_next_occurrence_days">+%1$dd</string>
-    <string name="mighty_skip_next_occurrence_hours">+%1$dh</string>
-    <string name="mighty_skip_next_occurrence_minutes">+%1$dm</string>
-    <string name="mighty_skip_next_occurrence_content_description">Diesen Klingeltermin überspringen und den nächsten planen (%1$s)</string>
-    <string name="mighty_postpone_snooze_content_description">Schlummer um %1$d Stunden ab jetzt verschieben</string>
 
-    <string name="mighty_sample_tag_work">Arbeit</string>
-    <string name="mighty_sample_tag_home">Zuhause</string>
-    <string name="mighty_sample_alarm_weekdays">Werktags aufstehen (Beispiel)</string>
-    <string name="mighty_sample_alarm_oneshot">Einmaliger Wochenende-Wecker (Beispiel)</string>
-    <string name="mighty_sample_alarm_work_tag">Arbeit – mit Tag (Beispiel)</string>
-    <string name="mighty_sample_alarm_wifi">Zuhause-WLAN (Beispiel)</string>
-    <string name="mighty_sample_alarm_snooze_extend">Schlummer verlängern (Beispiel)</string>
-    <string name="mighty_sample_alarm_interval">Intervall alle 30 Min, max. 3× (Beispiel)</string>
-    <string name="mighty_sample_alarm_future_interval">TÜV-Erinnerung (Beispiel)</string>
 
     <!-- Calendar Alarm tab -->
     <string name="menu_calendar_alarm">Kalender</string>

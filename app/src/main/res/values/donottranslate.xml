@@ -48,8 +48,6 @@
     <string name="action_snooze">Snooze</string>
     <string name="action_create">Create</string>
     <string name="action_delete">Delete</string>
-    <string name="action_duplicate">Duplicate</string>
-    <string name="action_update">Update</string>
     <string name="action_start">Start</string>
     <string name="action_pause">Pause</string>
     <string name="action_fire">Fire</string>
@@ -58,22 +56,9 @@
     <string name="action_add_custom_time_to_timer">Add Custom Time To Timer</string>
     <string name="action_set_new_timer_duration">Set New Timer Duration</string>
     <string name="action_lap">Lap</string>
-    <string name="action_enable">Enable</string>
     <string name="action_disable">Disable</string>
-    <string name="action_set_time">Set Time</string>
-    <string name="action_set_delay">Set Delay</string>
-    <string name="action_set_date">Set Date</string>
     <string name="action_set_label">Set Label</string>
-    <string name="action_set_ringtone">Set Ringtone</string>
-    <string name="action_toggle_vibrate">Toggle Vibrate</string>
-    <string name="action_set_vibration_pattern">Set Vibration Pattern</string>
-    <string name="action_toggle_flash">Toggle Flash</string>
     <string name="action_delete_alarm_after_use">Delete Alarm After Use</string>
-    <string name="action_set_auto_silence_duration">Set Auto Silence Duration</string>
-    <string name="action_set_snooze_duration">Set Snooze Duration</string>
-    <string name="action_set_missed_alarm_repeat_limit">Set Missed Alarm Repeat Limit</string>
-    <string name="action_set_crescendo_duration">Set Crescendo Duration</string>
-    <string name="action_set_alarm_volume">Set Alarm Volume</string>
 
     <!-- Label names for events describe the entity responsible for the event. -->
     <string name="label_deskclock">DeskClock</string>
@@ -207,23 +192,7 @@
     </string-array>
 
     <!-- Entries listed in the ListPreference when invoking the "Repeat missed alarms" preference. -->
-    <string-array name="missed_alarm_repeat_limit_entries">
-        <item>@string/label_never</item>
-        <item>@string/missed_alarm_repeat_limit_1_time</item>
-        <item>@string/missed_alarm_repeat_limit_3_times</item>
-        <item>@string/missed_alarm_repeat_limit_5_times</item>
-        <item>@string/missed_alarm_repeat_limit_10_times</item>
-        <item>@string/label_indefinitely</item>
-    </string-array>
     <!-- Values that are retrieved from the ListPreference. These must match the missed_alarm_repeat_limit_entries above. -->
-    <string-array name="missed_alarm_repeat_limit_values" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>3</item>
-        <item>5</item>
-        <item>10</item>
-        <item>-1</item>
-    </string-array>
 
     <!-- Values that are retrieved from the snooze selector. -->
     <integer-array name="alarm_snooze_selector_values" translatable="false">
@@ -239,20 +208,7 @@
     </integer-array>
 
     <!-- Entries listed in ListPreference for start day. -->
-    <string-array name="week_start_entries">
-        <item>@string/week_start_saturday</item>
-        <item>@string/week_start_sunday</item>
-        <item>@string/week_start_monday</item>
-    </string-array>
     <!-- Values for ListPreference for start day of week. -->
-    <string-array name="week_start_values" translatable="false">
-        <!-- Calendar.SATURDAY -->
-        <item>7</item>
-        <!-- Calendar.SUNDAY -->
-        <item>1</item>
-        <!-- Calendar.MONDAY -->
-        <item>2</item>
-    </string-array>
 
     <!-- Entries listed in the ListPreference when invoking the vibration pattern preference. -->
     <string-array name="vibration_pattern_entries">
@@ -376,50 +332,14 @@
     </string-array>
 
     <!-- Entries listed in the ListPreference when invoking the time picker style preference. -->
-    <string-array name="time_picker_style_entries">
-        <item>@string/clock_style_analog</item>
-        <item>@string/clock_style_digital</item>
-        <item>@string/clock_style_spinner</item>
-    </string-array>
     <!-- Values that are retrieved from the ListPreference. These must match the time_picker_style_entries above. -->
-    <string-array name="time_picker_style_values" translatable="false">
-        <item>analog</item>
-        <item>digital</item>
-        <item>spinner</item>
-    </string-array>
 
     <!-- Entries listed in the ListPreference when invoking the date picker style preference. -->
-    <string-array name="date_picker_style_entries">
-        <item>@string/date_picker_style_calendar</item>
-        <item>@string/date_picker_style_text</item>
-        <item>@string/clock_style_spinner</item>
-    </string-array>
     <!-- Values that are retrieved from the ListPreference. These must match the date_picker_style_entries above. -->
-    <string-array name="date_picker_style_values" translatable="false">
-        <item>calendar</item>
-        <item>text</item>
-        <item>spinner</item>
-    </string-array>
 
     <!-- Entries listed in the ListPreference when invoking the alarm sort preference -->
-    <string-array name="sort_alarm_entries">
-        <item>@string/sort_alarm_time</item>
-        <item>@string/sort_next_alarm_time</item>
-        <item>@string/sort_name</item>
-        <item>@string/sort_descending_creation_order</item>
-        <item>@string/sort_ascending_creation_order</item>
-        <item>@string/sort_manually</item>
-    </string-array>
     <!-- Values that are retrieved from the ListPreference. These must match
          the sort_alarm_entries above. -->
-    <string-array name="sort_alarm_values" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-    </string-array>
 
     <!-- Entries listed in the ListPreference when invoking the timer creation view style preference. -->
     <string-array name="timer_creation_view_style_entries">
@@ -700,13 +620,6 @@
     </string-array>
 
     <!-- Entries for the extra alarm sort spinner shown above the alarm list -->
-    <string-array name="mighty_alarm_sort_options">
-        <item>@string/sort_alarm_time</item>
-        <item>@string/mighty_sort_by_ring_count</item>
-        <item>@string/mighty_sort_by_created_date</item>
-        <item>@string/mighty_sort_by_updated_date</item>
-        <item>@string/mighty_sort_by_next_alarm</item>
-    </string-array>
 
     <!-- Entries for the JSON backup interval ListPreference -->
     <string-array name="mighty_backup_interval_entries">

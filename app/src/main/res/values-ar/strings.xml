@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"المنبّه"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"اهتزاز"</string>
-    <string name="time_picker_dialog_title">اختيار الوقت</string>
-    <string name="date_picker_dialog_title">حدِّد التاريخ</string>
     <string name="delete" msgid="5732434972457000541">احذف</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">"صوت التنبيه التلقائي"</string>
     <string name="alarm_sound" msgid="8754499591391638405">"صوت المنبِّه"</string>
@@ -38,7 +35,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">تأجيل حتى <xliff:g id="time">%s</xliff:g></string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">التنبيه الآتي</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"تم حذف التنبيه المفقود"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"يتبقى أقل من دقيقة"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138"><xliff:g example="2 hours" id="HOURS">%1$s</xliff:g><xliff:g example="remaining" id="REMAINING"> %3$s</xliff:g></string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893"><xliff:g example="2 minutes" id="MINUTES">%2$s</xliff:g><xliff:g example="remaining" id="REMAINING"> %3$s</xliff:g></string>
@@ -112,15 +108,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"ساعة عادية"</string>
     <string name="digital_widget" msgid="2326954556720571358">"ساعة رقمية"</string>
     <string name="settings" msgid="5849739030579520686">"الإعدادات"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"مدّة التأجيل"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"رفع مستوى الصوت تدريجيًا"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"صامت بعد"</string>
     <string name="label_never" msgid="4821982647348750809">"أبدًا"</string>
     <string name="label_off">إيقاف</string>
-    <string name="week_start_title" msgid="4268917518596832096">"بداية الأسبوع يوم"</string>
-    <string name="week_start_saturday">السبت</string>
-    <string name="week_start_sunday">الأحد</string>
-    <string name="week_start_monday">الاثنين</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"مستوى صوت المنبّه"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"صامت"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"غير معروف"</string>
@@ -132,13 +123,10 @@
     <string name="button_action_dismiss">أهمِل</string>
     <string name="button_action_control_volume">التحكم في مستوى الصوت</string>
     <string name="button_action_nothing">لا شيء</string>
-    <string name="label_description" msgid="8736179296142915727">تسمية</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"نغمة الرنين"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"المنبّه"</string>
     <string name="menu_timer" msgid="6459070074762877114">"موقت"</string>
     <string name="menu_clock" msgid="5612760670606829805">"الساعة"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"ساعة توقيف"</string>
-    <string name="button_alarms" msgid="3907838219512538763">أضف منبه</string>
     <string name="button_cities" msgid="4555761857494501363">"المدن"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"شاشة التوقف"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"تصنيف بحسب الوقت"</string>
@@ -197,8 +185,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"المنطقة الزمنية للبلد الأم"</string>
     <string name="city_checked" msgid="616847871968019"><xliff:g id="city_name">%s</xliff:g> حُدِّد</string>
     <string name="city_unchecked" msgid="710212932781145918">ألغِيَ تحديد <xliff:g id="city_name">%s</xliff:g></string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"منبه جديد"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"إنشاء منبه جديد"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"موقِّت جديد"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"إنشاء موقِّت جديد"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"بدء"</string>
@@ -216,8 +202,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"اهتزاز الموقت"</string>
     <string name="timer_paused" msgid="5941160896040771462">"تم إيقاف الموقِّت مؤقتًا"</string>
     <string name="timers_in_use" msgid="5570729467344408506"><xliff:g id="number">%d</xliff:g> من الموقتات</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"تراجع"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">حُذف المنبّه</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="label">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">متقدم بمقدار <xliff:g example="6 hours" id="time">%1$s</xliff:g></string>
     <string name="world_time_behind" msgid="5395771290726167865">متأخر بمقدار <xliff:g example="4 hours" id="time">%1$s</xliff:g></string>
@@ -226,15 +210,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">غدًا، <xliff:g example="6 hours ahead" id="time">%1$s</xliff:g></string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">أمس، <xliff:g example="4 hours behind" id="time">%1$s</xliff:g></string>
     <string name="next_alarm_description" msgid="2650244835760747046">التنبيه التالي: <xliff:g example="Wed 8:00am" id="alarm_time">%s</xliff:g></string>
-    <string name="no_alarms" msgid="6429431324842022917">لا منبّهات</string>
-    <string name="invalid_time" msgid="2782334750243998633">"الوقت غير صالح <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g> <xliff:g id="INVALID_AMPM">%3$s</xliff:g>"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">لم يتم تعيين منبّه للوقت <xliff:g example="14" id="alarm_time_hour">%1$d</xliff:g>:<xliff:g example="23" id="alarm_time_minutes"> %2$d</xliff:g></string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">لا منبّهات مجدولة</string>
-    <string name="no_label_specified" msgid="2008482054428460626">لم يتم تحديد تسمية</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">لا توجد منبّهات تتضمن التسمية</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"لم يتم تعيين منبه لهذا الوقت"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">أُهمِل المنبّه <xliff:g id="alarm_time">%s</xliff:g></string>
-    <string name="alarm_is_set" msgid="5503226382620011088">عُيِّن المنبّه على <xliff:g id="alarm_time">%s</xliff:g></string>
     <string name="timer_created" msgid="4381027137335885547">"تم إنشاء الموقت"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="zero">أُهمِل <xliff:g id="number">%d</xliff:g> موقِّت</item>
@@ -247,20 +223,10 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"مدة الموقت غير صالحة"</string>
     <string name="invalid_timer" msgid="900957020728335675">"تم اختيار موقِّت غير صالح"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"لا يمكن تنفيذ الإجراء على الموقِّتات المنتهية"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">لا يمكن إهمال المنبّه <xliff:g id="alarm_time">%s</xliff:g> في الوقت الحالي، لأن موعده لا يزال يبعد أكثر من 24 ساعة</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">أهمِل التنبيه</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">اختر المنبّه المراد إهماله</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">ليس هناك أي منبّهات نشطة الآن</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">أُجيل المنبّه <xliff:g id="alarm_time">%s</xliff:g> لمدة 10 دقائق</string>
     <string name="flip_action_title">تأثير قلب الجهاز</string>
     <string name="shake_action_title">تأثير هز الجهاز</string>
-    <string name="schedule_alarm_title">منبه مجدول</string>
-    <string name="alarm_flash">الكشاف</string>
-    <string name="delete_occasional_alarm_after_use_title">احذف المنبه بمجرد إهمال المنبه</string>
-    <string name="delay_picker_dialog_title">المنبه في…</string>
     <string name="alarm_label_box_title">تسمية المنبه</string>
     <string name="label_default">إفتراضي</string>
-    <string name="duplicate">كرّر</string>
     <string name="label_new_image">صورة جديدة</string>
     <string name="label_new_font">خط جديد</string>
     <string name="warning">تحذير</string>
@@ -271,7 +237,6 @@
     <string name="selected">محدد</string>
     <string name="more_options">خيارات إضافية</string>
     <string name="progress_ringtones">إضافة نغمات الرنين… (%1$d/%2$d)</string>
-    <string name="alarm_scheduled_for">من المقرر أن %s</string>
     <string name="alarm_alert_dismiss_and_delete_text">أهمِل واحذف</string>
     <string name="alarm_alert_off_and_deleted_text">إيقاف المنبه وحذفه</string>
     <string name="occasional_alarm_alert_predismiss_title">منبه عرضي آتي</string>
@@ -322,24 +287,7 @@
     <string name="settings_language_title">اللغة</string>
     <string name="settings_language_system">لغة النظام</string>
     <string name="settings_language_english_us">الإنجليزية (الولايات المتحدة)</string>
-    <string name="settings_language_french">الفرنسية</string>
     <string name="settings_language_german">الألمانية</string>
-    <string name="settings_language_chinese_simplified_cn">الصينية المبسطة(، جمهورية الصين الشعبية)</string>
-    <string name="settings_language_estonian">الإستونية</string>
-    <string name="settings_language_italian">الإطالية</string>
-    <string name="settings_language_polish">بولندي</string>
-    <string name="settings_language_portuguese">البرتغالية</string>
-    <string name="settings_language_serbian">صربي</string>
-    <string name="settings_language_spanish">الإسبانية</string>
-    <string name="settings_language_ukrainian">الأوكرانية</string>
-    <string name="settings_language_dutch">هولندية</string>
-    <string name="settings_language_russian">الروسية</string>
-    <string name="settings_language_turkish">تركية</string>
-    <string name="settings_language_korean">الكورية</string>
-    <string name="settings_language_czech">التشيك</string>
-    <string name="settings_language_chinese_traditional_tw">الصينية التقليدية (تايوان)</string>
-    <string name="settings_language_bulgarian">البلغارية</string>
-    <string name="settings_language_tamil">التاميل</string>
     <string name="settings_tab_to_display">تبويب للعرض عند فتح التطبيق</string>
     <string name="last_tab_used_title">آخر علامة تبويب مستخدمة</string>
     <string name="settings_vibration_title">فعّل الاهتزاز</string>
@@ -352,27 +300,11 @@
     <string name="settings_fade_transitions_title">قم بتمكين تأثيرات التلاشي عند التبديل بين الشاشات</string>
     <string name="settings_keep_screen_on_title">أبقِ الشاشة قيد التشغيل</string>
     <string name="settings_keep_screen_on_summary">ملاحظة: ستظل الشاشة مضاءة دائمًا إذا كان المؤقت أو ساعة الإيقاف قيد التشغيل ويتم عرض علامة التبويب المقابلة، بغض النظر عن حالة هذا الإعداد</string>
-    <string name="enable_per_alarm_snooze_duration_title">استخدم مدة تأجيل مخصّصة لكل منبه</string>
-    <string name="enable_per_alarm_snooze_duration_dialog_message">سيتم تصفير مدّة تأجيل المنبه المخصّصة.%s</string>
-    <string name="enable_per_alarm_volume_title">استخدم مستوى صوت مخصص لكل منبه</string>
-    <string name="enable_per_alarm_volume_dialog_message">سيتم إعادة ضبط مستويات صوت المنبه المخصصة.%s</string>
-    <string name="display_dismiss_button_title">اعرض زر \"أهمِل\" بمجرد تفعيل التنبيه</string>
-    <string name="display_dismiss_button_summary">في حال تعطيله، سيظهر الزر في نفس وقت ظهور تذكير الإشعارات</string>
-    <string name="enable_per_alarm_missed_repeat_limit_title">استخدم عدد مرات تكرار مخصصة لكل إنذار فائت</string>
-    <string name="enable_per_alarm_missed_repeat_limit_dialog_message">سيتم إعادة ضبط عدد مرات تكرار التنبيهات الفائتة المخصصة.%s</string>
-    <string name="missed_alarm_repeat_limit_title">كرر التنبيهات الفائتة</string>
-    <string name="missed_alarm_repeat_limit_1_time">مرة واحدة</string>
-    <string name="missed_alarm_repeat_limit_3_times">٣ مرات</string>
-    <string name="missed_alarm_repeat_limit_5_times">٥ مرات</string>
-    <string name="missed_alarm_repeat_limit_10_times">١٠ مرات</string>
     <string name="alarm_notification_reminder_title">تذكير بالإشعارات</string>
     <string name="advanced_audio_playback_title">استخدم تشغيل الصوت المتقدم</string>
     <string name="advanced_audio_playback_summary">يحسّن التوافق مع جهاز الصوت الخارجي ويمنع انقطاع الصوت أثناء التكرار.\n\nملاحظة: قد تحتوي بعض نغمات الرنين على تشويش صوتي طفيف</string>
     <string name="system_media_volume_title">استخدم مستوى صوت وسائط النظام</string>
     <string name="system_media_volume_summary">يعمل فقط إذا كان جهاز الصوت الخارجي متصلاً</string>
-    <string name="enable_alarm_vibrations_by_default_setting_title">فعِّل الاهتزاز عند انطلاق المنبه</string>
-    <string name="enable_per_alarm_vibration_pattern_title">استخدم نمط اهتزاز مخصص لكل منبه</string>
-    <string name="enable_per_alarm_vibration_pattern_dialog_message">سيتم إعادة ضبط أنماط الاهتزاز المخصصة.%s</string>
     <string name="vibration_pattern_title">نمط الاهتزاز</string>
     <string name="vibration_pattern_soft">ناعم</string>
     <string name="vibration_pattern_strong">قوي</string>
@@ -402,22 +334,7 @@
     <string name="minute_default_color_title">استخدم اللون الافتراضي للدقائق</string>
     <string name="dial_color_title">لون القرص</string>
     <string name="dial_default_color_title">استخدم اللون الافتراضي للقرص</string>
-    <string name="turn_on_back_flash_for_triggered_alarm_title">قم بتشغيل الفلاش الخلفي عند بدء المنبه</string>
-    <string name="enable_delete_occasional_alarm_by_default_setting_title">تفعيل الحذف التلقائي للتنبيهات العرضية افتراضياً</string>
-    <string name="material_time_picker_style_title">نمط منتقي الوقت</string>
-    <string name="date_picker_style_title">نمط منتقي التاريخ</string>
-    <string name="sort_alarm_title">فرز المنبهات</string>
-    <string name="sort_alarm_time">بحلول وقت التنبيه</string>
-    <string name="sort_next_alarm_time">بحلول وقت المنبه التالي</string>
     <string name="sort_name">بالاسم</string>
-    <string name="sort_descending_creation_order">حسب ترتيب الإنشاء (الأقدم في النهاية)</string>
-    <string name="sort_ascending_creation_order">حسب ترتيب المنشأ (الأقدم أولاً)</string>
-    <string name="display_enabled_alarms_first_title">عرض التنبيهات المفعلة أولاً</string>
-    <string name="enable_alarm_fab_long_press_title">قم بتفعيل الضغط المطول على زر الإجراء لإنشاء تنبيهات مع تأخير</string>
-    <string name="enable_alarm_fab_long_press_summary">في حالة تعطيل هذه الخاصية، سيتم عرض زرين لإنشاء تنبيهات</string>
-    <string name="date_picker_style_calendar">التقويم</string>
-    <string name="date_picker_style_text">نص</string>
-    <string name="alarm_settings_general_summary">يمكن تغيير هذا الإعداد لكل منبه في لوحة تحرير المنبهات</string>
     <string name="slide_zone_color_title">لون منطقة الانزلاق</string>
     <string name="snooze_title_color">لون عنوان \"تأجيل\"</string>
     <string name="snooze_button_color">لون زر \"تأجيل\"</string>
@@ -438,10 +355,6 @@
     <string name="background_image_toast_message_selected">تم اختيار الصورة بنجاح</string>
     <string name="background_image_toast_message_deleted">تم حذف الصورة بنجاح</string>
     <string name="enable_blur_effect_title">قم بتطبيق تأثير التمويه على صورة الخلفية</string>
-    <string name="enable_per_alarm_crescendo_duration_title">استخدم مدة زيادة مستوى الصوت المخصصة لكل منبه</string>
-    <string name="enable_per_alarm_crescendo_duration_dialog_message">ستتم إعادة ضبط مدة زيادة مستوى صوت التنبيه المخصص.%s</string>
-    <string name="enable_per_alarm_auto_silence_title">استخدم مدة إيقاف المنبه مخصصة لكل منبه</string>
-    <string name="enable_per_alarm_auto_silence_dialog_message">سيتم إعادة ضبط مدة إيقاف الإنذار المخصصة.%s</string>
     <string name="auto_silence_end_of_ringtone">نهاية نغمة الرنين</string>
     <string name="snooze_duration_none">أفتراضي</string>
     <string name="random_ringtone_title">نغمة رنين عشوائية</string>
@@ -627,14 +540,10 @@
     <string name="permission_info_title">لأجهزة شاومي فقط</string>
     <string name="timer_channel">المؤقت</string>
     <string name="permissions_category_title">الإذونات</string>
-    <string name="settings_language_arabic">العربية</string>
-    <string name="settings_language_hungarian">المجرية</string>
     <string name="auto_routing_to_external_audio_device_title">فعِّل التوجيه التلقائي لنغمات الرنين إلى أجهزة الصوت الخارجية</string>
     <string name="external_audio_device_volume_title">مستوى صوت المنبه لأجهزة الصوت الخارجية</string>
     <string name="connect_external_audio_device_title">صل جهاز صوت خارجي للوصول إلى هذا الإعداد</string>
     <string name="disconnect_external_audio_device_title">افصل جهاز الصوت الخارجي للوصول إلى هذا الإعداد</string>
-    <string name="enable_alarm_vibrations_by_default_dialog_message">سيتم إيقاف تشغيل الاهتزاز لجميع التنبيهات.%s</string>
-    <string name="enable_delete_occasional_alarm_by_default_dialog_message">سيتم إيقاف ميزة \"احذف المنبه بمجرد إهمال المنبه\" لجميع المنبهات.%s</string>
     <string name="display_low_alarm_volume_warning_title">أظهر تحذير عندما يتم ضبط مستوى صوت المنبه على الحد الأدنى</string>
     <string name="snooze_zone_color_title">لون منطقة التأجيل</string>
     <string name="snooze_minus_button_color_title">لون زر \"-\"</string>
@@ -670,11 +579,7 @@
     <string name="foreground_service_title">اعرض إشعار المقدمة</string>
     <string name="foreground_service_dialog_message">لمنع جهازك من إغلاق التطبيق بشكل مفاجئ وتفويت المنبهات، سيقوم هذا الخيار بعرض إشعار صامت ومستمر.\n\nيضمن ذلك بقاء التطبيق في الذاكرة، على الرغم من أنه قد يزيد من استهلاك البطارية قليلاً.\n\nملاحظة: تفعيل هذا الإعداد ليس ضروريًا لمعظم الأجهزة. لا تفعله إلا إذا كنت تواجه مشكلة في تفويت المنبهات.</string>
     <string name="sync_alarm_by_label_title">زامن التنبيهات التي تحمل نفس التسمية</string>
-    <string name="label_indefinitely">إلى الأبد</string>
     <string name="button_tip_title">اضغط مطولاً على زر \"+\" لإضافة مجلد</string>
-    <string name="alarm_alert_dismiss_and_delete_text_button">أهمِل و\nاحذف</string>
-    <string name="pause_alarm_title">إيقاف المنبه مؤقتًا</string>
-    <string name="pause_alarm_range">متوقف مؤقتًا: %1$s</string>
     <string name="toast_message_restore_error">فشلت عملية الاستعادة</string>
     <string name="shortcut_disabled">علامة تبويب مخفية</string>
     <string name="display_top_date_title">اعرض التاريخ فوق الوقت</string>
@@ -687,7 +592,6 @@
     <string name="single_timer_mode_title">وضع المؤقت الفردي</string>
     <string name="single_timer_mode_summary">احتفظ بمؤقت واحد فقط، والذي يُحذف تلقائيًا بمجرد إعادة ضبطه</string>
     <string name="single_timer_mode_warning_message">سيتم إزالة المؤقتات. %s</string>
-    <string name="settings_language_hebrew">العبرية</string>
     <string name="settings_vibration_disabled_summary">ميزة الاهتزاز معطّلة في إعدادات الجهاز</string>
     <string name="settings_tab_animation_title">الرسوم المتحركة عند التبديل بين علامات التبويب</string>
     <string name="tab_animation_cube">مكعب</string>

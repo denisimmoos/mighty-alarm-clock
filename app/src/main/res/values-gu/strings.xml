@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"એલાર્મ"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"વાઇબ્રેટ"</string>
-    <string name="time_picker_dialog_title">સમય પસંદ કરો</string>
-    <string name="date_picker_dialog_title">તારીખ પસંદ કરો</string>
     <string name="delete" msgid="5732434972457000541">"કાઢી નાખો"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">"ડિફોલ્ટ એલાર્મ ધ્વનિ"</string>
     <string name="alarm_sound" msgid="8754499591391638405">"એલાર્મની ધ્વનિ"</string>
@@ -34,7 +31,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">"<xliff:g id="TIME">%s</xliff:g> સુધી સ્નૂઝ કરીને"</string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"આગામી એલાર્મ"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"તમારો મિસ્ડ એલાર્મ કાઢી નાખવામાં આવ્યો છે"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"એક મિનિટ કરતા ઓછી બાકી છે"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="HOURS">%1$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="MINUTES">%2$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
@@ -84,15 +80,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"એનાલોગ ઘડિયાળ"</string>
     <string name="digital_widget" msgid="2326954556720571358">"ડિજિટલ ઘડિયાળ"</string>
     <string name="settings" msgid="5849739030579520686">"સેટિંગ્સ"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"સ્નૂઝ લંબાઈ"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"ધીમે-ધીમે વૉલ્યૂમ વધારો"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"આના પછી શાંતિ"</string>
     <string name="label_never" msgid="4821982647348750809">"ક્યારેય નહીં"</string>
     <string name="label_off">બંધ</string>
-    <string name="week_start_title" msgid="4268917518596832096">"આ પર સપ્તાહ શરૂ કરો"</string>
-    <string name="week_start_saturday">શનિવાર</string>
-    <string name="week_start_sunday">રવિવાર</string>
-    <string name="week_start_monday">સોમવાર</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"એલાર્મ વૉલ્યૂમ"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"શાંત"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"અજાણ્યું"</string>
@@ -103,13 +94,10 @@
     <string name="button_action_snooze">સ્નૂઝ</string>
     <string name="button_action_dismiss">છોડી દો</string>
     <string name="button_action_control_volume">વૉલ્યૂમ નિયંત્રણ</string>
-    <string name="label_description" msgid="8736179296142915727">"લેબલ"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"રિંગટોન"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"એલાર્મ"</string>
     <string name="menu_timer" msgid="6459070074762877114">"ટાઇમર"</string>
     <string name="menu_clock" msgid="5612760670606829805">"ઘડિયાળ"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"સ્ટોપવૉચ"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"એલાર્મ ઉમેરો"</string>
     <string name="button_cities" msgid="4555761857494501363">"શહેરો"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"સ્ક્રીન સેવર"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"સમય દ્વારા સૉર્ટ કરો"</string>
@@ -168,8 +156,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"હોમ સમય ઝોન"</string>
     <string name="city_checked" msgid="616847871968019">"<xliff:g id="CITY_NAME">%s</xliff:g> ચિહ્નિત કર્યું"</string>
     <string name="city_unchecked" msgid="710212932781145918">"<xliff:g id="CITY_NAME">%s</xliff:g> અચિહ્નિત કર્યું"</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"નવું એલાર્મ"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"નવું એલાર્મ બનાવો"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"નવું ટાઇમર"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"નવું ટાઇમર બનાવો"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"શરૂ કરો"</string>
@@ -187,8 +173,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"ટાઇમર વાઇબ્રેટ"</string>
     <string name="timer_paused" msgid="5941160896040771462">"ટાઇમર થોભાવ્યું"</string>
     <string name="timers_in_use" msgid="5570729467344408506">"<xliff:g id="NUMBER">%d</xliff:g> ટાઇમર્સ"</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"પૂર્વવત્ કરો"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"એલાર્મ કાઢી નાખ્યો"</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="LABEL">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">"<xliff:g id="TIME">%1$s</xliff:g> આગળ છે"</string>
     <string name="world_time_behind" msgid="5395771290726167865">"<xliff:g id="TIME">%1$s</xliff:g> પાછળ છે"</string>
@@ -197,15 +181,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">"આવતીકાલે, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">"ગઈકાલે, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="next_alarm_description" msgid="2650244835760747046">"આગલો એલાર્મ: <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
-    <string name="no_alarms" msgid="6429431324842022917">"એલાર્મ્સ નથી"</string>
-    <string name="invalid_time" msgid="2782334750243998633">"અમાન્ય સમય <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g> <xliff:g id="INVALID_AMPM">%3$s</xliff:g>"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">"<xliff:g id="ALARM_TIME_HOUR">%1$d</xliff:g>:<xliff:g id="ALARM_TIME_MINUTES">%2$d</xliff:g> વાગ્યે કોઈ એલાર્મ નથી"</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"કોઇ શેડ્યુલ કરેલ એલાર્મ્સ નથી"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"કોઈ લેબલ નિર્દિષ્ટ કરવામાં આવ્યું નથી"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"કોઈ એલાર્મ્સ લેબલ ધરાવતું નથી"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"આ સમય માટે કોઇ એલાર્મ શેડ્યુલ કરેલ નથી"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">"<xliff:g id="ALARM_TIME">%s</xliff:g> એલાર્મ છોડી દીધો"</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">"<xliff:g id="ALARM_TIME">%s</xliff:g> માટે એલાર્મ સેટ કરેલ છે"</string>
     <string name="timer_created" msgid="4381027137335885547">"ટાઇમર બનાવ્યું"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="one"><xliff:g id="NUMBER">%d</xliff:g> ટાઇમર છોડી દીધું</item>
@@ -214,16 +190,8 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"અમાન્ય ટાઇમર લંબાઈ"</string>
     <string name="invalid_timer" msgid="900957020728335675">"અમાન્ય ટાઇમર પસંદ કર્યુ"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"કોઈ સમાપ્ત થયેલા ટાઇમર નથી"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">"<xliff:g id="ALARM_TIME">%s</xliff:g> એલાર્મ હજી છોડી દઇ શકાતો નથી, હજી 24 કલાક કરતાં વધુ સમયની વાર છે"</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"એલાર્મ છોડી દો"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"કયું એલાર્મ છોડી દેવું તે ચૂંટો"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"કોઇ ચાલુ એલાર્મ્સ નથી"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">"<xliff:g id="ALARM_TIME">%s</xliff:g> એલાર્મ 10 મિનિટ માટે સ્નુઝ કર્યો"</string>
-    <string name="delete_occasional_alarm_after_use_title">અલાર્મ બંદ કરિયા પછી એને કાઢી નાખો</string>
     <string name="alarm_label_box_title">લેબલ</string>
-    <string name="alarm_flash">ટોર્ચ</string>
     <string name="label_default">ડિફૌલ્ટ</string>
-    <string name="duplicate">ડુપ્લિકેટ</string>
     <string name="stopwatch_channel">સ્ટોપવોચ</string>
     <string name="permission_denied">નકારી</string>
     <string name="sort_name">નામથી</string>
@@ -236,8 +204,6 @@
     <string name="settings_language_title">ભાષા</string>
     <string name="settings_language_system">સિસ્ટમ ની ભાષા</string>
     <string name="settings_language_german">જર્મન</string>
-    <string name="settings_language_french">ફ્રેંચ</string>
-    <string name="material_time_picker_style_title">સમય ચુનવાની રીત</string>
     <string name="timer_label_box_title">ટીમર લેબલ</string>
     <string name="sort_timer_descending_duration">સમયનો ક્રમ (ઉતરતા ક્રમમાં)</string>
     <string name="clock_color_title">ઘડિયાળ નો રંગ</string>
@@ -288,7 +254,6 @@
     <string name="light_theme">અજવડું</string>
     <string name="dark_theme">અંધારું</string>
     <string name="blue_gray_accent_color">વાદળી રાખોડી</string>
-    <string name="settings_language_chinese_simplified_cn">ચીની(સિમ્પલઇફીડ, PRC)</string>
     <string name="backup_restore_summary">કસ્ટમ રિંગટન ના સિવાય અપ નો ડેટા બેકઅપ કે પુનઃપ્રાપ્ત કરો</string>
     <string name="backup_restore_title">બેકઅપ અને પુનઃપ્રાપ્તિ</string>
     <string name="toast_message_for_backup">બેકઅપ સંપન્ન</string>

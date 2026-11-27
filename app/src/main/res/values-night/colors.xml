@@ -327,7 +327,6 @@
     <!-- Used e.g. for slider buttons -->
     <color name="colorDisabled">#61E6E0E9</color>
     <!-- https://m2.material.io/design/color/the-color-system.html#tools-for-picking-colors : Green 50 n°400 -->
-    <color name="calendarDotColor">#66BB6A</color>
     <!-- Calendar alarm: Wi-Fi is off, the alarms ring anyway. -->
     <color name="calendar_alarm_wifi_warning">#FFD54F</color>
 </resources>

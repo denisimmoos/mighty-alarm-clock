@@ -7,14 +7,12 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label">MightyCalendarAlarm</string>
     <string name="default_label">قوڭغۇراق</string>
-    <string name="alarm_vibrate">تىترەت</string>
     <string name="delete">ئۆچۈر</string>
     <string name="alarm_alert_dismiss_text">تاقا</string>
     <string name="alarm_missed_title">ئۆتكۈزۈۋەتكەن قوڭغۇراق</string>
     <string name="alarm_alert_snooze_text">قايتا جىرىڭلاتما</string>
     <string name="alarm_alert_snooze_until"><xliff:g id="TIME">%s</xliff:g> غىچە كېچىكتۈر</string>
     <string name="alarm_alert_predismiss_title">ئالدىن بېكىتىلگەن قوڭغۇراق</string>
-    <string name="missed_alarm_has_been_deleted">ئۆتكۈزۈۋەتكەن قوڭغۇراق ئۆچۈرۈلدى</string>
     <string name="timer_notifications_less_min">بىر مىنۇتمۇ قالمىدى</string>
     <string name="alarm_confirmation_toast_1">قوڭغۇراق ھازىردىن باشلاپ 1 مىنۇتقا يەتمىگەن ۋاقىتتا ئەسكەرتىشكە تەڭشەلدى.</string>
     <string name="alarm_confirmation_toast_2">قوڭغۇراق ھازىردىن باشلاپ <xliff:g id="DAYS">%1$s</xliff:g> دىن كېيىن ئەسكەرتىشكە تەڭشەلدى.</string>
@@ -29,7 +27,6 @@
     <string name="analog_widget">تەقلىد سائەت</string>
     <string name="digital_widget">رەقەملىك سائەت</string>
     <string name="settings">تەڭشەكلەر</string>
-    <string name="snooze_duration_title">مۈگدەش ئۇزۇنلۇقى</string>
     <string name="auto_silence_title">قوڭغۇراق ۋاقتى</string>
     <string name="label_never">ھەرگىز</string>
     <string name="alarm_volume_title">قوڭغۇراق ئاۋازى</string>
@@ -37,8 +34,6 @@
     <string name="volume_button_setting_title">ئاۋاز توپچىسى</string>
     <string name="button_action_snooze">قايتا جىرىڭلاتما</string>
     <string name="button_action_dismiss">تاقا</string>
-    <string name="label_description">بەلگە</string>
-    <string name="ringtone_description">زىل ئاۋازى</string>
     <string name="menu_alarm">قوڭغۇراق</string>
     <string name="menu_timer">ۋاقىت خاتىرىلىگۈچ</string>
     <string name="menu_clock">سائەت</string>
@@ -85,8 +80,6 @@
     <string name="home_time_zone">يەرلىك ۋاقىت رايونى</string>
     <string name="shortcut_start_stopwatch_short">باشلا</string>
     <string name="timers_in_use"><xliff:g id="NUMBER">%d</xliff:g> ۋاقىت خاتىرىلىگۈچ</string>
-    <string name="alarm_undo">يېنىۋال</string>
     <string name="world_day_of_week_label">/ <xliff:g id="LABEL">%s</xliff:g></string>
     <string name="next_alarm_description">كېيىنكى قوڭغۇراق: <xliff:g id="ALARM_TIME">%s</xliff:g></string>
-    <string name="no_alarms">قوڭغۇراقلىق سائەت يوق</string>
 </resources>

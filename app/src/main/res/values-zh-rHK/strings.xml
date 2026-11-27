@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"鬧鐘"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"震動"</string>
-    <string name="time_picker_dialog_title">選取時間</string>
-    <string name="date_picker_dialog_title">請選擇日期</string>
     <string name="delete" msgid="5732434972457000541">"刪除"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">"預設鬧鐘音效"</string>
     <string name="alarm_sound" msgid="8754499591391638405">"鬧鐘音效"</string>
@@ -33,7 +30,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">"延後到<xliff:g id="TIME">%s</xliff:g>"</string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"預定的鬧鐘"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"您錯過的鬧鐘已刪除"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"尚餘少於一分鐘"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="REMAINING"> %3$s</xliff:g> <xliff:g id="HOURS">%1$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="REMAINING"> %3$s</xliff:g> <xliff:g id="MINUTES">%2$s</xliff:g>"</string>
@@ -77,15 +73,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"指針式時鐘"</string>
     <string name="digital_widget" msgid="2326954556720571358">"數碼時鐘"</string>
     <string name="settings" msgid="5849739030579520686">"設定"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"延後時間長度"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"逐漸提升音量"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"鈴聲持續時間："</string>
     <string name="label_never" msgid="4821982647348750809">"永不"</string>
     <string name="label_off">關閉</string>
-    <string name="week_start_title" msgid="4268917518596832096">"一個星期開始於"</string>
-    <string name="week_start_saturday">星期六</string>
-    <string name="week_start_sunday">星期日</string>
-    <string name="week_start_monday">星期一</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"鬧鐘音量"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"靜音"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"不明"</string>
@@ -96,13 +87,10 @@
     <string name="button_action_snooze">延後</string>
     <string name="button_action_dismiss">關閉</string>
     <string name="button_action_control_volume">控制音量</string>
-    <string name="label_description" msgid="8736179296142915727">"標籤"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"鈴聲"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"鬧鐘"</string>
     <string name="menu_timer" msgid="6459070074762877114">"計時器"</string>
     <string name="menu_clock" msgid="5612760670606829805">"時鐘"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"秒錶"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"新增鬧鐘"</string>
     <string name="button_cities" msgid="4555761857494501363">"城市"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"螢幕保護程式"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"按時間排序"</string>
@@ -161,8 +149,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"居住地時區"</string>
     <string name="city_checked" msgid="616847871968019">"已勾選<xliff:g id="CITY_NAME">%s</xliff:g>"</string>
     <string name="city_unchecked" msgid="710212932781145918">"未勾選<xliff:g id="CITY_NAME">%s</xliff:g>"</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"新鬧鐘"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"建立新鬧鐘"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"新計時器"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"建立新計時器"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"開始"</string>
@@ -180,8 +166,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"計時器震動"</string>
     <string name="timer_paused" msgid="5941160896040771462">"計時器已暫停"</string>
     <string name="timers_in_use" msgid="5570729467344408506">"<xliff:g id="NUMBER">%d</xliff:g> 個計時器"</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"復原"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"已刪除鬧鐘"</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="LABEL">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">"早 <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="world_time_behind" msgid="5395771290726167865">"遲 <xliff:g id="TIME">%1$s</xliff:g>"</string>
@@ -190,15 +174,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">"明天，<xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">"昨天<xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="next_alarm_description" msgid="2650244835760747046">"下次鬧鐘時間：<xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
-    <string name="no_alarms" msgid="6429431324842022917">"沒有設定鬧鐘"</string>
-    <string name="invalid_time" msgid="2782334750243998633">"無效時間 <xliff:g id="INVALID_AMPM">%3$s</xliff:g> <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g>"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">"沒有 <xliff:g id="ALARM_TIME_HOUR">%1$d</xliff:g>:<xliff:g id="ALARM_TIME_MINUTES">%2$d</xliff:g> 的鬧鐘"</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"沒有已預設的鬧鐘"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"沒有指定標籤"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"此標籤沒有設定鬧鐘"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"尚未為這個時間預設鬧鐘"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">"已關閉 <xliff:g id="ALARM_TIME">%s</xliff:g> 的鬧鐘"</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">"鬧鐘已設定為 <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
     <string name="timer_created" msgid="4381027137335885547">"已建立倒數計時器"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="other">已關閉 <xliff:g id="NUMBER">%d</xliff:g> 個計時器</item>
@@ -206,9 +182,4 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"倒數計時器長度無效"</string>
     <string name="invalid_timer" msgid="900957020728335675">"所選的計時器無效"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"沒有已結束的計時器"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">"無法關閉 <xliff:g id="ALARM_TIME">%s</xliff:g> 的鬧鐘，您仍需要等待超過 24 小時。"</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"關閉鬧鐘"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"選擇要關閉的鬧鐘"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"現時沒有響鬧"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">"<xliff:g id="ALARM_TIME">%s</xliff:g> 的鬧鐘已延後 10 分鐘"</string>
 </resources>

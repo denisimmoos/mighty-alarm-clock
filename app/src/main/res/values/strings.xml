@@ -12,23 +12,14 @@
     <!-- Default label to display for an alarm -->
     <string name="default_label">Alarm</string>
     <!-- Label title in the alarm editing panel to schedule alarm -->
-    <string name="schedule_alarm_title">Schedule alarm</string>
     <!-- Label title in the alarm editing panel to pause alarm -->
-    <string name="pause_alarm_title">Pause alarm</string>
     <!-- Label title in the alarm editing panel when the pause is set -->
-    <string name="pause_alarm_range">Paused: %1$s</string>
     <!-- Setting labels on Set alarm screen: Vibration on or off -->
-    <string name="alarm_vibrate">Vibrate</string>
     <!-- Setting labels on Set alarm screen: Flash on or off -->
-    <string name="alarm_flash">Flash</string>
     <!-- Setting labels on Set alarm screen: Delete alarm once dismissed on or off -->
-    <string name="delete_occasional_alarm_after_use_title">Delete alarm once dismissed</string>
     <!-- Title of dialog box to choose the alarm time -->
-    <string name="time_picker_dialog_title">Select time</string>
     <!-- Title of dialog box to choose the alarm delay -->
-    <string name="delay_picker_dialog_title">Alarm in…</string>
     <!-- Title of dialog box to choose the alarm date -->
-    <string name="date_picker_dialog_title">Select Date</string>
     <!-- Title of dialog box for editing alarm label -->
     <string name="alarm_label_box_title">Alarm label</string>
     <!-- Title in the dialog box for editing alarm label allowing the synchronization of alarms sharing the same label -->
@@ -40,11 +31,9 @@
     <!-- Label "Never" -->
     <string name="label_never">Never</string>
     <!-- Label "Indefinitely" -->
-    <string name="label_indefinitely">Indefinitely</string>
     <!-- Label "Delete" -->
     <string name="delete">Delete</string>
     <!-- Setting labels on Set alarm screen: Duplicate -->
-    <string name="duplicate">Duplicate</string>
     <!-- Dialog label to choose a new background image. -->
     <string name="label_new_image">New image</string>
     <!-- Dialog label to choose a new font. -->
@@ -94,7 +83,6 @@
     <!-- Label shown when user is setting up non-repeating alarm for later today -->
     <string name="alarm_today">Today</string>
     <!-- Label shown when user has set a non-repeating alarm for a specific day -->
-    <string name="alarm_scheduled_for">Scheduled for %s</string>
     <!-- Button label on the alarm notification panel: Dismiss -->
     <string name="alarm_alert_dismiss_text">Dismiss</string>
     <!-- Notification action to permanently disable a repeating alarm. -->
@@ -102,7 +90,6 @@
     <!-- Button label on the alarm notification panel: Dismiss & Delete -->
     <string name="alarm_alert_dismiss_and_delete_text">Dismiss &amp; Delete</string>
     <!-- Button label on the alarm editing panel: Dismiss & Delete -->
-    <string name="alarm_alert_dismiss_and_delete_text_button">Dismiss &amp;\nDelete</string>
     <!-- Notification title when an alarm is missed -->
     <string name="alarm_missed_title">Missed alarm</string>
     <!-- Notification content for a missed alarm. -->
@@ -136,7 +123,6 @@
     <!-- Text to appear in the notification title while an occasional alarm is about to go off. -->
     <string name="occasional_alarm_alert_predismiss_title">Upcoming occasional alarm</string>
     <!-- Text to appear in when trying to view a missed alarm that has been deleted -->
-    <string name="missed_alarm_has_been_deleted">Your missed alarm has been deleted</string>
     <!-- 0: nothing
          1: days
          2:      hours
@@ -340,47 +326,27 @@
     <!-- Setting title for changing the language to English (US). -->
     <string name="settings_language_english_us">English (US)</string>
     <!-- Setting title for changing the language to French. -->
-    <string name="settings_language_french">French</string>
     <!-- Setting title for changing the language to German. -->
     <string name="settings_language_german">German</string>
     <!-- Setting title for changing the language to Chinese (simplified, PRC). -->
-    <string name="settings_language_chinese_simplified_cn">Chinese (simplified, PRC)</string>
     <!-- Setting title for changing the language to Estonian. -->
-    <string name="settings_language_estonian">Estonian</string>
     <!-- Setting title for changing the language to Italian. -->
-    <string name="settings_language_italian">Italian</string>
     <!-- Setting title for changing the language to Polish. -->
-    <string name="settings_language_polish">Polish</string>
     <!-- Setting title for changing the language to Portuguese. -->
-    <string name="settings_language_portuguese">Portuguese</string>
     <!-- Setting title for changing the language to Serbian. -->
-    <string name="settings_language_serbian">Serbian</string>
     <!-- Setting title for changing the language to Spanish. -->
-    <string name="settings_language_spanish">Spanish</string>
     <!-- Setting title for changing the language to Ukrainian. -->
-    <string name="settings_language_ukrainian">Ukrainian</string>
     <!-- Setting title for changing the language to Dutch. -->
-    <string name="settings_language_dutch">Dutch</string>
     <!-- Setting title for changing the language to Russian. -->
-    <string name="settings_language_russian">Russian</string>
     <!-- Setting title for changing the language to Turkish. -->
-    <string name="settings_language_turkish">Turkish</string>
     <!-- Setting title for changing the language to Korean. -->
-    <string name="settings_language_korean">Korean</string>
     <!-- Setting title for changing the language to Czech. -->
-    <string name="settings_language_czech">Czech</string>
     <!-- Setting title for changing the language to Chinese (traditional, Taiwan). -->
-    <string name="settings_language_chinese_traditional_tw">Chinese (traditional, Taiwan)</string>
     <!-- Setting title for changing the language to Bulgarian. -->
-    <string name="settings_language_bulgarian">Bulgarian</string>
     <!-- Setting title for changing the language to Tamil. -->
-    <string name="settings_language_tamil">Tamil</string>
     <!-- Setting title for changing the language to Arabic. -->
-    <string name="settings_language_arabic">Arabic</string>
     <!-- Setting title for changing the language to Hungarian. -->
-    <string name="settings_language_hungarian">Hungarian</string>
     <!-- Setting title for changing the language to Hebrew. -->
-    <string name="settings_language_hebrew">Hebrew</string>
     <!-- Setting title to choose which tabs are visible in the bottom navigation menu. -->
     <string name="visible_tabs_title">Visible tabs</string>
     <!-- Setting title for changing the tab to display when opening the application. -->
@@ -422,34 +388,20 @@
     <!-- Setting summary about keeping the screen on. -->
     <string name="settings_keep_screen_on_summary">Note: The screen will always be on if a timer or stopwatch is running and the corresponding tab is displayed, regardless of the status of this setting</string>
     <!-- Setting title to enable the use of a custom snooze duration for each alarm. -->
-    <string name="enable_per_alarm_snooze_duration_title">Use a custom snooze duration for each alarm</string>
     <!-- Dialog message when the "Use a custom snooze duration for each alarm" setting is disabled. -->
-    <string name="enable_per_alarm_snooze_duration_dialog_message">Custom alarm snooze durations will be reset.%s</string>
     <!-- Setting title for changing the snooze duration. -->
-    <string name="snooze_duration_title">Snooze length</string>
     <!-- Setting title to enable the use of a custom volume for each alarm. -->
-    <string name="enable_per_alarm_volume_title">Use a custom volume for each alarm</string>
     <!-- Dialog message when the user disables the "Use a custom volume for each alarm" setting -->
-    <string name="enable_per_alarm_volume_dialog_message">Custom alarm volumes will be reset.%s</string>
     <!-- Setting title to display the Dismiss button -->
-    <string name="display_dismiss_button_title">Display the \"Dismiss\" button as soon as the alarm is enabled</string>
     <!-- Setting summary to specify when the Dismiss button will appear if the
          "Display Dismiss button as soon as alarm is enabled" setting is disabled. -->
-    <string name="display_dismiss_button_summary">If disabled, the button will appear at the same time as the notification reminder</string>
     <!-- Setting title to enable the use of a custom missed alarm repeat count for each alarm. -->
-    <string name="enable_per_alarm_missed_repeat_limit_title">Use a custom missed alarm repeat count for each alarm</string>
     <!-- Dialog message when the "Use a custom missed alarm repeat count for each alarm" setting is disabled. -->
-    <string name="enable_per_alarm_missed_repeat_limit_dialog_message">Custom missed alarm repeat count will be reset.%s</string>
     <!-- Setting title for changing the "Repeat missed alarms" setting. -->
-    <string name="missed_alarm_repeat_limit_title">Repeat missed alarms</string>
     <!-- Setting title for changing the "Repeat missed alarms" setting to 1 ring. -->
-    <string name="missed_alarm_repeat_limit_1_time">1 time</string>
     <!-- Setting title for changing the "Repeat missed alarms" setting to 3 rings. -->
-    <string name="missed_alarm_repeat_limit_3_times">3 times</string>
     <!-- Setting title for changing the "Repeat missed alarms" setting to 5 rings. -->
-    <string name="missed_alarm_repeat_limit_5_times">5 times</string>
     <!-- Setting title for changing the "Repeat missed alarms" setting to 10 rings. -->
-    <string name="missed_alarm_repeat_limit_10_times">10 times</string>
     <!-- Setting title for changing the notification reminder. -->
     <string name="alarm_notification_reminder_title">Notification reminder</string>
     <!-- Setting title to enable advanced audio playback. -->
@@ -470,13 +422,9 @@
     <!-- Setting title to indicate that an external audio device should be disconnected. -->
     <string name="disconnect_external_audio_device_title">Disconnect the external audio device to access this setting</string>
     <!-- Setting title to enable vibrations when alarm is triggered -->
-    <string name="enable_alarm_vibrations_by_default_setting_title">Enable vibrations when alarm is triggered</string>
     <!-- Dialog message when the "Enable vibrations when alarm is triggered" setting is disabled. -->
-    <string name="enable_alarm_vibrations_by_default_dialog_message">Vibrations will be disabled for all alarms.%s</string>
     <!-- Setting title to enable the use of a custom vibration pattern for each alarm. -->
-    <string name="enable_per_alarm_vibration_pattern_title">Use a custom vibration pattern for each alarm</string>
     <!-- Dialog message when the "Use a custom vibration pattern for each alarm" setting is disabled. -->
-    <string name="enable_per_alarm_vibration_pattern_dialog_message">Custom vibration patterns will be reset.%s</string>
     <!-- Setting title to change the vibration pattern -->
     <string name="vibration_pattern_title">Vibration pattern</string>
     <!-- Setting title to change the vibration pattern to Soft -->
@@ -500,41 +448,25 @@
     <!-- Setting summary about vibrations when alarm is snoozed or dismissed -->
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Double vibration when alarm is snoozed and single vibration when alarm is dismissed</string>
     <!-- Setting title to turn on flash when alarm is triggered -->
-    <string name="turn_on_back_flash_for_triggered_alarm_title">Turn on back flash when alarm is triggered</string>
     <!-- Setting title to display the button for deleting single alarms in the alarm editing panel -->
-    <string name="enable_delete_occasional_alarm_by_default_setting_title">Enable automatic deletion of occasional alarms by default</string>
     <!-- Dialog message when the "Enable automatic deletion of occasional alarms by default" setting is disabled. -->
-    <string name="enable_delete_occasional_alarm_by_default_dialog_message">The \"Delete alarm once dismissed\" feature will be disabled for all alarms.%s</string>
     <!-- Setting title to display a warning when the alarm volume is set to the minimum-->
     <string name="display_low_alarm_volume_warning_title">Display a warning when the alarm volume is set to the minimum</string>
     <!-- Setting title for changing the time picker style. -->
-    <string name="material_time_picker_style_title">Time picker style</string>
     <!-- Setting title for changing the date picker style. -->
-    <string name="date_picker_style_title">Date picker style</string>
     <!-- Title to sort alarms -->
-    <string name="sort_alarm_title">Sort the alarms</string>
     <!-- Setting title for changing the alarm sorting order to By hour. -->
-    <string name="sort_alarm_time">By alarm time</string>
     <!-- Setting title for changing the alarm sorting order to By next alarm time. -->
-    <string name="sort_next_alarm_time">By next alarm time</string>
     <!-- Setting title for changing the sorting order to By name. -->
     <string name="sort_name">By name</string>
     <!-- Setting title for changing the sorting order to By creation order (oldest last). -->
-    <string name="sort_descending_creation_order">By creation order (oldest last)</string>
     <!-- Setting title for changing the sorting order to By creation order (oldest first). -->
-    <string name="sort_ascending_creation_order">By creation order (oldest first)</string>
     <!-- Setting title to display the enabled alarms first -->
-    <string name="display_enabled_alarms_first_title">Display the enabled alarms first</string>
     <!-- Setting title to enable long press on the floating action button in the alarm tab -->
-    <string name="enable_alarm_fab_long_press_title">Enable a long press on the action button to create alarms with delay</string>
     <!-- Setting summary to display two separate buttons for creating alarms if long press on the floating action button is not enabled -->
-    <string name="enable_alarm_fab_long_press_summary">If disabled, two buttons will be displayed to create alarms</string>
     <!-- Setting title for changing the date picker style to calendar. -->
-    <string name="date_picker_style_calendar">Calendar</string>
     <!-- Setting title for changing the date picker style to text. -->
-    <string name="date_picker_style_text">Text</string>
     <!-- Setting summary to indicate that this setting can be changed for each alarm -->
-    <string name="alarm_settings_general_summary">This setting can be changed for each alarm in the alarm editing panel</string>
     <!-- Setting title for customizing the slide zone color. -->
     <string name="slide_zone_color_title">Slide zone color</string>
     <!-- Setting title for customizing the color of "Snooze" title. -->
@@ -592,29 +524,21 @@
     <!-- Setting title to enable a blur effect. -->
     <string name="enable_blur_effect_title">Apply a blur effect to the background image</string>
     <!-- Setting title to enable the use of a custom volume increase duration for each alarm. -->
-    <string name="enable_per_alarm_crescendo_duration_title">Use a custom volume increase duration for each alarm</string>
     <!-- Dialog message when the "Use a custom volume increase duration for each alarm" setting is disabled. -->
-    <string name="enable_per_alarm_crescendo_duration_dialog_message">Custom alarm volume increase durations will be reset.%s</string>
     <!-- Setting title for changing the crescendo duration. -->
     <string name="crescendo_duration_title">Gradually increase volume</string>
     <!-- Auto silence preference title -->
     <string name="auto_silence_title">Silence after</string>
     <!-- Setting title to enable the use of a custom alarm stop duration for each alarm. -->
-    <string name="enable_per_alarm_auto_silence_title">Use a custom alarm stop duration for each alarm</string>
     <!-- Dialog message when the "Use a custom alarm stop duration for each alarm" setting is disabled. -->
-    <string name="enable_per_alarm_auto_silence_dialog_message">Custom alarm stop durations will be reset.%s</string>
     <!-- Auto silence summary when set at "The end of the ringtone" or for changing the auto silence.-->
     <string name="auto_silence_end_of_ringtone">The end of the ringtone</string>
     <!-- Setting title for changing the snooze duration to None. -->
     <string name="snooze_duration_none">None</string>
     <!-- Week start day preference title. -->
-    <string name="week_start_title">Start week on</string>
     <!-- Setting title for changing the start of the week to Saturday. -->
-    <string name="week_start_saturday">Saturday</string>
     <!-- Setting title for changing the start of the week to Sunday. -->
-    <string name="week_start_sunday">Sunday</string>
     <!-- Setting title for changing the start of the week to Monday. -->
-    <string name="week_start_monday">Monday</string>
     <!-- Setting title for changing the alarm volume. -->
     <string name="alarm_volume_title">Alarm volume</string>
     <!-- Title for the silent ringtone. -->
@@ -655,8 +579,6 @@
     <!-- Accessibility labels for Clock activity buttons -->
     <skip />
     <!-- Accessibility labels for alarm buttons -->
-    <string name="label_description">Label</string>
-    <string name="ringtone_description">Ringtone</string>
     <string name="add_label">Add label</string>
     <!--  ActionBar strings -->
     <!-- Describes the purpose of the tab button which switches the activity to the Alarm page -->
@@ -669,7 +591,6 @@
     <string name="menu_stopwatch">Stopwatch</string>
     <!-- Clock view buttons strings-->
     <!-- Describes the purpose of the button to start the activity to add/edit/delete alarms -->
-    <string name="button_alarms">Add alarm</string>
     <!-- Describes the purpose of the button which provides a list of cities for the world clock settings -->
     <string name="button_cities">Cities</string>
     <!-- Menu item on most screens to get to more settings -->
@@ -964,10 +885,8 @@
     <string name="shortcut_disabled">Tab hidden</string>
     <!-- Short label for a shortcut to create a new alarm. The maximum length is ~10 characters
          (longer translations may be truncated). -->
-    <string name="shortcut_new_alarm_short">New alarm</string>
     <!-- Long label for a shortcut to create a new alarm. The maximum length is ~25 characters
          (longer translations may be truncated). -->
-    <string name="shortcut_new_alarm_long">Create new alarm</string>
     <!-- Short label for a shortcut to create a new timer. The maximum length is ~10 characters
          (longer translations may be truncated). -->
     <string name="shortcut_new_timer_short">New timer</string>
@@ -1179,9 +1098,7 @@
     <!-- Summary for the screensaver preview in settings -->
     <string name="screensaver_preview_summary">Starts the screensaver immediately</string>
     <!-- Description of the button to undo change to alarm -->
-    <string name="alarm_undo">undo</string>
     <!-- Toast content when an alarm was deleted  -->
-    <string name="alarm_deleted">Alarm deleted</string>
     <!-- slash between date and next alarm in the clock: used for the DigitalAppWidget -->
     <string name="world_day_of_week_label">/ <xliff:g id="label">%s</xliff:g></string>
     <!-- Number of hours or minutes the world city is ahead of the current city [CHAR LIMIT=NONE] -->
@@ -1199,43 +1116,36 @@
     <!-- Description of field showing the next alarm time in the clock page, for accessibility. -->
     <string name="next_alarm_description">Next alarm: <xliff:g example="Wed 8:00am" id="alarm_time">%s</xliff:g></string>
     <!-- String for no alarms -->
-    <string name="no_alarms">No Alarms</string>
     <!-- String that represents that invalid time for an alarm was specified, e.g. 23:00am
      or 27:68pm.
     First %d represents hour, second %d represents minutes, %s represents am/pm,
     If no am/pm is passed in (e.g. the locale uses 24h time) only hour and minute are printed.
     [CHAR LIMIT=NONE]
     -->
-    <string name="invalid_time">Invalid time <xliff:g example="25" id="invalid_hour">%1$d</xliff:g>:<xliff:g example="63" id="invalid_minutes">%2$d</xliff:g> <xliff:g example="PM" id="invalid_ampm">%3$s</xliff:g></string>
     <!-- String that represents that no alarm has been specified for a requested hour:minutes.
     This happens when a user sends a voice command 'dismiss my alarm at 3:00pm' but they have no
     alarms specified for that time. %s represents the time of the alarm.
     [CHAR LIMIT=NONE]
     -->
-    <string name="no_alarm_at">No alarm at <xliff:g example="14" id="alarm_time_hour">%1$d</xliff:g>:<xliff:g example="23" id="alarm_time_minutes">%2$d</xliff:g></string>
     <!-- String that represents that the user doesn't have any alarms scheduled. This happens when
     a user sends a voice command 'dismiss next alarm' or 'dismiss all of my alarms' but they have
     no alarms scheduled in the app.
     [CHAR LIMIT=NONE]
     -->
-    <string name="no_scheduled_alarms">No scheduled alarms</string>
     <!-- String that represents that the user specified that they want to select an alarm to
     dismiss by specifying a 'label' but they didn't specify any labels.
     [CHAR LIMIT=NONE]
     -->
-    <string name="no_label_specified">No label specified</string>
     <!-- String that represents that no alarm has been specified for a requested label.
     This happens when a user sends a voice command 'dismiss my alarm with label pick up kids'
      but they have no alarms with that label.
     [CHAR LIMIT=NONE]
     -->
-    <string name="no_alarms_with_label">No alarms contain the label</string>
     <!-- String that represents that the user has sent a voice command 'dismiss my alarm at 3pm' when
     there was no alarm scheduled for that time (they might have had an alarm for 3pm on the list
     but it was disabled).
     [CHAR LIMIT=NONE]
     -->
-    <string name="no_alarm_scheduled_for_this_time">No alarm scheduled for this time</string>
     <!-- String that represents that the user has dismissed an alarm through a voice action.
     %s represents alarm time, e.g. 14:20
     [CHAR LIMIT=NONE]
@@ -1253,7 +1163,6 @@
     %s represents alarm time, e.g. 14:20
     [CHAR LIMIT=NONE]
     -->
-    <string name="alarm_is_set">Alarm is set for <xliff:g example="14:20" id="alarm_time">%s</xliff:g></string>
     <!-- String that represents that the user has successfully created a timer through a voice action.
     [CHAR LIMIT=NONE]
     -->
@@ -1288,28 +1197,23 @@
     %s represents the time of the alarm (e.g. 15:39)
     [CHAR LIMIT=NONE]
     -->
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> alarm can\'t be dismissed yet, still more than 24 hours away</string>
     <!-- String that shows up in the action bar for the Picker Activity
          where a use gets to pick which alarm to dismiss
    [CHAR LIMIT=NONE]
    -->
-    <string name="dismiss_alarm">Dismiss alarm</string>
     <!-- String that represents that further action is needed from the user in case their
     voice command was ambiguous or there are more than 1 alarms that match their request.
     The user needs to choose an alarm they want to dismiss through the UI
    [CHAR LIMIT=NONE]
    -->
-    <string name="pick_alarm_to_dismiss">Pick which alarm to dismiss</string>
     <!-- String that represents that the user doesn't have any alarms firing at the moment.
     [CHAR LIMIT=NONE]
     -->
-    <string name="no_firing_alarms">No firing alarms</string>
     <!-- String that represents that the user has snoozed an alarm through a voice action for 10
     minutes.
     %s represents alarm time, e.g. 14:20
     [CHAR LIMIT=NONE]
     -->
-    <string name="alarm_is_snoozed"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> alarm snoozed for 10 minutes</string>
     <!-- Setting title for the flip action setting. -->
     <string name="flip_action_title">Device flip action</string>
     <!-- Setting title for the shake action setting. -->
@@ -1467,31 +1371,17 @@
     <!-- ******************************* -->
 
     <!-- Title of the dialog shown when creating a brand-new alarm, prompting for a name/label -->
-    <string name="mighty_new_alarm_name_title">Name this alarm</string>
     <!-- Step 2 of new-alarm wizard: pick time, repeat days and optional date -->
-    <string name="mighty_new_alarm_time_date_title">Time, repeat and date</string>
-    <string name="mighty_new_alarm_repeat_label">Repeat on</string>
-    <string name="mighty_new_alarm_set_date">Set a specific date</string>
-    <string name="mighty_new_alarm_pick_date">Choose date</string>
     <!-- Step 3 of new-alarm wizard: assign category/tag -->
-    <string name="mighty_new_alarm_category_title">Category</string>
-    <string name="mighty_new_alarm_category_none">No category</string>
-    <string name="mighty_new_alarm_category_empty">No categories yet. Continue without one?</string>
     <!-- Title of the dialog allowing the user to pick an explicit snooze duration (long-press on the snooze button) -->
     <string name="mighty_choose_snooze_duration_title">Snooze for…</string>
     <!-- Suffix appended to the label of a duplicated alarm -->
-    <string name="mighty_copy_suffix">(copy)</string>
 
     <!-- Hint shown in the alarm list search field -->
-    <string name="mighty_search_alarms_hint">Search alarms…</string>
     <!-- Filter chip label: only show enabled alarms -->
-    <string name="mighty_filter_enabled">Enabled</string>
     <!-- Filter chip label: only show repeating alarms -->
-    <string name="mighty_filter_repeating">Repeating</string>
     <!-- Filter chip label: only show one-shot (non-repeating) alarms -->
-    <string name="mighty_filter_one_shot">One-shot</string>
     <!-- Chip that clears active list filters and tag selection (sort order is kept) -->
-    <string name="mighty_filter_reset">Reset filters</string>
 
     <!-- Title of the "Mighty features" settings entry -->
     <string name="mighty_features_title">Mighty features</string>
@@ -1534,10 +1424,6 @@
     <string name="mighty_mute_until_tomorrow_vibrate">Mute until tomorrow 8 AM (vibrate only)</string>
     <string name="mighty_mute_disable">Disable global mute</string>
 
-    <string name="mighty_category_wifi_rules">Wi-Fi rules</string>
-    <string name="mighty_wifi_reevaluate_title">Re-check Wi-Fi rules now</string>
-    <string name="mighty_wifi_reevaluate_summary">Applies enable/disable rules based on the currently connected Wi-Fi network</string>
-    <string name="mighty_wifi_reevaluate_toast">Wi-Fi rules re-checked</string>
 
     <string name="mighty_category_backup">Automatic backup</string>
     <string name="mighty_backup_folder_title">Backup folder</string>
@@ -1548,74 +1434,16 @@
     <string name="mighty_backup_now_success">Backup completed</string>
     <string name="mighty_backup_now_failure">Backup failed; check that a folder is selected</string>
 
-    <string name="mighty_category_exchange">Exchange</string>
-    <string name="mighty_exchange_device_name_title">Device name</string>
-    <string name="mighty_exchange_device_name_hint">Name shown to other devices</string>
-    <string name="mighty_exchange_device_name_dialog_title">Edit device name</string>
-    <string name="mighty_exchange_add_folder_title">Add exchange folder</string>
-    <string name="mighty_exchange_folder_name_hint">Folder name</string>
-    <string name="mighty_exchange_folders_title">Configured folders</string>
     <!-- Summary showing the number of configured exchange folders. %1$d = count -->
-    <string name="mighty_exchange_folders_summary">%1$d folder(s)</string>
-    <string name="mighty_exchange_folders_empty">No exchange folders configured</string>
-    <string name="mighty_exchange_nudge_syncthing_title">Start Syncthing before exchange scan</string>
-    <string name="mighty_exchange_nudge_syncthing_summary">Sends a start signal to Syncthing Fork before each scan. Enable remote control under Syncthing → Settings → Experimental, and set battery usage to Unrestricted.</string>
-    <string name="mighty_exchange_nudge_syncthing_toggle">Start Syncthing before scan: %1$s</string>
-    <string name="mighty_exchange_nudge_syncthing_on">on</string>
-    <string name="mighty_exchange_nudge_syncthing_off">off</string>
-    <string name="mighty_exchange_nudge_syncthing_enabled_toast">Syncthing will be started before each exchange scan</string>
-    <string name="mighty_exchange_nudge_syncthing_disabled_toast">Syncthing nudge before exchange scan disabled</string>
-    <string name="mighty_exchange_open_syncthing">Open Syncthing</string>
-    <string name="mighty_exchange_syncthing_not_installed">Syncthing Fork is not installed</string>
-    <string name="mighty_exchange_inbox_pending_hint">%1$d new alarm(s) in the exchange inbox</string>
-    <string name="mighty_exchange_inbox_show_action">Show</string>
-    <string name="mighty_exchange_inbox_after_scan">%1$d alarm(s) waiting in the exchange inbox</string>
     <!-- List row: %1$s = folder name, %2$s = import policy label -->
-    <string name="mighty_exchange_folder_list_item">%1$s\n%2$s</string>
-    <string name="mighty_exchange_import_policy_ask">Ask before importing</string>
-    <string name="mighty_exchange_import_policy_auto">Import automatically</string>
-    <string name="mighty_exchange_folder_actions_title">Exchange folder</string>
-    <string name="mighty_exchange_folder_change_policy">Import behavior</string>
-    <string name="mighty_exchange_folder_deleted">Exchange folder removed</string>
-    <string name="mighty_exchange_scan_now_title">Scan now</string>
-    <string name="mighty_exchange_inbox_title">Inbox</string>
     <!-- Summary showing the number of pending exchange imports. %1$d = count -->
-    <string name="mighty_exchange_inbox_summary">%1$d pending</string>
-    <string name="mighty_exchange_inbox_empty">Inbox is empty</string>
     <!-- Inbox item: %1$s = folder, %2$s = sender, %3$s = alarm summary -->
-    <string name="mighty_exchange_inbox_item_message">Folder \"%1$s\"\nFrom: %2$s\n\n%3$s</string>
     <!-- Inbox item with explicit recipient: %1$s = folder, %2$s = sender, %3$s = recipient, %4$s = alarm summary -->
-    <string name="mighty_exchange_inbox_item_message_to">Folder \"%1$s\"\nFrom: %2$s\nTo: %3$s\n\n%4$s</string>
-    <string name="mighty_exchange_unknown_sender">Unknown device</string>
-    <string name="mighty_accept">Accept</string>
-    <string name="mighty_reject">Reject</string>
 
     <string name="mighty_category_clock">Clock</string>
-    <string name="mighty_category_tags">Tags</string>
-    <string name="mighty_tags_section_title">Tags</string>
-    <string name="mighty_tags_edit_button">Assign tags</string>
-    <string name="mighty_tags_none">No tags</string>
-    <string name="mighty_tags_with_count">%1$s (%2$d)</string>
-    <string name="mighty_tags_assign_title">Assign tags</string>
-    <string name="mighty_tags_create_first">Create tags first under Settings → Mighty features</string>
-    <string name="mighty_manage_tags_title">Manage tags</string>
-    <string name="mighty_manage_tags_summary">Create, color, or delete alarm tags</string>
-    <string name="mighty_tags_add_title">New tag</string>
-    <string name="mighty_tags_add_hint">Tag name</string>
-    <string name="mighty_tags_empty">No tags yet. Tap Add to create one.</string>
-    <string name="mighty_tags_deleted">Tag deleted</string>
-    <string name="mighty_tags_created">Tag created</string>
-    <string name="mighty_tags_change_color">Change color</string>
-    <string name="mighty_tags_color_updated">Tag color updated</string>
-    <string name="mighty_tags_add">Add</string>
-    <string name="mighty_tags_delete">Delete</string>
     <string name="mighty_display_timezone_globe_title">Show timezone globe</string>
 
     <!-- Extra alarm sort spinner options -->
-    <string name="mighty_sort_by_ring_count">Sort: ring count</string>
-    <string name="mighty_sort_by_created_date">Sort: date created</string>
-    <string name="mighty_sort_by_updated_date">Sort: date updated</string>
-    <string name="mighty_sort_by_next_alarm">Sort: next to ring</string>
 
     <!-- JSON backup interval options -->
     <string name="mighty_backup_interval_6h">Every 6 hours</string>
@@ -1624,76 +1452,26 @@
     <string name="mighty_backup_interval_48h">Every 48 hours</string>
 
     <!-- Alarm edit bottom sheet: snooze extension section -->
-    <string name="mighty_snooze_extend_title">Snooze extension</string>
-    <string name="mighty_snooze_extend_enabled_title">Extend snooze each time</string>
-    <string name="mighty_snooze_extend_minutes_label">Extend by</string>
-    <string name="mighty_snooze_extend_max_minutes_label">Maximum extension</string>
-    <string name="mighty_snooze_extend_no_max">No limit</string>
 
     <!-- Alarm edit bottom sheet: Wi-Fi rule section -->
-    <string name="mighty_wifi_rule_title">Wi-Fi rule</string>
-    <string name="mighty_wifi_rule_enabled_title">Enable Wi-Fi rule for this alarm</string>
-    <string name="mighty_wifi_ssid_hint">Wi-Fi network name (SSID)</string>
-    <string name="mighty_wifi_condition_label">When network is</string>
-    <string name="mighty_wifi_condition_present">Present</string>
-    <string name="mighty_wifi_condition_absent">Absent</string>
-    <string name="mighty_wifi_action_label">Then</string>
-    <string name="mighty_wifi_action_enable">Enable alarm</string>
-    <string name="mighty_wifi_action_disable">Disable alarm</string>
 
     <!-- Alarm edit bottom sheet: move to exchange section -->
-    <string name="mighty_move_to_exchange_button">Move to exchange…</string>
-    <string name="mighty_move_to_exchange_title">Choose exchange folder</string>
-    <string name="mighty_move_to_exchange_recipient_title">Choose recipient</string>
-    <string name="mighty_move_to_exchange_any_device">Any device</string>
-    <string name="mighty_move_to_exchange_success">Alarm moved to exchange folder</string>
-    <string name="mighty_move_to_exchange_failure">Failed to move alarm to exchange folder</string>
-    <string name="mighty_exchange_no_folders_configured">No exchange folders configured. Add one from Mighty features settings.</string>
 
     <!-- Alarm list: tag filter -->
-    <string name="mighty_tag_filter_all">All tags</string>
-    <string name="mighty_tag_filter_untagged">No tags</string>
     <!-- Spinner row label: %1$s = tag filter option (all / untagged / tag name) -->
-    <string name="mighty_tag_filter_labeled">Tags: %1$s</string>
 
 
     <!-- Interval repeat -->
-    <string name="mighty_interval_repeat_title">Interval repeat</string>
-    <string name="mighty_interval_repeat_enabled">Repeat on an interval</string>
-    <string name="mighty_interval_value_label">Interval</string>
-    <string name="mighty_interval_unit_label">Unit</string>
-    <string name="mighty_interval_unit_minutes">Minutes</string>
-    <string name="mighty_interval_unit_hours">Hours</string>
-    <string name="mighty_interval_max_count_label">Maximum repeats</string>
-    <string name="mighty_interval_max_unlimited">Unlimited</string>
     <!-- %1$d = interval in minutes -->
-    <string name="mighty_interval_summary_minutes">Every %1$d min</string>
     <!-- %1$d = interval in hours -->
-    <string name="mighty_interval_summary_hours">Every %1$d h</string>
     <!-- %1$s = interval summary, %2$d = max count -->
-    <string name="mighty_interval_summary_with_max">%1$s · max %2$d×</string>
     <!-- %1$s = start date, %2$s = interval summary -->
-    <string name="mighty_interval_summary_with_date">%1$s · %2$s</string>
 
     <!-- Skip current occurrence of a recurring alarm; %1$d = days/hours/minutes until the one after -->
-    <string name="mighty_skip_next_occurrence_days">+%1$dd</string>
-    <string name="mighty_skip_next_occurrence_hours">+%1$dh</string>
-    <string name="mighty_skip_next_occurrence_minutes">+%1$dm</string>
     <!-- %1$s = short label such as "+2d" -->
-    <string name="mighty_skip_next_occurrence_content_description">Skip this ringing and schedule the next one (%1$s)</string>
     <!-- Postpone a snoozed alarm from now; %1$d = hours -->
-    <string name="mighty_postpone_snooze_content_description">Postpone snooze by %1$d hours from now</string>
 
     <!-- Sample alarms / tags seeded on first launch -->
-    <string name="mighty_sample_tag_work">Work</string>
-    <string name="mighty_sample_tag_home">Home</string>
-    <string name="mighty_sample_alarm_weekdays">Weekday wake-up (sample)</string>
-    <string name="mighty_sample_alarm_oneshot">One-shot weekend alarm (sample)</string>
-    <string name="mighty_sample_alarm_work_tag">Work – tagged (sample)</string>
-    <string name="mighty_sample_alarm_wifi">Home Wi-Fi (sample)</string>
-    <string name="mighty_sample_alarm_snooze_extend">Snooze extension (sample)</string>
-    <string name="mighty_sample_alarm_interval">Every 30 min, max 3× (sample)</string>
-    <string name="mighty_sample_alarm_future_interval">Vehicle inspection reminder (sample)</string>
 
     <!-- Calendar Alarm tab -->
     <string name="menu_calendar_alarm">Calendar</string>

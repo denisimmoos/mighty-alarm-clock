@@ -66,6 +66,40 @@ public class BackupAndRestoreUtils {
     public static boolean appNeedsRestart = false;
 
     /**
+     * Settings of the removed normal alarms (list, editor, per-alarm defaults, exchange). Older
+     * backups still contain them; they are skipped when restoring.
+     */
+    private static final Set<String> REMOVED_NORMAL_ALARM_SETTINGS = Set.of(
+        "key_sample_alarms_seeded",
+        "key_material_time_picker_style",
+        "key_material_date_picker_style",
+        "key_enable_per_alarm_auto_silence",
+        "key_auto_silence_duration",
+        "key_enable_per_alarm_snooze_duration",
+        "key_alarm_snooze_duration",
+        "key_enable_per_alarm_missed_repeat_limit",
+        "key_repeat_missed_alarm",
+        "key_enable_per_alarm_volume_crescendo_duration",
+        "key_alarm_volume_crescendo_duration",
+        "key_enable_per_alarm_volume",
+        "key_sort_alarm",
+        "key_display_enabled_alarms_first",
+        "key_enable_alarm_fab_long_press",
+        "key_week_start",
+        "key_display_dismiss_button",
+        "key_enable_per_alarm_vibration_pattern",
+        "key_enable_alarm_vibrations_by_default",
+        "key_turn_on_back_flash_for_triggered_alarm",
+        "key_enable_delete_occasional_alarm_by_default",
+        "key_mighty_exchange_nudge_syncthing",
+        "key_alarm_list_filter_enabled",
+        "key_alarm_list_filter_repeating",
+        "key_alarm_list_filter_one_shot",
+        "key_alarm_list_extra_sort",
+        "key_alarm_list_filter_tag_id"
+    );
+
+    /**
      * Read and export values in SharedPreferences to a file.
      */
     public static void settingsToJsonStream(Context context, SharedPreferences prefs, Map<String, ?> settings, OutputStream out)
@@ -254,6 +288,9 @@ public class BackupAndRestoreUtils {
         JSONObject booleans = jsonObject.getJSONObject("Boolean settings");
         for (Iterator<String> it = booleans.keys(); it.hasNext(); ) {
             String key = it.next();
+            if (REMOVED_NORMAL_ALARM_SETTINGS.contains(key)) {
+                continue;
+            }
             boolean value = booleans.getBoolean(key);
             editor.putBoolean(key, value);
         }
@@ -261,6 +298,9 @@ public class BackupAndRestoreUtils {
         JSONObject strings = jsonObject.getJSONObject("String settings");
         for (Iterator<String> it = strings.keys(); it.hasNext(); ) {
             String key = it.next();
+            if (REMOVED_NORMAL_ALARM_SETTINGS.contains(key)) {
+                continue;
+            }
             String value = strings.getString(key);
 
             if (isRingtoneKey(key)) {
@@ -281,6 +321,9 @@ public class BackupAndRestoreUtils {
         JSONObject integers = jsonObject.getJSONObject("Integer settings");
         for (Iterator<String> it = integers.keys(); it.hasNext(); ) {
             String key = it.next();
+            if (REMOVED_NORMAL_ALARM_SETTINGS.contains(key)) {
+                continue;
+            }
             int value = integers.getInt(key);
             editor.putInt(key, value);
         }
@@ -288,6 +331,9 @@ public class BackupAndRestoreUtils {
         JSONObject longs = jsonObject.getJSONObject("Long settings");
         for (Iterator<String> it = longs.keys(); it.hasNext(); ) {
             String key = it.next();
+            if (REMOVED_NORMAL_ALARM_SETTINGS.contains(key)) {
+                continue;
+            }
             long value = longs.getLong(key);
             editor.putLong(key, value);
         }

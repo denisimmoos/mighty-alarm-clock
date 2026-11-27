@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"მაღვიძარა"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"ვიბრაცია"</string>
-    <string name="time_picker_dialog_title">აირჩიეთ დრო</string>
-    <string name="date_picker_dialog_title">აირჩიეთ თარიღი</string>
     <string name="delete" msgid="5732434972457000541">"წაშლა"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">"მაღვიძარას ნაგულისხმევი ხმა"</string>
     <string name="alarm_sound" msgid="8754499591391638405">"მაღვიძარას ხმა"</string>
@@ -34,7 +31,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">"ჩაჩუმება  <xliff:g id="TIME">%s</xliff:g>-მდე"</string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"მომავალი მაღვიძარა"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"თქვენი გაცდენილი მაღვიძარა წაიშალა"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"დარჩენილია ერთ წუთზე ნაკლები"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="REMAINING"> %3$s</xliff:g><xliff:g id="HOURS">%1$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="REMAINING"> %3$s</xliff:g><xliff:g id="MINUTES">%2$s</xliff:g>"</string>
@@ -84,15 +80,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"ისრებიანი საათი"</string>
     <string name="digital_widget" msgid="2326954556720571358">"ციფრული საათი"</string>
     <string name="settings" msgid="5849739030579520686">"პარამეტრები"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"ჩაჩუმების სიგრძე"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"ხმის თანდათანობით გაზრდა"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"სიჩუმე გააქტიურდება:"</string>
     <string name="label_never" msgid="4821982647348750809">"არასოდეს"</string>
     <string name="label_off">გამორთული</string>
-    <string name="week_start_title" msgid="4268917518596832096">"კვირის დაწყების დღეა"</string>
-    <string name="week_start_saturday">შაბათი</string>
-    <string name="week_start_sunday">კვირა</string>
-    <string name="week_start_monday">ორშაბათი</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"მაღვიძარას ხმა"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"ჩუმი"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"უცნობი"</string>
@@ -104,13 +95,10 @@
     <string name="button_action_dismiss">დახურვა</string>
     <string name="button_action_control_volume">ხმის მართვა</string>
     <string name="button_action_nothing">არაფერი</string>
-    <string name="label_description" msgid="8736179296142915727">"ლეიბლი"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"ზარი"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"მაღვიძარა"</string>
     <string name="menu_timer" msgid="6459070074762877114">"ტაიმერი"</string>
     <string name="menu_clock" msgid="5612760670606829805">"საათი"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"წამმზომი"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"მაღვიძარას დამატება"</string>
     <string name="button_cities" msgid="4555761857494501363">"ქალაქები"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"ეკრანმზოგი"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"სორტირება დროის მიხედვით"</string>
@@ -169,8 +157,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"სახლის დროის სარტყელი"</string>
     <string name="city_checked" msgid="616847871968019">"<xliff:g id="CITY_NAME">%s</xliff:g> მონიშნულია"</string>
     <string name="city_unchecked" msgid="710212932781145918">"<xliff:g id="CITY_NAME">%s</xliff:g> არ არის მონიშნული"</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"ახალი მაღვიძარა"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"ახალი მაღვიძარის შექმნა"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"ახალი ტაიმერი"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"ახალი ტაიმერის შექმნა"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"გაშვება"</string>
@@ -188,8 +174,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"ტაიმერის ვიბრაცია"</string>
     <string name="timer_paused" msgid="5941160896040771462">"ტაიმერი დაპაუზებულია"</string>
     <string name="timers_in_use" msgid="5570729467344408506">"<xliff:g id="NUMBER">%d</xliff:g> ტაიმერი"</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"მოქმედების გაუქმება"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"მაღვიძარა წაშლილია"</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="LABEL">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">"<xliff:g id="TIME">%1$s</xliff:g>-ით წინ"</string>
     <string name="world_time_behind" msgid="5395771290726167865">"<xliff:g id="TIME">%1$s</xliff:g>-ით უკან"</string>
@@ -198,15 +182,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">"ხვალ, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">"გუშინ, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="next_alarm_description" msgid="2650244835760747046">"მომდევნო მაღვიძარა: <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
-    <string name="no_alarms" msgid="6429431324842022917">"მაღვიძარები არ არის"</string>
-    <string name="invalid_time" msgid="2782334750243998633">"არასწორი დრო <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g> <xliff:g id="INVALID_AMPM">%3$s</xliff:g>"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">"<xliff:g id="ALARM_TIME_HOUR">%1$d</xliff:g>:<xliff:g id="ALARM_TIME_MINUTES">%2$d</xliff:g>-ზე მაღვიძარა არ არის"</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"დაგეგმილი მაღვიძარა არ არის"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"ლეიბლი მითითებული არ არის"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"მაღვიძარას არ აქვს ეს ლეიბლი"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"მაღვიძარა ამ დროს დაგეგმილი არ არის"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">"<xliff:g id="ALARM_TIME">%s</xliff:g>-ზე მაღვიძარა გაუქმებულია"</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">"მაღვიძარა დაყენებულია <xliff:g id="ALARM_TIME">%s</xliff:g>-ზე"</string>
     <string name="timer_created" msgid="4381027137335885547">"ტაიმერი შექმნილია"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="other"><xliff:g id="NUMBER">%d</xliff:g> ტაიმერი უგულებელყოფილია</item>
@@ -215,11 +191,6 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"ტაიმერის არასწორი ხანგრძლივობა"</string>
     <string name="invalid_timer" msgid="900957020728335675">"არჩეულია არასწორი ტაიმერი"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"ვადაგასული ტაიმერები არ არის"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">"<xliff:g id="ALARM_TIME">%s</xliff:g>-ზე მაღვიძარა ჯერ ვერ გაუქმდება, იქამდე 24 საათზე მეტია"</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"მაღვიძარის გაუქმება"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"აირჩიეთ გასაუქმებელი მაღვიძარა"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"აქტიური მაღვიძარა არ არის"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">"<xliff:g id="ALARM_TIME">%s</xliff:g>-ის მაღვიძარა 10 წუთით ჩაჩუმდა"</string>
     <string name="flip_action_title">მოქმედება მოწყობილობის შეტრიალებისას</string>
     <string name="firing_alarms_timers_channel">საგანგებო სიგნალები და წამზომები</string>
     <string name="alarm_missed_channel">გაცდენილი მაღვიძარა</string>

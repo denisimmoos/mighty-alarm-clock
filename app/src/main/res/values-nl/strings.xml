@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"Wekker"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"Trillen"</string>
-    <string name="time_picker_dialog_title">Tijd selecteren</string>
-    <string name="date_picker_dialog_title">Datum selecteren</string>
     <string name="delete" msgid="5732434972457000541">"Verwijderen"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">Standaard wekkergeluid</string>
     <string name="alarm_sound" msgid="8754499591391638405">Wekkergeluid</string>
@@ -34,7 +31,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">Sluimeren tot <xliff:g id="time">%s</xliff:g></string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">Aankomende wekker</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"Je gemiste wekker is verwijderd"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"Nog minder dan een minuut"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="HOURS">%1$s</xliff:g> <xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="MINUTES">%2$s</xliff:g> <xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
@@ -84,15 +80,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"Analoge klok"</string>
     <string name="digital_widget" msgid="2326954556720571358">"Digitale klok"</string>
     <string name="settings" msgid="5849739030579520686">"Instellingen"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">Sluimerduur</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"Volume geleidelijk verhogen"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"Stil na"</string>
     <string name="label_never" msgid="4821982647348750809">"Nooit"</string>
     <string name="label_off">Uit</string>
-    <string name="week_start_title" msgid="4268917518596832096">"Week starten op"</string>
-    <string name="week_start_saturday">Zaterdag</string>
-    <string name="week_start_sunday">Zondag</string>
-    <string name="week_start_monday">Maandag</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">Volume</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"Stil"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"Onbekend"</string>
@@ -104,13 +95,10 @@
     <string name="button_action_dismiss">Uitzetten</string>
     <string name="button_action_control_volume">Volume regelen</string>
     <string name="button_action_nothing">Geen</string>
-    <string name="label_description" msgid="8736179296142915727">"Label"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">Geluid</string>
     <string name="menu_alarm" msgid="4772010125376647519">"Wekker"</string>
     <string name="menu_timer" msgid="6459070074762877114">Kookwekker</string>
     <string name="menu_clock" msgid="5612760670606829805">"Klok"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">Stopklok</string>
-    <string name="button_alarms" msgid="3907838219512538763">"Wekker toevoegen"</string>
     <string name="button_cities" msgid="4555761857494501363">"Plaatsen"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"Screensaver"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Sorteren op tijd"</string>
@@ -169,8 +157,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"Eigen tijdzone"</string>
     <string name="city_checked" msgid="616847871968019"><xliff:g id="city_name">%s</xliff:g> aangevinkt</string>
     <string name="city_unchecked" msgid="710212932781145918"><xliff:g id="city_name">%s</xliff:g> niet aangevinkt</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"Nieuwe wekker"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">Nieuwe wekker maken</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">Nieuwe kookwekker</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">Nieuwe kookwekker maken</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"Starten"</string>
@@ -188,8 +174,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">Trillen voor kookwekker</string>
     <string name="timer_paused" msgid="5941160896040771462">Kookwekker gepauzeerd</string>
     <string name="timers_in_use" msgid="5570729467344408506"><xliff:g example="7" id="number">%d</xliff:g> kookwekkers</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"ongedaan maken"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"Verwijderd"</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="label">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652"><xliff:g example="6 hours" id="time">%1$s</xliff:g> later</string>
     <string name="world_time_behind" msgid="5395771290726167865"><xliff:g example="4 hours" id="time">%1$s</xliff:g> vroeger</string>
@@ -198,15 +182,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">Morgen, <xliff:g example="6 hours ahead" id="time">%1$s</xliff:g></string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">Gisteren, <xliff:g example="4 hours behind" id="time">%1$s</xliff:g></string>
     <string name="next_alarm_description" msgid="2650244835760747046">Volgende wekker: <xliff:g example="Wed 8:00am" id="alarm_time">%s</xliff:g></string>
-    <string name="no_alarms" msgid="6429431324842022917">"Geen wekkers"</string>
-    <string name="invalid_time" msgid="2782334750243998633">"Ongeldige tijd: <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g> <xliff:g id="INVALID_AMPM">%3$s</xliff:g>"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">Geen wekker om <xliff:g example="14" id="alarm_time_hour">%1$d</xliff:g>:<xliff:g example="23" id="alarm_time_minutes">%2$d</xliff:g></string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"Geen geplande wekkers"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"Geen label opgegeven"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"Er zijn geen wekkers die het label bevatten"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"Geen wekker gepland op deze tijd"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> wekker uitgezet</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">Wekker is ingesteld voor <xliff:g example="14:20" id="alarm_time">%s</xliff:g></string>
     <string name="timer_created" msgid="4381027137335885547">Kookwekker gemaakt</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="one">Kookwekker gesloten</item>
@@ -215,11 +191,6 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">Ongeldige kookwekkerduur</string>
     <string name="invalid_timer" msgid="900957020728335675">Ongeldige kookwekker geselecteerd</string>
     <string name="no_expired_timers" msgid="4624192298397846876">Geen verlopen kookwekkers</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> wekker kan nog niet uitgezet worden omdat deze over meer dan 24 uur afgaat</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"Wekker sluiten"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"Kiezen welke wekker je wilt sluiten"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"Geen actieve wekkers"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> wekker tien minuten gesluimerd</string>
     <string name="flip_action_title">Actie bij apparaat omdraaien</string>
     <string name="shake_action_title">Actie bij apparaat schudden</string>
     <string name="title_theme">Thema</string>
@@ -227,7 +198,6 @@
     <string name="display_background_border_title">Achtergrondranden weergeven</string>
     <string name="display_background_border_summary">Gebruik een achtergrondrand voor sommige elementen (wekkers, steden, kookwekkerknoppen etc.)</string>
     <string name="settings_vibration_title">Trillen inschakelen</string>
-    <string name="duplicate">Dupliceren</string>
     <string name="more_options">Meer opties</string>
     <string name="settings_permission_message">Één of meer essentiële rechten zijn niet toegestaan. Niet toestemmen kan ervoor zorgen dat de app niet goed werkt.</string>
     <string name="settings_permission_summary">Tik hier om de pagina rechtenbeheer te tonen.</string>
@@ -303,7 +273,6 @@
     <string name="power_button_title">Aan/uit-knop</string>
     <string name="gnu_gpl">GNU General Public License v3.0</string>
     <string name="first_launch_important_info_message">Om zeker te zijn dat de app goed werkt, &lt;b&gt;moeten sommige instellingen van je apparaat veranderd worden:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;NIET STOREN;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;BATTERIJOPTIMALISATIE;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;MELDINGEN;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;Afhankelijk van de Androidversie van je apparaat zijn sommige instellingen al geoptimaliseerd (bijv. meldingen).&lt;/i&gt; &lt;br&gt; &lt;br&gt; Je kan ze nu of later veranderen in de rechtenbeheer-instellingen:</string>
-    <string name="material_time_picker_style_title">Tijdselectie</string>
     <string name="alarm_settings_summary">Stijl, lettertype, geluid, volume, sluimeracties, eerste weekdag en herinneringstijd aanpassen</string>
     <string name="next_alarm_default_color_title">Standaardkleur volgende wekker</string>
     <string name="digital_widget_message_summary">\"Steden weergeven\" moet uitgeschakeld zijn voor deze optie</string>
@@ -334,10 +303,8 @@
     <string name="max_clock_font_size_title">Maximum lettergrootte van de klok</string>
     <string name="miscellaneous_category_title">Overig</string>
     <string name="ringtone_category_title">Geluid</string>
-    <string name="enable_alarm_vibrations_by_default_setting_title">Trillen als wekker gaat</string>
     <string name="alarm_notification_reminder_title">Wekkerherinnering</string>
     <string name="label_default">Standaard</string>
-    <string name="delete_occasional_alarm_after_use_title">Verwijderen na uitzetten</string>
     <string name="alarm_alert_dismiss_and_delete_text">Uitzetten &amp; Verwijderen</string>
     <string name="alarm_alert_off_and_deleted_text">Wekker uit en verwijderd</string>
     <string name="timer_volume_buttons_action_title">Verlopen kookwekkers terugzetten met volumeknoppen</string>
@@ -397,8 +364,6 @@
     <string name="brown_accent_color">Bruin</string>
     <string name="red_accent_color">Rood</string>
     <string name="amoled_dark_theme_mode">AMOLED</string>
-    <string name="enable_delete_occasional_alarm_by_default_setting_title">Gelegenheidswekkers standaard verwijderen</string>
-    <string name="alarm_settings_general_summary">Deze instelling kan per wekker aangepast worden in het uitvouwmenu</string>
     <string name="dismiss_button_color">Kleur uitzetknop</string>
     <string name="alarm_button_color">Kleur wekkerknop</string>
     <string name="sort_manually">Handmatig (door te slepen)</string>
@@ -419,23 +384,12 @@
     <string name="warning_dialog_title">Kookwekker verwijderen</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">Trillen als wekker wordt gesluimerd of uitgezet</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Dubbel trillen als wekker wordt gesluimerd en één keer trillen als wekker wordt uitgezet</string>
-    <string name="turn_on_back_flash_for_triggered_alarm_title">Zaklamp aanzetten als wekker gaat</string>
-    <string name="alarm_flash">Zaklamp</string>
     <string name="about_translate_link">Vertalen op Codeberg</string>
     <string name="translate_dialog_message">Bezoek de Codeberg-pagina:\n\n%s</string>
     <string name="shake_intensity_title">Schud-intensiteit</string>
     <string name="settings_language_title">Taal</string>
     <string name="settings_language_system">Systeemtaal</string>
-    <string name="settings_language_french">Frans</string>
     <string name="settings_language_german">Duits</string>
-    <string name="settings_language_estonian">Ests</string>
-    <string name="settings_language_italian">Italiaans</string>
-    <string name="settings_language_polish">Pools</string>
-    <string name="settings_language_portuguese">Portugees</string>
-    <string name="settings_language_serbian">Servisch</string>
-    <string name="settings_language_spanish">Spaans</string>
-    <string name="settings_language_ukrainian">Oekraïens</string>
-    <string name="settings_language_chinese_simplified_cn">Chinees (vereenvoudigd, PRC)</string>
     <string name="settings_language_english_us">Engels (VS)</string>
     <string name="permission_info_title">Enkel voor Xiaomi toestellen</string>
     <string name="show_lockscreen_dialog_title">Tonen op vergrendelscherm</string>
@@ -443,20 +397,15 @@
     <string name="show_lockscreen_dialog_text">Bij Xiami toestellen, moet de \"Tonen op vergrendelscherm\"-toestemming manueel geactiveerd worden in de instellingen zodat de applicatie normaal kan werken.</string>
     <string name="clock_style_analog_material">Analoog (Material)</string>
     <string name="clock_style_spinner">Carrousel</string>
-    <string name="settings_language_dutch">Nederlands</string>
-    <string name="settings_language_russian">Russisch</string>
     <string name="settings_tab_to_display">Tabblad openen bij start</string>
     <string name="timer_button_time_minutes_warning_box_text">Voer een waarde in tussen 0 en 60 minuten</string>
     <string name="last_tab_used_title">Laatst gebruikt</string>
     <string name="timer_time_warning_box_title">Onjuiste waarde ingevoerd</string>
-    <string name="settings_language_turkish">Turks</string>
     <string name="reset_settings_title">Instellingen opnieuw instellen</string>
     <string name="reset_settings_message">Weet je zeker dat je alle instellingen opnieuw wilt instellen?</string>
     <string name="blue_accent_color">Blauw</string>
     <string name="restart_app_dialog_title_for_reset">Terugzetten voltooid</string>
-    <string name="settings_language_korean">Koreaans</string>
     <string name="display_date_title">Datum weergeven</string>
-    <string name="settings_language_czech">Tsjechisch</string>
     <string name="settings_toolbar_title">Titel in navigatiemenu weergeven</string>
     <string name="settings_tab_title_visibility_title">Titels van tabbladen weergeven</string>
     <string name="tab_title_visibility_always">Altijd</string>
@@ -471,14 +420,8 @@
     <string name="display_next_alarm_title">Volgende wekker weergeven</string>
     <string name="snooze_title_color">Kleur sluimertitel</string>
     <string name="description_dismiss_button_for_occasional_alarm">Tik om wekker uit te zetten en te verwijderen</string>
-    <string name="settings_language_chinese_traditional_tw">Chinees (traditioneel, Taiwan)</string>
     <string name="alarm_is_dismissed_and_deleted"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> wekker uitgezet en verwijderd</string>
-    <string name="date_picker_style_calendar">Kalender</string>
-    <string name="date_picker_style_title">Datumkiezer</string>
-    <string name="alarm_scheduled_for">Ingeroosterd voor %s</string>
-    <string name="schedule_alarm_title">Inroosteren</string>
     <string name="random_ringtone_title">Willekeurig geluid</string>
-    <string name="date_picker_style_text">Tekst</string>
     <string name="warning">Waarschuwing</string>
     <string name="timer_add_custom_time_with_seconds_for_notification">%1$s min. %2$s sec. toevoegen</string>
     <string name="label_minutes">Minuten</string>
@@ -500,8 +443,6 @@
     <string name="connect_external_audio_device_title">Sluit een extern audioapparaat aan om deze instelling te openen</string>
     <string name="disconnect_external_audio_device_title">Koppel het externe audioapparaat los om deze instelling te openen</string>
     <string name="widget_apply_horizontal_padding_title">Ruimte toepassen op widgetranden</string>
-    <string name="enable_per_alarm_volume_title">Aangepast volume voor iedere wekker</string>
-    <string name="delay_picker_dialog_title">Alarm in…</string>
     <string name="colors_category_title">Kleuren</string>
     <string name="clock_second_hand_title">Secondewijzer</string>
     <string name="clock_second_hand_vintage">Antiek</string>
@@ -518,10 +459,6 @@
     <string name="clock_dial_with_numbers">Getallen</string>
     <string name="clock_dial_without_numbers">Zonder getallen</string>
     <string name="second_hand_default_color_title">Standaardkleur secondewijzer</string>
-    <string name="sort_alarm_title">Wekkers sorteren</string>
-    <string name="sort_alarm_time">Op wekkertijd</string>
-    <string name="sort_next_alarm_time">Op volgende wekkertijd</string>
-    <string name="display_enabled_alarms_first_title">Ingeschakelde wekkers eerst weergeven</string>
     <string name="sort_cities_title">Steden sorteren</string>
     <string name="enable_city_note_title">Persoonlijke notities aan steden toevoegen</string>
     <string name="enable_city_note_summary">Tik op een stad om een persoonlijke notitie toe te voegen of te bewerken</string>
@@ -529,10 +466,6 @@
     <string name="sort_cities_ascending_time_zone">Op tijdzone (oplopende volgorde)</string>
     <string name="sort_cities_descending_time_zone">Op tijdzone (aflopende volgorde)</string>
     <string name="city_search_hint">Stad zoeken</string>
-    <string name="sort_descending_creation_order">Op aanmaakdatum (oudste laatst)</string>
-    <string name="sort_ascending_creation_order">Op aanmaakdatum (oudste eerst)</string>
-    <string name="enable_alarm_fab_long_press_title">Lang drukken op actieknop om wekkers met uitstel te maken</string>
-    <string name="enable_alarm_fab_long_press_summary">Uitgeschakeld: twee knoppen om wekkers te maken worden weergegeven</string>
     <string name="vibration_pattern_title">Trillingspatroon</string>
     <string name="vibration_pattern_soft">Zacht</string>
     <string name="vibration_pattern_strong">Sterk</string>
@@ -543,23 +476,7 @@
     <string name="vibration_start_delay_none">Geen</string>
     <string name="vibration_start_delay_warning_box_text">Voer een waarde in tussen 0 en 10 minuten</string>
     <string name="confirm_action_prompt">\n\nWil je doorgaan?</string>
-    <string name="enable_per_alarm_snooze_duration_title">Aangepaste sluimerduur voor iedere wekker</string>
-    <string name="enable_per_alarm_snooze_duration_dialog_message">Aangepaste sluimerduren zullen worden teruggezet.%s</string>
-    <string name="enable_per_alarm_volume_dialog_message">Aangepaste wekkervolumes zullen worden teruggezet.%s</string>
-    <string name="display_dismiss_button_title">Uitzetknop weergeven zodra wekker is ingeschakeld</string>
-    <string name="display_dismiss_button_summary">Als deze optie is uitgeschakeld, wordt de knop tegelijk met de herinneringsmelding weergegeven</string>
-    <string name="enable_per_alarm_missed_repeat_limit_title">Aangepast aantal gemiste wekkerherhalingen voor iedere wekker</string>
-    <string name="enable_per_alarm_crescendo_duration_title">Aangepaste volumeverhogingsduur voor iedere wekker</string>
-    <string name="enable_per_alarm_crescendo_duration_dialog_message">Aangepaste volumeverhogingsduren zullen worden teruggezet.%s</string>
-    <string name="enable_per_alarm_auto_silence_title">Aangepaste eindtijd voor iedere wekker</string>
-    <string name="enable_per_alarm_auto_silence_dialog_message">Aangepaste eindtijden zullen worden teruggezet.%s</string>
     <string name="features_dialog_message">Bekijk de pagina met de belangrijkste kenmerken:\n\n%s</string>
-    <string name="enable_per_alarm_missed_repeat_limit_dialog_message">Aangepast aantal wekkerherhalingen zullen worden teruggezet.%s</string>
-    <string name="missed_alarm_repeat_limit_title">Gemiste wekkers herhalen</string>
-    <string name="missed_alarm_repeat_limit_1_time">1 keer</string>
-    <string name="missed_alarm_repeat_limit_3_times">3 keer</string>
-    <string name="missed_alarm_repeat_limit_5_times">5 keer</string>
-    <string name="missed_alarm_repeat_limit_10_times">10 keer</string>
     <string name="repetitive_alarm_is_dismissed">Wekker uitgezet. <xliff:g example="Next alarm Monday." id="alarm_day">Opnieuw ingeroosterd op %s.</xliff:g></string>
     <string name="blur_intensity_title">Vervagingssterkte</string>
     <string name="background_image_title">Achtergrondafbeelding selecteren</string>
@@ -588,8 +505,6 @@
     <string name="custom_font_toast_message_selected">Lettertype succesvol geselecteerd</string>
     <string name="custom_font_toast_message_deleted">Lettertype succesvol verwijderd</string>
     <string name="vibration_category_title">Trilling</string>
-    <string name="enable_per_alarm_vibration_pattern_title">Aangepast trillingspatroon voor iedere wekker</string>
-    <string name="enable_per_alarm_vibration_pattern_dialog_message">Aangepaste trillingspatronen zulken worden teruggezet.%s</string>
     <string name="sw_laps_title">Rondes</string>
     <string name="sw_split_title">Verdeling</string>
     <string name="sw_total_title">Totaal</string>
@@ -599,16 +514,10 @@
     <string name="battery_color_title">Kleur batterijniveau</string>
     <string name="screensaver_bold_battery_title">Dikgedrukt batterijniveau</string>
     <string name="screensaver_italic_battery_title">Schuingedrukt batterijniveau</string>
-    <string name="settings_language_bulgarian">Bulgaars</string>
-    <string name="settings_language_tamil">Tamil</string>
     <string name="display_settings_title">Weergave</string>
     <string name="sync_alarm_by_label_title">Wekkers met hetzelfde label synchroniseren</string>
-    <string name="label_indefinitely">Voor onbepaalde tijd</string>
     <string name="button_tip_title">Houd de \"+\" knop lang ingedrukt om een map toe te voegen</string>
-    <string name="alarm_alert_dismiss_and_delete_text_button">Uitzetten &amp;\nVerwijderen</string>
     <string name="permissions_category_title">Rechten</string>
-    <string name="enable_alarm_vibrations_by_default_dialog_message">Trillen zal uitgeschakeld worden voor alle wekkers.%s</string>
-    <string name="enable_delete_occasional_alarm_by_default_dialog_message">De \"Verwijderen na uitzetten\" optie zal uitgeschakeld worden voor alle wekkers.%s</string>
     <string name="snooze_zone_color_title">Kleur sluimergebied</string>
     <string name="snooze_minus_button_color_title">Kleur \"-\" knop</string>
     <string name="snooze_plus_button_color_title">Kleur \"+\" knop</string>
@@ -637,8 +546,6 @@
     <string name="foreground_service_message">Draait op de achtergrond</string>
     <string name="foreground_service_title">Voorgrondmelding weergeven</string>
     <string name="foreground_service_dialog_message">Om te voorkomen dat je apparaat de app abrupt afsluit en meldingen mist, wordt er een permanente, stille melding weergegeven.\n\nDit zorgt ervoor dat de app in het geheugen blijft, maar kan het batterijverbruik iets verhogen.\n\nLet op: Het inschakelen van deze instelling is voor de meeste apparaten niet nodig. Schakel deze alleen in als je meldingen mist.</string>
-    <string name="settings_language_arabic">Arabisch</string>
-    <string name="settings_language_hungarian">Hongaars</string>
     <string name="display_low_alarm_volume_warning_title">Waarschuwing weergeven wanneer wekkervolume op laagste niveau is ingesteld</string>
     <string name="next_alarm_title_color_title">Kleur titel volgende wekker</string>
     <string name="next_alarm_title_default_color_title">Standaardkleur titel volgende wekker</string>
@@ -650,8 +557,6 @@
     <string name="toast_message_backup_error">Back-up mislukt</string>
     <string name="toast_message_restore_error">Herstel mislukt</string>
     <string name="alarm_minutes_warning_box_text">Voer een waarde in tussen 0 en 59 minuten</string>
-    <string name="pause_alarm_title">Op pauze zetten</string>
-    <string name="pause_alarm_range">Gepauzeerd: %1$s</string>
     <string name="tabs_category_title">Tabbladen</string>
     <string name="visible_tabs_title">Zichtbare tabbladen</string>
     <string name="shortcut_disabled">Tabblad verborgen</string>

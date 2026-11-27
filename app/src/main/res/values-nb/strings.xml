@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"Alarm"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"Vibrer"</string>
-    <string name="time_picker_dialog_title">Velg tidspunkt</string>
-    <string name="date_picker_dialog_title">Velg dato</string>
     <string name="delete" msgid="5732434972457000541">"Slett"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">"Standard alarmlyd"</string>
     <string name="alarm_sound" msgid="8754499591391638405">"Alarmlyd"</string>
@@ -34,7 +31,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">"Slumrer til <xliff:g id="TIME">%s</xliff:g>"</string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"Kommende alarm"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"Alarmen du gikk glipp av er slettet"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"Mindre enn ett minutt igjen"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="HOURS">%1$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="MINUTES">%2$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
@@ -84,15 +80,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"Analog klokke"</string>
     <string name="digital_widget" msgid="2326954556720571358">"Digital klokke"</string>
     <string name="settings" msgid="5849739030579520686">"Innstillinger"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"Slumretid"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"Øk volumet gradvis"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"Slå av etter"</string>
     <string name="label_never" msgid="4821982647348750809">"Aldri"</string>
     <string name="label_off">Av</string>
-    <string name="week_start_title" msgid="4268917518596832096">"Begynn uken på"</string>
-    <string name="week_start_saturday">Lørdag</string>
-    <string name="week_start_sunday">Søndag</string>
-    <string name="week_start_monday">Mandag</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"Alarmvolum"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"Lydløs"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"Ukjent"</string>
@@ -104,13 +95,10 @@
     <string name="button_action_dismiss">Avvis</string>
     <string name="button_action_control_volume">Kontrollér volumet</string>
     <string name="button_action_nothing">Ingenting</string>
-    <string name="label_description" msgid="8736179296142915727">"Etikett"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"Ringetone"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"Alarm"</string>
     <string name="menu_timer" msgid="6459070074762877114">"Tidtaker"</string>
     <string name="menu_clock" msgid="5612760670606829805">"Klokke"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Stoppeklokke"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"Legg til alarm"</string>
     <string name="button_cities" msgid="4555761857494501363">"Byer"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"Skjermsparer"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Sortér etter tid"</string>
@@ -169,8 +157,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"Hjemmetidssone"</string>
     <string name="city_checked" msgid="616847871968019">"Det er merket av for <xliff:g id="CITY_NAME">%s</xliff:g>"</string>
     <string name="city_unchecked" msgid="710212932781145918">"Det er ikke merket av for <xliff:g id="CITY_NAME">%s</xliff:g>"</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"Ny alarm"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"Still inn en ny alarm"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"Ny tidtaker"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"Opprett en ny tidtaker"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"Start"</string>
@@ -188,8 +174,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Tidtakervibrering"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Tidtaker er satt på pause"</string>
     <string name="timers_in_use" msgid="5570729467344408506">"<xliff:g id="NUMBER">%d</xliff:g> nedtellinger"</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"angre"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"Alarmen ble slettet"</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="LABEL">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">"<xliff:g id="TIME">%1$s</xliff:g> foran"</string>
     <string name="world_time_behind" msgid="5395771290726167865">"<xliff:g id="TIME">%1$s</xliff:g> bak"</string>
@@ -198,15 +182,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">"I morgen, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">"I går kl. <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="next_alarm_description" msgid="2650244835760747046">"Neste alarm: <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
-    <string name="no_alarms" msgid="6429431324842022917">"Ingen alarmer"</string>
-    <string name="invalid_time" msgid="2782334750243998633">"Ugyldig tid <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g> <xliff:g id="INVALID_AMPM">%3$s</xliff:g>"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">"Ingen alarm kl. <xliff:g id="ALARM_TIME_HOUR">%1$d</xliff:g>:<xliff:g id="ALARM_TIME_MINUTES">%2$d</xliff:g>"</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"Ingen alarmer er angitt"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"Ingen etikett er spesifisert"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"Ingen alarmer inneholder etiketten"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"Ingen alarm er angitt for dette tidspunktet"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">"Alarmen <xliff:g id="ALARM_TIME">%s</xliff:g> er fjernet"</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">"Alarmen er angitt for <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
     <string name="timer_created" msgid="4381027137335885547">"Tidtakeren er opprettet"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="other"><xliff:g id="NUMBER">%d</xliff:g> tidtakere ble avvist</item>
@@ -215,13 +191,7 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"Ugyldig tidtakerlengde"</string>
     <string name="invalid_timer" msgid="900957020728335675">"En ugyldig tidtaker er valgt"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"Ingen utløpte tidtakere"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">"Alarmen <xliff:g id="ALARM_TIME">%s</xliff:g> kan ikke fjernes ennå – tidspunktet er fortsatt over 24 timer frem i tid"</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"Slå av alarm"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"Velg hvilken alarm du vil fjerne"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"Ingen alarmer ringer nå"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">"Alarmen <xliff:g id="ALARM_TIME">%s</xliff:g> slumrer i ti minutter"</string>
     <string name="label_seconds">Sekunder</string>
-    <string name="delay_picker_dialog_title">Alarm om…</string>
     <string name="label_new_image">Nytt bilde</string>
     <string name="label_hours">Timer</string>
 </resources>

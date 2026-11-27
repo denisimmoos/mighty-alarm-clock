@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"鬧鐘"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"震動"</string>
-    <string name="time_picker_dialog_title">選取時間</string>
-    <string name="date_picker_dialog_title">選取日期</string>
     <string name="delete" msgid="5732434972457000541">"刪除"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">"預設鬧鐘音效"</string>
     <string name="alarm_sound" msgid="8754499591391638405">"鬧鐘音效"</string>
@@ -33,7 +30,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">"延後到<xliff:g id="TIME">%s</xliff:g>"</string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"預定的鬧鐘"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"您錯過的鬧鐘已刪除"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"還剩下不到 1 分鐘"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="REMAINING"> %3$s</xliff:g> <xliff:g id="HOURS">%1$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="REMAINING"> %3$s</xliff:g> <xliff:g id="MINUTES">%2$s</xliff:g>"</string>
@@ -77,15 +73,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"類比時鐘"</string>
     <string name="digital_widget" msgid="2326954556720571358">"數位時鐘"</string>
     <string name="settings" msgid="5849739030579520686">"設定"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"延後時間長度"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"漸漸提高音量"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">鬧鐘鈴響持續時間</string>
     <string name="label_never" msgid="4821982647348750809">"無限期"</string>
     <string name="label_off">關閉</string>
-    <string name="week_start_title" msgid="4268917518596832096">每週起始日</string>
-    <string name="week_start_saturday">星期六</string>
-    <string name="week_start_sunday">星期日</string>
-    <string name="week_start_monday">星期一</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"鬧鐘音量"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"靜音"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"不明"</string>
@@ -97,13 +88,10 @@
     <string name="button_action_dismiss">關閉</string>
     <string name="button_action_control_volume">控制音量</string>
     <string name="button_action_nothing">無</string>
-    <string name="label_description" msgid="8736179296142915727">"標籤"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"鈴聲"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"鬧鐘"</string>
     <string name="menu_timer" msgid="6459070074762877114">"計時器"</string>
     <string name="menu_clock" msgid="5612760670606829805">"時鐘"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"碼表"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"新增鬧鐘"</string>
     <string name="button_cities" msgid="4555761857494501363">"城市"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"螢幕保護程式"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"依時間排序"</string>
@@ -162,8 +150,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"居住地時區"</string>
     <string name="city_checked" msgid="616847871968019">"已勾選<xliff:g id="CITY_NAME">%s</xliff:g>"</string>
     <string name="city_unchecked" msgid="710212932781145918">"已取消勾選<xliff:g id="CITY_NAME">%s</xliff:g>"</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"新鬧鐘"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"建立新鬧鐘"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"新計時器"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"建立新計時器"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"啟動"</string>
@@ -181,8 +167,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"計時器震動"</string>
     <string name="timer_paused" msgid="5941160896040771462">"計時器已暫停"</string>
     <string name="timers_in_use" msgid="5570729467344408506">"<xliff:g id="NUMBER">%d</xliff:g> 個計時器"</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"復原"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"已刪除鬧鐘"</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">／ <xliff:g id="label">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">"快 <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="world_time_behind" msgid="5395771290726167865">"慢 <xliff:g id="TIME">%1$s</xliff:g>"</string>
@@ -191,15 +175,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">"明天，<xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">"昨天，<xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="next_alarm_description" msgid="2650244835760747046">"下次鬧鐘時間：<xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
-    <string name="no_alarms" msgid="6429431324842022917">"沒有設定鬧鐘"</string>
-    <string name="invalid_time" msgid="2782334750243998633">"<xliff:g id="INVALID_AMPM">%3$s</xliff:g> <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g> 是無效的時間"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">"目前沒有鬧鐘設在 <xliff:g id="ALARM_TIME_HOUR">%1$d</xliff:g>:<xliff:g id="ALARM_TIME_MINUTES">%2$d</xliff:g>"</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"未設定鬧鐘"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"未指定任何標籤"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"沒有任何鬧鐘包含指定標籤"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"目前沒有鬧鐘設在這個時間"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">"已關閉 <xliff:g id="ALARM_TIME">%s</xliff:g> 的鬧鐘"</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">"已設定鬧鐘時間：<xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
     <string name="timer_created" msgid="4381027137335885547">"已建立計時器"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="other"><xliff:g id="NUMBER">%d</xliff:g> 個計時器已關閉</item>
@@ -207,11 +183,6 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"計時器時間長度無效"</string>
     <string name="invalid_timer" msgid="900957020728335675">"選取的計時器無效"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"沒有已結束的計時器"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">"距離 <xliff:g id="ALARM_TIME">%s</xliff:g> 的時間超過 24 小時，因此無法關閉這個鬧鐘"</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"關閉鬧鐘"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"選擇要關閉的鬧鐘"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"目前沒有鬧鐘正在響鈴"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">"<xliff:g id="ALARM_TIME">%s</xliff:g> 的鬧鐘已延後 10 分鐘"</string>
     <string name="flip_action_title">裝置翻轉動作</string>
     <string name="shake_action_title">裝置搖動動作</string>
     <string name="about_title">關於</string>
@@ -223,7 +194,6 @@
     <string name="stopwatch_channel">碼表</string>
     <string name="timer_channel">計時器</string>
     <string name="first_launch_button_now">現在</string>
-    <string name="duplicate">複製</string>
     <string name="selected">已選取</string>
     <string name="more_options">更多選項</string>
     <string name="version">版本</string>
@@ -278,19 +248,13 @@
     <string name="black_accent_color">黑色</string>
     <string name="purple_accent_color">紫色</string>
     <string name="yellow_accent_color">黃色</string>
-    <string name="alarm_flash">閃光燈</string>
     <string name="alarm_alert_off_and_deleted_text">已關閉並刪除鬧鐘</string>
-    <string name="delete_occasional_alarm_after_use_title">關閉後立即刪除鬧鐘</string>
     <string name="alarm_alert_dismiss_and_delete_text">關閉並刪除</string>
     <string name="occasional_alarm_alert_predismiss_title">預定的臨時鬧鐘</string>
     <string name="vertical_widget">直式數位時鐘</string>
     <string name="next_alarm_widget">下個鬧鐘</string>
-    <string name="settings_language_turkish">土耳其</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">延後或關閉鬧鐘時震動</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">延後鬧鐘時震動兩次，關閉鬧鐘時震動一次</string>
-    <string name="turn_on_back_flash_for_triggered_alarm_title">鬧鐘鈴響時啟用後置閃光燈</string>
-    <string name="enable_delete_occasional_alarm_by_default_setting_title">啟用自動刪除臨時鬧鐘</string>
-    <string name="alarm_settings_general_summary">您可展開鬧鐘編輯面板各別設定</string>
     <string name="timer_label_box_title">計時器名稱</string>
     <string name="timer_time_warning_box_title">數值無效</string>
     <string name="warning_dialog_title">刪除計時器</string>
@@ -314,7 +278,6 @@
     <string name="denied_permission_label">權限遭拒</string>
     <string name="next_alarm_no_upcoming_alarm_titles_default_color">「沒有即將啟動的鬧鐘」使用預設色彩</string>
     <string name="backup_restore_dialog_message">您要備份或還原應用程式資料嗎？</string>
-    <string name="settings_language_korean">韓文</string>
     <string name="auto_silence_end_of_ringtone">鈴聲播放完畢時靜音</string>
     <string name="sw_long_press_volume_down_action_title">降低音量 (按住)</string>
     <string name="sw_volume_up_action_title">提高音量</string>
@@ -328,17 +291,11 @@
     <string name="widget_max_font_size_title">小工具文字大小</string>
     <string name="restart_app_dialog_title_for_restore">還原完成</string>
     <string name="alarm_upcoming_channel">即將啟動的鬧鐘</string>
-    <string name="settings_language_french">法文</string>
-    <string name="settings_language_polish">波蘭</string>
-    <string name="settings_language_estonian">愛沙尼亞</string>
     <string name="settings_language_system">系統語言</string>
-    <string name="settings_language_italian">義大利</string>
     <string name="second_hand_color_title">秒針色彩</string>
     <string name="sort_manually">手動 (拖曳)</string>
     <string name="settings_language_german">德文</string>
-    <string name="settings_language_chinese_simplified_cn">中文 (簡體，中國)</string>
     <string name="settings_language_english_us">英文</string>
-    <string name="settings_language_dutch">荷蘭</string>
     <string name="clock_style_spinner">下拉式選單</string>
     <string name="timer_power_button_action_title">電源鍵重設到期的計時器</string>
     <string name="next_alarm_color_title">下個鬧鐘色彩</string>
@@ -347,9 +304,7 @@
     <string name="warning_dialog_message">您要刪除計時器「%s」嗎？</string>
     <string name="screensaver_settings_summary">設定螢幕保護程式外觀、色彩及字型</string>
     <string name="screensaver_preview_summary">立即啟動螢幕保護程式</string>
-    <string name="enable_alarm_vibrations_by_default_setting_title">鬧鐘鈴響時震動</string>
     <string name="alarm_notification_reminder_title">提醒通知</string>
-    <string name="settings_language_russian">俄羅斯</string>
     <string name="settings_tab_indicator_title">底部選單顯示頁面指標</string>
     <string name="alarm_title_color">鬧鐘標題色彩</string>
     <string name="shake_intensity_title">搖動強度</string>
@@ -364,17 +319,12 @@
     <string name="settings_vibration_summary">僅適用部分按鍵 (例如計時器記錄 / 暫停鍵或切換控制項)</string>
     <string name="timer_buttons_action_summary">僅適用於鎖定螢幕</string>
     <string name="indigo_accent_color">靛藍色</string>
-    <string name="settings_language_portuguese">葡萄牙</string>
-    <string name="settings_language_serbian">塞爾維亞</string>
-    <string name="settings_language_spanish">西班牙</string>
-    <string name="settings_language_ukrainian">烏克蘭</string>
     <string name="day_accent_color_title">日間模式強調色</string>
     <string name="clock_settings_summary">設定樣式、時區或變更裝置時間</string>
     <string name="settings_toolbar_title">顯示工具列標題</string>
     <string name="settings_tab_title_visibility_title">顯示分頁標題</string>
     <string name="tab_title_visibility_always">一律顯示</string>
     <string name="tab_title_visibility_when_selected">僅選取時</string>
-    <string name="settings_language_czech">捷克</string>
     <string name="timer_button_time_minutes_warning_box_text">請輸入 0–60 分鐘</string>
     <string name="transparent_background_for_expired_timer_title">計時器到期透明背景</string>
     <string name="settings_keep_screen_on_title">保持螢幕開啟</string>
@@ -393,7 +343,6 @@
     <string name="screensaver_italic_next_alarm_title">斜體下個鬧鐘</string>
     <string name="swipe_action_title">滑動以延後或關閉鬧鐘</string>
     <string name="app_slogan">源自 AOSP，100% 自由與開源的鬧鐘</string>
-    <string name="material_time_picker_style_title">選取時間面板樣式</string>
     <string name="city_name_color_title">城市名稱色彩</string>
     <string name="github_dialog_message">造訪這個計畫的 GitHub 頁面\n\n%s</string>
     <string name="whats_new_dialog_message">探索新功能：\n\n%s</string>
@@ -456,17 +405,11 @@
     <string name="dismiss_title_color">「關閉」標題色彩</string>
     <string name="ringtone_title_color">鈴聲標題色彩</string>
     <string name="display_next_alarm_title">小工具顯示下個鬧鐘</string>
-    <string name="settings_language_chinese_traditional_tw">中文 (正體，台灣)</string>
     <string name="description_dismiss_button">輕觸即可關閉鬧鐘</string>
     <string name="description_dismiss_button_for_occasional_alarm">輕觸即可關閉並刪除鬧鐘</string>
     <string name="description_snooze_button">輕觸即可延後鬧鐘</string>
     <string name="alarm_is_dismissed_and_deleted">已關閉並刪除臨時鬧鐘「<xliff:g example="14:20" id="alarm_time">%s</xliff:g>」</string>
     <string name="warning">警告</string>
-    <string name="schedule_alarm_title">排定鬧鐘</string>
-    <string name="alarm_scheduled_for">已預定 %s</string>
-    <string name="date_picker_style_title">選取日期面板樣式</string>
-    <string name="date_picker_style_calendar">日曆</string>
-    <string name="date_picker_style_text">文字</string>
     <string name="random_ringtone_title">隨機鈴聲</string>
     <string name="timer_button_time_seconds_warning_box_text">請輸入 0–59 秒</string>
     <string name="timer_add_custom_time_with_seconds_for_notification">新增 %1$s 分 %2$s 秒</string>
@@ -488,8 +431,6 @@
     <string name="external_audio_device_volume_title">外接音訊裝置的鬧鐘音量</string>
     <string name="connect_external_audio_device_title">連接外接音訊裝置即可存取此設定</string>
     <string name="disconnect_external_audio_device_title">請先斷開外接音訊裝置即可存取此設定</string>
-    <string name="enable_per_alarm_volume_title">為每個鬧鐘自訂音量</string>
-    <string name="delay_picker_dialog_title">鈴響於…</string>
     <string name="colors_category_title">色彩</string>
     <string name="clock_second_hand_title">秒針</string>
     <string name="clock_second_hand_vintage">古典</string>
@@ -506,21 +447,13 @@
     <string name="clock_dial_without_numbers">不含數字</string>
     <string name="background_default_color_title">背景使用預設色彩</string>
     <string name="hour_hand_default_color_title">時針使用預設色彩</string>
-    <string name="sort_alarm_title">鬧鐘排序</string>
-    <string name="sort_alarm_time">依據鬧鐘時間</string>
-    <string name="sort_next_alarm_time">依據下個鬧鐘時間</string>
-    <string name="display_enabled_alarms_first_title">優先顯示啟動的鬧鐘</string>
     <string name="sort_cities_title">城市排序</string>
     <string name="enable_city_note_title">為城市新增個人註解</string>
     <string name="enable_city_note_summary">輕觸城市即可新增或編輯註解</string>
     <string name="city_note_dialog_title">%s 的註解</string>
     <string name="sort_cities_ascending_time_zone">依據時區 (升序)</string>
     <string name="sort_cities_descending_time_zone">依據時區 (降序)</string>
-    <string name="sort_descending_creation_order">依據建立順序 (最早在後)</string>
-    <string name="sort_ascending_creation_order">依據建立順序 (最早在前)</string>
     <string name="city_search_hint">搜尋城市</string>
-    <string name="enable_alarm_fab_long_press_title">啟用按住新增延遲性鬧鐘動作</string>
-    <string name="enable_alarm_fab_long_press_summary">停用將會顯示兩種建立鬧鐘按鍵</string>
     <string name="vibration_pattern_title">震動模式</string>
     <string name="vibration_pattern_soft">柔和</string>
     <string name="vibration_pattern_strong">強力</string>
@@ -531,22 +464,6 @@
     <string name="vibration_start_delay_none">無</string>
     <string name="vibration_start_delay_warning_box_text">請輸入 0–10 分鐘</string>
     <string name="confirm_action_prompt">\n\n您想要繼續嗎？</string>
-    <string name="enable_per_alarm_snooze_duration_title">為每個鬧鐘自訂延後時間</string>
-    <string name="enable_per_alarm_snooze_duration_dialog_message">將會重設自訂鬧鐘延後時間。\n%s</string>
-    <string name="enable_per_alarm_volume_dialog_message">將會重設自訂鬧鐘音量。\n%s</string>
-    <string name="display_dismiss_button_title">啟動鬧鐘時立即顯示關閉按鍵</string>
-    <string name="display_dismiss_button_summary">停用狀態下僅會和提醒同時顯示</string>
-    <string name="enable_per_alarm_missed_repeat_limit_title">為每個鬧鐘自訂重複錯過次數</string>
-    <string name="enable_per_alarm_missed_repeat_limit_dialog_message">將會重設自訂鬧鐘重複錯過計數。\n%s</string>
-    <string name="missed_alarm_repeat_limit_title">重複錯過的鬧鐘</string>
-    <string name="missed_alarm_repeat_limit_1_time">1 次</string>
-    <string name="missed_alarm_repeat_limit_3_times">3 次</string>
-    <string name="missed_alarm_repeat_limit_5_times">5 次</string>
-    <string name="missed_alarm_repeat_limit_10_times">10 次</string>
-    <string name="enable_per_alarm_crescendo_duration_title">為每個鬧鐘自訂提高音量間隔</string>
-    <string name="enable_per_alarm_crescendo_duration_dialog_message">將會重設自訂鬧鐘提高音量間隔。\n%s</string>
-    <string name="enable_per_alarm_auto_silence_title">為每個鬧鐘自訂停止時間</string>
-    <string name="enable_per_alarm_auto_silence_dialog_message">將會重設自訂鬧鐘停止時間。\n%s</string>
     <string name="features_dialog_message">造訪主要功能介紹：\n\n%s</string>
     <string name="repetitive_alarm_is_dismissed">已關閉鬧鐘，<xliff:g example="Next alarm Monday." id="alarm_day">重新排定至 %s</xliff:g>。</string>
     <string name="display_text_shadow_title">顯示文字陰影</string>
@@ -577,10 +494,6 @@
     <string name="custom_font_toast_message_deleted">已刪除字型</string>
     <string name="vibration_category_title">震動</string>
     <string name="display_settings_title">顯示設定</string>
-    <string name="settings_language_bulgarian">保加利亞</string>
-    <string name="settings_language_tamil">泰米爾</string>
-    <string name="enable_per_alarm_vibration_pattern_title">為每個鬧鐘自訂震動模式</string>
-    <string name="enable_per_alarm_vibration_pattern_dialog_message">將會重設自訂震動模式。\n%s</string>
     <string name="sw_laps_title">圈數</string>
     <string name="sw_total_title">總計</string>
     <string name="analog_clock_size_title">類比時鐘大小</string>
@@ -591,14 +504,8 @@
     <string name="screensaver_italic_battery_title">斜體電池電量</string>
     <string name="sw_split_title">分隔</string>
     <string name="sync_alarm_by_label_title">同步共享相同標籤的鬧鐘</string>
-    <string name="label_indefinitely">無限期</string>
     <string name="button_tip_title">按住「+」以新增資料夾</string>
-    <string name="alarm_alert_dismiss_and_delete_text_button">關閉與刪除</string>
     <string name="permissions_category_title">權限</string>
-    <string name="settings_language_arabic">阿拉伯</string>
-    <string name="settings_language_hungarian">匈牙利</string>
-    <string name="enable_alarm_vibrations_by_default_dialog_message">將會停用所有鬧鐘震動。\n%s</string>
-    <string name="enable_delete_occasional_alarm_by_default_dialog_message">將會停用所有鬧鐘的「關閉後立即刪除」功能。\n%s</string>
     <string name="display_low_alarm_volume_warning_title">鬧鐘音量設為最小值時警告</string>
     <string name="snooze_zone_color_title">延後區域色彩</string>
     <string name="snooze_minus_button_color_title">「-」按鍵色彩</string>

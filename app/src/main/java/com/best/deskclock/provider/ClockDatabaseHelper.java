@@ -489,6 +489,12 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
      * Deletes every other alarm with its instances, and the alarm tag tables.
      */
     static void removeNormalAlarms(SQLiteDatabase db) {
+        db.execSQL("DROP TABLE IF EXISTS " + LEGACY_ALARM_TAGS_TABLE_NAME + ";");
+        db.execSQL("DROP TABLE IF EXISTS " + LEGACY_TAGS_TABLE_NAME + ";");
+        if (!tableExists(db, ALARMS_TABLE_NAME) || !tableExists(db, INSTANCES_TABLE_NAME)
+            || !tableExists(db, CALENDAR_ALARM_EVENTS_TABLE_NAME)) {
+            return;
+        }
         final String calendarAlarmIds = "SELECT " + ClockContract.CalendarAlarmEventsColumns.ALARM_ID
             + " FROM " + CALENDAR_ALARM_EVENTS_TABLE_NAME
             + " UNION SELECT " + ClockContract.CalendarAlarmEventsColumns.START_ALARM_ID
@@ -500,8 +506,6 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
                 + ClockContract.InstancesColumns.ALARM_ID + " NOT IN (" + calendarAlarmIds + ")", null);
         final int alarms = db.delete(ALARMS_TABLE_NAME,
             ClockContract.AlarmsColumns._ID + " NOT IN (" + calendarAlarmIds + ")", null);
-        db.execSQL("DROP TABLE IF EXISTS " + LEGACY_ALARM_TAGS_TABLE_NAME + ";");
-        db.execSQL("DROP TABLE IF EXISTS " + LEGACY_TAGS_TABLE_NAME + ";");
         LogUtils.i("Removed " + alarms + " normal alarms and " + instances
             + " of their instances, and the alarm tag tables, for version 43 upgrade.");
     }
@@ -513,6 +517,13 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         LogUtils.w("Database downgrade from %d to %d, keeping the data", oldVersion, newVersion);
+    }
+
+    private static boolean tableExists(SQLiteDatabase db, String table) {
+        try (Cursor c = db.rawQuery("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?",
+            new String[]{table})) {
+            return c.moveToFirst();
+        }
     }
 
     private static void addCalendarProfileColumnsIfMissing(SQLiteDatabase db) {

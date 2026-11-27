@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"Alarm"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"Titreşim"</string>
-    <string name="time_picker_dialog_title">Zamanı seçin</string>
-    <string name="date_picker_dialog_title">Tarih Seçin</string>
     <string name="delete" msgid="5732434972457000541">"Sil"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">"Varsayılan alarm sesi"</string>
     <string name="alarm_sound" msgid="8754499591391638405">"Alarm sesi"</string>
@@ -34,7 +31,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">"Şu saate kadar ertelendi: <xliff:g id="TIME">%s</xliff:g>"</string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"Yaklaşan alarm"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"Kaçırılan alarmınız silindi"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"Bir dakikadan az kaldı"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="HOURS">%1$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="MINUTES">%2$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
@@ -84,15 +80,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"Analog saat"</string>
     <string name="digital_widget" msgid="2326954556720571358">"Dijital saat"</string>
     <string name="settings" msgid="5849739030579520686">"Ayarlar"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"Erteleme süresi"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"Ses düzeyini kademeli olarak artır"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"Şu süreden sonra sessiz"</string>
     <string name="label_never" msgid="4821982647348750809">"Hiçbir zaman"</string>
     <string name="label_off">Kapalı</string>
-    <string name="week_start_title" msgid="4268917518596832096">"Haftanın ilk günü"</string>
-    <string name="week_start_saturday">Cumartesi</string>
-    <string name="week_start_sunday">Pazar</string>
-    <string name="week_start_monday">Pazartesi</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"Alarm ses düzeyi"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"Sessiz"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"Bilinmiyor"</string>
@@ -104,13 +95,10 @@
     <string name="button_action_dismiss">Kapat</string>
     <string name="button_action_control_volume">Ses seviyesini ayarla</string>
     <string name="button_action_nothing">Hiçbiri</string>
-    <string name="label_description" msgid="8736179296142915727">"Etiket"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"Zil sesi"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"Alarm"</string>
     <string name="menu_timer" msgid="6459070074762877114">"Zamanlayıcı"</string>
     <string name="menu_clock" msgid="5612760670606829805">"Saat"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Kronometre"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"Alarm ekle"</string>
     <string name="button_cities" msgid="4555761857494501363">"Şehirler"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"Ekran koruyucu"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Saate göre sırala"</string>
@@ -169,8 +157,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"Ev saat dilimi"</string>
     <string name="city_checked" msgid="616847871968019"><xliff:g id="CITY_NAME">%s</xliff:g> işaretlendi</string>
     <string name="city_unchecked" msgid="710212932781145918"><xliff:g id="CITY_NAME">%s</xliff:g> işareti kaldırıldı</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"Yeni alarm"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"Yeni alarm oluştur"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"Yeni zamanlayıcı"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"Yeni zamanlayıcı oluştur"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"Başlat"</string>
@@ -188,8 +174,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Zamanlayıcı titreşimi"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Zamanlayıcı duraklatıldı"</string>
     <string name="timers_in_use" msgid="5570729467344408506"><xliff:g id="NUMBER">%d</xliff:g> zamanlayıcı</string>
-    <string name="alarm_undo" msgid="5710042601177655254">geri al</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"Alarm silindi"</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="LABEL">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652"><xliff:g id="TIME">%1$s</xliff:g> önde</string>
     <string name="world_time_behind" msgid="5395771290726167865"><xliff:g id="TIME">%1$s</xliff:g> geride</string>
@@ -198,15 +182,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">"Yarın, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">"Dün, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="next_alarm_description" msgid="2650244835760747046">"Sonraki alarm: <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
-    <string name="no_alarms" msgid="6429431324842022917">"Alarm Yok"</string>
-    <string name="invalid_time" msgid="2782334750243998633">"Geçersiz saat: <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g> <xliff:g id="INVALID_AMPM">%3$s</xliff:g>"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">"Şu saate ayarlanmış alarm yok: <xliff:g id="ALARM_TIME_HOUR">%1$d</xliff:g>:<xliff:g id="ALARM_TIME_MINUTES">%2$d</xliff:g>"</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"Programlanmış alarm yok"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"Etiket belirtilmedi"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"Etiketi içeren alarm yok"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"Bu saat için alarm programlanmadı"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642"><xliff:g id="ALARM_TIME">%s</xliff:g> alarmı kapatıldı</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">Alarm <xliff:g id="ALARM_TIME">%s</xliff:g> için ayarlandı</string>
     <string name="timer_created" msgid="4381027137335885547">"Zamanlayıcı oluşturuldu"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="other"><xliff:g id="NUMBER">%d</xliff:g> zamanlayıcı kapatıldı</item>
@@ -215,11 +191,6 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">Geçersiz zamanlayıcı süresi</string>
     <string name="invalid_timer" msgid="900957020728335675">"Geçersiz zamanlayıcı seçildi"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"Süresi dolan zamanlayıcı yok"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437"><xliff:g id="ALARM_TIME">%s</xliff:g> alarmı henüz kapatılamaz. Alarma hâlâ 24 saatten fazla zaman var</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"Alarmı kapat"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"Hangi alarmın kapatılacağını seçin"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"Çalan alarm yok"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846"><xliff:g id="ALARM_TIME">%s</xliff:g> alarmı 10 dakika ertelendi</string>
     <string name="flip_action_title">Cihazı çevirme hareketi</string>
     <string name="shake_action_title">Cihazı sallama hareketi</string>
     <string name="firing_alarms_timers_channel">Çalan alarmlar ve zamanlayıcılar</string>
@@ -266,10 +237,7 @@
     <string name="indigo_accent_color">Çivit mavisi</string>
     <string name="orange_accent_color">Turuncu</string>
     <string name="pink_accent_color">Pembe</string>
-    <string name="alarm_flash">Flaş</string>
-    <string name="delete_occasional_alarm_after_use_title">Alarm kapatılınca alarmı sil</string>
     <string name="label_default">Varsayılan</string>
-    <string name="duplicate">Çoğalt</string>
     <string name="vertical_widget">Dikey dijital saat</string>
     <string name="settings_permission_message">Bir veya daha fazla temel izin reddedildi. İzinleri sağlamamak düzgün çalışmaya engel olabilir.</string>
     <string name="settings_permission_summary">İzinleri yönetme sayfasını görüntülemek için buraya dokunun.</string>
@@ -287,7 +255,6 @@
     <string name="clock_settings_summary">Stili, zaman dilimini ve cihazın tarih ve zamanını ayarlayın</string>
     <string name="description_direction_both_for_occasional_alarm">Alarmı ertelemek için sola, kapatıp silmek için sağa kaydırın</string>
     <string name="clock_color_title">Saat rengi</string>
-    <string name="alarm_settings_general_summary">Bu ayar, alarm düzenleme panelinde her alarm için değiştirilebilir</string>
     <string name="permission_highly_recommended">Şiddetle tavsiye edilir</string>
     <string name="timer_volume_buttons_action_title">Süresi dolmuş zamanlayıcıları ses düğmelerini kullanarak sıfırlayın</string>
     <string name="clock_style_spinner">Kaydırmalı</string>
@@ -318,10 +285,8 @@
     <string name="shake_intensity_title">Sallama şiddeti</string>
     <string name="first_launch_important_info_message_for_SDK34">TAM EKRAN BİLDİRİMLER</string>
     <string name="timer_settings_summary">Varsayılan zil sesini, ses düzeyini ve zamanlayıcı sıralamalarını ayarlayın</string>
-    <string name="settings_language_dutch">Hollandaca</string>
     <string name="settings_vibration_title">Titreşimleri etkinleştir</string>
     <string name="settings_tab_indicator_title">Alt gezinme menüsünde sekme vurgusunu göster</string>
-    <string name="enable_alarm_vibrations_by_default_setting_title">Alarm tetiklendiğinde titreşimleri etkinleştirin</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">Alarm ertelendiğinde veya kapatıldığında titreşimi etkinleştir</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Alarm kapatıldığında bir kere titreşir, ertelendiğinde iki kere titreşir</string>
     <string name="sort_timer_title">Zamanlayıcıları sırala</string>
@@ -335,7 +300,6 @@
     <string name="first_launch_dialog_message">Uygulamadan çıkmak istediğinize emin misiniz?</string>
     <string name="settings_language_title">Dil</string>
     <string name="settings_language_system">Sistem dili</string>
-    <string name="settings_language_french">Fransızca</string>
     <string name="widgets_settings">Widget\'lar</string>
     <string name="widget_background_title">Arka planı göster</string>
     <string name="background_color_title">Arka plan rengi</string>
@@ -344,15 +308,6 @@
     <string name="backup_restore_title">Yedekle &amp; Geri Yükle</string>
     <string name="settings_language_german">Almanca</string>
     <string name="settings_language_english_us">İngilizce (ABD)</string>
-    <string name="settings_language_chinese_simplified_cn">Çince (Basitleştirilmiş)</string>
-    <string name="settings_language_russian">Rusça</string>
-    <string name="settings_language_estonian">Estonca</string>
-    <string name="settings_language_italian">İtalyanca</string>
-    <string name="settings_language_polish">Lehçe</string>
-    <string name="settings_language_portuguese">Portekizce</string>
-    <string name="settings_language_serbian">Sırpça</string>
-    <string name="settings_language_spanish">İspanyolca</string>
-    <string name="settings_language_ukrainian">Ukraynaca</string>
     <string name="settings_tab_to_display">Uygulama açıldığında gösterliecek sekme</string>
     <string name="last_tab_used_title">Son kullanılan sekme</string>
     <string name="clock_font_size">Saat yazı boyutu</string>
@@ -377,7 +332,6 @@
     <string name="first_launch_main_feature_link">… ve daha fazlası!</string>
     <string name="permission_requirement_title">Gereklilik:</string>
     <string name="description_direction_both_for_non_repeatable_alarm">Alarmı kapatmak için sağa veya sola kaydırın</string>
-    <string name="material_time_picker_style_title">Saat seçme stili</string>
     <string name="permission_status_title">Durum:</string>
     <string name="minute_default_color_title">Dakikalar için varsayılan rengi kullan</string>
     <string name="minute_color_title">Dakika rengi</string>
@@ -387,7 +341,6 @@
     <string name="alarm_title_default_color">Alarm başlığı için varsayılan rengi kullanın</string>
     <string name="settings_fade_transitions_title">Ekran geçişlerinde solma efektini etkinleştir</string>
     <string name="next_alarm_no_upcoming_alarm_titles_default_color">\"Sonraki alarm\" ve \"Yaklaşan alarm yok\" başlığı için varsayılan rengi kullan</string>
-    <string name="turn_on_back_flash_for_triggered_alarm_title">Alarm başladığında flaşı aç</string>
     <string name="next_alarm_widget_title_no_alarm">Yaklaşan alarm yok</string>
     <string name="permission_dialog_revoke_title">İzni geri al</string>
     <string name="city_clock_default_color_title">Şehir saati için varsayılan rengi kullanın</string>
@@ -442,21 +395,17 @@
     <string name="screensaver_italic_date_title">İtalik tarih</string>
     <string name="screensaver_italic_next_alarm_title">İtalik sonraki alarm</string>
     <string name="screensaver_bold_next_alarm_title">Kalın sonraki alarm</string>
-    <string name="enable_delete_occasional_alarm_by_default_setting_title">Etkinlik alarmlarının otomatik silinmesini varsayılan olarak etkinleştir</string>
     <string name="screensaver_bold_digital_clock_title">Kalın dijital saat</string>
     <string name="occasional_alarm_alert_predismiss_title">Yaklaşan etkinlik alarmı</string>
-    <string name="settings_language_turkish">Türkçe</string>
     <string name="reset_settings_title">Ayarları sıfırla</string>
     <string name="reset_settings_message">Uygulamanın bütün ayarlarını sıfırlamak istediğinize emin misiniz?</string>
     <string name="restart_app_dialog_title_for_reset">Sıfırlama tamamlandı</string>
-    <string name="settings_language_korean">Korece</string>
     <string name="blue_accent_color">Mavi</string>
     <string name="display_date_title">Tarihi göster</string>
     <string name="settings_toolbar_title">Araç çubuğunda başlığı görüntüle</string>
     <string name="settings_tab_title_visibility_title">Sekme başlıklarını görüntüle</string>
     <string name="tab_title_visibility_always">Daima</string>
     <string name="tab_title_visibility_when_selected">Seçildiğinde</string>
-    <string name="settings_language_czech">Çek</string>
     <string name="settings_keep_screen_on_title">Ekranı açık tut</string>
     <string name="settings_keep_screen_on_summary">Not: Bu ayarın durumundan bağımsız olarak, bir zamanlayıcı veya kronometre çalışıyorsa ve ilgili sekme gösteriliyorsa, ekran her zaman açık kalacaktır</string>
     <string name="slide_zone_color_title">Sürgü alanı rengi</string>
@@ -468,12 +417,6 @@
     <string name="display_next_alarm_title">Sonraki alarmı göster</string>
     <string name="description_snooze_button">Alarmı ertelemek için tıklayın</string>
     <string name="alarm_is_dismissed_and_deleted"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> alarmı susturuldu ve silindi</string>
-    <string name="settings_language_chinese_traditional_tw">Çince (geleneksel, Tayvan)</string>
-    <string name="schedule_alarm_title">Alarm ayarla</string>
-    <string name="date_picker_style_title">Tarih seçim stili</string>
-    <string name="date_picker_style_calendar">Takvim</string>
-    <string name="date_picker_style_text">Metin</string>
-    <string name="alarm_scheduled_for">%s için ayarlandı</string>
     <string name="random_ringtone_title">Rasgele zil sesi</string>
     <string name="warning">Uyaru</string>
     <string name="timer_button_time_seconds_warning_box_text">0 ile 59 saniye arasında bir değer girin</string>
@@ -489,7 +432,6 @@
     <string name="timer_creation_view_style_keypad">Tuş takımı</string>
     <string name="advanced_audio_playback_summary">Bluetooth uyumluluğunu iyileştirir ve tekrarlamalarda ses kesintilerini engeller.\n\nNot: Bazı zil seslerinde küçük kesintiler olabilir</string>
     <string name="timer_creation_view_style_title">Zamanlayıcı yaratma görünüm stili</string>
-    <string name="enable_per_alarm_volume_title">Her bir alarm için özelleştirilmiş bir ses yüksekliği kullan</string>
     <string name="hide_clock_am_pm_pref">AM/PM metnini gizle</string>
     <string name="widget_apply_horizontal_padding_title">Araç yanlarına dolgu uygula</string>
     <string name="system_media_volume_title">Sistem ortam ses yüksekliğini kullan</string>
@@ -498,12 +440,6 @@
     <string name="connect_external_audio_device_title">Bu ayara erişmek için harici bir ses cihazı bağlayın</string>
     <string name="disconnect_external_audio_device_title">Bu ayara erişmek için harici ses cihazının bağlantısını kesin</string>
     <string name="colors_category_title">Renkler</string>
-    <string name="sort_alarm_title">Alarmları Sıralama</string>
-    <string name="sort_alarm_time">Alarm zamanına göre</string>
-    <string name="sort_next_alarm_time">Sıradaki alarm zamanına göre</string>
-    <string name="sort_descending_creation_order">Oluşturma sırasına göre (yeniden eskiye)</string>
-    <string name="sort_ascending_creation_order">Oluşturma sırasına göre (eskiden yeniye)</string>
-    <string name="display_enabled_alarms_first_title">Önce etkin olan alarmları görüntüleyin</string>
     <string name="city_search_hint">Bir şehri arat</string>
     <string name="clock_dial_with_numbers">Sayılarla</string>
     <string name="clock_dial_without_numbers">Sayısız</string>
@@ -523,8 +459,6 @@
     <string name="vibration_start_delay_title">Titreşim öncesi bekleme süresi</string>
     <string name="vibration_start_delay_none">Hiçbiri</string>
     <string name="vibration_start_delay_warning_box_text">0 ile 10 dakika arasında bir değer girin</string>
-    <string name="enable_alarm_fab_long_press_title">Gecikmeli alarm oluşturmak için aksiyon düğmesine uzun basmayı etkinleştir</string>
-    <string name="enable_alarm_fab_long_press_summary">Devre dışı bırakılırsa, alarm oluşturmak için iki düğme gösterilecektir</string>
     <string name="clock_second_hand_title">Yelkovan</string>
     <string name="city_note_dialog_title">%s için not</string>
     <string name="sort_cities_ascending_time_zone">Zaman dilimine göre (artan sırada)</string>
@@ -537,15 +471,6 @@
     <string name="minute_hand_default_color_title">Yelkovan için varsayılan rengi kullanın</string>
     <string name="confirm_action_prompt">\n\nDevam etmek istiyor musun?</string>
     <string name="progress_ringtones">%2$d zil sesinden %1$d\'i eklendi.</string>
-    <string name="enable_per_alarm_snooze_duration_title">Her alarm için farklı erteleme süresi kullanın</string>
-    <string name="enable_per_alarm_snooze_duration_dialog_message">Özel alarm erteleme süreleri sıfırlanacak. %s</string>
-    <string name="enable_per_alarm_volume_dialog_message">Alarma özel ses seviyeleri sıfırlanacak. %s</string>
-    <string name="display_dismiss_button_title">Alarm etkinleştirildiğinde kapatma düğmesini göster</string>
-    <string name="missed_alarm_repeat_limit_title">Kaçırılan alarmları tekrarla</string>
-    <string name="missed_alarm_repeat_limit_1_time">1 kez</string>
-    <string name="missed_alarm_repeat_limit_3_times">3 kez</string>
-    <string name="missed_alarm_repeat_limit_5_times">5 kez</string>
-    <string name="missed_alarm_repeat_limit_10_times">10 kez</string>
     <string name="display_text_shadow_title">Metin gölgesini göster</string>
     <string name="shadow_color_title">Gölge rengi</string>
     <string name="blur_intensity_title">Bulanıklık yoğunluğu</string>
@@ -553,19 +478,11 @@
     <string name="background_image_toast_message_selected">Görüntü başarıyla seçildi</string>
     <string name="label_new_image">Yeni resim</string>
     <string name="label_new_font">Yeni yazı tipi</string>
-    <string name="enable_per_alarm_missed_repeat_limit_title">Her alarma özel bir kaçırılmış alarm tekrarı sayısı ekle</string>
-    <string name="enable_per_alarm_missed_repeat_limit_dialog_message">Özel kaçırılmış alarm tekrarı sayısı sıfırlanacaktır.%s</string>
-    <string name="enable_per_alarm_vibration_pattern_title">Her alarm için özel bir titreşim paterni kullan</string>
-    <string name="enable_per_alarm_vibration_pattern_dialog_message">Özel titreşim paternleri sıfırlanacaktır.%s</string>
     <string name="shadow_offset_title">Gölge uzaklığı</string>
     <string name="background_image_title_variant">Arka plan resmini değiştirin veya silin</string>
     <string name="background_image_dialog_title">Arkaplan resmi</string>
     <string name="background_image_toast_message_deleted">Resim başarıyla silindi</string>
     <string name="enable_blur_effect_title">Arkaplan resmine bulanıklaştırma efekti uygula</string>
-    <string name="enable_per_alarm_crescendo_duration_title">Her alarma özel bir ses arttırılma süresi kullan</string>
-    <string name="enable_per_alarm_crescendo_duration_dialog_message">Özel ses arttırılma süreleri sıfırlanacaktır.%s</string>
-    <string name="enable_per_alarm_auto_silence_title">Her alarma özel bir durdurma süresi kullan</string>
-    <string name="enable_per_alarm_auto_silence_dialog_message">Özel alarm durdurma süreleri sıfırlanacaktır.%s</string>
     <string name="sw_laps_title">Tur</string>
     <string name="sw_split_title">Aralık</string>
     <string name="sw_total_title">Toplam</string>
@@ -583,13 +500,8 @@
     <string name="screensaver_italic_battery_title">Pil seviyesini eğik göster</string>
     <string name="display_text_uppercase_title">Metinleri büyük harfle göster</string>
     <string name="background_default_color_title">Arkaplan için varsayılan rengi kullan</string>
-    <string name="pause_alarm_title">Alarmı duraklat</string>
-    <string name="pause_alarm_range">Durduruldu: %1$s</string>
-    <string name="delay_picker_dialog_title">Alarm gecikmesi…</string>
     <string name="sync_alarm_by_label_title">Aynı etiketi paylaşan alarmları senkronize edin</string>
-    <string name="label_indefinitely">Süresiz olarak</string>
     <string name="button_tip_title">Klasör eklemek için \"+\" düğmesine uzun basın</string>
-    <string name="alarm_alert_dismiss_and_delete_text_button">Kapat &amp;\nSil</string>
     <string name="permissions_category_title">İzinler</string>
     <string name="tabs_category_title">Sekmeler</string>
     <string name="custom_font_title">Özel bir yazı tipi seçin</string>
@@ -599,14 +511,7 @@
     <string name="custom_font_toast_message_deleted">Yazı tipi başarıyla silindi</string>
     <string name="vibration_category_title">Titreşim</string>
     <string name="display_settings_title">Ekran ayarları</string>
-    <string name="settings_language_bulgarian">Bulgarca</string>
-    <string name="settings_language_tamil">Tamil</string>
-    <string name="settings_language_arabic">Arapça</string>
-    <string name="settings_language_hungarian">Macarca</string>
     <string name="visible_tabs_title">Görünür sekmeler</string>
-    <string name="display_dismiss_button_summary">Devre dışı bırakılırsa, düğme bildirim hatırlatıcısıyla aynı anda görünecektir</string>
-    <string name="enable_alarm_vibrations_by_default_dialog_message">Tüm alarmlar için titreşim devre dışı bırakılacaktır. %s</string>
-    <string name="enable_delete_occasional_alarm_by_default_dialog_message">\"Alarm kapatıldıktan sonra sil\" özelliği tüm alarmlar için devre dışı bırakılacaktır. %s</string>
     <string name="display_low_alarm_volume_warning_title">Alarm ses seviyesi minimuma ayarlandığında bir uyarı görüntülenecektir</string>
     <string name="snooze_zone_color_title">Erteleme bölgesi rengi</string>
     <string name="snooze_minus_button_color_title">\"-\" Düğmesinin rengi</string>
@@ -667,5 +572,4 @@
     <string name="invert_timer_button_positions_title">Zamanlayıcı düğmelerinin konumunu tersine çevirin</string>
     <string name="display_timer_end_time_title">Zamanlayıcının bitiş zamanını görüntüle</string>
     <string name="timer_missed_channel">Kaçırılan zamanlayıcılar</string>
-    <string name="settings_language_hebrew">İbranice</string>
 </resources>

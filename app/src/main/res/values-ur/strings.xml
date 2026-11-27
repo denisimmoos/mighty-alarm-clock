@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"الارم"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"وائبریٹ"</string>
-    <string name="time_picker_dialog_title">وقت منتخب کریں</string>
-    <string name="date_picker_dialog_title">تاریخ منتخب کریں</string>
     <string name="delete" msgid="5732434972457000541">"حذف کریں"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">"الارم کی ڈیفالٹ آواز"</string>
     <string name="alarm_sound" msgid="8754499591391638405">"الارم کی آواز"</string>
@@ -34,7 +31,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">"<xliff:g id="TIME">%s</xliff:g> تک اسنوز کر رہا ہے"</string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"آئندہ الارم"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"آپ کا چھوٹا ہوا الارم حذف کر دیا گیا ہے"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"ایک منٹ سے کم باقی ہے"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="HOURS">%1$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="MINUTES">%2$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
@@ -84,15 +80,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"اینالاگ کلاک"</string>
     <string name="digital_widget" msgid="2326954556720571358">"ڈیجیٹل کلاک"</string>
     <string name="settings" msgid="5849739030579520686">"ترتیبات"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"اسنوز کی طوالت"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"آواز میں بتدریج اضافہ کریں"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"خاموش بعد از"</string>
     <string name="label_never" msgid="4821982647348750809">"کبھی نہیں"</string>
     <string name="label_off">آف</string>
-    <string name="week_start_title" msgid="4268917518596832096">"ہفتہ شروع کریں بروز"</string>
-    <string name="week_start_saturday">ہفتہ</string>
-    <string name="week_start_sunday">اتوار</string>
-    <string name="week_start_monday">پیر</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"الارم والیوم"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"خاموش"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"نامعلوم"</string>
@@ -103,13 +94,10 @@
     <string name="button_action_snooze">اسنوز کریں</string>
     <string name="button_action_dismiss">کالعدم کریں</string>
     <string name="button_action_control_volume">والیوم کنٹرول کریں</string>
-    <string name="label_description" msgid="8736179296142915727">"لیبل"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"رنگ ٹون"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"الارم"</string>
     <string name="menu_timer" msgid="6459070074762877114">"ٹائمر"</string>
     <string name="menu_clock" msgid="5612760670606829805">"گھڑی"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"اسٹاپ واچ"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"الارم شامل کریں"</string>
     <string name="button_cities" msgid="4555761857494501363">"شہر"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"اسکرین سیور"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"وقت کے لحاظ سے ترتیب دیں"</string>
@@ -168,8 +156,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"ہوم ٹائم زون"</string>
     <string name="city_checked" msgid="616847871968019">"<xliff:g id="CITY_NAME">%s</xliff:g> نشان زد ہو گیا"</string>
     <string name="city_unchecked" msgid="710212932781145918">"<xliff:g id="CITY_NAME">%s</xliff:g> غیر نشان زد ہو گیا"</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"نیا الارم"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"نیا الارم بنائیں"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"نیا ٹائمر"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"نیا ٹائمر بنائیں"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"شروع کریں"</string>
@@ -187,8 +173,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"ٹائمر ارتعاش"</string>
     <string name="timer_paused" msgid="5941160896040771462">"ٹائمر موقوف ہو گیا"</string>
     <string name="timers_in_use" msgid="5570729467344408506">"<xliff:g id="NUMBER">%d</xliff:g> ٹائمرز"</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"کالعدم کریں"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"الارم حذف ہوگیا"</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="LABEL">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">"<xliff:g id="TIME">%1$s</xliff:g> آگے"</string>
     <string name="world_time_behind" msgid="5395771290726167865">"<xliff:g id="TIME">%1$s</xliff:g> پیچھے"</string>
@@ -197,15 +181,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">"آئندہ کل، <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">"گزشتہ کل، <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="next_alarm_description" msgid="2650244835760747046">"اگلا الارم: <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
-    <string name="no_alarms" msgid="6429431324842022917">"کوئی الارمز نہیں ہیں"</string>
-    <string name="invalid_time" msgid="2782334750243998633">"‏غلط وقت <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g>‎ <xliff:g id="INVALID_AMPM">%3$s</xliff:g>"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">"<xliff:g id="ALARM_TIME_HOUR">%1$d</xliff:g>:<xliff:g id="ALARM_TIME_MINUTES">%2$d</xliff:g> پر کوئی الارم نہیں"</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"کوئی الارم مقرر نہیں"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"کوئی لیبل مختص نہیں کیا گیا"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"کسی الارم میں لیبل شامل نہیں ہے"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"اس وقت کیلئے کوئی الارم مقرر نہیں"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">"<xliff:g id="ALARM_TIME">%s</xliff:g> الارم برخاست ہوگیا"</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">"<xliff:g id="ALARM_TIME">%s</xliff:g> کیلئے الارم سیٹ ہے"</string>
     <string name="timer_created" msgid="4381027137335885547">"ٹائمر بن گیا"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="other"><xliff:g id="NUMBER">%d</xliff:g> ٹائمرز کو برخاست کر دیا</item>
@@ -214,16 +190,8 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"ٹائمر کی غلط لمبائی"</string>
     <string name="invalid_timer" msgid="900957020728335675">"غلط ٹائمر منتخب کیا گیا"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"میعاد ختم ہونے والا کوئی ٹائمر نہیں ہے"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">"<xliff:g id="ALARM_TIME">%s</xliff:g> الارم ابھی برخاست نہیں کیا جا سکتا، ابھی بھی 24 گھنٹے سے زائد باقی ہیں"</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"الارم برخاست کریں"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"برخاست کرنے کیلیے الارم منتخب کریں"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"کوئی فائرنگ الارم نہیں"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">"<xliff:g id="ALARM_TIME">%s</xliff:g> الارم 10 منٹ کیلئے اسنوز ہوگیا"</string>
-    <string name="delete_occasional_alarm_after_use_title">برخاست ہونے کے بعد الارم کو حذف کریں</string>
     <string name="alarm_label_box_title">الارم لیبل</string>
     <string name="alarm_alert_dismiss_and_delete_text">برخاست کریں اور حذف کریں</string>
-    <string name="duplicate">نقل</string>
-    <string name="alarm_flash">فلیش</string>
     <string name="label_default">طے شدہ</string>
     <string name="selected">منتخب</string>
     <string name="more_options">مزید اختیارات</string>

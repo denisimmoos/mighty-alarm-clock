@@ -6,7 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label">MightyCalendarAlarm</string>
     <string name="default_label">Alarma</string>
-    <string name="alarm_vibrate">Vibrar</string>
     <string name="delete">Desaniciar</string>
     <string name="default_timer_ringtone_title">Caducó\'l temporizador</string>
     <string name="alarm_tomorrow">Mañana</string>
@@ -22,7 +21,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until">Repetir a les <xliff:g id="TIME">%s</xliff:g></string>
     <string name="alarm_alert_predismiss_title">Próxima alarma</string>
-    <string name="missed_alarm_has_been_deleted">Desaniciáronse les alarmes perdíes</string>
     <string name="timer_notifications_less_min">Queda menos de 1 minutu</string>
     <string name="timer_notifications_hours"><xliff:g example="2 hours" id="HOURS">%1$s</xliff:g><xliff:g example="remaining" id="REMAINING"> %3$s</xliff:g></string>
     <string name="timer_notifications_minutes"><xliff:g example="2 minutes" id="MINUTES">%2$s</xliff:g><xliff:g example="remaining" id="REMAINING"> %3$s</xliff:g></string>
@@ -60,15 +58,10 @@
     <string name="analog_widget">Reló analóxicu</string>
     <string name="digital_widget">Reló dixital</string>
     <string name="settings">Axustes</string>
-    <string name="snooze_duration_title">Repetir alarma dempués de</string>
     <string name="crescendo_duration_title">Aumentar adulces el volume</string>
     <string name="auto_silence_title">Silenciar dempués de</string>
     <string name="label_never">Enxamás</string>
     <string name="label_off">Non</string>
-    <string name="week_start_title">Entamar la selmana el</string>
-    <string name="week_start_saturday">Sábadu</string>
-    <string name="week_start_sunday">Domingu</string>
-    <string name="week_start_monday">Llunes</string>
     <string name="alarm_volume_title">Volume d\'alarma</string>
     <string name="silent_ringtone_title">Silenciu</string>
     <string name="unknown_ringtone_title">Desconocíu</string>
@@ -80,13 +73,10 @@
     <string name="button_action_dismiss">Escartar</string>
     <string name="button_action_control_volume">Controlar volume</string>
     <string name="button_action_nothing">Nada</string>
-    <string name="label_description">Nome</string>
-    <string name="ringtone_description">Timbre</string>
     <string name="menu_alarm">Alarma</string>
     <string name="menu_timer">Temporizador</string>
     <string name="menu_clock">Reló</string>
     <string name="menu_stopwatch">Cronómetru</string>
-    <string name="button_alarms">Amestar alarma</string>
     <string name="button_cities">Ciudaes</string>
     <string name="menu_item_sort_by_gmt_offset">Ordenar por hora</string>
     <string name="menu_item_sort_by_name">Ordenar por nome</string>
@@ -139,8 +129,6 @@
     <string name="home_time_zone">Estaya horaria llocal</string>
     <string name="city_checked"><xliff:g id="city_name">%s</xliff:g> xequeáu</string>
     <string name="city_unchecked"><xliff:g id="city_name">%s</xliff:g> ensin xequiar</string>
-    <string name="shortcut_new_alarm_short">Alarma nueva</string>
-    <string name="shortcut_new_alarm_long">Crear una alarma nueva</string>
     <string name="shortcut_new_timer_short">Temporizador nuevu</string>
     <string name="shortcut_new_timer_long">Crear un temporizador nuevu</string>
     <string name="shortcut_start_stopwatch_short">Aniciar</string>
@@ -158,8 +146,6 @@
     <string name="timer_vibrate_title">Temporizador en vibración</string>
     <string name="timer_paused">Posóse\'l temporizador</string>
     <string name="timers_in_use"><xliff:g id="NUMBER">%d</xliff:g> temporizadores</string>
-    <string name="alarm_undo">desfacer</string>
-    <string name="alarm_deleted">Alarma desaniciada</string>
     <string name="world_day_of_week_label">/ <xliff:g id="LABEL">%s</xliff:g></string>
     <string name="world_time_ahead"><xliff:g example="6 hours" id="time">%1$s</xliff:g> alantre</string>
     <string name="world_time_behind"><xliff:g example="4 hours" id="time">%1$s</xliff:g> atrás</string>
@@ -168,15 +154,7 @@
     <string name="world_hours_tomorrow">Mañana, <xliff:g example="6 hours ahead" id="time">%1$s</xliff:g></string>
     <string name="world_hours_yesterday">Ayeri, <xliff:g example="4 hours behind" id="time">%1$s</xliff:g></string>
     <string name="next_alarm_description">Próxima alarma: <xliff:g id="ALARM_TIME">%s</xliff:g></string>
-    <string name="no_alarms">Nun hai alarmes</string>
-    <string name="invalid_time">Tiempu inválidu <xliff:g example="25" id="invalid_hour">%1$d</xliff:g>:<xliff:g example="63" id="invalid_minutes">%2$d</xliff:g> <xliff:g example="PM" id="invalid_ampm">%3$s</xliff:g></string>
-    <string name="no_alarm_at">Nun hai alarma pa les <xliff:g example="14" id="alarm_time_hour">%1$d</xliff:g>:<xliff:g example="23" id="alarm_time_minutes">%2$d</xliff:g></string>
-    <string name="no_scheduled_alarms">Nun hai alarmes programaes</string>
-    <string name="no_label_specified">Nun s\'especificó nenguna etiqueta</string>
-    <string name="no_alarms_with_label">Nun hai nenguna alarma con esa etiqueta</string>
-    <string name="no_alarm_scheduled_for_this_time">Nun se planificaron alarmes pa esta hora</string>
     <string name="alarm_is_dismissed">Inoróse l\'alarma <xliff:g example="14:20" id="alarm_time">%s</xliff:g></string>
-    <string name="alarm_is_set">Afitóse l\'alarma a les <xliff:g example="14:20" id="alarm_time">%s</xliff:g></string>
     <string name="timer_created">Creóse\'l temporizador</string>
     <plurals name="expired_timers_dismissed">
         <item quantity="one">Temporidador de despidu</item>
@@ -185,11 +163,6 @@
     <string name="invalid_timer_length">La duración del temporizador nun ye válida</string>
     <string name="invalid_timer">Temporizador escoyíu inválidu</string>
     <string name="no_expired_timers">Temporizadores non cadudaos</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away">Aínda nun pue inorase l\'alarma <xliff:g example="14:20" id="alarm_time">%s</xliff:g> porque entá falten más de 24 hores pa que s\'active</string>
-    <string name="dismiss_alarm">Inorar alarma</string>
-    <string name="pick_alarm_to_dismiss">Esbilla l\'alarma que quies inorar</string>
-    <string name="no_firing_alarms">Nun hai alarmes actives</string>
-    <string name="alarm_is_snoozed">L\'alarma <xliff:g example="14:20" id="alarm_time">%s</xliff:g> pospúsose por diez minutos</string>
     <string name="flip_action_title">Aición al voltiar el preséu</string>
     <string name="shake_action_title">Aición al ximelgar el preséu</string>
 </resources>

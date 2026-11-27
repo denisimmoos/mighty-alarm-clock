@@ -6,7 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label">MightyCalendarAlarm</string>
     <string name="default_label">Larwm</string>
-    <string name="alarm_vibrate">Dirgrynu</string>
     <string name="delete">Dileu</string>
     <string name="default_alarm_ringtone_title">Tôn larwm rhagosodedig</string>
     <string name="alarm_sound">Sain larwm</string>
@@ -36,7 +35,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until">Yn hepian nes <xliff:g id="time">%s</xliff:g></string>
     <string name="alarm_alert_predismiss_title">Larwm yn dod i fyny</string>
-    <string name="missed_alarm_has_been_deleted">Mae dy larwm wedi\'i fethu wedi ei dileu</string>
     <string name="timer_notifications_less_min">Llai na funud i fynd</string>
     <string name="timer_notifications_hours"><xliff:g example="2 hours" id="HOURS">%1$s</xliff:g><xliff:g example="remaining" id="REMAINING"> %3$s</xliff:g></string>
     <string name="timer_notifications_minutes"><xliff:g example="2 minutes" id="MINUTES">%2$s</xliff:g><xliff:g example="remaining" id="REMAINING"> %3$s</xliff:g></string>
@@ -110,15 +108,10 @@
     <string name="analog_widget">Cloc analog</string>
     <string name="digital_widget">Cloc digidol</string>
     <string name="settings">Gosodiadau</string>
-    <string name="snooze_duration_title">Hyd hepian</string>
     <string name="crescendo_duration_title">Cynyddu\'r sain yn raddol</string>
     <string name="auto_silence_title">Distawrwydd ar ôl</string>
     <string name="label_never">Byth</string>
     <string name="label_off">I ffwrdd</string>
-    <string name="week_start_title">Dechrau\'r wythnos ar</string>
-    <string name="week_start_saturday">Dydd Sadwrn</string>
-    <string name="week_start_sunday">Dydd Sul</string>
-    <string name="week_start_monday">Dydd Llun</string>
     <string name="alarm_volume_title">Uchder sain larymau</string>
     <string name="silent_ringtone_title">Distaw</string>
     <string name="unknown_ringtone_title">Anhysbys</string>
@@ -130,13 +123,10 @@
     <string name="button_action_dismiss">Diystyru</string>
     <string name="button_action_control_volume">Rheoli uchder sain</string>
     <string name="button_action_nothing">Dim byd</string>
-    <string name="label_description">Label</string>
-    <string name="ringtone_description">Tôn caniad</string>
     <string name="menu_alarm">Larwm</string>
     <string name="menu_timer">Amserydd</string>
     <string name="menu_clock">Cloc</string>
     <string name="menu_stopwatch">Cloc amseru</string>
-    <string name="button_alarms">Ychwanegu larwm</string>
     <string name="button_cities">Dinasoedd</string>
     <string name="screensaver_settings_title">Arbedwr sgrin</string>
     <string name="menu_item_sort_by_gmt_offset">Trefnu\'n ôl amser</string>
@@ -195,8 +185,6 @@
     <string name="home_time_zone">Cylchfa amser adref</string>
     <string name="city_checked"><xliff:g id="city_name">%s</xliff:g> wedi ei ddewis</string>
     <string name="city_unchecked"><xliff:g id="city_name">%s</xliff:g> heb ei ddewis</string>
-    <string name="shortcut_new_alarm_short">Larwm newydd</string>
-    <string name="shortcut_new_alarm_long">Creu larwm newydd</string>
     <string name="shortcut_new_timer_short">Amserydd newydd</string>
     <string name="shortcut_new_timer_long">Creu amserydd newydd</string>
     <string name="shortcut_start_stopwatch_short">Dechrau</string>
@@ -214,8 +202,6 @@
     <string name="timer_vibrate_title">Dirgryniad amserydd</string>
     <string name="timer_paused">Amserydd wedi ei rewi</string>
     <string name="timers_in_use"><xliff:g example="7" id="number">%d</xliff:g> amserydd</string>
-    <string name="alarm_undo">dad-wneud</string>
-    <string name="alarm_deleted">Dilëwyd y larwm</string>
     <string name="world_day_of_week_label">/ <xliff:g id="label">%s</xliff:g></string>
     <string name="world_time_ahead"><xliff:g example="6 hours" id="time">%1$s</xliff:g> ymlaen</string>
     <string name="world_time_behind"><xliff:g example="4 hours" id="time">%1$s</xliff:g> tu ôl</string>
@@ -224,15 +210,7 @@
     <string name="world_hours_tomorrow">Yfory, <xliff:g example="6 hours ahead" id="time">%1$s</xliff:g></string>
     <string name="world_hours_yesterday">Ddoe, <xliff:g example="4 hours behind" id="time">%1$s</xliff:g></string>
     <string name="next_alarm_description">Larwm nesaf: <xliff:g example="Wed 8:00am" id="alarm_time">%s</xliff:g></string>
-    <string name="no_alarms">Dim Larymau</string>
-    <string name="invalid_time">Amser annilys <xliff:g example="25" id="invalid_hour">%1$d</xliff:g><xliff:g example="63" id="invalid_minutes">%2$d</xliff:g> <xliff:g example="PM" id="invalid_ampm">%3$s</xliff:g></string>
-    <string name="no_alarm_at">Dim larwm am <xliff:g example="14" id="alarm_time_hour">%1$d</xliff:g>:<xliff:g example="23" id="alarm_time_minutes">%2$d</xliff:g></string>
-    <string name="no_scheduled_alarms">Dim larymau wedi\'u gosod</string>
-    <string name="no_label_specified">Dim label wedi\'i nodi</string>
-    <string name="no_alarms_with_label">Does dim larwm yn cynnwys y label</string>
-    <string name="no_alarm_scheduled_for_this_time">Does dim larwm wedi\'i osod ar gyfer yr amser hwn.</string>
     <string name="alarm_is_dismissed">Larwm <xliff:g example="14:20" id="alarm_time">%s</xliff:g> wedi\'i ddiystyru</string>
-    <string name="alarm_is_set">Mae\'r larwm wedi\'i osod ar gyfer <xliff:g example="14:20" id="alarm_time">%s</xliff:g></string>
     <string name="timer_created">Amserydd wedi\'i greu</string>
     <plurals name="expired_timers_dismissed">
         <item quantity="zero">Diystyrwyd <xliff:g example="5" id="number">%d</xliff:g> amseryddion</item>
@@ -245,11 +223,6 @@
     <string name="invalid_timer_length">Hyd amserydd annilys</string>
     <string name="invalid_timer">Dewiswyd amserydd annilys</string>
     <string name="no_expired_timers">Dim amseryddion wedi dod i ben</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away">Ni ellir diystyru larwm <xliff:g example="14:20" id="alarm_time">%s</xliff:g> eto gan ei fod dros 24 awr i ffwrdd</string>
-    <string name="dismiss_alarm">Diystyru\'r larwm</string>
-    <string name="pick_alarm_to_dismiss">Dewis pa larwm i\'w ddiystyru</string>
-    <string name="no_firing_alarms">Dim larymau yn canu</string>
-    <string name="alarm_is_snoozed"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> larwm yn caniatáu hepian am 10 munud</string>
     <string name="flip_action_title">Effaith troi\'r ddyfais drosodd</string>
     <string name="shake_action_title">Effaith ysgwyd y ddyfais</string>
     <string name="firing_alarms_timers_channel">Tanio larymau ac amseryddion</string>

@@ -175,4 +175,40 @@ public class CalendarProfileUpgradeTest {
         }
         db.close();
     }
+
+    @Test
+    public void upgradeFromVersion42RemovesNormalAlarmsAndTags() {
+        final android.content.Context context = ApplicationProvider.getApplicationContext();
+        final SQLiteDatabase db = SQLiteDatabase.create(null);
+        final ClockDatabaseHelper helper = new ClockDatabaseHelper(context);
+        helper.onCreate(db);
+        db.execSQL("CREATE TABLE tags (_id INTEGER PRIMARY KEY, name TEXT);");
+        db.execSQL("CREATE TABLE alarm_tags (alarm_id INTEGER, tag_id INTEGER);");
+        // Alarm 1 is a normal alarm, 2 and 3 come from a calendar event (start and end).
+        for (int id = 1; id <= 3; id++) {
+            final Alarm alarm = new Alarm();
+            alarm.id = id;
+            db.insert("alarm_templates", null, alarm.createContentValues());
+            final AlarmInstance instance = alarm.createInstanceAfter(java.util.Calendar.getInstance());
+            db.insert("alarm_instances", null, instance.createContentValues());
+        }
+        db.execSQL("INSERT INTO calendar_profiles (_id, name) VALUES (1, 'P');");
+        db.execSQL("INSERT INTO calendar_alert_events (_id, profile_id, event_key, alarm_id, start_alarm_id, end_alarm_id) "
+            + "VALUES (1, 1, 'k', -1, 2, 3);");
+
+        helper.onUpgrade(db, 42, 43);
+
+        try (Cursor c = db.rawQuery("SELECT _id FROM alarm_templates ORDER BY _id", null)) {
+            assertEquals(2, c.getCount());
+            assertTrue(c.moveToFirst());
+            assertEquals(2, c.getInt(0));
+        }
+        try (Cursor c = db.rawQuery("SELECT _id FROM alarm_instances WHERE alarm_id = 1", null)) {
+            assertEquals(0, c.getCount());
+        }
+        try (Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE name IN ('tags', 'alarm_tags')", null)) {
+            assertEquals(0, c.getCount());
+        }
+        db.close();
+    }
 }

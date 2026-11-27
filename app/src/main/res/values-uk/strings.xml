@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"Будильник"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"Вібросигнал"</string>
-    <string name="time_picker_dialog_title">Виберіть час</string>
-    <string name="date_picker_dialog_title">Виберіть дату</string>
     <string name="delete" msgid="5732434972457000541">"Видалити"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">Сигнал за замовчуванням</string>
     <string name="alarm_sound" msgid="8754499591391638405">"Сигнал будильника"</string>
@@ -36,7 +33,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">Відкласти сигнал до <xliff:g id="time">%s</xliff:g></string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"Наступний будильник"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"Пропущений сигнал видалено"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"Залишилося менше хвилини"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="REMAINING"> %3$s</xliff:g> <xliff:g id="HOURS">%1$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="REMAINING"> %3$s</xliff:g> <xliff:g id="MINUTES">%2$s</xliff:g>"</string>
@@ -98,15 +94,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"Аналог. годинник"</string>
     <string name="digital_widget" msgid="2326954556720571358">"Цифровий годинник"</string>
     <string name="settings" msgid="5849739030579520686">"Налаштування"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"Відкласти на"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"Збільшувати гучність поступово"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">Вимкнути після</string>
     <string name="label_never" msgid="4821982647348750809">"Ніколи"</string>
     <string name="label_off">Вимкнено</string>
-    <string name="week_start_title" msgid="4268917518596832096">Початок тижня</string>
-    <string name="week_start_saturday">субота</string>
-    <string name="week_start_sunday">неділя</string>
-    <string name="week_start_monday">понеділок</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"Гучність будильника"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"Без звуку"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"Невідомий сигнал"</string>
@@ -117,13 +108,10 @@
     <string name="button_action_snooze">Відкласти</string>
     <string name="button_action_dismiss">Вимкнути</string>
     <string name="button_action_control_volume">Регулювати гучність</string>
-    <string name="label_description" msgid="8736179296142915727">"Мітка"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">Сигнал</string>
     <string name="menu_alarm" msgid="4772010125376647519">"Будильник"</string>
     <string name="menu_timer" msgid="6459070074762877114">"Таймер"</string>
     <string name="menu_clock" msgid="5612760670606829805">"Годинник"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Секундомір"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"Додати сигнал"</string>
     <string name="button_cities" msgid="4555761857494501363">"Міста"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"Заставка"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Сортувати за часом"</string>
@@ -182,8 +170,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"Часовий пояс удома"</string>
     <string name="city_checked" msgid="616847871968019"><xliff:g id="city_name">%s</xliff:g> вибрано</string>
     <string name="city_unchecked" msgid="710212932781145918"><xliff:g id="city_name">%s</xliff:g> не вибрано</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"Будильник"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"Налаштув. новий будильник"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"Таймер"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"Налаштувати новий таймер"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"Запустити"</string>
@@ -201,8 +187,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Вібросигнал таймера"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Таймер призупинено"</string>
     <string name="timers_in_use" msgid="5570729467344408506">Таймерів: <xliff:g example="7" id="number">%d</xliff:g></string>
-    <string name="alarm_undo" msgid="5710042601177655254">Скасувати</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"Будильник видалено"</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="label">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">На <xliff:g id="time">%1$s</xliff:g> пізніше</string>
     <string name="world_time_behind" msgid="5395771290726167865">На <xliff:g id="time">%1$s</xliff:g> раніше</string>
@@ -211,15 +195,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">Завтра, <xliff:g id="time">%1$s</xliff:g></string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">Учора, <xliff:g id="time">%1$s</xliff:g></string>
     <string name="next_alarm_description" msgid="2650244835760747046">Наступний сигнал: <xliff:g id="alarm_time">%s</xliff:g></string>
-    <string name="no_alarms" msgid="6429431324842022917">"Немає сигналів"</string>
-    <string name="invalid_time" msgid="2782334750243998633">Недійсний час — <xliff:g example="25" id="invalid_hour">%1$d</xliff:g>:<xliff:g example="63" id="invalid_minutes">%2$d</xliff:g> <xliff:g example="PM" id="invalid_ampm">%3$s</xliff:g></string>
-    <string name="no_alarm_at" msgid="8140632482969193119">Немає будильника на <xliff:g example="14" id="alarm_time_hour">%1$d</xliff:g>:<xliff:g example="23" id="alarm_time_minutes">%2$d</xliff:g></string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">Немає запланованих будильників</string>
-    <string name="no_label_specified" msgid="2008482054428460626">Мітку не вказано</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"Немає будильників із такою міткою"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"Немає будильника на цей час"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">Будильник на <xliff:g example="14:20" id="alarm_time">%s</xliff:g> вимкнено</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">Будильник установлено на <xliff:g example="14:20" id="alarm_time">%s</xliff:g></string>
     <string name="timer_created" msgid="4381027137335885547">"Таймер створено"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="one">Вимкнено <xliff:g id="number">%d</xliff:g> таймер</item>
@@ -230,11 +206,6 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"Недійсна тривалість таймера"</string>
     <string name="invalid_timer" msgid="900957020728335675">"Вибрано недійсний таймер"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"Немає використаних таймерів"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">Будильник на <xliff:g example="14:20" id="alarm_time">%s</xliff:g> ще не можна вимкнути, оскільки він має спрацювати більше ніж через 24 години</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"Вимкнути будильник"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"Виберіть, який будильник вимкнути"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"Немає ввімкнених будильників"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">Будильник на <xliff:g example="14:20" id="alarm_time">%s</xliff:g> відкладено на 10 хвилин</string>
     <string name="add_label">Додати мітку</string>
     <string name="app_slogan">100% вільний годинник на основі проєкту Android Open Source</string>
     <string name="version">Версія</string>
@@ -268,7 +239,6 @@
     <string name="notifications_permission_title">УВІМКНУТИ СПОВІЩЕННЯ</string>
     <string name="selected">Вибрано</string>
     <string name="more_options">Додаткові опції</string>
-    <string name="duplicate">Дублювати</string>
     <string name="settings_permission_summary">Натисніть тут, щоб відкрити сторінку керування дозволами.</string>
     <string name="settings_permission_message">Відмовлено в одному або декількох важливих дозволах. Якщо їх не надати, це може призвести до збоїв у роботі.</string>
     <string name="screensaver_preview_summary">Запускає заставку негайно</string>
@@ -283,7 +253,6 @@
     <string name="miscellaneous_category_title">Різне</string>
     <string name="actions_category_title">Дії</string>
     <string name="ringtone_category_title">Сигнал</string>
-    <string name="enable_alarm_vibrations_by_default_setting_title">Увімкнути вібрацію при спрацьовуванні будильника</string>
     <string name="auto_silence_end_of_ringtone">Відтворення сигналу</string>
     <string name="alarm_notification_reminder_title">Нагадування про сповіщення</string>
     <string name="about_github_link">Подивитися на GitHub</string>
@@ -350,7 +319,6 @@
 \n
 \nРекомендуємо вимкнути оптимізацію заряду акумулятора для цього додатка.</string>
     <string name="FSN_dialog_text">Починаючи з Android 14, щоб будильник спрацював, коли екран вимкнено, необхідно надати дозвіл на повноекранні сповіщення.</string>
-    <string name="material_time_picker_style_title">Стиль вікна зміни часу</string>
     <string name="second_hand_color_title">Колір секундної стрілки</string>
     <string name="alarm_title_color">Колір заголовка будильника</string>
     <string name="snooze_button_color">Колір кнопки «Відкласти»</string>
@@ -406,9 +374,6 @@
     <string name="alarm_alert_off_and_deleted_text">Будильник вимкнено і видалено</string>
     <string name="description_direction_both_for_occasional_alarm">Проведіть пальцем ліворуч, щоб відкласти, або праворуч, щоб вимкнути і видалити будильник</string>
     <string name="description_direction_both_for_occasional_non_repeatable_alarm">Проведіть пальцем ліворуч або праворуч, щоб вимкнути і видалити будильник</string>
-    <string name="enable_delete_occasional_alarm_by_default_setting_title">Увімкнути за замовчуванням автоматичне видалення нерегулярних будильників</string>
-    <string name="alarm_settings_general_summary">Це налаштування можна змінити для кожного будильника на панелі редагування будильника</string>
-    <string name="delete_occasional_alarm_after_use_title">Видалити будильник після вимкнення</string>
     <string name="occasional_alarm_alert_predismiss_title">Наступний нерегулярний будильник</string>
     <string name="backup_restore_title">Резервне копіювання та відновлення</string>
     <string name="backup_restore_dialog_message">Бажаєте створити резервну копію чи відновити дані додатка?</string>
@@ -441,23 +406,12 @@
     <string name="display_ringtone_title">Показувати назву мелодії сигналу</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Вібрувати двічі при відкладенні будильника, вібрувати один раз при вимкненні будильника</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">Увімкнути вібрацію, коли будильник відкладено або вимкнено</string>
-    <string name="turn_on_back_flash_for_triggered_alarm_title">Увімкнути задній спалах при спрацьовуванні будильника</string>
-    <string name="alarm_flash">Спалах</string>
     <string name="about_translate_link">Переклад на Codeberg</string>
     <string name="translate_dialog_message">Відвідайте сторінку на Codeberg:\n\n%s</string>
     <string name="shake_intensity_title">Інтенсивність струшування</string>
     <string name="settings_language_title">Мова</string>
-    <string name="settings_language_french">Французька</string>
     <string name="settings_language_german">Німецька</string>
-    <string name="settings_language_estonian">Естонська</string>
-    <string name="settings_language_italian">Італійська</string>
-    <string name="settings_language_polish">Польська</string>
-    <string name="settings_language_portuguese">Португальська</string>
-    <string name="settings_language_serbian">Сербська</string>
-    <string name="settings_language_spanish">Іспанська</string>
     <string name="settings_language_system">Мова системи</string>
-    <string name="settings_language_ukrainian">Українська</string>
-    <string name="settings_language_chinese_simplified_cn">Китайська (спрощена, КНР)</string>
     <string name="settings_language_english_us">Англійська (США)</string>
     <string name="permission_info_title">Тільки для пристроїв Xiaomi</string>
     <string name="show_lockscreen_dialog_title">Показувати на заблокованому екрані</string>
@@ -465,22 +419,17 @@
     <string name="show_lockscreen_dialog_text">На пристроях Xiaomi для коректної роботи додатка необхідно вручну ввімкнути дозвіл «Показувати на заблокованому екрані» в налаштуваннях пристрою.</string>
     <string name="clock_style_spinner">Лічильник</string>
     <string name="clock_style_analog_material">Аналоговий (Material)</string>
-    <string name="settings_language_dutch">Нідерландська</string>
-    <string name="settings_language_russian">Російська</string>
     <string name="last_tab_used_title">Остання використана вкладка</string>
     <string name="settings_tab_to_display">Вкладка, на якій відкриватиметься додаток</string>
     <string name="timer_time_warning_box_title">Уведено неправильне значення</string>
     <string name="timer_button_time_minutes_warning_box_text">Уведіть значення від 0 до 60 хвилин</string>
-    <string name="settings_language_turkish">Турецька</string>
     <string name="reset_settings_message">Ви дійсно хочете скинути всі налаштування додатка?</string>
     <string name="reset_settings_title">Скинути налаштування</string>
     <string name="blue_accent_color">Синій</string>
     <string name="restart_app_dialog_title_for_reset">Скидання завершено</string>
-    <string name="settings_language_korean">Корейська</string>
     <string name="display_date_title">Показувати дату</string>
     <string name="settings_tab_title_visibility_title">Показувати заголовки вкладок</string>
     <string name="settings_toolbar_title">Показувати заголовок панелі інструментів</string>
-    <string name="settings_language_czech">Чеська</string>
     <string name="tab_title_visibility_always">Завжди</string>
     <string name="tab_title_visibility_when_selected">Коли вибрана</string>
     <string name="settings_keep_screen_on_title">Тримати дисплей увімкненим</string>
@@ -493,13 +442,7 @@
     <string name="description_dismiss_button_for_occasional_alarm">Натисніть, щоб вимкнути і видалити будильник</string>
     <string name="display_next_alarm_title">Показувати наступний будильник</string>
     <string name="ringtone_title_color">Колір назви мелодії сигналу</string>
-    <string name="settings_language_chinese_traditional_tw">Китайська (традиційна, Тайвань)</string>
     <string name="alarm_is_dismissed_and_deleted">Будильник <xliff:g example="14:20" id="alarm_time">%s</xliff:g> вимкнено і видалено</string>
-    <string name="alarm_scheduled_for">Заплановано на %s</string>
-    <string name="date_picker_style_calendar">Календар</string>
-    <string name="date_picker_style_text">Текст</string>
-    <string name="schedule_alarm_title">Запланувати будильник</string>
-    <string name="date_picker_style_title">Стиль вікна зміни дати</string>
     <string name="random_ringtone_title">Випадкова мелодія сигналу</string>
     <string name="warning">Попередження</string>
     <string name="timer_add_custom_time_with_seconds_for_notification">Додати %1$s хв %2$s с</string>
@@ -522,8 +465,6 @@
     <string name="connect_external_audio_device_title">Під’єднайте зовнішній аудіопристрій, щоб отримати доступ до цього параметра</string>
     <string name="disconnect_external_audio_device_title">Від’єднайте зовнішній аудіопристрій, щоб отримати доступ до цього параметра</string>
     <string name="widget_apply_horizontal_padding_title">Застосувати відступи до сторін віджетів</string>
-    <string name="enable_per_alarm_volume_title">Окреме значення гучності для кожного будильника</string>
-    <string name="delay_picker_dialog_title">Будильник о…</string>
     <string name="clock_dial_with_numbers">Із цифрами</string>
     <string name="colors_category_title">Кольори</string>
     <string name="clock_second_hand_title">Секундна стрілка</string>
@@ -540,10 +481,6 @@
     <string name="second_hand_default_color_title">Колір за замовчуванням для секундної стрілки</string>
     <string name="background_default_color_title">Колір за замовчуванням для фону</string>
     <string name="clock_dial_without_numbers">Без цифр</string>
-    <string name="sort_alarm_title">Сортування будильників</string>
-    <string name="display_enabled_alarms_first_title">Спочатку показувати ввімкнені будильники</string>
-    <string name="sort_alarm_time">За часом будильника</string>
-    <string name="sort_next_alarm_time">За часом наступного будильника</string>
     <string name="sort_cities_title">Сортування міст</string>
     <string name="sort_cities_descending_time_zone">За часовим поясом (спадання)</string>
     <string name="sort_cities_ascending_time_zone">За часовим поясом (зростання)</string>
@@ -551,10 +488,6 @@
     <string name="enable_city_note_summary">Натисніть на місто, щоб додати або редагувати примітку до нього</string>
     <string name="enable_city_note_title">Додати примітки до міст</string>
     <string name="city_search_hint">Знайти місто</string>
-    <string name="sort_ascending_creation_order">За порядком створення (спочатку старіші)</string>
-    <string name="sort_descending_creation_order">За порядком створення (спочатку новіші)</string>
-    <string name="enable_alarm_fab_long_press_title">Увімкнути тривале натискання кнопки дії для створення будильників із затримкою</string>
-    <string name="enable_alarm_fab_long_press_summary">Якщо вимкнено, для створення будильників відображатимуться дві кнопки</string>
     <string name="vibration_start_delay_title">Затримка перед вібрацією</string>
     <string name="vibration_start_delay_none">Немає</string>
     <string name="vibration_start_delay_warning_box_text">Уведіть значення від 0 до 10 хвилин</string>
@@ -564,25 +497,9 @@
     <string name="vibration_pattern_soft">Легкий</string>
     <string name="vibration_pattern_strong">Сильний</string>
     <string name="vibration_pattern_escalating">Посилення</string>
-    <string name="missed_alarm_repeat_limit_1_time">1 раз</string>
-    <string name="missed_alarm_repeat_limit_3_times">3 рази</string>
-    <string name="missed_alarm_repeat_limit_5_times">5 разів</string>
-    <string name="missed_alarm_repeat_limit_10_times">10 разів</string>
     <string name="confirm_action_prompt">\n\nПродовжити?</string>
-    <string name="missed_alarm_repeat_limit_title">Повторювати пропущені сигнали</string>
     <string name="repetitive_alarm_is_dismissed">Будильник вимкнено. <xliff:g example="Next alarm Monday." id="alarm_day">Перенесено на %s.</xliff:g></string>
-    <string name="enable_per_alarm_snooze_duration_title">Окреме значення тривалості відкладення для кожного будильника</string>
-    <string name="enable_per_alarm_missed_repeat_limit_title">Окрема кількість повторень пропущених для кожного будильника</string>
-    <string name="enable_per_alarm_auto_silence_title">Окреме значення «Вимкнути після» для кожного будильника</string>
-    <string name="enable_per_alarm_crescendo_duration_title">Окреме значення збільшення гучності для кожного будильника</string>
-    <string name="enable_per_alarm_snooze_duration_dialog_message">Користувацькі значення тривалості відкладення для будильників буде скинуто.%s</string>
-    <string name="enable_per_alarm_volume_dialog_message">Користувацькі значення гучності для будильників буде скинуто.%s</string>
-    <string name="enable_per_alarm_missed_repeat_limit_dialog_message">Користувацькі значення кількості повторень для пропущених будильників буде скинуто.%s</string>
-    <string name="enable_per_alarm_crescendo_duration_dialog_message">Користувацькі значення збільшення гучності для будильників буде скинуто.%s</string>
-    <string name="enable_per_alarm_auto_silence_dialog_message">Користувацькі значення «Вимкнути після» для будильників буде скинуто.%s</string>
     <string name="features_dialog_message">Відвідайте сторінку основних функцій:\n\n%s</string>
-    <string name="display_dismiss_button_summary">Якщо вимкнено, кнопка з’являтиметься разом із нагадуванням про сповіщення</string>
-    <string name="display_dismiss_button_title">Показувати кнопку «Вимкнути» одразу після ввімкнення будильника</string>
     <string name="blur_intensity_title">Інтенсивність розмиття</string>
     <string name="background_image_title">Вибрати фонове зображення</string>
     <string name="background_image_toast_message_selected">Зображення успішно вибрано</string>
@@ -615,15 +532,11 @@
     <string name="custom_font_toast_message_deleted">Шрифт успішно видалено</string>
     <string name="custom_font_toast_message_selected">Шрифт успішно вибрано</string>
     <string name="display_settings_title">Налаштування показу</string>
-    <string name="enable_per_alarm_vibration_pattern_dialog_message">Користувацькі ритми вібрації буде скинуто.%s</string>
-    <string name="enable_per_alarm_vibration_pattern_title">Окремий ритм вібрації для кожного будильника</string>
     <string name="custom_font_title">Вибрати власний шрифт</string>
     <string name="custom_font_title_variant">Змінити або видалити власний шрифт</string>
     <string name="sw_laps_title">Кола</string>
     <string name="sw_split_title">Час кола</string>
     <string name="sw_total_title">Загальний</string>
-    <string name="settings_language_tamil">Тамільська</string>
-    <string name="settings_language_bulgarian">Болгарська</string>
     <string name="timezone_baker_howland">Острови Бейкер і Гауленд</string>
     <string name="timezone_marquesas">Маркізькі острови</string>
     <string name="timezone_chatham">Острови Чатем</string>
@@ -635,12 +548,8 @@
     <string name="timezone_miquelon">Сен-П’єр і Мікелон</string>
     <string name="timezone_norfolk">Острів Норфолк</string>
     <string name="timezone_macquarie">Острів Маккуорі</string>
-    <string name="label_indefinitely">Постійно</string>
     <string name="button_tip_title">Натисніть і утримуйте кнопку «+», щоб додати папку</string>
-    <string name="alarm_alert_dismiss_and_delete_text_button">Вимкнути\nі видалити</string>
     <string name="permissions_category_title">Дозволи</string>
-    <string name="enable_alarm_vibrations_by_default_dialog_message">Вібрацію буде вимкнено для всіх будильників.%s</string>
-    <string name="enable_delete_occasional_alarm_by_default_dialog_message">Функцію «Видалити будильник після вимкнення» буде вимкнено для всіх будильників.%s</string>
     <string name="sync_alarm_by_label_title">Синхронізувати будильники з однаковою міткою</string>
     <string name="snooze_minus_button_color_title">Колір кнопки «−»</string>
     <string name="snooze_plus_button_color_title">Колір кнопки «+»</string>
@@ -659,8 +568,6 @@
     <string name="background_image_summary">Щоб побачити зображення, встановіть прозорий колір фону</string>
     <string name="snooze_selector_text_color_title">Колір тексту при виборі відкладення</string>
     <string name="display_snooze_selector_title">Показувати вибір відкладення</string>
-    <string name="settings_language_arabic">Арабська</string>
-    <string name="settings_language_hungarian">Угорська</string>
     <string name="next_alarm_title_color_title">Колір заголовка наступного будильника</string>
     <string name="next_alarm_title_default_color_title">Колір за замовчуванням для заголовка наступного будильника</string>
     <string name="city_note_color_title">Колір примітки до міста</string>
@@ -673,9 +580,7 @@
     <string name="display_top_date_title">Показувати дату над часом</string>
     <string name="alarm_minutes_warning_box_text">Уведіть значення від 0 до 59 хвилин</string>
     <string name="tabs_category_title">Вкладки</string>
-    <string name="pause_alarm_range">Призупинено: %1$s</string>
     <string name="visible_tabs_title">Видимі вкладки</string>
-    <string name="pause_alarm_title">Призупинити будильник</string>
     <string name="shortcut_disabled">Прихована вкладка</string>
     <string name="restart_app_dialog_message">Щоб зміни набули чинності, потрібно перезапустити додаток.</string>
     <string name="single_timer_mode_title">Режим одного таймера</string>
@@ -693,5 +598,4 @@
     <string name="display_timer_end_time_title">Показувати час завершення таймера</string>
     <string name="timer_missed_channel">Пропущені таймери</string>
     <string name="invert_timer_button_positions_title">Поміняти місцями кнопки таймера</string>
-    <string name="settings_language_hebrew">Іврит</string>
 </resources>

@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"Äratus"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"Värin"</string>
-    <string name="time_picker_dialog_title">Aja valimine</string>
-    <string name="date_picker_dialog_title">Valige kuupäev</string>
     <string name="delete" msgid="5732434972457000541">"Kustuta"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">Äratuse vaikehelin</string>
     <string name="alarm_sound" msgid="8754499591391638405">Äratuse helin</string>
@@ -34,7 +31,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">Lükkame äratuse edasi kuni <xliff:g id="time">%s</xliff:g></string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">"Tulevane äratus"</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">Märkamata jäänud äratus on kustutatud</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"Jäänud on vähem kui minut"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="HOURS">%1$s</xliff:g> <xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="MINUTES">%2$s</xliff:g> <xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
@@ -84,15 +80,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"Analoogkell"</string>
     <string name="digital_widget" msgid="2326954556720571358">"Digitaalkell"</string>
     <string name="settings" msgid="5849739030579520686">Seadistused</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"Äratuse edasilükkamise pikkus"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"Helitugevuse järkjärguline suurendamine"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"Vaikus aja möödumisel"</string>
     <string name="label_never" msgid="4821982647348750809">"Mitte kunagi"</string>
     <string name="label_off">Väljas</string>
-    <string name="week_start_title" msgid="4268917518596832096">Nädala algus</string>
-    <string name="week_start_saturday">Laupäev</string>
-    <string name="week_start_sunday">Pühapäev</string>
-    <string name="week_start_monday">Esmaspäev</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"Äratuse helitugevus"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"Hääletu"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"Tundmatu"</string>
@@ -104,13 +95,10 @@
     <string name="button_action_dismiss">Loobu</string>
     <string name="button_action_control_volume">Juhi helitugevust</string>
     <string name="button_action_nothing">Mitte midagi</string>
-    <string name="label_description" msgid="8736179296142915727">"Silt"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"Helin"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"Äratus"</string>
     <string name="menu_timer" msgid="6459070074762877114">"Taimer"</string>
     <string name="menu_clock" msgid="5612760670606829805">"Kell"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Stopper"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"Lisa äratus"</string>
     <string name="button_cities" msgid="4555761857494501363">"Linnad"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"Ekraanisäästja"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Sordi aja järgi"</string>
@@ -169,8 +157,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"Kodune ajavöönd"</string>
     <string name="city_checked" msgid="616847871968019"><xliff:g id="city_name">%s</xliff:g> on märgitud</string>
     <string name="city_unchecked" msgid="710212932781145918"><xliff:g id="city_name">%s</xliff:g> pole märgitud</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">Uus äratus</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">Loo uus äratus</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"Uus taimer"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"Loo uus taimer"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"Alustamine"</string>
@@ -188,8 +174,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Taimeri vibratsioon"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Taimer peatati"</string>
     <string name="timers_in_use" msgid="5570729467344408506"><xliff:g example="7" id="number">%d</xliff:g> taimerit</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"võta tagasi"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"Äratus on kustutatud"</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="label">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652"><xliff:g example="6 tundi" id="time">%1$s</xliff:g> ees</string>
     <string name="world_time_behind" msgid="5395771290726167865"><xliff:g example="4 tundi" id="time">%1$s</xliff:g> taga</string>
@@ -198,15 +182,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">Homme <xliff:g example="6 tundi ees" id="time">%1$s</xliff:g></string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">Eile <xliff:g example="4 tundi taga" id="time">%1$s</xliff:g></string>
     <string name="next_alarm_description" msgid="2650244835760747046">Järgmine äratus: <xliff:g example="Kolmap 08:00" id="alarm_time">%s</xliff:g></string>
-    <string name="no_alarms" msgid="6429431324842022917">Äratusi pole</string>
-    <string name="invalid_time" msgid="2782334750243998633">"<xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g> <xliff:g id="INVALID_AMPM">%3$s</xliff:g> on sobimatu kellaaeg"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">Kellaajaks <xliff:g example="14" id="alarm_time_hour">%1$d</xliff:g>:<xliff:g example="23" id="alarm_time_minutes">%2$d</xliff:g> ei ole äratust määratud</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">Ühtegi ajastatud äratust ei leidu</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"Silti pole määratud"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">Ühelgi äratusel pole seda silti</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">Selleks kellaajaks ei ole äratust määratud</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">Äratuse kellaajast <xliff:g example="14:20" id="alarm_time">%s</xliff:g> loobuti</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">Äratus on seatud – <xliff:g example="14:20" id="alarm_time">%s</xliff:g></string>
     <string name="timer_created" msgid="4381027137335885547">"Taimer on loodud"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="one">Taimerist loobuti</item>
@@ -215,11 +191,6 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"Taimeri kestus on sobimatu"</string>
     <string name="invalid_timer" msgid="900957020728335675">"Valitud on sobimatu taimer"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"Aegunud taimereid ei ole"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">Äratusest kell <xliff:g example="14:20" id="alarm_time">%s</xliff:g> ei saa veel loobuda, kuna selleni on enam kui 24 tundi aega</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">Loobu äratusest</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">Vali äratus, millest soovid loobuda</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">Ühtegi käivitatavat äratust pole</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">Äratus kellaajaks <xliff:g example="14:20" id="alarm_time">%s</xliff:g> lükati 10 minutit edasi</string>
     <string name="flip_action_title">Tegevus seadme pööramisel</string>
     <string name="shake_action_title">Tegevus seadme raputamisel</string>
     <string name="firing_alarms_timers_channel">Toimuvad äratused ja taimerid</string>
@@ -229,7 +200,6 @@
     <string name="stopwatch_channel">Stopper</string>
     <string name="timer_channel">Taimer</string>
     <string name="alarm_label_box_title">Äratuse silt</string>
-    <string name="duplicate">Tee koopia</string>
     <string name="selected">Valitud</string>
     <string name="more_options">Rohkem valikuid</string>
     <string name="settings_permission_message">Üks või enam olulist õigust on puudu. Kui vajalikud õigused jäävadki puudu, siis rakendus ei pruugi korralikult toimida.</string>
@@ -246,7 +216,6 @@
     <string name="interface_customization_settings">Kasutajaliides</string>
     <string name="style_category_title">Välimus</string>
     <string name="alarm_notification_reminder_title">Teavituse meeldetuletus</string>
-    <string name="enable_alarm_vibrations_by_default_setting_title">Äratuse käivitamisel lülita vibreerimine sisse</string>
     <string name="timer_add_custom_time">+ %s</string>
     <string name="app_slogan">AOSP-l põhinev, 100% avatud lähtekoodiga kell</string>
     <string name="display_background_border_summary">See eelistus võimaldab mõnede rakenduse elementide (äratused, linnad, taimeri nupud, jne) puhul kuvada taustu äärejoontega</string>
@@ -259,7 +228,6 @@
     <string name="power_button_title">Toitenupp</string>
     <string name="interface_customization_summary">Vali rakenduse stiil, kirjatüüp, keel ja värvid</string>
     <string name="swipe_action_title">Äratuse lõpetamiseks või edasilükkamiseks viipa</string>
-    <string name="material_time_picker_style_title">Taimeri valikuvaade</string>
     <string name="timer_label_box_title">Taimeri silt</string>
     <string name="auto_silence_end_of_ringtone">Helina lõppedes</string>
     <string name="timer_button_time_box_title">Taimerile lisatavad minutid</string>
@@ -388,11 +356,8 @@
     <string name="sort_timer_ascending_duration">Kestuse alusel (kasvavalt)</string>
     <string name="alarm_alert_dismiss_and_delete_text">Loobu ja kustuta</string>
     <string name="alarm_alert_off_and_deleted_text">Loobusid äratusest ja kustutasid ta</string>
-    <string name="alarm_settings_general_summary">Seda seadistust saad iga äratuse puhul muuta äratuse muutmisvaates</string>
     <string name="description_direction_both_for_occasional_alarm">Edasilükkamiseks viipa vasakule ja äratusest loobumiseks ning tema kustutamiseks paremale</string>
     <string name="description_direction_both_for_occasional_non_repeatable_alarm">Äratusest loobumiseks ning tema kustutamiseks viipa vasakule või paremale</string>
-    <string name="delete_occasional_alarm_after_use_title">Kustuta äratus peale loobumist</string>
-    <string name="enable_delete_occasional_alarm_by_default_setting_title">Vaikimisi kasuta juhuslike äratuste automaatset kustutamist</string>
     <string name="occasional_alarm_alert_predismiss_title">Tulevane juhuäratus</string>
     <string name="backup_restore_dialog_message">Kas sa soovid rakenduse andmeid varundada faili või neid taastada sealt?</string>
     <string name="backup_button_title">Varunda</string>
@@ -425,48 +390,32 @@
     <string name="warning_dialog_message">Kas sa oled kindel, et soovid kustutada „%s“ taimeri?</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">Kasuta värinat, kui äratus on edasilükatud või katkestatud</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Kasuta topeltvärinat, kui äratus on edasilükatud või ühekordset värinat, kui äratus on katkestatud</string>
-    <string name="turn_on_back_flash_for_triggered_alarm_title">Äratuse käivitumisel lülita tagumine välklamp sisse</string>
-    <string name="alarm_flash">Välklamp</string>
     <string name="translate_dialog_message">Vaata meie lehte Codebergis:\n\n%s</string>
     <string name="about_translate_link">Tõlgi Codebergis</string>
     <string name="shake_intensity_title">Raputamise tugevus</string>
     <string name="settings_language_title">Keel</string>
     <string name="settings_language_system">Süsteemi keel</string>
-    <string name="settings_language_french">prantsuse keel</string>
-    <string name="settings_language_estonian">eesti keel</string>
-    <string name="settings_language_italian">itaalia keel</string>
-    <string name="settings_language_polish">poola keel</string>
-    <string name="settings_language_portuguese">portugali keel</string>
     <string name="settings_language_german">saksa keel</string>
-    <string name="settings_language_chinese_simplified_cn">hiina keel (lihtsustatud, Hiina RV)</string>
     <string name="settings_language_english_us">inglise keel (USA)</string>
-    <string name="settings_language_serbian">serbia keel</string>
-    <string name="settings_language_spanish">hispaania keel</string>
-    <string name="settings_language_ukrainian">ukraina keel</string>
     <string name="permission_info_title">Vaid Xiaomi seadmete jaoks</string>
     <string name="show_lockscreen_permission_title">NÄITA LUKUSTUSVAATES</string>
     <string name="show_lockscreen_dialog_title">Näita lukustusvaates</string>
     <string name="show_lockscreen_dialog_text">Et see rakendus toimiks korralikult, siis Xiaomi nutiseadmetes palun luba seadistustes „Näita lukustusvaates“ õigused.</string>
     <string name="clock_style_spinner">Vurr</string>
     <string name="clock_style_analog_material">Analoogkell (MD-kujunduskeel)</string>
-    <string name="settings_language_dutch">hollandi keel</string>
-    <string name="settings_language_russian">vene keel</string>
     <string name="last_tab_used_title">Viimatikasutatud vahekaart</string>
     <string name="timer_button_time_minutes_warning_box_text">Sisesta väärtus 0 ja 60 minuti vahemikust</string>
     <string name="timer_time_warning_box_title">Sisestasid vigase väärtuse</string>
     <string name="settings_tab_to_display">Rakenduse avamisel kuvatav vahekaart</string>
-    <string name="settings_language_turkish">türgi keel</string>
     <string name="reset_settings_title">Lähtesta seadistused</string>
     <string name="reset_settings_message">Kas sa oled kindel, et soovid kõik rakenduse seadistused muuta algolekusse?</string>
     <string name="blue_accent_color">Sinine</string>
     <string name="restart_app_dialog_title_for_reset">Lähtestamine on tehtud</string>
-    <string name="settings_language_korean">korea keel</string>
     <string name="display_date_title">Näita vidinas kuupäeva</string>
     <string name="settings_toolbar_title">Näita tööriistaribal pealkirja</string>
     <string name="settings_tab_title_visibility_title">Näita vahekaartide pealkirju</string>
     <string name="tab_title_visibility_always">Alati</string>
     <string name="tab_title_visibility_when_selected">Kui on valitud</string>
-    <string name="settings_language_czech">tšehhi keel</string>
     <string name="settings_keep_screen_on_title">Hoia ekraan sisselülitatuna</string>
     <string name="settings_keep_screen_on_summary">Märkus: Kui stopper töötab ja vahekaart on kuvatud, siis on ekraan alati sisselülitatud sõltumata selle seadistuse olekust</string>
     <string name="dismiss_title_color">„Loobu“ nupu pealkiri</string>
@@ -477,13 +426,7 @@
     <string name="description_dismiss_button_for_occasional_alarm">Klõpsi äratusest loobumiseks ja tema kustutamiseks</string>
     <string name="display_next_alarm_title">Näita vidinas järgmist äratust</string>
     <string name="snooze_title_color">„Lükka edasi“ nupu pealkiri</string>
-    <string name="settings_language_chinese_traditional_tw">hiina keel (traditsiooniline, Taivan)</string>
     <string name="alarm_is_dismissed_and_deleted"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> äratusest on loobutud ja ta on kustutatud</string>
-    <string name="alarm_scheduled_for">Ajastatud: %s</string>
-    <string name="date_picker_style_calendar">Kalender</string>
-    <string name="date_picker_style_text">Tekst</string>
-    <string name="date_picker_style_title">Kuupäevavalija stiil</string>
-    <string name="schedule_alarm_title">Ajasta äratus</string>
     <string name="random_ringtone_title">Juhuslik helin</string>
     <string name="warning">Hoiatus</string>
     <string name="timer_button_time_seconds_warning_box_text">Sisesta väärtus 0 ja 59 sekundi vahemikust</string>
@@ -506,8 +449,6 @@
     <string name="disconnect_external_audio_device_title">Ühendage väline heliseade lahti, et sellele seadistusele juurde pääseda</string>
     <string name="system_media_volume_title">Kasuta süsteemi üldist helivaljust</string>
     <string name="widget_apply_horizontal_padding_title">Lisa vidina külgedele veerised</string>
-    <string name="enable_per_alarm_volume_title">Kasuta iga äratuse puhul eraldi valjust</string>
-    <string name="delay_picker_dialog_title">Äratuse aeg…</string>
     <string name="colors_category_title">Värvid</string>
     <string name="clock_second_hand_title">Teine seier</string>
     <string name="clock_second_hand_vintage">Vanaaegne</string>
@@ -524,10 +465,6 @@
     <string name="clock_dial_title">Sihverplaat</string>
     <string name="background_default_color_title">Kasuta tausta jaoks vaikimisi värvi</string>
     <string name="clock_dial_with_numbers">Numbritega</string>
-    <string name="sort_alarm_title">Äratuste järjestamine</string>
-    <string name="sort_alarm_time">Äratuse aja alusel</string>
-    <string name="sort_next_alarm_time">Järgmise äratuse aja alusel</string>
-    <string name="display_enabled_alarms_first_title">Näita kasutusel olevaid äratusi esimesena</string>
     <string name="sort_cities_title">Järjesta linnasid</string>
     <string name="enable_city_note_title">Lisa linnale oma märkus</string>
     <string name="enable_city_note_summary">Klõpsi linna nimel ja lisa endale vajalik märkus</string>
@@ -535,10 +472,6 @@
     <string name="sort_cities_ascending_time_zone">Ajavööndi alusel (kasvavalt)</string>
     <string name="sort_cities_descending_time_zone">Ajavööndi alusel (kahanevalt)</string>
     <string name="city_search_hint">Otsi linna</string>
-    <string name="sort_descending_creation_order">Loomise alusel (vanemad viimasena)</string>
-    <string name="sort_ascending_creation_order">Loomise alusel (vanemad esimesena)</string>
-    <string name="enable_alarm_fab_long_press_title">Võimalda pika vajutusega tegevusnupul luua viivitusega äratusi</string>
-    <string name="enable_alarm_fab_long_press_summary">Kui see valik pole kasutusel, siis kuvatakse äratuste lisamiseks kaks nuppu</string>
     <string name="vibration_pattern_title">Värinamuster</string>
     <string name="vibration_pattern_soft">Pehme</string>
     <string name="vibration_pattern_strong">Tugev</string>
@@ -549,22 +482,6 @@
     <string name="vibration_start_delay_none">Puudub</string>
     <string name="vibration_start_delay_warning_box_text">Sisesta väärtus vahemikust 0 kuni 10 minutit</string>
     <string name="confirm_action_prompt">\n\nKas sa soovid jätkata?</string>
-    <string name="enable_per_alarm_snooze_duration_title">Kasuta iga äratuse jaoks oma uinumise kestust</string>
-    <string name="missed_alarm_repeat_limit_title">Korda märkamata jäänud äratusi</string>
-    <string name="missed_alarm_repeat_limit_1_time">1 kord</string>
-    <string name="missed_alarm_repeat_limit_3_times">3 korda</string>
-    <string name="missed_alarm_repeat_limit_5_times">5 korda</string>
-    <string name="missed_alarm_repeat_limit_10_times">10 korda</string>
-    <string name="enable_per_alarm_snooze_duration_dialog_message">Iga äratuse jaoks lisatud oma uinumise kestused lähtestuvad.%s</string>
-    <string name="enable_per_alarm_volume_dialog_message">Sinu seadistatud äratuste valjused lähtestuvad.%s</string>
-    <string name="display_dismiss_button_title">Kohe peale äratuse sisselülitamist kuva „Loobu“ nupp</string>
-    <string name="display_dismiss_button_summary">Kui see eelistus pole kasutusel, siis „Loobu“ nupp tekib koos meeldetuletuse teavitusega</string>
-    <string name="enable_per_alarm_missed_repeat_limit_title">Kasuta iga äratuse jaoks oma märkamata jäänud äratuste korduste arvu</string>
-    <string name="enable_per_alarm_missed_repeat_limit_dialog_message">Märkamata jäänud äratuste korduste arvud lähtestuvad.%s</string>
-    <string name="enable_per_alarm_crescendo_duration_title">Kasuta iga äratuse jaoks oma helivaljuse suurendamise kestust</string>
-    <string name="enable_per_alarm_crescendo_duration_dialog_message">Äratuste omad helivaljuse suurendamise kestused lähtestuvad.%s</string>
-    <string name="enable_per_alarm_auto_silence_title">Kasuta iga äratuse jaoks oma peatamise kestust</string>
-    <string name="enable_per_alarm_auto_silence_dialog_message">Äratuste omad peatamise kestused lähtestuvad.%s</string>
     <string name="features_dialog_message">Vaata põhiliste funktsionaalsuste lehte:\n\n%s</string>
     <string name="repetitive_alarm_is_dismissed">Oled äratusest loobunud. <xliff:g example="Järgmine äratus on esmaspäeval." id="alarm_day">Uus aeg on - %s.</xliff:g></string>
     <string name="blur_intensity_title">Hägustamise tugevus</string>
@@ -595,10 +512,6 @@
     <string name="custom_font_toast_message_deleted">Kirjatüübi kustutamine õnnestus</string>
     <string name="vibration_category_title">Värin</string>
     <string name="display_settings_title">Ekraani seadistused</string>
-    <string name="settings_language_bulgarian">bulgaaria keel</string>
-    <string name="settings_language_tamil">tamili keel</string>
-    <string name="enable_per_alarm_vibration_pattern_title">Kasuta iga äratuse jaoks oma tüüpi värinat</string>
-    <string name="enable_per_alarm_vibration_pattern_dialog_message">Iga äratuse jaoks oma tüüpi värinad lähtestatakse.%s</string>
     <string name="sw_laps_title">Ringe</string>
     <string name="sw_split_title">Jagatud</string>
     <string name="sw_total_title">Kokku</string>
@@ -609,12 +522,8 @@
     <string name="screensaver_bold_battery_title">Aku laetus paksus kirjas</string>
     <string name="screensaver_italic_battery_title">Aku laetus kaldkirjas</string>
     <string name="sync_alarm_by_label_title">Sünkrooni sama sildiga äratused</string>
-    <string name="label_indefinitely">Lõputult</string>
     <string name="button_tip_title">Kausta lisamiseks klõpsa + ikooniga nuppu</string>
-    <string name="alarm_alert_dismiss_and_delete_text_button">Loobu ja\nkustuta</string>
     <string name="permissions_category_title">Õigused</string>
-    <string name="settings_language_arabic">araabia keel</string>
-    <string name="settings_language_hungarian">ungari keel</string>
     <string name="snooze_minus_button_color_title">„-“ nupu värv</string>
     <string name="snooze_plus_button_color_title">„+“ nupu värv</string>
     <string name="snooze_minus_symbol_color_title">„-“ sümboli värv</string>
@@ -643,21 +552,17 @@
     <string name="display_next_alarm_title_setting_title">Näita vidinas järgmise äratuse pealkirja</string>
     <string name="foreground_service_title">Näita teavitust esiplaanil</string>
     <string name="foreground_service_dialog_message">Vältimaks olukorda, kus seade sulgeb rakenduse jõuliselt ja sul jääb äratus märkamata, kuvatakse ekraanil püsiv, helitu teade.\n\nSee tagab, et rakendus jääb mällu, kuigi see võib veidi suurendada aku tarbimist.\n\nMärkus: enamiku seadmete puhul pole selle seade sisselülitamine vajalik. Lülita see sisse ainult juhul, kui sinu äratused jäävad vahele.</string>
-    <string name="enable_alarm_vibrations_by_default_dialog_message">Värin lülitatakse kõikide äratuste puhul välja. %s</string>
     <string name="snooze_zone_color_title">„Lükka edasi“ tsooni värv</string>
     <string name="snooze_selector_text_color_title">„Lükka edasi“ valiku teksti värv</string>
     <string name="display_snooze_selector_title">Näita „Lükka edasi“ valikut</string>
     <string name="missed_timer_indicator_color_title">Vahelejäänud taimeri tunnusvärv</string>
     <string name="background_image_summary">Pildi nägemiseks muuda taustavärv läbipaistvaks</string>
     <string name="display_low_alarm_volume_warning_title">Näita hoiatust, kui äratuse helivaljus on sätitud vaikseks</string>
-    <string name="enable_delete_occasional_alarm_by_default_dialog_message">„Kustuta äratus peale loobumist“ funktsionaalsus lülitatakse kõikide äratuste puhul välja. %s</string>
     <string name="toast_message_restore_error">Taastamine ei õnnestunud</string>
     <string name="toast_message_backup_error">Varundamine ei õnnestunud</string>
     <string name="display_top_date_title">Näita vidinas kellaaja kohal kuupäeva</string>
     <string name="display_alarm_action_message_title">Äratuse lõpetamisel või edasilükkamisel näita asjakohast teadet</string>
     <string name="alarm_minutes_warning_box_text">Sisesta väärtus 0 ja 59 minuti vahemikust</string>
-    <string name="pause_alarm_title">Peata äratus</string>
-    <string name="pause_alarm_range">Peatatud: %1$s</string>
     <string name="tabs_category_title">Vahekaardid</string>
     <string name="visible_tabs_title">Nähtavad vahekaardid</string>
     <string name="shortcut_disabled">Vahekaart on peidetud</string>
@@ -677,5 +582,4 @@
     <string name="invert_timer_button_positions_title">Pööra taimerinuppude asukohad teistpidi</string>
     <string name="display_timer_end_time_title">Näita taimeri lõpuaega</string>
     <string name="timer_missed_channel">Märkamata taimerid</string>
-    <string name="settings_language_hebrew">heebrea keel</string>
 </resources>

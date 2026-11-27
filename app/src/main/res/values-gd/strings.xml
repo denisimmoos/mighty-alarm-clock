@@ -7,7 +7,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label">MightyCalendarAlarm</string>
     <string name="default_label">Caismeachd</string>
-    <string name="alarm_vibrate">Dèan crith</string>
     <string name="delete">Sguab às</string>
     <string name="default_timer_ringtone_title">Falbhaidh an ùine air an tìmear</string>
     <string name="alarm_tomorrow">A-màireach</string>
@@ -25,7 +24,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until">’Na dhùsal gus <xliff:g id="time">%s</xliff:g></string>
     <string name="alarm_alert_predismiss_title">Tha caismeachd gu bhith ann</string>
-    <string name="missed_alarm_has_been_deleted">Chaidh a’ chaismeachd a dh’fhalbh ort a sguabadh às</string>
     <string name="timer_notifications_less_min">Nas lugha na mionaid air fhàgail</string>
     <string name="timer_notifications_hours"><xliff:g example="2 hours" id="HOURS">%1$s</xliff:g><xliff:g example="remaining" id="REMAINING"> %3$s</xliff:g></string>
     <string name="timer_notifications_minutes"><xliff:g example="2 minutes" id="MINUTES">%2$s</xliff:g><xliff:g example="remaining" id="REMAINING"> %3$s</xliff:g></string>
@@ -63,15 +61,10 @@
     <string name="analog_widget">Cleoc analogach</string>
     <string name="digital_widget">Cleoc digiteach</string>
     <string name="settings">Roghainnean</string>
-    <string name="snooze_duration_title">Dèan dùsal fad</string>
     <string name="crescendo_duration_title">Àrdaich an fuaim mean air mhean</string>
     <string name="auto_silence_title">Cuir ’na thost às dèidh </string>
     <string name="label_never">Chan ann idir</string>
     <string name="label_off">Dheth</string>
-    <string name="week_start_title">Tòisich an t-seachdain air</string>
-    <string name="week_start_saturday">DiSathairne</string>
-    <string name="week_start_sunday">DiDòmhnaich</string>
-    <string name="week_start_monday">DiLuain</string>
     <string name="alarm_volume_title">Àirde fuaim nan caismeachdan</string>
     <string name="silent_ringtone_title">’Na thost</string>
     <string name="unknown_ringtone_title">Chan eil fhios</string>
@@ -80,13 +73,10 @@
     <string name="button_action_dismiss">Leig seachad</string>
     <string name="button_action_control_volume">Smachd air an tomhas-lìonaidh</string>
     <string name="button_action_nothing">Na dèan dad</string>
-    <string name="label_description">Leubail</string>
-    <string name="ringtone_description">Seirm</string>
     <string name="menu_alarm">Caismeachd</string>
     <string name="menu_timer">Tìmear</string>
     <string name="menu_clock">Cleoc</string>
     <string name="menu_stopwatch">Stad-uaireadair</string>
-    <string name="button_alarms">Cuir caismeachd ris</string>
     <string name="button_cities">Bailtean</string>
     <string name="menu_item_sort_by_gmt_offset">Seòrsaich a-rèir an ama</string>
     <string name="menu_item_sort_by_name">Seòrsaich a-rèir ainm</string>
@@ -146,17 +136,9 @@
     <string name="timer_settings">Tìmearan</string>
     <string name="timer_paused">Tha an tìmear ’na stad</string>
     <string name="timers_in_use"><xliff:g example="7" id="number">%d</xliff:g> tìmear(an)</string>
-    <string name="alarm_undo">neo-dhèan</string>
-    <string name="alarm_deleted">Chaidh a’ chaismeachd a sguabadh às</string>
     <string name="world_day_of_week_label">/ <xliff:g id="label">%s</xliff:g></string>
     <string name="next_alarm_description">An ath-chaismeachd: <xliff:g example="Wed 8:00am" id="alarm_time">%s</xliff:g></string>
-    <string name="no_alarms">Chan eil caismeachd ann</string>
-    <string name="no_scheduled_alarms">Chan eil caismeachd air an sgeideal</string>
-    <string name="no_label_specified">Cha deach leubail a shònrachadh</string>
-    <string name="no_alarms_with_label">Chan eil caismeachd air a bheil an leubail seo</string>
-    <string name="no_alarm_scheduled_for_this_time">Chan eil caismeachd air an sgeideal airson an ama seo</string>
     <string name="alarm_is_dismissed">Chaidh caismeachd aig <xliff:g example="14:20" id="alarm_time">%s</xliff:g> a leigeil seachad</string>
-    <string name="alarm_is_set">Chaidh caismeachd a shuidheachadh aig <xliff:g example="14:20" id="alarm_time">%s</xliff:g></string>
     <string name="timer_created">Chaidh tìmear a chruthachadh</string>
     <plurals name="expired_timers_dismissed">
         <item quantity="one">Chaidh <xliff:g example="5" id="number">%d</xliff:g> tìmear a leigeil seachad</item>
@@ -167,11 +149,6 @@
     <string name="invalid_timer_length">Seo faide mhì-dhligheach do thìmear</string>
     <string name="invalid_timer">Chaidh tìmear mì-dhligheach a thaghadh.</string>
     <string name="no_expired_timers">Cha do dh’fhalbh an ùine air tìmear sam bith</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away">Cha ghabh a’ chaismeachd aig <xliff:g example="14:20" id="alarm_time">%s</xliff:g> a leigeil seachad fhathast, tha i còrr is 24 uair a thìde romhad</string>
-    <string name="dismiss_alarm">Leig seachad a’ chaismeachd</string>
-    <string name="pick_alarm_to_dismiss">Tagh dè a’ chaismeachd a leigeas tu seachad</string>
-    <string name="no_firing_alarms">Chan eil caismeachd ghnìomhach ann</string>
-    <string name="alarm_is_snoozed">Chaidh a’ chaismeachd aig <xliff:g example="14:20" id="alarm_time">%s</xliff:g> a chur ’na dùsal fad 10 mionaidean</string>
     <string name="flip_action_title">Gnìomh flipeadh an uidheim</string>
     <string name="shake_action_title">Gnìomh crathadh an uidheim</string>
 </resources>

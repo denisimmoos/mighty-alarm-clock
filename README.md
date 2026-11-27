@@ -1,8 +1,8 @@
 <!--suppress CheckImageSize -->
-# <img width="24" height="24" alt="image" src="/fastlane/metadata/android/en-US/images/icon.png" /> AlarmClock Deluxe (Wecker, Uhr, Timer, Stoppuhr)
-**AlarmClock Deluxe (Wecker, Uhr, Timer, Stoppuhr)** is a HutterSoft fork of [Clock](https://github.com/BlackyHawky/Clock) (AOSP-inspired), focused on richer alarm management: tags, filters, Syncthing-friendly sync/handoff, Wi‑Fi rules, and more.
+# <img width="24" height="24" alt="image" src="/fastlane/metadata/android/en-US/images/icon.png" /> MightyCalendarAlarm
+**MightyCalendarAlarm** is a HutterSoft fork of [Clock](https://github.com/BlackyHawky/Clock) (AOSP-inspired), focused on alarms from Google Calendar events: profiles matched by event title, fullscreen alarms with snooze, end-of-event alarms, Wi‑Fi conditions and backup. Timer, Stopwatch and Clock are kept; normal alarms were removed.
 
-Application ID: `de.huttersoft.mightyalarmclock` (installs side-by-side with the upstream Clock app).
+Application ID: `de.huttersoft.mightycalendaralarm` (installs side-by-side with MightyAlarmClock and the upstream Clock app).
 
 # 📑 Table of Contents
 
@@ -11,7 +11,6 @@ Application ID: `de.huttersoft.mightyalarmclock` (installs side-by-side with the
 - [Common Issues](#-common-issues)
 - [Contributing](#-contributing)
 - [License](#-license)
-- [Screenshots](#-screenshots)
 - [Credits](#-credits)
 
 # 📥 Download
@@ -29,13 +28,13 @@ Fork builds are not yet published on F-Droid. Build from source or use local APK
 
 # ✨ Features
 
-### • ⏰ **Advanced alarms**
+### • 📅 **Calendar alarms**
 
-* Set alarms to a specific date
-* Flip or shake to dismiss/postpone
-* Use power or volume buttons to snooze/stop
-* Swipe to delete, duplicate, or customize alarms
-* Custom titles, backgrounds, and ringtones (including random playback)
+* Alarms from Google Calendar events, matched to profiles by a title regex
+* Per profile: calendar, ringtone, volume, vibration, offset, escalation and max alert duration
+* Three snooze lengths, optional extend-event-on-snooze, and alarms at the end of events
+* Optional Wi-Fi condition (ring only near a chosen network)
+* Flip or shake to dismiss/postpone, power or volume buttons to snooze/stop
 
 ### • 🎨 **Customization**
   * Light, dark, or system theme
@@ -54,7 +53,7 @@ Fork builds are not yet published on F-Droid. Build from source or use local APK
 
 ### • ⚙️ **Extra features**
   * Quick settings tiles (Android 7+)
-  * Backup & restore (except custom ringtones)
+  * Backup & restore of calendar profiles and settings (except custom ringtones)
   * Material Design UI
   * Support for [Direct Boot](https://developer.android.com/privacy-and-security/direct-boot)
   * Alarm support on some Snapdragon devices when powered off
@@ -97,27 +96,6 @@ See the [LICENSE](LICENSE) file for full details.
 
 > [!NOTE]  
 > Since Clock is based on **AOSP Clock**, which is licensed under **Apache License 2.0**, an additional [Apache 2.0](LICENSE-Apache-2.0) license file is provided in this repository.
-
-# 📷 Screenshots
-
-<details>
-<summary><b>Click here to see screenshots</b></summary>
-<br>
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/01.jpg" alt="Screenshot 01" width="200" />
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/02.jpg" alt="Screenshot 02" width="200" />
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/03.jpg" alt="Screenshot 03" width="200" />
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/04.jpg" alt="Screenshot 04" width="200" />
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/05.jpg" alt="Screenshot 05" width="200" />
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/06.jpg" alt="Screenshot 06" width="200" />
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/07.jpg" alt="Screenshot 07" width="200" />
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/08.jpg" alt="Screenshot 08" width="200" />
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/09.jpg" alt="Screenshot 09" width="200" />
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/10.jpg" alt="Screenshot 10" width="200" />
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/11.jpg" alt="Screenshot 11" width="200" />
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/12.jpg" alt="Screenshot 12" width="200" />
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/13.jpg" alt="Screenshot 13" width="200" />
- <img src="/fastlane/metadata/android/en-US/images/phoneScreenshots/14.jpg" alt="Screenshot 14" width="200" />
-</details>
 
 # 🏅 Credits
 * 🖼️ **App icon** inspired by [LineageOS DeskClock](https://github.com/LineageOS/android_packages_apps_DeskClock), modified by [BlackyHawky](https://github.com/BlackyHawky)

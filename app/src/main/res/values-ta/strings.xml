@@ -6,9 +6,6 @@
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">"அலாரம்"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"அதிர்வு"</string>
-    <string name="time_picker_dialog_title">நேரத்தைத் தேர்ந்தெடுக்கவும்</string>
-    <string name="date_picker_dialog_title">தேதியைத் தேர்ந்தெடுக்கவும்</string>
     <string name="delete" msgid="5732434972457000541">"நீக்கு"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">"இயல்பு அலார ஒலி"</string>
     <string name="alarm_sound" msgid="8754499591391638405">"அலார ஒலி"</string>
@@ -34,7 +31,6 @@
     </plurals>
     <string name="alarm_alert_snooze_until" msgid="6958013659168344550">"<xliff:g id="TIME">%s</xliff:g> வரை உறக்கநிலையில் வை"</string>
     <string name="alarm_alert_predismiss_title" msgid="5723945586913705445">அடுத்த வரும் அறிவிப்பொலி</string>
-    <string name="missed_alarm_has_been_deleted" msgid="5295473204045979335">"உங்கள் தவறிய அலாரம் நீக்கப்பட்டது"</string>
     <string name="timer_notifications_less_min" msgid="5481375048976427255">"ஒரு நிமிடத்திற்கும் குறைவான நேரமே மீதமுள்ளது"</string>
     <string name="timer_notifications_hours" msgid="1613266446037145138">"<xliff:g id="HOURS">%1$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
     <string name="timer_notifications_minutes" msgid="8543138714519498893">"<xliff:g id="MINUTES">%2$s</xliff:g><xliff:g id="REMAINING"> %3$s</xliff:g>"</string>
@@ -84,15 +80,10 @@
     <string name="analog_widget" msgid="1670505720837152766">"கடிகாரம்"</string>
     <string name="digital_widget" msgid="2326954556720571358">"டிஜிட்டல் கடிகாரம்"</string>
     <string name="settings" msgid="5849739030579520686">"அமைப்பு"</string>
-    <string name="snooze_duration_title" msgid="1097309861110780483">"உறக்கநிலையின் காலஅளவு"</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"படிப்படியாக ஒலியளவை அதிகரி"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"அமைதியாக்க வேண்டியது"</string>
     <string name="label_never" msgid="4821982647348750809">"எப்போதும் வேண்டாம்"</string>
     <string name="label_off">முடக்கப்பட்டுள்ளது</string>
-    <string name="week_start_title" msgid="4268917518596832096">"வாரத் தொடக்கம்"</string>
-    <string name="week_start_saturday">சனி</string>
-    <string name="week_start_sunday">ஞாயிறு</string>
-    <string name="week_start_monday">திங்கள்</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"அலாரத்தின் ஒலியளவு"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"நிசப்தம்"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"அறியப்படாதது"</string>
@@ -103,13 +94,10 @@
     <string name="button_action_snooze">உறக்கநிலை</string>
     <string name="button_action_dismiss">நிராகரி</string>
     <string name="button_action_control_volume">ஒலியைக் கட்டுப்படுத்து</string>
-    <string name="label_description" msgid="8736179296142915727">"லேபிள்"</string>
-    <string name="ringtone_description" msgid="7580922112921069925">"ரிங்டோன்"</string>
     <string name="menu_alarm" msgid="4772010125376647519">"அலாரம்"</string>
     <string name="menu_timer" msgid="6459070074762877114">"டைமர்"</string>
     <string name="menu_clock" msgid="5612760670606829805">"கடிகாரம்"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"நிறுத்தக்கடிகாரம்"</string>
-    <string name="button_alarms" msgid="3907838219512538763">"அலாரத்தைச் சேர்"</string>
     <string name="button_cities" msgid="4555761857494501363">"நகரங்கள்"</string>
     <string name="screensaver_settings_title" msgid="2930695838866189483">"ஸ்கிரீன் சேவர்"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"நேர வரிசையில்"</string>
@@ -168,8 +156,6 @@
     <string name="home_time_zone" msgid="9199730676287974501">"தாய்நாட்டின் நேரமண்டலம்"</string>
     <string name="city_checked" msgid="616847871968019">"<xliff:g id="CITY_NAME">%s</xliff:g> தேர்ந்தெடுக்கப்பட்டது"</string>
     <string name="city_unchecked" msgid="710212932781145918">"<xliff:g id="CITY_NAME">%s</xliff:g> தேர்வுநீக்கப்பட்டது"</string>
-    <string name="shortcut_new_alarm_short" msgid="3490418929139725538">"புதிய அலாரம்"</string>
-    <string name="shortcut_new_alarm_long" msgid="4778064830147981089">"புதிய அலாரத்தை உருவாக்கு"</string>
     <string name="shortcut_new_timer_short" msgid="3793414543219297884">"புதிய டைமர்"</string>
     <string name="shortcut_new_timer_long" msgid="5194092459678096067">"புதிய டைமரை உருவாக்கு"</string>
     <string name="shortcut_start_stopwatch_short" msgid="5469715764277476796">"தொடங்கு"</string>
@@ -187,8 +173,6 @@
     <string name="timer_vibrate_title" msgid="7788920024785587518">"டைமர் அதிர்வு"</string>
     <string name="timer_paused" msgid="5941160896040771462">"டைமர் இடைநிறுத்தப்பட்டது"</string>
     <string name="timers_in_use" msgid="5570729467344408506">"<xliff:g id="NUMBER">%d</xliff:g> டைமர்கள்"</string>
-    <string name="alarm_undo" msgid="5710042601177655254">"செயல்தவிர்"</string>
-    <string name="alarm_deleted" msgid="6131529309389084785">"அலாரம் நீக்கப்பட்டது"</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="label">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">"<xliff:g id="TIME">%1$s</xliff:g> முன் உள்ளது"</string>
     <string name="world_time_behind" msgid="5395771290726167865">"<xliff:g id="TIME">%1$s</xliff:g> பின் உள்ளது"</string>
@@ -197,15 +181,7 @@
     <string name="world_hours_tomorrow" msgid="2504465609269004794">"நாளை, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="world_hours_yesterday" msgid="4425086322610882745">"நேற்று, <xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="next_alarm_description" msgid="2650244835760747046">"அடுத்த அலாரம்: <xliff:g id="ALARM_TIME">%s</xliff:g>"</string>
-    <string name="no_alarms" msgid="6429431324842022917">"அலாரங்கள் இல்லை"</string>
-    <string name="invalid_time" msgid="2782334750243998633">"தவறான நேரம் <xliff:g id="INVALID_HOUR">%1$d</xliff:g>:<xliff:g id="INVALID_MINUTES">%2$d</xliff:g> <xliff:g id="INVALID_AMPM">%3$s</xliff:g>"</string>
-    <string name="no_alarm_at" msgid="8140632482969193119">"<xliff:g id="ALARM_TIME_HOUR">%1$d</xliff:g>:<xliff:g id="ALARM_TIME_MINUTES">%2$d</xliff:g>க்கு அலாரம் எதுவுமில்லை"</string>
-    <string name="no_scheduled_alarms" msgid="2115420148192753534">"அலாரங்கள் எதுவும் அமைக்கப்படவில்லை"</string>
-    <string name="no_label_specified" msgid="2008482054428460626">"லேபிள் எதையும் குறிப்பிடவில்லை"</string>
-    <string name="no_alarms_with_label" msgid="6250998794542941665">"இந்த லேபிளின் பெயரில் அலாரங்கள் இல்லை"</string>
-    <string name="no_alarm_scheduled_for_this_time" msgid="4463069177414482818">"இந்த நேரத்திற்கு அலாரம் எதுவும் அமைக்கப்படவில்லை"</string>
     <string name="alarm_is_dismissed" msgid="5509897230565826642">"<xliff:g id="ALARM_TIME">%s</xliff:g> அலாரம் விலக்கப்பட்டது"</string>
-    <string name="alarm_is_set" msgid="5503226382620011088">"அலாரம் <xliff:g id="ALARM_TIME">%s</xliff:g>க்கு அமைக்கப்பட்டது"</string>
     <string name="timer_created" msgid="4381027137335885547">"டைமர் உருவாக்கப்பட்டது"</string>
     <plurals name="expired_timers_dismissed" formatted="false" msgid="1294953410988488149">
         <item quantity="other"><xliff:g id="NUMBER">%d</xliff:g> டைமர்கள் நிராகரிக்கப்பட்டன</item>
@@ -214,22 +190,13 @@
     <string name="invalid_timer_length" msgid="3104567893212932487">"தவறான டைமர் நீளம்"</string>
     <string name="invalid_timer" msgid="900957020728335675">"தவறான டைமர் தேர்ந்தெடுக்கப்பட்டது"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"டைமர்கள் எதுவும் காலாவதியாகவில்லை"</string>
-    <string name="alarm_cant_be_dismissed_still_more_than_24_hours_away" msgid="8810520940995307437">"இன்னும் 24 மணிநேரத்திற்கு அதிகமாக இருப்பதால், <xliff:g id="ALARM_TIME">%s</xliff:g> அலாரத்தை விலக்க முடியாது"</string>
-    <string name="dismiss_alarm" msgid="7204593078688533541">"அலாரத்தை விலக்கு"</string>
-    <string name="pick_alarm_to_dismiss" msgid="5408769235866082896">"விலக்க வேண்டிய அலாரத்தைத் தேர்வுசெய்க"</string>
-    <string name="no_firing_alarms" msgid="4986161963178722289">"இயக்கத்தில் உள்ள அலாரங்கள் எதுவுமில்லை"</string>
-    <string name="alarm_is_snoozed" msgid="7044644119744928846">"<xliff:g id="ALARM_TIME">%s</xliff:g> அலாரம் 10 நிமிடங்களுக்கு உறக்கநிலையில் வைக்கப்பட்டது"</string>
     <string name="red_accent_color">சிவப்பு</string>
     <string name="blue_accent_color">நீலம்</string>
     <string name="amoled_dark_theme_mode">அமோல்ட்</string>
     <string name="settings_language_german">ஜெர்மன்</string>
     <string name="settings_language_title">மொழி</string>
     <string name="settings_language_system">சாதன மொழி</string>
-    <string name="settings_language_french">பிரெஞ்சு</string>
-    <string name="settings_language_italian">இத்தாலியன்</string>
     <string name="settings_language_english_us">ஆங்கிலம்(யுஎஸ்)</string>
-    <string name="settings_language_chinese_simplified_cn">சீனம் (எளிமைப்படுத்தப்பட்டது, PRC)</string>
-    <string name="enable_alarm_vibrations_by_default_setting_title">அலாரங்களை உருவாக்கும்போது அதிர்வுகளை இயக்கு</string>
     <string name="orange_accent_color">ஆரஞ்சு</string>
     <string name="blue_gray_accent_color">நீல சாம்பல்</string>
     <string name="brown_accent_color">பழுப்பு</string>
@@ -248,13 +215,8 @@
     <string name="alarm_notification_reminder_title">அறிவிப்பு நினைவூட்டல்</string>
     <string name="alarm_alert_dismiss_and_delete_text">நிராகரி &amp; நீக்கு</string>
     <string name="vertical_widget">செங்குத்து டிஜிட்டல் கடிகாரம்</string>
-    <string name="schedule_alarm_title">அலாரத்தை திட்டமிடுங்கள்</string>
-    <string name="alarm_flash">ஃபிளாச்</string>
-    <string name="delete_occasional_alarm_after_use_title">அலாரத்தை நிராகரித்தவுடன் நீக்கு</string>
-    <string name="delay_picker_dialog_title">இதில் அலாரம்…</string>
     <string name="alarm_label_box_title">அலாரம் சிட்டை</string>
     <string name="label_default">இயல்புநிலை</string>
-    <string name="duplicate">நகல்</string>
     <string name="label_new_image">புதிய படம்</string>
     <string name="warning">எச்சரிக்கை</string>
     <string name="label_hours">மணிநேரம்</string>
@@ -263,7 +225,6 @@
     <string name="confirm_action_prompt">\n\nதொடர வேண்டுமா?</string>
     <string name="more_options">மேலும் விருப்பங்கள்</string>
     <string name="progress_ringtones">ரிங்டோன்களைச் சேர்க்கிறது… (%1$d/%2$d)</string>
-    <string name="alarm_scheduled_for">%sக்கு திட்டமிடப்பட்டது</string>
     <string name="alarm_alert_off_and_deleted_text">அலாரம் அணைக்கப்பட்டு நீக்கப்பட்டது</string>
     <string name="occasional_alarm_alert_predismiss_title">வரவிருக்கும் எப்போதாவது அலாரம்</string>
     <string name="settings_permission_message">ஒன்று அல்லது அதற்கு மேற்பட்ட அத்தியாவசிய அனுமதிகள் மறுக்கப்படுகின்றன. அவற்றை வழங்காதது செயலிழப்புக்கு வழிவகுக்கும்.</string>
@@ -287,18 +248,6 @@
     <string name="display_card_background_summary">சில பயன்பாட்டு உறுப்புகளுக்கான பின்னணியைக் காட்டுகிறது (அலாரம்கள், நகரங்கள், நேரங்குறிகருவி பொத்தான் போன்றவை)</string>
     <string name="display_background_border_title">பின்னணி எல்லைகளைக் காண்பி</string>
     <string name="display_background_border_summary">சில பயன்பாட்டு உறுப்புகளுக்கு (அறிவிப்பொலிகள், நகரங்கள், நேரங்குறிகருவி பொத்தான் போன்றவை) பின்னணி எல்லையைக் காட்டுகிறது</string>
-    <string name="settings_language_estonian">எச்டோனிய</string>
-    <string name="settings_language_polish">போலீச்</string>
-    <string name="settings_language_portuguese">போர்த்துகீசியம்</string>
-    <string name="settings_language_serbian">செர்பிய</string>
-    <string name="settings_language_spanish">ச்பானிச்</string>
-    <string name="settings_language_ukrainian">உக்ரேனிய</string>
-    <string name="settings_language_dutch">டச்சு</string>
-    <string name="settings_language_russian">ரச்ய</string>
-    <string name="settings_language_turkish">துருக்கிய</string>
-    <string name="settings_language_korean">கொரிய</string>
-    <string name="settings_language_czech">செக்</string>
-    <string name="settings_language_chinese_traditional_tw">சீன (பாரம்பரிய, தைவான்)</string>
     <string name="settings_tab_to_display">பயன்பாட்டைத் திறக்கும்போது காட்ட தாவல்</string>
     <string name="last_tab_used_title">கடைசியாக பயன்படுத்தப்பட்ட தாவல்</string>
     <string name="settings_vibration_summary">சில இடைமுக பொத்தான்கள் மட்டுமே பாதிக்கப்படுகின்றன (எ.கா: நேரங்குறிகருவி பிளே/பாச் பட்டன் அல்லது சுவிட்சுகள்)</string>
@@ -310,19 +259,6 @@
     <string name="settings_fade_transitions_title">திரைகளை மாற்றும்போது மங்கல் மாற்றங்களை இயக்கவும்</string>
     <string name="settings_keep_screen_on_title">திரையை இயக்கவும்</string>
     <string name="settings_keep_screen_on_summary">குறிப்பு: இந்த அமைப்பின் நிலையைப் பொருட்படுத்தாமல், நேரங்குறிகருவி அல்லது ச்டாப்வாட்ச் இயங்கினால், அதனுடன் தொடர்புடைய டேப் காட்டப்பட்டால், திரை எப்போதும் இயக்கத்தில் இருக்கும்</string>
-    <string name="enable_per_alarm_snooze_duration_title">ஒவ்வொரு அலாரத்திற்கும் தனிப்பயன் உறக்கநிலை காலத்தைப் பயன்படுத்தவும்</string>
-    <string name="enable_per_alarm_snooze_duration_dialog_message">தனிப்பயன் அலாரம் உறக்கநிலை காலங்கள் மீட்டமைக்கப்படும்.%s</string>
-    <string name="enable_per_alarm_volume_title">ஒவ்வொரு அலாரத்திற்கும் தனிப்பயன் ஒலியளவைப் பயன்படுத்தவும்</string>
-    <string name="enable_per_alarm_volume_dialog_message">தனிப்பயன் அலாரத்தின் ஒலியமைப்புகள் மீட்டமைக்கப்படும்.%s</string>
-    <string name="display_dismiss_button_title">அலாரம் இயக்கப்பட்டவுடன் டிச்மிச் பட்டனைக் காண்பி</string>
-    <string name="display_dismiss_button_summary">முடக்கப்பட்டிருந்தால், அறிவிப்பு நினைவூட்டலின் அதே நேரத்தில் பொத்தான் தோன்றும்</string>
-    <string name="enable_per_alarm_missed_repeat_limit_title">ஒவ்வொரு அலாரத்திற்கும் தனிப்பயன் தவறவிட்ட அலாரம் மீண்டும் எண்ணிக்கையைப் பயன்படுத்தவும்</string>
-    <string name="enable_per_alarm_missed_repeat_limit_dialog_message">தனிப்பயன் தவறவிட்ட அலாரத்தின் எண்ணிக்கை மீட்டமைக்கப்படும்.%s</string>
-    <string name="missed_alarm_repeat_limit_title">தவறவிட்ட அலாரங்களை மீண்டும் செய்யவும்</string>
-    <string name="missed_alarm_repeat_limit_1_time">1 முறை</string>
-    <string name="missed_alarm_repeat_limit_3_times">3 முறை</string>
-    <string name="missed_alarm_repeat_limit_5_times">5 முறை</string>
-    <string name="missed_alarm_repeat_limit_10_times">10 முறை</string>
     <string name="advanced_audio_playback_title">மேம்பட்ட ஆடியோ பிளேபேக்கைப் பயன்படுத்தவும்</string>
     <string name="advanced_audio_playback_summary">ஊடலை இணக்கத்தன்மையை மேம்படுத்துகிறது மற்றும் மீண்டும் ஒலிக்கும் போது ஒலி குறுக்கீடுகளைத் தடுக்கிறது \n\nகுறிப்பு: சில ரிங்டோன்களில் சிறிய ஆடியோ குறைபாடுகள் இருக்கலாம்</string>
     <string name="auto_routing_to_external_audio_device_title">வெளிப்புற ஆடியோ சாதனங்களுக்கு ரிங்டோன்களை தானாக மாற்றும் வசதியை இயக்குகிறது</string>
@@ -341,22 +277,7 @@
     <string name="vibration_start_delay_none">எதுவுமில்லை</string>
     <string name="vibration_start_delay_warning_box_text">0 முதல் 10 நிமிடங்கள் வரை மதிப்பை உள்ளிடவும்</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">அலாரத்தை உறக்கநிலையில் வைக்கும்போது இரட்டை அதிர்வு மற்றும் அலாரத்தை நிராகரிக்கும் போது ஒற்றை அதிர்வு</string>
-    <string name="turn_on_back_flash_for_triggered_alarm_title">அலாரம் தூண்டப்படும்போது பின் ஃபிளாசை இயக்கவும்</string>
-    <string name="enable_delete_occasional_alarm_by_default_setting_title">இயல்பாக அவ்வப்போது அலாரங்களைத் தானாக நீக்குவதை இயக்கு</string>
-    <string name="material_time_picker_style_title">நேரம் எடுப்பவர் பாணி</string>
-    <string name="date_picker_style_title">தேதி தேர்வு பாணி</string>
-    <string name="sort_alarm_title">அலாரங்களை வரிசைப்படுத்தவும்</string>
-    <string name="sort_alarm_time">முன்னறிவிப்பு நேரத்தில்</string>
-    <string name="sort_next_alarm_time">அடுத்த அலாரம் நேரத்தில்</string>
     <string name="sort_name">பெயரால்</string>
-    <string name="sort_descending_creation_order">படைப்பு வரிசைப்படி (பழைய கடைசி)</string>
-    <string name="sort_ascending_creation_order">படைப்பு வரிசைப்படி (பழைய முதல்)</string>
-    <string name="display_enabled_alarms_first_title">இயக்கப்பட்ட அலாரங்களை முதலில் காண்பி</string>
-    <string name="enable_alarm_fab_long_press_title">தாமதத்துடன் அலாரங்களை உருவாக்க, செயல் பட்டனை நீண்ட நேரம் அழுத்துவதை இயக்கவும்</string>
-    <string name="enable_alarm_fab_long_press_summary">முடக்கப்பட்டிருந்தால், அலாரங்களை உருவாக்க இரண்டு பொத்தான்கள் காட்டப்படும்</string>
-    <string name="date_picker_style_calendar">நாள்காட்டி</string>
-    <string name="date_picker_style_text">உரை</string>
-    <string name="alarm_settings_general_summary">விரிவாக்கப்பட்ட அலாரக் காட்சியில் ஒவ்வொரு அலாரத்திற்கும் இந்த அமைப்பை மாற்றலாம்</string>
     <string name="slide_zone_color_title">ச்லைடு மண்டலத்தின் நிறம்</string>
     <string name="snooze_title_color">\"உறக்கநிலை\" தலைப்பின் நிறம்</string>
     <string name="snooze_button_color">\"உறக்கநிலை\" பொத்தானின் நிறம்</string>
@@ -377,10 +298,6 @@
     <string name="background_image_toast_message_selected">படம் வெற்றிகரமாக தேர்ந்தெடுக்கப்பட்டது</string>
     <string name="background_image_toast_message_deleted">படம் வெற்றிகரமாக நீக்கப்பட்டது</string>
     <string name="enable_blur_effect_title">பின்னணி படத்திற்கு மங்கலான விளைவைப் பயன்படுத்தவும்</string>
-    <string name="enable_per_alarm_crescendo_duration_title">ஒவ்வொரு அலாரத்திற்கும் தனிப்பயன் ஒலியளவை அதிகரிக்கும் கால அளவைப் பயன்படுத்தவும்</string>
-    <string name="enable_per_alarm_crescendo_duration_dialog_message">தனிப்பயன் அலாரத்தின் ஒலி அதிகரிப்பு கால அளவு மீட்டமைக்கப்படும்.%s</string>
-    <string name="enable_per_alarm_auto_silence_title">ஒவ்வொரு அலாரத்திற்கும் தனிப்பயன் அலாரம் நிறுத்த காலத்தைப் பயன்படுத்தவும்</string>
-    <string name="enable_per_alarm_auto_silence_dialog_message">தனிப்பயன் அலாரத்தை நிறுத்தும் கால அளவுகள் மீட்டமைக்கப்படும்.%s</string>
     <string name="auto_silence_end_of_ringtone">ரிங்டோனின் முடிவு</string>
     <string name="snooze_duration_none">எதுவுமில்லை</string>
     <string name="random_ringtone_title">சீரற்ற ரிங்டோன்</string>
@@ -585,10 +502,6 @@
     <string name="custom_font_toast_message_deleted">எழுத்துரு வெற்றிகரமாக நீக்கப்பட்டது</string>
     <string name="vibration_category_title">அதிர்வு</string>
     <string name="display_settings_title">காட்சி அமைப்புகள்</string>
-    <string name="settings_language_bulgarian">பல்கேரியன்</string>
-    <string name="settings_language_tamil">தமிழ்</string>
-    <string name="enable_per_alarm_vibration_pattern_title">ஒவ்வொரு அலாரத்திற்கும் தனிப்பயன் அதிர்வு வடிவத்தைப் பயன்படுத்தவும்</string>
-    <string name="enable_per_alarm_vibration_pattern_dialog_message">தனிப்பயன் அதிர்வு வடிவங்கள் மீட்டமைக்கப்படும்.%s</string>
     <string name="sw_laps_title">மடியில்</string>
     <string name="sw_split_title">பிளவு</string>
     <string name="sw_total_title">மொத்தம்</string>
