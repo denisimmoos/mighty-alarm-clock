@@ -292,4 +292,24 @@ public class CalendarWifiTest {
         // What the profile shows matches what happens when the alarm is due.
         assertEquals(skipping, CalendarWifiGate.shouldSkip(mContext, instance()) != null);
     }
+
+    @Test
+    public void snoozedAlarmRingsAgainNearTheWifiAndStaysQuietAway() {
+        useWifi(true, new CalendarWifi.Network("Home", ""));
+        connect("Home", "aa:bb:cc:dd:ee:ff");
+        assertTrue(fire());
+        final AlarmInstance ringing = instance();
+        AlarmStateManager.setSnoozeState(mContext, ringing, false);
+        assertEquals(AlarmInstance.SNOOZE_STATE, AlarmInstance.getInstance(mCr, ringing.mId).mAlarmState);
+
+        // Still at home when the snooze is over: it rings again.
+        AlarmStateManager.setFiredState(mContext, AlarmInstance.getInstance(mCr, ringing.mId));
+        assertEquals(AlarmInstance.FIRED_STATE, AlarmInstance.getInstance(mCr, ringing.mId).mAlarmState);
+
+        // Snoozed again and left home: it stays quiet.
+        AlarmStateManager.setSnoozeState(mContext, AlarmInstance.getInstance(mCr, ringing.mId), false);
+        connect("Cafe", "11:11:11:11:11:11");
+        AlarmStateManager.setFiredState(mContext, AlarmInstance.getInstance(mCr, ringing.mId));
+        assertNull(AlarmInstance.getInstance(mCr, ringing.mId));
+    }
 }

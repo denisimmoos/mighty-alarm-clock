@@ -538,8 +538,9 @@ public final class AlarmStateManager extends BroadcastReceiver {
         instance.updateInstance(contentResolver);
 
         // A calendar alarm at the end of an event may extend the event until it rings again.
+        // The instance keeps the snooze time to the minute, which is when it rings again.
         com.best.deskclock.mighty.calendar.CalendarEventExtender.onSnoozed(context, instance,
-            newAlarmTime.getTimeInMillis());
+            instance.getAlarmTime().getTimeInMillis());
 
         EventLogStore.logEvent(contentResolver, EventLogStore.EVENT_ALARM_SNOOZED,
             alarm != null ? alarm.stableUuid : null, instance.mLabel,
