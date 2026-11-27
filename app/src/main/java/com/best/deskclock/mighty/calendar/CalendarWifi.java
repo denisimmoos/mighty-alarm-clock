@@ -176,7 +176,8 @@ public final class CalendarWifi {
      */
     public static boolean isValidBssid(@Nullable String bssid) {
         final String value = normalizeBssid(bssid);
-        return value.isEmpty() || value.matches("([0-9a-f]{2}:){5}[0-9a-f]{2}");
+        // The placeholder Android reports for a hidden MAC address would match every network.
+        return value.isEmpty() || (value.matches("([0-9a-f]{2}:){5}[0-9a-f]{2}") && !value.equals(HIDDEN_BSSID));
     }
 
     @Nullable
@@ -322,7 +323,7 @@ public final class CalendarWifi {
             if (results != null) {
                 for (ScanResult result : results) {
                     final String bssid = normalizeBssid(result.BSSID);
-                    if (bssid.isEmpty() || byBssid.containsKey(bssid)) {
+                    if (bssid.isEmpty() || bssid.equals(HIDDEN_BSSID) || byBssid.containsKey(bssid)) {
                         continue;
                     }
                     final String ssid = result.SSID == null ? "" : result.SSID;

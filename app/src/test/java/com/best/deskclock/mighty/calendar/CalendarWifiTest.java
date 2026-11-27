@@ -150,6 +150,8 @@ public class CalendarWifiTest {
         assertTrue(CalendarWifi.isValidBssid("aa:bb:cc:dd:ee:ff"));
         assertTrue(CalendarWifi.isValidBssid(""));
         assertFalse(CalendarWifi.isValidBssid("aa:bb:cc"));
+        // Android's placeholder for a hidden MAC address would match every network.
+        assertFalse(CalendarWifi.isValidBssid("02:00:00:00:00:00"));
     }
 
     @Test

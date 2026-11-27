@@ -44,6 +44,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
     private static final String STATE_ACCOUNT_NAME = "state_account_name";
     private static final String STATE_CALENDAR_NAME = "state_calendar_name";
     private static final String STATE_RINGTONE = "state_ringtone";
+    private static final String STATE_WIFI_NETWORKS = "state_wifi_networks";
     private static final String STATE_ALL_DAY_MINUTES = "state_all_day_minutes";
 
     /** Default time for all-day events when they are first switched on: 8:00. */
@@ -800,8 +801,6 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
      * @return the number, 0 for an empty field, or {@code null} if the text is not a number
      */
     @Nullable
-    private static final String STATE_WIFI_NETWORKS = "state_wifi_networks";
-
     private static Integer parseOptionalNumber(@Nullable Editable text) {
         final String value = textOf(text).trim();
         if (value.isEmpty()) {
