@@ -89,6 +89,31 @@ public final class CalendarWifiGate {
     }
 
     /**
+     * Shows the status on a line with a Wi-Fi icon: red when the alarms are skipped, a yellow
+     * icon when they ring only because Wi-Fi is off and "ring anyway" is on.
+     */
+    public static void showStatus(android.widget.TextView view, Status status, String text) {
+        view.setVisibility(text == null ? android.view.View.GONE : android.view.View.VISIBLE);
+        view.setText(text);
+        final int normal = com.google.android.material.color.MaterialColors.getColor(view,
+            com.google.android.material.R.attr.colorOnSurfaceVariant);
+        final int textColor;
+        final int iconColor;
+        if (isSkipping(status)) {
+            textColor = iconColor = com.google.android.material.color.MaterialColors.getColor(view,
+                androidx.appcompat.R.attr.colorError);
+        } else if (status == Status.WIFI_OFF_RINGS) {
+            textColor = normal;
+            iconColor = ContextCompat.getColor(view.getContext(), R.color.calendar_alarm_wifi_warning);
+        } else {
+            textColor = iconColor = normal;
+        }
+        view.setTextColor(textColor);
+        androidx.core.widget.TextViewCompat.setCompoundDrawableTintList(view,
+            android.content.res.ColorStateList.valueOf(iconColor));
+    }
+
+    /**
      * @return {@code true} if alarms with this status are skipped.
      */
     public static boolean isSkipping(Status status) {

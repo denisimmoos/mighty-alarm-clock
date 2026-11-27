@@ -210,15 +210,8 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
                     profile.calendarName.isEmpty() ? profile.accountName : profile.calendarName,
                     profile.titleRegex));
                 final String wifi = CalendarWifiGate.describe(this, wifiStatus);
-                mBinding.eventsWifi.setVisibility(wifi == null ? GONE : VISIBLE);
-                mBinding.eventsWifi.setText(wifi == null ? null
+                CalendarWifiGate.showStatus(mBinding.eventsWifi, wifiStatus, wifi == null ? null
                     : wifi + "\n" + getString(R.string.calendar_alarm_wifi_status_recheck));
-                final int wifiColor = com.google.android.material.color.MaterialColors.getColor(
-                    mBinding.eventsWifi, CalendarWifiGate.isSkipping(wifiStatus) ? androidx.appcompat.R.attr.colorError
-                        : com.google.android.material.R.attr.colorOnSurfaceVariant);
-                mBinding.eventsWifi.setTextColor(wifiColor);
-                androidx.core.widget.TextViewCompat.setCompoundDrawableTintList(mBinding.eventsWifi,
-                    android.content.res.ColorStateList.valueOf(wifiColor));
                 mAdapter.setEvents(events, profile);
                 mBinding.eventsEmpty.setText(getString(R.string.calendar_alarm_no_events,
                     CalendarProfile.clampLookaheadDays(profile.lookaheadDays)));

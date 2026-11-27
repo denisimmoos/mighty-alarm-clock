@@ -358,14 +358,7 @@ public final class CalendarAlarmFragment extends DeskClockFragment {
             mItem.profileCalendar.setText(source);
 
             final String wifi = CalendarWifiGate.describe(context, row.wifiStatus());
-            mItem.profileWifi.setVisibility(wifi == null ? View.GONE : View.VISIBLE);
-            mItem.profileWifi.setText(wifi);
-            final int wifiColor = com.google.android.material.color.MaterialColors.getColor(mItem.profileWifi,
-                CalendarWifiGate.isSkipping(row.wifiStatus()) ? androidx.appcompat.R.attr.colorError
-                    : com.google.android.material.R.attr.colorOnSurfaceVariant);
-            mItem.profileWifi.setTextColor(wifiColor);
-            androidx.core.widget.TextViewCompat.setCompoundDrawableTintList(mItem.profileWifi,
-                android.content.res.ColorStateList.valueOf(wifiColor));
+            CalendarWifiGate.showStatus(mItem.profileWifi, row.wifiStatus(), wifi);
 
             mItem.profileSwitch.setOnCheckedChangeListener(null);
             mItem.profileSwitch.setChecked(profile.enabled);
