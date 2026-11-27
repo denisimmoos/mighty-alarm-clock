@@ -1747,6 +1747,11 @@
     <string name="calendar_alarm_section_timing">Timing</string>
     <string name="calendar_alarm_section_wifi">Wi-Fi</string>
     <string name="calendar_alarm_wifi_check">Only ring near a chosen Wi-Fi</string>
+    <string name="calendar_alarm_wifi_status_near">Near a chosen Wi-Fi now: alarms ring</string>
+    <string name="calendar_alarm_wifi_status_away">Not near a chosen Wi-Fi now: alarms are skipped</string>
+    <string name="calendar_alarm_wifi_status_unknown">Wi-Fi can’t be checked now: alarms are skipped</string>
+    <string name="calendar_alarm_wifi_status_off_rings">Wi-Fi is off: alarms ring anyway (“Ring anyway when Wi-Fi is off”)</string>
+    <string name="calendar_alarm_wifi_status_recheck">Wi-Fi is checked again when each alarm is due.</string>
     <string name="calendar_alarm_wifi_off_rings">Ring anyway when the phone’s Wi-Fi is turned off</string>
     <string name="calendar_alarm_wifi_help">The alarm only rings if the phone is connected to one of these networks or saw it in range in the last 30 minutes. Otherwise it stays quiet and you get a notification. Choose by name to match every access point of a network, or by MAC address to match one access point.</string>
     <string name="calendar_alarm_wifi_none">No network chosen yet</string>

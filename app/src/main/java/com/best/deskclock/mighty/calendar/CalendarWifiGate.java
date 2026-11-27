@@ -35,6 +35,62 @@ public final class CalendarWifiGate {
     private CalendarWifiGate() {
     }
 
+    /** What the Wi-Fi check means for a profile's alarms right now. */
+    public enum Status {
+        /** The profile has no Wi-Fi check. */
+        NO_CHECK,
+        /** Near one of the networks: the alarms ring. */
+        NEAR,
+        /** Not near any of the networks: the alarms are skipped. */
+        AWAY,
+        /** Wi-Fi can't be checked: the alarms are skipped. */
+        UNKNOWN,
+        /** The phone's Wi-Fi is off and the profile rings anyway. */
+        WIFI_OFF_RINGS
+    }
+
+    /**
+     * @param scan see {@link CalendarWifi#check(Context, List, boolean)}.
+     * @return what the Wi-Fi check means for the profile's alarms right now.
+     */
+    public static Status status(Context context, CalendarProfile profile, boolean scan) {
+        if (profile == null || !profile.wifiCheck) {
+            return Status.NO_CHECK;
+        }
+        final List<CalendarWifi.Network> networks = CalendarWifi.parse(profile.wifiNetworks);
+        if (networks.isEmpty()) {
+            return Status.NO_CHECK;
+        }
+        if (profile.wifiOffRings && !CalendarWifi.isWifiEnabled(context)) {
+            return Status.WIFI_OFF_RINGS;
+        }
+        return switch (CalendarWifi.check(context, networks, scan)) {
+            case NEAR -> Status.NEAR;
+            case NOT_NEAR -> Status.AWAY;
+            case UNKNOWN -> Status.UNKNOWN;
+        };
+    }
+
+    /**
+     * @return the text shown on a profile for the status, or {@code null} without a Wi-Fi check.
+     */
+    public static String describe(Context context, Status status) {
+        return switch (status) {
+            case NO_CHECK -> null;
+            case NEAR -> context.getString(R.string.calendar_alarm_wifi_status_near);
+            case AWAY -> context.getString(R.string.calendar_alarm_wifi_status_away);
+            case UNKNOWN -> context.getString(R.string.calendar_alarm_wifi_status_unknown);
+            case WIFI_OFF_RINGS -> context.getString(R.string.calendar_alarm_wifi_status_off_rings);
+        };
+    }
+
+    /**
+     * @return {@code true} if alarms with this status are skipped.
+     */
+    public static boolean isSkipping(Status status) {
+        return status == Status.AWAY || status == Status.UNKNOWN;
+    }
+
     /**
      * @return the reason the alarm must stay quiet, or {@code null} if it may ring.
      */
@@ -49,20 +105,15 @@ public final class CalendarWifiGate {
             LogUtils.e("CalendarWifiGate: could not read the profile of alarm " + instance.mAlarmId, e);
             return null;
         }
-        if (profile == null || !profile.wifiCheck) {
-            return null;
+        final Status status = status(context, profile, true);
+        if (status != Status.NO_CHECK) {
+            LogUtils.i("CalendarWifiGate: alarm %d, Wi-Fi check %s", instance.mAlarmId, status);
         }
-        final List<CalendarWifi.Network> networks = CalendarWifi.parse(profile.wifiNetworks);
-        if (networks.isEmpty()) {
-            return null;
-        }
-        if (profile.wifiOffRings && !CalendarWifi.isWifiEnabled(context)) {
-            LogUtils.i("CalendarWifiGate: alarm %d rings, Wi-Fi is turned off", instance.mAlarmId);
-            return null;
-        }
-        final CalendarWifi.Result result = CalendarWifi.check(context, networks);
-        LogUtils.i("CalendarWifiGate: alarm %d, Wi-Fi check %s", instance.mAlarmId, result);
-        return result == CalendarWifi.Result.NEAR ? null : result;
+        return switch (status) {
+            case AWAY -> CalendarWifi.Result.NOT_NEAR;
+            case UNKNOWN -> CalendarWifi.Result.UNKNOWN;
+            default -> null;
+        };
     }
 
     /**

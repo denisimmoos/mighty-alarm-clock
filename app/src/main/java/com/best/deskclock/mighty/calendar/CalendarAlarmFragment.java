@@ -185,7 +185,8 @@ public final class CalendarAlarmFragment extends DeskClockFragment {
                         }
                     }
                 }
-                rows.add(new ProfileRow(profile, count, next, isCalendarMissing(profile, calendars)));
+                rows.add(new ProfileRow(profile, count, next, isCalendarMissing(profile, calendars),
+                    CalendarWifiGate.status(appContext, profile, false)));
             }
             AppExecutors.getMainThread().post(() -> {
                 if (mBinding == null) {
@@ -245,7 +246,8 @@ public final class CalendarAlarmFragment extends DeskClockFragment {
         right.setVisibility(INVISIBLE);
     }
 
-    private record ProfileRow(CalendarProfile profile, int upcomingCount, long nextBegin, boolean calendarMissing) {
+    private record ProfileRow(CalendarProfile profile, int upcomingCount, long nextBegin, boolean calendarMissing,
+                              CalendarWifiGate.Status wifiStatus) {
     }
 
     /**
@@ -335,6 +337,13 @@ public final class CalendarAlarmFragment extends DeskClockFragment {
             }
             source.append(" · ").append(profile.titleRegex);
             mItem.profileCalendar.setText(source);
+
+            final String wifi = CalendarWifiGate.describe(context, row.wifiStatus());
+            mItem.profileWifi.setVisibility(wifi == null ? View.GONE : View.VISIBLE);
+            mItem.profileWifi.setText(wifi);
+            mItem.profileWifi.setTextColor(com.google.android.material.color.MaterialColors.getColor(mItem.profileWifi,
+                CalendarWifiGate.isSkipping(row.wifiStatus()) ? androidx.appcompat.R.attr.colorError
+                    : com.google.android.material.R.attr.colorOnSurfaceVariant));
 
             mItem.profileSwitch.setOnCheckedChangeListener(null);
             mItem.profileSwitch.setChecked(profile.enabled);

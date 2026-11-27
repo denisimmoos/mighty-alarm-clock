@@ -913,6 +913,11 @@
     <string name="calendar_alarm_section_timing">Zeitpunkt</string>
     <string name="calendar_alarm_section_wifi">WLAN</string>
     <string name="calendar_alarm_wifi_check">Nur in der Nähe eines gewählten WLANs klingeln</string>
+    <string name="calendar_alarm_wifi_status_near">Jetzt in der Nähe eines gewählten WLANs: Wecker klingeln</string>
+    <string name="calendar_alarm_wifi_status_away">Jetzt nicht in der Nähe eines gewählten WLANs: Wecker werden übersprungen</string>
+    <string name="calendar_alarm_wifi_status_unknown">WLAN kann jetzt nicht geprüft werden: Wecker werden übersprungen</string>
+    <string name="calendar_alarm_wifi_status_off_rings">WLAN ist aus: Wecker klingeln trotzdem („Trotzdem klingeln, wenn das WLAN aus ist“)</string>
+    <string name="calendar_alarm_wifi_status_recheck">Das WLAN wird erneut geprüft, wenn ein Wecker fällig ist.</string>
     <string name="calendar_alarm_wifi_off_rings">Trotzdem klingeln, wenn das WLAN des Telefons ausgeschaltet ist</string>
     <string name="calendar_alarm_wifi_help">Der Wecker klingelt nur, wenn das Telefon mit einem dieser Netze verbunden ist oder es in den letzten 30 Minuten in Reichweite gesehen hat. Sonst bleibt er still und du bekommst eine Benachrichtigung. Wähle nach Name, um alle Zugangspunkte eines Netzes zu erfassen, oder nach MAC-Adresse für einen bestimmten Zugangspunkt.</string>
     <string name="calendar_alarm_wifi_none">Noch kein Netz gewählt</string>

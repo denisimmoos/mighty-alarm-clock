@@ -231,6 +231,16 @@ public final class CalendarWifi {
     @SuppressLint("MissingPermission")
     @SuppressWarnings("deprecation")
     public static Result check(Context context, List<Network> networks) {
+        return check(context, networks, true);
+    }
+
+    /**
+     * @param scan {@code true} to ask for a fresh scan for the next check. Screens that only show
+     *             the status pass {@code false}, because Android limits how often apps may scan.
+     */
+    @SuppressLint("MissingPermission")
+    @SuppressWarnings("deprecation")
+    public static Result check(Context context, List<Network> networks, boolean scan) {
         if (networks.isEmpty()) {
             return Result.NEAR;
         }
@@ -264,8 +274,10 @@ public final class CalendarWifi {
                     }
                 }
             }
-            // Fresh results for the next check, for example after a snooze.
-            wifi.startScan();
+            if (scan) {
+                // Fresh results for the next check, for example after a snooze.
+                wifi.startScan();
+            }
         } catch (Exception e) {
             LogUtils.e("CalendarWifi: could not check Wi-Fi", e);
             return Result.UNKNOWN;

@@ -18,6 +18,18 @@
         android:textColor="?attr/colorOnSurfaceVariant"
         android:textSize="14sp" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/events_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="6dp"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="8dp"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:drawableStartCompat="@drawable/ic_calendar_wifi" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

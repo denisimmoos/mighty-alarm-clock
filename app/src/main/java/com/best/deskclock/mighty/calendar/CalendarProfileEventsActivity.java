@@ -165,6 +165,7 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
         AppExecutors.getDiskIO().execute(() -> {
             final CalendarProfile profile = CalendarProfile.getProfile(appContext.getContentResolver(), profileId);
             final List<CalendarAlarmEvent> events = new ArrayList<>();
+            final CalendarWifiGate.Status wifiStatus = CalendarWifiGate.status(appContext, profile, false);
             if (profile != null) {
                 final long now = System.currentTimeMillis();
                 for (CalendarAlarmEvent event : CalendarAlarmEvent.getEventsForProfile(
@@ -189,6 +190,13 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
                 mBinding.eventsSubtitle.setText(getString(R.string.calendar_alarm_events_subtitle,
                     profile.calendarName.isEmpty() ? profile.accountName : profile.calendarName,
                     profile.titleRegex));
+                final String wifi = CalendarWifiGate.describe(this, wifiStatus);
+                mBinding.eventsWifi.setVisibility(wifi == null ? GONE : VISIBLE);
+                mBinding.eventsWifi.setText(wifi == null ? null
+                    : wifi + "\n" + getString(R.string.calendar_alarm_wifi_status_recheck));
+                mBinding.eventsWifi.setTextColor(com.google.android.material.color.MaterialColors.getColor(
+                    mBinding.eventsWifi, CalendarWifiGate.isSkipping(wifiStatus) ? androidx.appcompat.R.attr.colorError
+                        : com.google.android.material.R.attr.colorOnSurfaceVariant));
                 mAdapter.setEvents(events, profile);
                 mBinding.eventsEmpty.setText(getString(R.string.calendar_alarm_no_events,
                     CalendarProfile.clampLookaheadDays(profile.lookaheadDays)));

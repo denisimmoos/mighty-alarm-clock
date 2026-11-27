@@ -255,4 +255,37 @@ public class CalendarWifiTest {
         connect("Cafe", "11:11:11:11:11:11");
         assertFalse(fire());
     }
+
+    @Test
+    public void profileShowsWhatTheWifiCheckMeansNow() {
+        final CalendarWifiGate.Status noCheck = CalendarWifiGate.status(mContext,
+            CalendarProfile.getProfile(mCr, mProfile.id), false);
+        assertEquals(CalendarWifiGate.Status.NO_CHECK, noCheck);
+        assertNull(CalendarWifiGate.describe(mContext, noCheck));
+
+        useWifi(true, new CalendarWifi.Network("Home", ""));
+        connect("Home", "aa:bb:cc:dd:ee:ff");
+        assertStatus(CalendarWifiGate.Status.NEAR, false);
+
+        connect("Cafe", "11:11:11:11:11:11");
+        assertStatus(CalendarWifiGate.Status.AWAY, true);
+
+        // Wi-Fi off, but "scanning always available" still sees the networks around.
+        mWifi.setWifiEnabled(false);
+        assertStatus(CalendarWifiGate.Status.AWAY, true);
+
+        mProfile.wifiOffRings = true;
+        mProfile.updateProfile(mCr);
+        assertStatus(CalendarWifiGate.Status.WIFI_OFF_RINGS, false);
+    }
+
+    private void assertStatus(CalendarWifiGate.Status expected, boolean skipping) {
+        final CalendarWifiGate.Status status = CalendarWifiGate.status(mContext,
+            CalendarProfile.getProfile(mCr, mProfile.id), false);
+        assertEquals(expected, status);
+        assertEquals(skipping, CalendarWifiGate.isSkipping(status));
+        assertNotNull(CalendarWifiGate.describe(mContext, status));
+        // What the profile shows matches what happens when the alarm is due.
+        assertEquals(skipping, CalendarWifiGate.shouldSkip(mContext, instance()) != null);
+    }
 }
