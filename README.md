@@ -12,7 +12,7 @@ It is a fork of [Clock](https://github.com/BlackyHawky/Clock) by BlackyHawky, wh
 
 ### How it works
 1. Open the **Calendar** tab and tap **+** to create a profile (or long-press the app icon and pick **Create new profile**).
-2. Pick a calendar and enter a title filter, for example `⏰` or `^Alarm:`.
+2. Pick a calendar and enter a title filter, for example `⏰` or `^Alarm:` (see [the title filter](#the-title-filter-regular-expressions) for more).
 3. Every matching event in the next 7 to 30 days gets an alarm. The app checks your calendar every 15 minutes and after every change.
 4. Tap a profile to see its upcoming alarms and switch single alarms off.
 
@@ -28,6 +28,27 @@ When an alarm rings you get a big **Dismiss** button and three snooze buttons (b
 * Volume as a share of the app's alarm volume, vibration, flashlight and escalation
 * Shows title, description and place on the lock screen (can be switched off)
 
+### The title filter (regular expressions)
+The title filter is a [regular expression](https://developer.android.com/reference/java/util/regex/Pattern), so it can be as simple or as precise as you like.
+It matches **anywhere in the event title**, unless you anchor it with `^` (start) or `$` (end).
+Switch on **Ignore upper and lower case** in the profile to treat `alarm`, `Alarm` and `ALARM` the same, or put `(?i)` at the start of the filter.
+An invalid filter is shown as an error in the editor and never rings.
+
+| Filter | Rings for events whose title … | Example that rings |
+|---|---|---|
+| `⏰` | contains the ⏰ emoji anywhere | `Dentist ⏰` |
+| `^Alarm:` | starts with "Alarm:" | `Alarm: Flight to Rome` |
+| `⏰\|Alarm:\|Wecker` | contains any of the three | `Wecker Sport` |
+| `^Train` | starts with "Train" | `Train to Bern 07:12` |
+| `(?i)^dentist` | starts with "dentist" in any case | `DENTIST check-up` |
+| `\bgym\b` | contains "gym" as a whole word (not "gymnastics") | `Morning gym` |
+| `^(?!.*Cancelled).*Meeting` | contains "Meeting" but not "Cancelled" | `Team Meeting` |
+| `Shift (Early\|Late)$` | ends with "Shift Early" or "Shift Late" | `Hospital Shift Late` |
+| `\b\d{1,2}:\d{2}\b` | contains a time like 7:30 or 14:05 | `Pickup 7:30` |
+| `\b[A-Z]{2}\d{3,4}\b` | contains a code like a flight number | `Flight LX1612` |
+
+Each profile has its own filter, so you can use several profiles with different filters, sounds and settings on the same calendar.
+
 ### Calendar tab
 All your profiles at a glance. Each card shows the profile name, how many alarms it has in the next days, the next alarm, and which calendar and title filter it uses. The switch turns a profile on or off, the gear opens its settings, and **+** creates a new profile.
 
@@ -37,11 +58,6 @@ All your profiles at a glance. Each card shows the profile name, how many alarms
 Tapping a profile lists every event that will ring, with time, title and date. Each alarm can be switched off on its own, for example to skip one day.
 
 <img src="docs/screenshots/silent-profile-alarms.jpg" width="300" alt="Upcoming alarms of a profile" />
-
-### A profile with a single alarm
-Another profile with one matching event in the next days. The line at the top says which calendar is checked and which title filter is used.
-
-<img src="docs/screenshots/profile-alarms.jpg" width="300" alt="A profile with a single alarm" />
 
 ### All profile options
 The whole profile editor from top to bottom: name and calendar, title filter and look-ahead, which events ring, timing, the Wi‑Fi condition, sound and vibration, maximum ring time, the three snooze lengths and the lock screen.
