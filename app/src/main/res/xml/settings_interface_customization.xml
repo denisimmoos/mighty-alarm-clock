@@ -76,7 +76,7 @@
         <ListPreference
             android:key="key_accent_color"
             android:layout="@layout/settings_preference_layout"
-            android:defaultValue="0"
+            android:defaultValue="11"
             android:entries="@array/array_accent_color"
             android:entryValues="@array/accent_color_setting_entries"
             app:iconSpaceReserved="false"
@@ -95,7 +95,7 @@
             android:key="key_night_accent_color"
             android:layout="@layout/settings_preference_layout"
             android:title="@string/night_accent_color_title"
-            android:defaultValue="0"
+            android:defaultValue="11"
             android:entries="@array/array_accent_color"
             android:entryValues="@array/accent_color_setting_entries"
             app:iconSpaceReserved="false"
