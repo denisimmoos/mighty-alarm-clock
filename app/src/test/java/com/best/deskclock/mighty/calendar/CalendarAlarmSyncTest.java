@@ -76,8 +76,8 @@ public class CalendarAlarmSyncTest {
             if (uri.getPathSegments().get(0).equals("calendars")) {
                 final MatrixCursor calendars = new MatrixCursor(projection);
                 for (java.util.Map.Entry<Long, String> entry : CALENDARS.entrySet()) {
-                    calendars.addRow(new Object[]{entry.getKey(), entry.getValue(), "com.google",
-                        "Calendar " + entry.getKey(), 0});
+                    calendars.addRow(java.util.Arrays.copyOf(new Object[]{entry.getKey(), entry.getValue(),
+                        "com.google", "Calendar " + entry.getKey(), 0}, projection.length));
                 }
                 return calendars;
             }
@@ -1211,6 +1211,10 @@ public class CalendarAlarmSyncTest {
         assertTrue(CHANGES.get(0), CHANGES.get(0).contains("/events/1 ") && CHANGES.get(0).contains("dtend=" + newEnd));
         assertEquals(Long.valueOf(newEnd), DTENDS.get(1L));
         assertEquals(newEnd, events().get(0).end);
+        // The calendar's account is synced right away, so the change reaches Google quickly.
+        final android.accounts.Account account = new android.accounts.Account("someone@example.com", "com.google");
+        assertTrue(org.robolectric.shadows.ShadowContentResolver.getStatus(account, CalendarContract.AUTHORITY)
+            .syncRequests > 0);
     }
 
     @Test
