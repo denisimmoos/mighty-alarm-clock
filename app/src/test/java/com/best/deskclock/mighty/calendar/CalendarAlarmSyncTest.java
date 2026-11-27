@@ -112,14 +112,14 @@ public class CalendarAlarmSyncTest {
             final MatrixCursor cursor = new MatrixCursor(projection);
             for (FakeEvent event : EVENTS) {
                 // Like the real provider: every instance that overlaps the window.
-                if (event.calendarId() == calendarId && event.begin() + EVENT_LENGTH_MS > from && event.begin() <= to) {
+                if (event.calendarId() == calendarId && endOf(event) > from && event.begin() <= to) {
                     final Object[] row = new Object[projection.length];
                     for (int i = 0; i < projection.length; i++) {
                         switch (projection[i]) {
                             case CalendarContract.Instances.EVENT_ID -> row[i] = event.id();
                             case CalendarContract.Instances.BEGIN -> row[i] = event.begin();
                             // Every fake event lasts one hour.
-                            case CalendarContract.Instances.END -> row[i] = event.begin() + EVENT_LENGTH_MS;
+                            case CalendarContract.Instances.END -> row[i] = endOf(event);
                             case CalendarContract.Instances.TITLE -> row[i] = event.title();
                             case CalendarContract.Instances.ALL_DAY -> row[i] = event.allDay();
                             case CalendarContract.Instances.SELF_ATTENDEE_STATUS -> row[i] = event.status();
@@ -183,6 +183,13 @@ public class CalendarAlarmSyncTest {
     static final java.util.Set<Long> RECURRING = new java.util.HashSet<>();
     static final List<String> CHANGES = new ArrayList<>();
     static final long EXCEPTION_ID = 99;
+    /** End times that differ from the usual one hour, by event id. */
+    static final java.util.Map<Long, Long> ENDS = new java.util.HashMap<>();
+
+    static long endOf(FakeEvent event) {
+        final Long end = ENDS.get(event.id());
+        return end != null ? end : event.begin() + EVENT_LENGTH_MS;
+    }
 
     static final java.util.Map<Long, String> CALENDARS = new java.util.TreeMap<>();
 
@@ -194,6 +201,7 @@ public class CalendarAlarmSyncTest {
         EVENT_DETAILS.clear();
         DELETED_IDS.clear();
         RECURRING.clear();
+        ENDS.clear();
         CHANGES.clear();
         CALENDARS.clear();
         CALENDARS.put(CALENDAR_ID, "someone@example.com");
@@ -1195,5 +1203,42 @@ public class CalendarAlarmSyncTest {
         final CalendarAlarmEvent row = events().get(0);
         assertFalse(CalendarEventExtender.extend(mContext, row.endAlarmId, row.end + 60_000));
         assertTrue(CHANGES.isEmpty());
+    }
+
+    @Test
+    public void changedEndTimeMovesTheAlarmAtTheEnd() {
+        mProfile.ringAtEnd = true;
+        mProfile.updateProfile(mCr);
+        final long begin = inHours(3);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, "Alarm: Meeting"));
+        CalendarAlarmSync.syncAll(mContext);
+        final long endAlarmId = events().get(0).endAlarmId;
+
+        final long newEnd = begin + TimeUnit.HOURS.toMillis(2);
+        ENDS.put(1L, newEnd);
+        CalendarAlarmSync.syncAll(mContext);
+        final CalendarAlarmEvent row = events().get(0);
+        assertEquals(newEnd, row.end);
+        assertEquals(newEnd, AlarmInstance.getInstancesByAlarmId(mCr, row.endAlarmId).get(0)
+            .getAlarmTime().getTimeInMillis());
+        assertEquals(endAlarmId, row.endAlarmId);
+    }
+
+    @Test
+    public void changedEndTimeOfARunningEventMovesTheAlarmAtTheEnd() {
+        mProfile.ringAtEnd = true;
+        mProfile.updateProfile(mCr);
+        final long begin = inHours(0) - TimeUnit.MINUTES.toMillis(30);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, "Alarm: Workshop"));
+        CalendarAlarmSync.syncAll(mContext);
+        assertTrue(events().get(0).endAlarmId >= 0);
+
+        final long newEnd = inHours(3);
+        ENDS.put(1L, newEnd);
+        CalendarAlarmSync.syncAll(mContext);
+        final CalendarAlarmEvent row = events().get(0);
+        assertEquals(newEnd, row.end);
+        assertEquals(newEnd, AlarmInstance.getInstancesByAlarmId(mCr, row.endAlarmId).get(0)
+            .getAlarmTime().getTimeInMillis());
     }
 }

@@ -238,6 +238,15 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
         }
     }
 
+    private static boolean isSameDay(long a, long b) {
+        final java.util.Calendar first = java.util.Calendar.getInstance();
+        first.setTimeInMillis(a);
+        final java.util.Calendar second = java.util.Calendar.getInstance();
+        second.setTimeInMillis(b);
+        return first.get(java.util.Calendar.YEAR) == second.get(java.util.Calendar.YEAR)
+            && first.get(java.util.Calendar.DAY_OF_YEAR) == second.get(java.util.Calendar.DAY_OF_YEAR);
+    }
+
     private final class EventAdapter extends RecyclerView.Adapter<EventViewHolder> {
 
         private final List<CalendarAlarmEvent> mEvents = new ArrayList<>();
@@ -316,6 +325,13 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
                     : (atStart ? R.string.calendar_alarm_rings_at_and_start : R.string.calendar_alarm_rings_at);
                 dateText += " · " + context.getString(text,
                     DateFormat.getTimeFormat(context).format(new java.util.Date(ringTime)));
+            }
+            if (showsEnd && !isSameDay(event.begin, event.end)) {
+                // The time on the left only shows the hour, so say on which day the event ends.
+                dateText += " · " + context.getString(R.string.calendar_alarm_ends_on,
+                    DateUtils.formatDateTime(context, event.end, DateUtils.FORMAT_SHOW_WEEKDAY
+                        | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_SHOW_DATE
+                        | DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_SHOW_TIME));
             }
             mItem.eventDate.setText(dateText);
 

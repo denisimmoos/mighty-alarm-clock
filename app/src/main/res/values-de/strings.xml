@@ -957,6 +957,7 @@
     <string name="calendar_alarm_extend_permission">Zum Verlängern von Terminen braucht die App Zugriff zum Ändern des Kalenders.</string>
     <string name="calendar_alarm_clone_profile">Profil klonen</string>
     <string name="calendar_alarm_clone_name">%s (Klon)</string>
+    <string name="calendar_alarm_ends_on">endet %s</string>
     <string name="calendar_alarm_event_ends">Termin endet jetzt</string>
     <string name="calendar_alarm_rings_at_and_end">Klingelt um %s und am Ende</string>
     <string name="calendar_alarm_rings_at_start_and_end">Klingelt um %s, zu Beginn und am Ende</string>
