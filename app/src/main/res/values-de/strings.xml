@@ -958,6 +958,9 @@
     <string name="calendar_alarm_clone_profile">Profil klonen</string>
     <string name="calendar_alarm_clone_name">%s (Klon)</string>
     <string name="calendar_alarm_ends_on">endet %s</string>
+    <string name="calendar_alarm_extended_until">Termin verlängert bis %s</string>
+    <string name="calendar_alarm_extend_no_permission">Termin nicht verlängert: keine Berechtigung, den Kalender zu ändern</string>
+    <string name="calendar_alarm_extend_failed">Der Kalender hat die Verlängerung nicht übernommen</string>
     <string name="calendar_alarm_snooze_extends">Schlummern verlängert den Termin um die Schlummerzeit</string>
     <string name="calendar_alarm_event_ends">Termin endet jetzt</string>
     <string name="calendar_alarm_rings_at_and_end">Klingelt um %s und am Ende</string>

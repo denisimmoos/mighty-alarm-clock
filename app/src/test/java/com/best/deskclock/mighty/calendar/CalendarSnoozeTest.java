@@ -239,6 +239,13 @@ public class CalendarSnoozeTest {
         final long expected = before + TimeUnit.MINUTES.toMillis(longest);
         assertTrue("snoozed until " + until, Math.abs(until - expected) < TimeUnit.MINUTES.toMillis(1));
         assertEquals(until, row().end);
+        // The user is told, also in the event log.
+        boolean logged = false;
+        for (com.best.deskclock.provider.EventLogStore.EventLogEntry entry
+                : com.best.deskclock.provider.EventLogStore.getEvents(mCr)) {
+            logged |= "CALENDAR_EVENT_EXTENDED".equals(entry.eventType);
+        }
+        assertTrue(logged);
     }
 
     @Test

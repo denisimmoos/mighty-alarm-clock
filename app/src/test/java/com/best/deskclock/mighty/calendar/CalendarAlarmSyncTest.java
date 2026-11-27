@@ -89,6 +89,13 @@ public class CalendarAlarmSyncTest {
                 rule.addRow(new Object[]{RECURRING.contains(id) ? "FREQ=WEEKLY" : null, null});
                 return rule;
             }
+            if (uri.getPathSegments().get(0).equals("events") && uri.getPathSegments().size() == 2
+                && CalendarContract.Events.DTEND.equals(projection[0])) {
+                // The stored end of one event.
+                final MatrixCursor end = new MatrixCursor(projection);
+                end.addRow(new Object[]{DTENDS.get(Long.parseLong(uri.getLastPathSegment()))});
+                return end;
+            }
             if (uri.getPathSegments().get(0).equals("events") && uri.getPathSegments().size() == 2) {
                 // One event: its description and location.
                 final MatrixCursor details = new MatrixCursor(projection);
@@ -141,6 +148,10 @@ public class CalendarAlarmSyncTest {
         public Uri insert(@NonNull Uri uri, ContentValues values) {
             // A changed occurrence of a repeating event becomes a new event.
             CHANGES.add(uri + " " + values);
+            // Like some calendars, the new occurrence gets the length of the repeating event, and
+            // stores it as a length.
+            DTENDS.put(EXCEPTION_ID, values.getAsLong(CalendarContract.Events.DTSTART) + EVENT_LENGTH_MS);
+            WITH_DURATION.add(EXCEPTION_ID);
             return Uri.parse("content://" + CalendarContract.AUTHORITY + "/events/" + EXCEPTION_ID);
         }
 
@@ -151,7 +162,21 @@ public class CalendarAlarmSyncTest {
 
         @Override
         public int update(@NonNull Uri uri, ContentValues values, String selection, String[] args) {
+            final long id = Long.parseLong(uri.getLastPathSegment());
+            // Like the real calendar: an event can't have both an end and a length.
+            if (values.containsKey(CalendarContract.Events.DTEND) && WITH_DURATION.contains(id)
+                && !(values.containsKey(CalendarContract.Events.DURATION)
+                    && values.get(CalendarContract.Events.DURATION) == null)) {
+                throw new IllegalArgumentException("Cannot have both DTEND and DURATION in an event");
+            }
+            if (REFUSED.contains(id)) {
+                return 0;
+            }
             CHANGES.add(uri + " " + values);
+            if (values.containsKey(CalendarContract.Events.DTEND)) {
+                DTENDS.put(id, values.getAsLong(CalendarContract.Events.DTEND));
+                WITH_DURATION.remove(id);
+            }
             return 1;
         }
     }
@@ -183,6 +208,12 @@ public class CalendarAlarmSyncTest {
     static final java.util.Set<Long> RECURRING = new java.util.HashSet<>();
     static final List<String> CHANGES = new ArrayList<>();
     static final long EXCEPTION_ID = 99;
+    /** Events that store a length instead of an end, by event id. */
+    static final java.util.Set<Long> WITH_DURATION = new java.util.HashSet<>();
+    /** The end stored by the fake calendar for changed events, by event id. */
+    static final java.util.Map<Long, Long> DTENDS = new java.util.HashMap<>();
+    /** Events the fake calendar won't change, by event id. */
+    static final java.util.Set<Long> REFUSED = new java.util.HashSet<>();
     /** End times that differ from the usual one hour, by event id. */
     static final java.util.Map<Long, Long> ENDS = new java.util.HashMap<>();
 
@@ -203,6 +234,9 @@ public class CalendarAlarmSyncTest {
         RECURRING.clear();
         ENDS.clear();
         CHANGES.clear();
+        WITH_DURATION.clear();
+        DTENDS.clear();
+        REFUSED.clear();
         CALENDARS.clear();
         CALENDARS.put(CALENDAR_ID, "someone@example.com");
         CALENDARS.put(OTHER_CALENDAR_ID, "someone@example.com");
@@ -1157,16 +1191,23 @@ public class CalendarAlarmSyncTest {
         final long newEnd = row.end + TimeUnit.MINUTES.toMillis(5);
 
         // Off by default; and the alarm at the start never extends the event.
-        assertFalse(CalendarEventExtender.extend(mContext, row.endAlarmId, newEnd));
+        assertEquals(CalendarEventExtender.Result.NOT_APPLICABLE,
+            CalendarEventExtender.extend(mContext, row.endAlarmId, newEnd));
         mProfile.extendOnSnooze = true;
         mProfile.updateProfile(mCr);
         assertTrue(CalendarProfile.getProfile(mCr, mProfile.id).extendOnSnooze);
-        assertFalse(CalendarEventExtender.extend(mContext, row.alarmId, newEnd));
+        assertEquals(CalendarEventExtender.Result.NOT_APPLICABLE,
+            CalendarEventExtender.extend(mContext, row.alarmId, newEnd));
         assertTrue(CHANGES.isEmpty());
 
-        assertTrue(CalendarEventExtender.extend(mContext, row.endAlarmId, newEnd));
+        // The event stores a length instead of an end (some calendar apps do that); the
+        // calendar refuses an end next to a length, so the length is cleared.
+        WITH_DURATION.add(1L);
+        assertEquals(CalendarEventExtender.Result.EXTENDED,
+            CalendarEventExtender.extend(mContext, row.endAlarmId, newEnd));
         assertEquals(1, CHANGES.size());
         assertTrue(CHANGES.get(0), CHANGES.get(0).contains("/events/1 ") && CHANGES.get(0).contains("dtend=" + newEnd));
+        assertEquals(Long.valueOf(newEnd), DTENDS.get(1L));
         assertEquals(newEnd, events().get(0).end);
     }
 
@@ -1183,14 +1224,34 @@ public class CalendarAlarmSyncTest {
         final CalendarAlarmEvent row = events().get(0);
         final long newEnd = row.end + TimeUnit.MINUTES.toMillis(5);
 
-        assertTrue(CalendarEventExtender.extend(mContext, row.endAlarmId, newEnd));
-        assertEquals(1, CHANGES.size());
+        assertEquals(CalendarEventExtender.Result.EXTENDED,
+            CalendarEventExtender.extend(mContext, row.endAlarmId, newEnd));
+        assertEquals(2, CHANGES.size());
         assertTrue(CHANGES.get(0), CHANGES.get(0).contains("exception/1")
             && CHANGES.get(0).contains("originalInstanceTime=" + begin));
+        // The new occurrence got the old length; its end is then set again.
+        assertTrue(CHANGES.get(1), CHANGES.get(1).contains("/events/" + EXCEPTION_ID + " ")
+            && CHANGES.get(1).contains("dtend=" + newEnd));
+        assertEquals(Long.valueOf(newEnd), DTENDS.get(EXCEPTION_ID));
         // The snoozed alarm now belongs to the changed occurrence.
         final CalendarAlarmEvent changed = events().get(0);
         assertEquals(EXCEPTION_ID, changed.eventId);
         assertEquals(row.endAlarmId, changed.endAlarmId);
+    }
+
+    @Test
+    public void refusedChangeIsReportedAndKeepsTheEnd() {
+        Shadows.shadowOf(mContext).grantPermissions(Manifest.permission.WRITE_CALENDAR);
+        mProfile.ringAtEnd = true;
+        mProfile.extendOnSnooze = true;
+        mProfile.updateProfile(mCr);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Meeting"));
+        CalendarAlarmSync.syncAll(mContext);
+        final CalendarAlarmEvent row = events().get(0);
+        REFUSED.add(1L);
+        assertEquals(CalendarEventExtender.Result.FAILED,
+            CalendarEventExtender.extend(mContext, row.endAlarmId, row.end + 60_000));
+        assertEquals(row.end, events().get(0).end);
     }
 
     @Test
@@ -1201,7 +1262,8 @@ public class CalendarAlarmSyncTest {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Meeting"));
         CalendarAlarmSync.syncAll(mContext);
         final CalendarAlarmEvent row = events().get(0);
-        assertFalse(CalendarEventExtender.extend(mContext, row.endAlarmId, row.end + 60_000));
+        assertEquals(CalendarEventExtender.Result.NO_PERMISSION,
+            CalendarEventExtender.extend(mContext, row.endAlarmId, row.end + 60_000));
         assertTrue(CHANGES.isEmpty());
     }
 
