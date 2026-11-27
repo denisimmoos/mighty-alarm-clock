@@ -23,11 +23,11 @@ public final class CalendarAlarmSlots {
     }
 
     /**
-     * @return {@code true} if the instance is a snoozed early or start alarm whose event has
-     * already ended. Ringing then would be for an event that is over.
+     * @return {@code true} if the instance is an early or start alarm (usually a snoozed one)
+     * whose event has already ended. It still rings, and the alarm screen says the event ended.
      */
     public static boolean isOverAfterSnooze(Context context, AlarmInstance instance, long now) {
-        if (instance.mAlarmId == null || instance.mAlarmState != AlarmInstance.SNOOZE_STATE) {
+        if (instance.mAlarmId == null) {
             return false;
         }
         try {
@@ -46,6 +46,7 @@ public final class CalendarAlarmSlots {
     /**
      * @return the snoozed instances of the event's earlier alarms, which the alarm of the given
      * instance replaces: the start alarm replaces a snoozed early alarm, the end alarm both.
+     * A snoozed alarm of an event without a later alarm rings once even after the event ended.
      */
     public static List<AlarmInstance> getReplacedSnoozes(Context context, AlarmInstance instance) {
         final List<AlarmInstance> replaced = new ArrayList<>();

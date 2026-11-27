@@ -103,6 +103,23 @@ public class CalendarAlarmReproTest {
     }
 
     @Test
+    public void extendOnSnoozeIsOfferedOnlyWithAnEndAlarmAndSnooze() {
+        final CalendarProfileEditActivity activity = Robolectric.buildActivity(CalendarProfileEditActivity.class,
+            CalendarProfileEditActivity.createIntent(mContext, mProfile.id)).setup().get();
+        final android.view.View extend = activity.findViewById(com.best.deskclock.R.id.extend_on_snooze_switch);
+        final android.widget.CompoundButton end = activity.findViewById(com.best.deskclock.R.id.ring_at_end_switch);
+        final android.widget.CompoundButton snooze = activity.findViewById(com.best.deskclock.R.id.snooze_switch);
+        end.setChecked(true);
+        snooze.setChecked(true);
+        assertEquals(android.view.View.VISIBLE, extend.getVisibility());
+        snooze.setChecked(false);
+        assertEquals(android.view.View.GONE, extend.getVisibility());
+        snooze.setChecked(true);
+        end.setChecked(false);
+        assertEquals(android.view.View.GONE, extend.getVisibility());
+    }
+
+    @Test
     public void openEditScreenAndSave() {
         final CalendarProfileEditActivity activity = Robolectric.buildActivity(CalendarProfileEditActivity.class,
             CalendarProfileEditActivity.createIntent(mContext, mProfile.id)).setup().get();

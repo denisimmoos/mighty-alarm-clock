@@ -758,6 +758,10 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
                     && !com.best.deskclock.mighty.calendar.CalendarAlarmRules.isSnoozeLimitReached(profile, instance)
                     && com.best.deskclock.mighty.calendar.CalendarEventExtender.hasPermission(appContext);
                 com.best.deskclock.base.AppExecutors.getMainThread().post(() -> showCalendarEventEnds(extends_));
+            } else if (event.end > event.begin && System.currentTimeMillis() >= event.end) {
+                // A snoozed early or start alarm ringing after its event ended says when it ended.
+                final long end = event.end;
+                com.best.deskclock.base.AppExecutors.getMainThread().post(() -> showCalendarEventEnded(end));
             } else if (profile != null && profile.offsetEnabled && event.alarmId == alarmId) {
                 // The early alarm says how long until the event. This is not private, so it
                 // shows also on the lock screen.
@@ -820,6 +824,23 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             }
             mBinding.calendarExtendHint.setVisibility(VISIBLE);
         }
+        mBinding.calendarCountdown.setVisibility(VISIBLE);
+        mBinding.calendarInfo.setVisibility(VISIBLE);
+    }
+
+    /**
+     * Shows when the event ended, for a snoozed alarm that rings after its event.
+     */
+    private void showCalendarEventEnded(long end) {
+        if (isFinishing() || isDestroyed() || mBinding == null) {
+            return;
+        }
+        if (mIsTextShadowDisplayed) {
+            mBinding.calendarCountdown.setShadowLayer(mShadowRadius, mShadowOffset, mShadowOffset, mShadowColor);
+        }
+        mBinding.calendarCountdown.setTextColor(mAlarmTitleColor);
+        mBinding.calendarCountdown.setText(getString(R.string.calendar_alarm_event_ended,
+            android.text.format.DateFormat.getTimeFormat(this).format(new java.util.Date(end))));
         mBinding.calendarCountdown.setVisibility(VISIBLE);
         mBinding.calendarInfo.setVisibility(VISIBLE);
     }

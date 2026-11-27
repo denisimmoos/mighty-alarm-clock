@@ -463,18 +463,26 @@ public final class AlarmNotifications {
             // A calendar alarm offers its profile's three snooze lengths. A notification shows
             // at most three actions, so they are buttons in the notification itself, next to
             // the Dismiss action.
-            final android.widget.RemoteViews content = new android.widget.RemoteViews(
+            // The expanded view has room for the title, the time, the bubbles and the extend
+            // line. The folded and heads-up views get about 48 dp, so they use a one-line layout.
+            final android.widget.RemoteViews big = new android.widget.RemoteViews(
                 context.getPackageName(), R.layout.calendar_alarm_notification);
-            content.setTextViewText(R.id.title, instance.getLabelOrDefault(localizedContext));
-            content.setTextViewText(R.id.time, AlarmUtils.getFormattedTime(localizedContext, instance.getAlarmTime()));
+            final android.widget.RemoteViews small = new android.widget.RemoteViews(
+                context.getPackageName(), R.layout.calendar_alarm_notification_small);
+            big.setTextViewText(R.id.time, AlarmUtils.getFormattedTime(localizedContext, instance.getAlarmTime()));
             // Below the bubbles: snoozing extends the event, if the profile does that.
             final com.best.deskclock.provider.CalendarAlarmEvent calendarEvent =
                 com.best.deskclock.provider.CalendarAlarmEvent.getEventForAlarm(context.getContentResolver(), alarm.id);
-            if (calendarEvent != null && calendarEvent.endAlarmId == alarm.id && calendarProfile.extendOnSnooze
-                && com.best.deskclock.mighty.calendar.CalendarEventExtender.hasPermission(context)) {
-                content.setTextViewText(R.id.extend_hint,
-                    localizedContext.getString(R.string.calendar_alarm_snooze_extends));
-                content.setViewVisibility(R.id.extend_hint, android.view.View.VISIBLE);
+            final boolean extendsEvent = calendarEvent != null && calendarEvent.endAlarmId == alarm.id
+                && calendarProfile.extendOnSnooze
+                && com.best.deskclock.mighty.calendar.CalendarEventExtender.hasPermission(context);
+            for (android.widget.RemoteViews content : new android.widget.RemoteViews[]{small, big}) {
+                content.setTextViewText(R.id.title, instance.getLabelOrDefault(localizedContext));
+                if (extendsEvent) {
+                    content.setTextViewText(R.id.extend_hint,
+                        localizedContext.getString(R.string.calendar_alarm_snooze_extends));
+                    content.setViewVisibility(R.id.extend_hint, android.view.View.VISIBLE);
+                }
             }
             final int[] buttons = {R.id.snooze_1, R.id.snooze_2, R.id.snooze_3};
             for (int i = 0; i < buttons.length; i++) {
@@ -486,16 +494,18 @@ public final class AlarmNotifications {
                 final PendingIntent snoozePendingIntent = PendingIntent.getService(context,
                     CALENDAR_SNOOZE_REQUEST_CODE + i, snoozeIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-                content.setTextViewText(buttons[i],
-                    localizedContext.getString(R.string.calendar_alarm_snooze_action, snoozeChoices[i]));
-                content.setOnClickPendingIntent(buttons[i], snoozePendingIntent);
-                content.setContentDescription(buttons[i], localizedContext.getResources().getQuantityString(
-                    R.plurals.alarm_alert_snooze_set, snoozeChoices[i], snoozeChoices[i]));
+                for (android.widget.RemoteViews content : new android.widget.RemoteViews[]{small, big}) {
+                    content.setTextViewText(buttons[i],
+                        localizedContext.getString(R.string.calendar_alarm_snooze_action, snoozeChoices[i]));
+                    content.setOnClickPendingIntent(buttons[i], snoozePendingIntent);
+                    content.setContentDescription(buttons[i], localizedContext.getResources().getQuantityString(
+                        R.plurals.alarm_alert_snooze_set, snoozeChoices[i], snoozeChoices[i]));
+                }
             }
             notification.setStyle(new NotificationCompat.DecoratedCustomViewStyle())
-                .setCustomContentView(content)
-                .setCustomBigContentView(content)
-                .setCustomHeadsUpContentView(content);
+                .setCustomContentView(small)
+                .setCustomBigContentView(big)
+                .setCustomHeadsUpContentView(small);
         } else if (instance.mSnoozeDuration != ALARM_SNOOZE_DURATION_DISABLED
             && !CalendarAlarmRules.isSnoozeLimitReached(calendarProfile, instance)) {
             Intent snoozeIntent = AlarmStateManager.createStateChangeIntent(

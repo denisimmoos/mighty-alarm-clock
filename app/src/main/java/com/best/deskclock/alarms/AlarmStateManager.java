@@ -404,13 +404,8 @@ public final class AlarmStateManager extends BroadcastReceiver {
 
         // A calendar profile may only ring near certain Wi-Fi networks. Checked when the alarm is
         // about to ring, not again while it is already ringing.
-        if (com.best.deskclock.mighty.calendar.CalendarAlarmSlots.isOverAfterSnooze(
-            context, instance, System.currentTimeMillis())) {
-            // A snoozed calendar alarm from before or at the start of an event that has ended.
-            LogUtils.i("Calendar alarm instance " + instance.mId + " stays quiet: its event is over");
-            deleteInstanceAndUpdateParent(context, instance, false);
-            return;
-        }
+        // A snoozed early or start alarm still rings once after its event has ended: it was
+        // snoozed on purpose. The alarm screen then says when the event ended.
         if (instance.mAlarmState != AlarmInstance.FIRED_STATE) {
             final com.best.deskclock.mighty.calendar.CalendarWifi.Result skip =
                 com.best.deskclock.mighty.calendar.CalendarWifiGate.shouldSkip(context, instance);

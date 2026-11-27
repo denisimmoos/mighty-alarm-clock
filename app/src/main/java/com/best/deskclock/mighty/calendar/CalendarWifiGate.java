@@ -179,7 +179,9 @@ public final class CalendarWifiGate {
                 : PendingIntent.getActivity(context, id, open, PendingIntent.FLAG_IMMUTABLE);
             final NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_tab_calendar_alarm)
-                .setContentTitle(context.getString(R.string.calendar_alarm_wifi_skipped_title, label))
+                .setContentTitle(context.getString(instance.mAlarmState == AlarmInstance.SNOOZE_STATE
+                    ? R.string.calendar_alarm_wifi_skipped_snoozed_title
+                    : R.string.calendar_alarm_wifi_skipped_title, label))
                 .setContentText(text)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
                 .setAutoCancel(true)

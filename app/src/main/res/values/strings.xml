@@ -1797,6 +1797,8 @@
     <string name="calendar_alarm_extend_failed">The calendar did not accept the longer event</string>
     <string name="calendar_alarm_extend_reverted">The calendar set the event end back to %s</string>
     <string name="calendar_alarm_snooze_extends">Snoozing extends the event by the snooze time</string>
+    <string name="calendar_alarm_wifi_skipped_snoozed_title">Snoozed alarm skipped: %s</string>
+    <string name="calendar_alarm_event_ended">Event ended at %s</string>
     <string name="calendar_alarm_event_ends">Event ends now</string>
     <string name="calendar_alarm_rings_at_and_end">Rings at %s and at the end</string>
     <string name="calendar_alarm_rings_at_start_and_end">Rings at %s, at the start and at the end</string>

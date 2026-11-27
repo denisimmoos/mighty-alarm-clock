@@ -314,10 +314,10 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mBinding.offsetSwitch.setOnCheckedChangeListener((button, checked) ->
             mBinding.offsetFields.setVisibility(checked ? VISIBLE : GONE));
 
-        // Extending the event on snooze belongs to the alarm at the end, and needs calendar write access.
-        mBinding.extendOnSnoozeSwitch.setVisibility(mBinding.ringAtEndSwitch.isChecked() ? VISIBLE : GONE);
-        mBinding.ringAtEndSwitch.setOnCheckedChangeListener((button, checked) ->
-            mBinding.extendOnSnoozeSwitch.setVisibility(checked ? VISIBLE : GONE));
+        // Extending the event on snooze belongs to the alarm at the end, only makes sense when the
+        // profile snoozes, and needs calendar write access.
+        updateExtendOnSnoozeVisibility();
+        mBinding.ringAtEndSwitch.setOnCheckedChangeListener((button, checked) -> updateExtendOnSnoozeVisibility());
         mBinding.extendOnSnoozeSwitch.setOnCheckedChangeListener((button, checked) -> {
             if (checked && !CalendarEventExtender.hasPermission(this)) {
                 mWriteCalendarLauncher.launch(Manifest.permission.WRITE_CALENDAR);
@@ -338,8 +338,10 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
 
         // Snooze fields follow the snooze switch
         mBinding.snoozeFields.setVisibility(mBinding.snoozeSwitch.isChecked() ? VISIBLE : GONE);
-        mBinding.snoozeSwitch.setOnCheckedChangeListener((button, checked) ->
-            mBinding.snoozeFields.setVisibility(checked ? VISIBLE : GONE));
+        mBinding.snoozeSwitch.setOnCheckedChangeListener((button, checked) -> {
+            mBinding.snoozeFields.setVisibility(checked ? VISIBLE : GONE);
+            updateExtendOnSnoozeVisibility();
+        });
 
         // Regex validation as the user types
         mBinding.regexInput.addTextChangedListener(new TextWatcher() {
@@ -785,7 +787,9 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         }
         mProfile.ringAtStart = mBinding.ringAtStartSwitch.isChecked();
         mProfile.ringAtEnd = mBinding.ringAtEndSwitch.isChecked();
-        mProfile.extendOnSnooze = mBinding.extendOnSnoozeSwitch.isChecked();
+        // Without an alarm at the end or without snooze there is nothing to extend.
+        mProfile.extendOnSnooze = mBinding.extendOnSnoozeSwitch.isChecked()
+            && mBinding.ringAtEndSwitch.isChecked() && mBinding.snoozeSwitch.isChecked();
         mProfile.wifiCheck = mBinding.wifiSwitch.isChecked();
         mProfile.wifiOffRings = mBinding.wifiOffRingsSwitch.isChecked();
         mProfile.wifiNetworks = CalendarWifi.toJson(mWifiNetworks);
@@ -864,6 +868,11 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
      * @return the number, 0 for an empty field, or {@code null} if the text is not a number
      */
     @Nullable
+    private void updateExtendOnSnoozeVisibility() {
+        mBinding.extendOnSnoozeSwitch.setVisibility(
+            mBinding.ringAtEndSwitch.isChecked() && mBinding.snoozeSwitch.isChecked() ? VISIBLE : GONE);
+    }
+
     private static Integer parseOptionalNumber(@Nullable Editable text) {
         final String value = textOf(text).trim();
         if (value.isEmpty()) {

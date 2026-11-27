@@ -963,6 +963,8 @@
     <string name="calendar_alarm_extend_failed">Der Kalender hat die Verlängerung nicht übernommen</string>
     <string name="calendar_alarm_extend_reverted">Der Kalender hat das Terminende auf %s zurückgesetzt</string>
     <string name="calendar_alarm_snooze_extends">Schlummern verlängert den Termin um die Schlummerzeit</string>
+    <string name="calendar_alarm_wifi_skipped_snoozed_title">Geschlummerter Alarm übersprungen: %s</string>
+    <string name="calendar_alarm_event_ended">Termin endete um %s</string>
     <string name="calendar_alarm_event_ends">Termin endet jetzt</string>
     <string name="calendar_alarm_rings_at_and_end">Klingelt um %s und am Ende</string>
     <string name="calendar_alarm_rings_at_start_and_end">Klingelt um %s, zu Beginn und am Ende</string>

@@ -309,7 +309,16 @@ public class CalendarWifiTest {
         // Snoozed again and left home: it stays quiet.
         AlarmStateManager.setSnoozeState(mContext, AlarmInstance.getInstance(mCr, ringing.mId), false);
         connect("Cafe", "11:11:11:11:11:11");
+        org.robolectric.Shadows.shadowOf(mContext).grantPermissions(android.Manifest.permission.POST_NOTIFICATIONS);
         AlarmStateManager.setFiredState(mContext, AlarmInstance.getInstance(mCr, ringing.mId));
         assertNull(AlarmInstance.getInstance(mCr, ringing.mId));
+        // The user is told that the snoozed alarm was skipped.
+        boolean told = false;
+        for (android.app.Notification n : org.robolectric.Shadows.shadowOf(
+                mContext.getSystemService(android.app.NotificationManager.class)).getAllNotifications()) {
+            final CharSequence title = n.extras.getCharSequence(android.app.Notification.EXTRA_TITLE);
+            told |= title != null && title.toString().startsWith("Snoozed alarm skipped");
+        }
+        assertTrue(told);
     }
 }
