@@ -104,6 +104,8 @@ public final class AlarmStateManager extends BroadcastReceiver {
 
     // Extra key to indicate the state change was launched from a notification.
     public static final String FROM_NOTIFICATION_EXTRA = "intent.extra.from.notification";
+    /** Snooze length in minutes picked in the notification of a calendar alarm. */
+    public static final String SNOOZE_MINUTES_EXTRA = "intent.extra.snooze.minutes";
 
     // Intent category tags used to dismiss, disable or snooze an alarm
     public static final String ALARM_DISMISS_TAG = "DISMISS_TAG";
@@ -1129,6 +1131,10 @@ public final class AlarmStateManager extends BroadcastReceiver {
             if (intent.hasCategory(ALARM_DISABLE_TAG)) {
                 deleteInstanceAndDisableParent(context, instance, true);
                 AlarmVisualCache.cacheDismissedAlarm(instance.mAlarmId);
+            } else if (alarmState == AlarmInstance.SNOOZE_STATE && intent.hasExtra(SNOOZE_MINUTES_EXTRA)) {
+                // One of the snooze lengths of a calendar alarm.
+                setSnoozeState(context, instance, true, intent.getIntExtra(SNOOZE_MINUTES_EXTRA, 0));
+                AlarmVisualCache.invalidate(instance.mAlarmId);
             } else if (alarmState >= 0) {
                 setAlarmState(context, instance, alarmState);
 

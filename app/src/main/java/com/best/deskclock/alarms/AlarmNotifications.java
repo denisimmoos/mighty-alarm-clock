@@ -403,6 +403,9 @@ public final class AlarmNotifications {
         updateMissedAlarmGroupNotification(context, -1, notification);
     }
 
+    /** Request codes of the snooze buttons of a ringing calendar alarm, one for each length. */
+    private static final int CALENDAR_SNOOZE_REQUEST_CODE = Integer.MAX_VALUE - 1000;
+
     @SuppressLint("FullScreenIntentPolicy")
     static synchronized void showAlarmNotification(Context context, AlarmInstance instance) {
         LogUtils.v("Displaying alarm notification for alarm instance: " + instance.mId);
@@ -451,8 +454,39 @@ public final class AlarmNotifications {
         // Setup Snooze Action only if snooze duration has NOT been set to "None" in the settings
         // or if "Enable alarm snooze actions" is enabled in the alarm editing panel.
         // Calendar alarms that were snoozed as often as their profile allows get no Snooze button.
-        if (instance.mSnoozeDuration != ALARM_SNOOZE_DURATION_DISABLED
-            && !CalendarAlarmRules.isSnoozeLimitReached(context.getContentResolver(), instance)) {
+        final com.best.deskclock.provider.CalendarProfile calendarProfile =
+            CalendarAlarmRules.getProfileForAlarm(context.getContentResolver(), instance.mAlarmId);
+        final int[] snoozeChoices = calendarProfile == null
+            || CalendarAlarmRules.isSnoozeLimitReached(calendarProfile, instance)
+            ? new int[0] : calendarProfile.getSnoozeChoices();
+        if (snoozeChoices.length == 3) {
+            // A calendar alarm offers its profile's three snooze lengths. A notification shows
+            // at most three actions, so they are buttons in the notification itself, next to
+            // the Dismiss action.
+            final android.widget.RemoteViews content = new android.widget.RemoteViews(
+                context.getPackageName(), R.layout.calendar_alarm_notification);
+            content.setTextViewText(R.id.title, instance.getLabelOrDefault(localizedContext));
+            content.setTextViewText(R.id.time, AlarmUtils.getFormattedTime(localizedContext, instance.getAlarmTime()));
+            final int[] buttons = {R.id.snooze_1, R.id.snooze_2, R.id.snooze_3};
+            for (int i = 0; i < buttons.length; i++) {
+                final Intent snoozeIntent = AlarmStateManager.createStateChangeIntent(
+                    context, AlarmStateManager.ALARM_SNOOZE_TAG, instance, AlarmInstance.SNOOZE_STATE);
+                snoozeIntent.putExtra(AlarmStateManager.FROM_NOTIFICATION_EXTRA, true);
+                snoozeIntent.putExtra(AlarmStateManager.SNOOZE_MINUTES_EXTRA, snoozeChoices[i]);
+                // Its own request code, so each button keeps its own length.
+                final PendingIntent snoozePendingIntent = PendingIntent.getService(context,
+                    CALENDAR_SNOOZE_REQUEST_CODE + i, snoozeIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                content.setTextViewText(buttons[i],
+                    localizedContext.getString(R.string.calendar_alarm_snooze_action, snoozeChoices[i]));
+                content.setOnClickPendingIntent(buttons[i], snoozePendingIntent);
+            }
+            notification.setStyle(new NotificationCompat.DecoratedCustomViewStyle())
+                .setCustomContentView(content)
+                .setCustomBigContentView(content)
+                .setCustomHeadsUpContentView(content);
+        } else if (instance.mSnoozeDuration != ALARM_SNOOZE_DURATION_DISABLED
+            && !CalendarAlarmRules.isSnoozeLimitReached(calendarProfile, instance)) {
             Intent snoozeIntent = AlarmStateManager.createStateChangeIntent(
                 context, AlarmStateManager.ALARM_SNOOZE_TAG, instance, AlarmInstance.SNOOZE_STATE);
             snoozeIntent.putExtra(AlarmStateManager.FROM_NOTIFICATION_EXTRA, true);

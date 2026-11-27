@@ -989,7 +989,8 @@
     <string name="calendar_alarm_snooze_2">Mittel</string>
     <string name="calendar_alarm_snooze_3">Lang</string>
     <string name="calendar_alarm_error_snooze_order">Schlummerzeiten müssen steigen: kurz &lt; mittel &lt; lang (max. 999 Min.).</string>
-    <string name="calendar_alarm_snooze_button">%d Min.</string>
+    <string name="calendar_alarm_snooze_button">+%d</string>
+    <string name="calendar_alarm_snooze_action">+%d Min.</string>
     <string name="calendar_alarm_max_snoozes">Max. Schlummern</string>
     <string name="calendar_alarm_max_snoozes_help">Leer = unbegrenzt</string>
     <string name="calendar_alarm_section_dismiss">Sperrbildschirm und Beenden</string>

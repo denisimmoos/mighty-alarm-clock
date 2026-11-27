@@ -440,7 +440,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             } else if (view == mBinding.dismissButton) {
                 dismiss();
             } else if (view == mBinding.dismissOnlyButton) {
-                if (isSnoozeDisabledForAlarmInstance()) {
+                if (isSnoozeDisabledForAlarmInstance() || isSnoozedByButtonsOnly()) {
                     dismiss();
                 } else {
                     snooze();
@@ -575,7 +575,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
                 if (deltaX <= -maxDeltaX) {
                     dismiss(); // Left = Dismiss in RTL
                 } else if (deltaX >= maxDeltaX) {
-                    snooze(); // Right = Snooze in RTL
+                    snoozeBySlide(); // Right = Snooze in RTL
                 } else {
                     resetAnimations();
                 }
@@ -583,7 +583,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
                 if (deltaX >= maxDeltaX) {
                     dismiss(); // Right = Dismiss in LTR
                 } else if (deltaX <= -maxDeltaX) {
-                    snooze(); // Left = Snooze in LTR
+                    snoozeBySlide(); // Left = Snooze in LTR
                 } else {
                     resetAnimations();
                 }
@@ -657,6 +657,26 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
     }
 
     /**
+     * @return {@code true} if this calendar alarm snoozes only with its snooze length buttons. The
+     * slider and the dismiss button then only dismiss, so there is one clear way to snooze.
+     */
+    private boolean isSnoozedByButtonsOnly() {
+        return mCalendarSnoozeChoices.length == 3;
+    }
+
+    /**
+     * Slide towards the snooze side: snoozes, unless the snooze buttons do that. Then both
+     * sides dismiss.
+     */
+    private void snoozeBySlide() {
+        if (isSnoozedByButtonsOnly()) {
+            dismiss();
+        } else {
+            snooze();
+        }
+    }
+
+    /**
      * Shows a button for each snooze length of the calendar profile. Tapping one snoozes for that
      * long; if the profile extends the event on snooze, it is extended by the same time.
      */
@@ -680,6 +700,11 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             button.setTypeface(mGeneralBoldTypeface);
             button.setTextColor(snoozeTextColor);
             button.setOnClickListener(v -> snoozeWithExplicitDuration(minutes));
+        }
+        mBinding.calendarSnoozeLabel.setTypeface(mGeneralBoldTypeface);
+        mBinding.calendarSnoozeLabel.setTextColor(SettingsDAO.getSnoozeTitleColor(mPrefs));
+        if (mIsTextShadowDisplayed) {
+            mBinding.calendarSnoozeLabel.setShadowLayer(mShadowRadius, mShadowOffset, mShadowOffset, mShadowColor);
         }
         mBinding.calendarSnoozeChoices.setVisibility(VISIBLE);
     }
@@ -1039,7 +1064,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
      * Initializes the slide mode texts.
      */
     private void initSlideTexts() {
-        boolean disabled = isSnoozeDisabledForAlarmInstance();
+        boolean disabled = isSnoozeDisabledForAlarmInstance() || isSnoozedByButtonsOnly();
         final boolean canDisable = canPermanentlyDisableAlarm();
 
         mBinding.alarmButton.setContentDescription(getString(disabled
@@ -1055,7 +1080,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
 
         mBinding.snoozeText.setTypeface(mGeneralBoldTypeface);
         mBinding.snoozeText.setTextColor(SettingsDAO.getSnoozeTitleColor(mPrefs));
-        int snoozeTextRes = isSnoozeDisabledForAlarmInstance()
+        int snoozeTextRes = isSnoozeDisabledForAlarmInstance() || isSnoozedByButtonsOnly()
             ? (isOccasionalAlarmDeletedAfterUse()
             ? R.string.delete
             : R.string.button_action_dismiss)
@@ -1162,7 +1187,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
         mBinding.slideZoneLayout.setVisibility(GONE);
         mBinding.disableHintText.setVisibility(GONE);
 
-        if (isSnoozeDisabledForAlarm()) {
+        if (isSnoozeDisabledForAlarm() || isSnoozedByButtonsOnly()) {
             initDismissOnlyButton();
         } else {
             initSnoozeAndDismissButtons();

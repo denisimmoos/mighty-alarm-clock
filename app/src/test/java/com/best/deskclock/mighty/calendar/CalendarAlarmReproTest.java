@@ -286,6 +286,82 @@ public class CalendarAlarmReproTest {
         }
     }
 
+    @Test(timeout = 60000)
+    public void alarmScreenSnoozesOnlyWithTheThreeLengthButtons() {
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
+        AlarmStateManager.setFiredState(mContext, instance);
+        final AlarmActivity activity = Robolectric.buildActivity(AlarmActivity.class,
+            new android.content.Intent(mContext, AlarmActivity.class)
+                .setData(AlarmInstance.getContentUri(instance.mId))).create().start().postCreate(null).resume().get();
+        assertEquals(android.view.View.VISIBLE,
+            activity.findViewById(com.best.deskclock.R.id.calendar_snooze_choices).getVisibility());
+        final int[] ids = {com.best.deskclock.R.id.calendar_snooze_choice_1,
+            com.best.deskclock.R.id.calendar_snooze_choice_2, com.best.deskclock.R.id.calendar_snooze_choice_3};
+        final String[] labels = {"+5", "+10", "+20"};
+        for (int i = 0; i < ids.length; i++) {
+            assertEquals(labels[i], ((android.widget.TextView) activity.findViewById(ids[i])).getText().toString());
+        }
+        // No other way to snooze: no snooze picker, no snooze button, and the slider only dismisses.
+        assertEquals(android.view.View.GONE,
+            activity.findViewById(com.best.deskclock.R.id.snooze_selector_layout).getVisibility());
+        assertEquals(android.view.View.GONE,
+            activity.findViewById(com.best.deskclock.R.id.snooze_button).getVisibility());
+        final String dismiss = mContext.getString(com.best.deskclock.R.string.button_action_dismiss);
+        if (activity.findViewById(com.best.deskclock.R.id.slide_zone_layout).getVisibility() == android.view.View.VISIBLE) {
+            assertEquals(dismiss, ((android.widget.TextView) activity.findViewById(
+                com.best.deskclock.R.id.snooze_text)).getText().toString());
+        } else {
+            assertEquals(dismiss, ((android.widget.TextView) activity.findViewById(
+                com.best.deskclock.R.id.dismiss_only_button)).getText().toString());
+        }
+
+        final long before = System.currentTimeMillis();
+        activity.findViewById(com.best.deskclock.R.id.calendar_snooze_choice_3).performClick();
+        final AlarmInstance snoozed = AlarmInstance.getInstance(mCr, instance.mId);
+        assertEquals(AlarmInstance.SNOOZE_STATE, snoozed.mAlarmState);
+        final long expected = before + java.util.concurrent.TimeUnit.MINUTES.toMillis(20);
+        org.junit.Assert.assertTrue(Math.abs(snoozed.getAlarmTime().getTimeInMillis() - expected) < 61_000);
+    }
+
+    @Test
+    public void notificationOffersTheThreeSnoozeLengths() throws Exception {
+        final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;
+        final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, alarmId).get(0);
+        Shadows.shadowOf(mContext).grantPermissions(Manifest.permission.POST_NOTIFICATIONS);
+        AlarmStateManager.setFiredState(mContext, instance);
+        final java.lang.reflect.Method show = com.best.deskclock.alarms.AlarmNotifications.class
+            .getDeclaredMethod("showAlarmNotification", android.content.Context.class, AlarmInstance.class);
+        show.setAccessible(true);
+        show.invoke(null, mContext, AlarmInstance.getInstance(mCr, instance.mId));
+        final android.app.NotificationManager nm = mContext.getSystemService(android.app.NotificationManager.class);
+        android.app.Notification ringing = null;
+        for (android.app.Notification n : Shadows.shadowOf(nm).getAllNotifications()) {
+            if (android.app.Notification.CATEGORY_ALARM.equals(n.category) && n.fullScreenIntent != null) {
+                ringing = n;
+            }
+        }
+        org.junit.Assert.assertNotNull(ringing);
+        // The lengths are buttons in the small and the large view; the actions only dismiss.
+        org.junit.Assert.assertNotNull(ringing.headsUpContentView);
+        org.junit.Assert.assertNotNull(ringing.contentView);
+        for (android.app.Notification.Action a : ringing.actions) {
+            org.junit.Assert.assertNotEquals(mContext.getString(com.best.deskclock.R.string.alarm_alert_snooze_text),
+                a.title.toString());
+        }
+
+        // A tap on "+10 min" snoozes for 10 minutes.
+        final android.content.Intent snooze = AlarmStateManager.createStateChangeIntent(mContext,
+            AlarmStateManager.ALARM_SNOOZE_TAG, instance, AlarmInstance.SNOOZE_STATE);
+        snooze.putExtra(AlarmStateManager.SNOOZE_MINUTES_EXTRA, 10);
+        final long before = System.currentTimeMillis();
+        AlarmStateManager.handleIntent(mContext, snooze);
+        final AlarmInstance snoozed = AlarmInstance.getInstance(mCr, instance.mId);
+        assertEquals(AlarmInstance.SNOOZE_STATE, snoozed.mAlarmState);
+        final long expected = before + java.util.concurrent.TimeUnit.MINUTES.toMillis(10);
+        org.junit.Assert.assertTrue(Math.abs(snoozed.getAlarmTime().getTimeInMillis() - expected) < 61_000);
+    }
+
     @Test
     public void notificationSaysDismiss() {
         final long alarmId = CalendarAlarmEvent.getEventsForProfile(mCr, mProfile.id).get(0).alarmId;

@@ -384,6 +384,16 @@
             app:layout_constraintBottom_toTopOf="@+id/ringtone_layout">
 
             <TextView
+                android:id="@+id/calendar_snooze_label"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="12dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/button_action_snooze"
+                android:textSize="18sp" />
+
+            <TextView
                 android:id="@+id/calendar_snooze_choice_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -392,7 +402,7 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:textSize="18sp"
-                tools:text="5 min" />
+                tools:text="+5" />
 
             <TextView
                 android:id="@+id/calendar_snooze_choice_2"
@@ -403,7 +413,7 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:textSize="18sp"
-                tools:text="5 min" />
+                tools:text="+5" />
 
             <TextView
                 android:id="@+id/calendar_snooze_choice_3"
@@ -413,7 +423,7 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:textSize="18sp"
-                tools:text="5 min" />
+                tools:text="+5" />
         </LinearLayout>
 
         <LinearLayout
