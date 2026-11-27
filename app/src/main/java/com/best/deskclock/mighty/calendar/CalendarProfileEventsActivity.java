@@ -210,8 +210,7 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
                     profile.calendarName.isEmpty() ? profile.accountName : profile.calendarName,
                     profile.titleRegex));
                 final String wifi = CalendarWifiGate.describe(this, wifiStatus);
-                CalendarWifiGate.showStatus(mBinding.eventsWifi, wifiStatus, wifi == null ? null
-                    : wifi + "\n" + getString(R.string.calendar_alarm_wifi_status_recheck));
+                CalendarWifiGate.showStatus(mBinding.eventsWifi, wifiStatus, wifi);
                 mAdapter.setEvents(events, profile);
                 mBinding.eventsEmpty.setText(getString(R.string.calendar_alarm_no_events,
                     CalendarProfile.clampLookaheadDays(profile.lookaheadDays)));
