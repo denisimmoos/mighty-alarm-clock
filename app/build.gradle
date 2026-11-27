@@ -6,7 +6,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "de.huttersoft.mightyalarmclock"
+        applicationId = "de.huttersoft.mightycalendaralarm"
         minSdk = 23
         targetSdk = 36
         versionCode = 202608001
@@ -88,10 +88,10 @@ android {
             def outputFileName
 
             if (variant.buildType == "nightly") {
-                outputFileName = "MightyCalendarAlarmClock_${versionName}-nightly-${commitNumber}-${buildCommit}.apk"
+                outputFileName = "MightyCalendarAlarm_${versionName}-nightly-${commitNumber}-${buildCommit}.apk"
             } else {
                 def suffix = versionNameSuffix ?: (keystorePropertiesFile.exists() ? "-release" : "-unsigned")
-                outputFileName = "MightyCalendarAlarmClock_${versionName}${suffix}.apk"
+                outputFileName = "MightyCalendarAlarm_${versionName}${suffix}.apk"
             }
 
             variant.outputs.forEach { output ->

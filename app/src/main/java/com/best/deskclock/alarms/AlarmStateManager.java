@@ -17,14 +17,12 @@ import android.app.AlarmManager;
 import android.app.AlarmManager.AlarmClockInfo;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.PowerManager;
-import android.service.quicksettings.TileService;
 import android.text.format.DateFormat;
 import android.widget.Toast;
 
@@ -35,18 +33,15 @@ import com.best.deskclock.data.DataModel;
 import com.best.deskclock.data.SettingsDAO;
 import com.best.deskclock.events.Events;
 import com.best.deskclock.mighty.calendar.CalendarAlarmRules;
-import com.best.deskclock.mighty.ringtone.TagRingtoneResolver;
 import com.best.deskclock.mighty.stats.DeviceStats;
 import com.best.deskclock.provider.Alarm;
 import com.best.deskclock.provider.AlarmInstance;
 import com.best.deskclock.provider.EventLogStore;
-import com.best.deskclock.tiles.AlarmTileService;
 import com.best.deskclock.uicomponents.toast.CustomToast;
 import com.best.deskclock.utils.AlarmUtils;
 import com.best.deskclock.utils.DeviceUtils;
 import com.best.deskclock.utils.LogUtils;
 import com.best.deskclock.utils.RingtoneUtils;
-import com.best.deskclock.utils.SdkUtils;
 import com.best.deskclock.utils.Utils;
 import com.best.deskclock.utils.WidgetUtils;
 
@@ -169,10 +164,6 @@ public final class AlarmStateManager extends BroadcastReceiver {
 
         updateNextAlarmInAlarmManager(context, nextAlarm);
 
-        if (SdkUtils.isAtLeastAndroid7()) {
-            TileService.requestListeningState(context, new ComponentName(context, AlarmTileService.class));
-        }
-
         // Adding a Handler ensures better fluidity when activating/deactivating the alarm
         AppExecutors.getMainThread().postDelayed(() -> {
             Intent nextAlarmChangedIntent = new Intent(ACTION_NEXT_ALARM_CHANGED_BY_CLOCK);
@@ -279,8 +270,7 @@ public final class AlarmStateManager extends BroadcastReceiver {
         } else {
             AlarmInstance nextRepeatedInstance;
 
-            if (SettingsDAO.isDismissButtonDisplayedWhenAlarmEnabled(getDefaultSharedPreferences(context))
-                || instance.mAlarmState == AlarmInstance.PREDISMISSED_STATE) {
+            if (instance.mAlarmState == AlarmInstance.PREDISMISSED_STATE) {
                 // Skip-to-next / permanent dismiss button: schedule strictly after this instance.
                 nextRepeatedInstance = alarm.createInstanceAfter(instance.getAlarmTime());
             } else {
@@ -437,13 +427,6 @@ public final class AlarmStateManager extends BroadcastReceiver {
                 instance.mRingtone = RingtoneUtils.getRandomRingtoneUri();
             } else if (RingtoneUtils.isRandomCustomRingtone(alarm.alert)) {
                 instance.mRingtone = RingtoneUtils.getRandomCustomRingtoneUri();
-            } else {
-                // If the alarm/instance still uses a default ringtone, see if one of the alarm's
-                // tags defines a ringtone to use instead.
-                Uri tagRingtone = TagRingtoneResolver.resolve(context.getContentResolver(), alarm.id, instance.mRingtone);
-                if (tagRingtone != null) {
-                    instance.mRingtone = tagRingtone;
-                }
             }
         }
 
@@ -945,7 +928,6 @@ public final class AlarmStateManager extends BroadcastReceiver {
 
                 // Make sure we re-enable the parent alarm of the instance because it will get activated by the below code
                 Objects.requireNonNull(alarm).enabled = true;
-                AlarmVisualCache.invalidate(alarm.id);
                 alarm.updateAlarm(cr);
 
                 // If the hours and minutes of the instance differ from those of the parent alarm, it is a Snooze.
@@ -1125,20 +1107,16 @@ public final class AlarmStateManager extends BroadcastReceiver {
 
             if (intent.hasCategory(ALARM_DISABLE_TAG)) {
                 deleteInstanceAndDisableParent(context, instance, true);
-                AlarmVisualCache.cacheDismissedAlarm(instance.mAlarmId);
             } else if (alarmState == AlarmInstance.SNOOZE_STATE && intent.hasExtra(SNOOZE_MINUTES_EXTRA)) {
                 // One of the snooze lengths of a calendar alarm.
                 setSnoozeState(context, instance, true, intent.getIntExtra(SNOOZE_MINUTES_EXTRA, 0));
-                AlarmVisualCache.invalidate(instance.mAlarmId);
             } else if (alarmState >= 0) {
                 setAlarmState(context, instance, alarmState);
 
                 if (alarmState == AlarmInstance.PREDISMISSED_STATE || alarmState == AlarmInstance.DISMISSED_STATE) {
-                    AlarmVisualCache.cacheDismissedAlarm(instance.mAlarmId);
                 } else if (alarmState == AlarmInstance.NOTIFICATION_STATE
                     || alarmState == AlarmInstance.SNOOZE_STATE
                     || alarmState == AlarmInstance.FIRED_STATE) {
-                    AlarmVisualCache.invalidate(instance.mAlarmId);
                 }
             } else {
                 registerInstance(context, instance, true);

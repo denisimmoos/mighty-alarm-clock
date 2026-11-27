@@ -1,4 +1,4 @@
-MightyCalendarAlarmClock (de.huttersoft.mightyalarmclock)
+MightyCalendarAlarm (de.huttersoft.mightyalarmclock)
 is a fork of BlackyHawky's Clock, itself based on AOSP, released under the GNU
 General Public License v3.0 (GPL-3.0).
 
@@ -8,7 +8,7 @@ The location permission is used only to read the SSID of the connected Wi-Fi
 network for optional per-alarm Wi-Fi rules. No location data is collected or
 sent; the app cannot access the internet.
 
-On top of everything the original Clock app offers, MightyCalendarAlarmClock adds:
+On top of everything the original Clock app offers, MightyCalendarAlarm adds:
 <ul>
   <li>A fire queue so multiple alarms firing close together are presented one after another instead of being marked missed;</li>
   <li>Progressive snooze (each snooze can automatically get longer) plus a manual snooze duration picker;</li>

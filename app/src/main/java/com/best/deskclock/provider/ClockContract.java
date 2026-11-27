@@ -447,58 +447,6 @@ public final class ClockContract {
     }
 
     /**
-     * Constants for the Tags table, which contains user-defined alarm tags.
-     */
-    protected interface TagsColumns extends TimestampColumns, BaseColumns {
-
-        /**
-         * The content:// style URL for this table.
-         */
-        Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/tags");
-
-        /**
-         * Tag name.
-         * <p>Type: TEXT</p>
-         */
-        String NAME = "name";
-
-        /**
-         * Tag color.
-         * <p>Type: INTEGER</p>
-         */
-        String COLOR = "color";
-
-        /**
-         * Optional ringtone associated with the tag.
-         * <p>Type: TEXT</p>
-         */
-        String RINGTONE_URI = "ringtone_uri";
-    }
-
-    /**
-     * Constants for the AlarmTags table, which maps alarms to tags (many-to-many).
-     */
-    protected interface AlarmTagsColumns {
-
-        /**
-         * The content:// style URL for this table.
-         */
-        Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/alarm_tags");
-
-        /**
-         * Foreign key to the Alarms table.
-         * <p>Type: INTEGER (long)</p>
-         */
-        String ALARM_ID = "alarm_id";
-
-        /**
-         * Foreign key to the Tags table.
-         * <p>Type: INTEGER (long)</p>
-         */
-        String TAG_ID = "tag_id";
-    }
-
-    /**
      * Constants for the EventLog table, which contains a history of alarm-related events.
      */
     protected interface EventLogColumns extends BaseColumns {

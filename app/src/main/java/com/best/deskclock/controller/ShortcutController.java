@@ -68,12 +68,6 @@ class ShortcutController {
             List<ShortcutInfo> dynamicShortcuts = new ArrayList<>();
             List<String> disabledShortcutIds = new ArrayList<>();
 
-            if (SettingsDAO.isAlarmTabVisible(prefs)) {
-                dynamicShortcuts.add(createNewAlarmShortcut());
-            } else {
-                disabledShortcutIds.add(UiDataModel.getUiDataModel().getShortcutId(R.string.category_alarm, R.string.action_create));
-            }
-
             if (SettingsDAO.isTimerTabVisible(prefs)) {
                 dynamicShortcuts.add(createNewTimerShortcut());
             } else {
@@ -104,25 +98,6 @@ class ShortcutController {
         } catch (IllegalStateException e) {
             LogUtils.wtf(e);
         }
-    }
-
-    private ShortcutInfo createNewAlarmShortcut() {
-        Context appContext = Utils.getLocalizedContext(DeskClockApplication.getAppContext());
-
-        final Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM)
-            .setClass(appContext, HandleApiCalls.class)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(Events.EXTRA_EVENT_LABEL, R.string.label_shortcut);
-        final String setAlarmShortcut = UiDataModel.getUiDataModel().getShortcutId(R.string.category_alarm, R.string.action_create);
-
-        return new ShortcutInfo.Builder(appContext, setAlarmShortcut)
-            .setIcon(Icon.createWithResource(appContext, R.drawable.shortcut_new_alarm))
-            .setActivity(mComponentName)
-            .setShortLabel(appContext.getString(R.string.shortcut_new_alarm_short))
-            .setLongLabel(appContext.getString(R.string.shortcut_new_alarm_long))
-            .setIntent(intent)
-            .setRank(0)
-            .build();
     }
 
     private ShortcutInfo createNewTimerShortcut() {

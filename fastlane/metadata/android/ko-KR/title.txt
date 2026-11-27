@@ -1,1 +1,1 @@
-MightyCalendarAlarmClock
+MightyCalendarAlarm

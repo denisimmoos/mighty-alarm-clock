@@ -31,7 +31,6 @@ import com.best.deskclock.base.KeepAliveService;
 import com.best.deskclock.controller.Controller;
 import com.best.deskclock.data.SettingsDAO;
 import com.best.deskclock.data.WidgetDAO;
-import com.best.deskclock.tiles.AlarmTileService;
 import com.best.deskclock.tiles.StopwatchTileService;
 import com.best.deskclock.tiles.TimerTileService;
 import com.best.deskclock.uicomponents.toast.CustomToast;
@@ -254,7 +253,6 @@ public class InterfaceCustomizationFragment extends ScreenFragment
 
                     // Update the tiles
                     if (SdkUtils.isAtLeastAndroid7()) {
-                        TileService.requestListeningState(requireContext(), new ComponentName(requireContext(), AlarmTileService.class));
                         TileService.requestListeningState(requireContext(), new ComponentName(requireContext(), TimerTileService.class));
                         TileService.requestListeningState(requireContext(), new ComponentName(requireContext(), StopwatchTileService.class));
                     }
@@ -444,8 +442,8 @@ public class InterfaceCustomizationFragment extends ScreenFragment
 
         List<String> labels = new ArrayList<>();
 
-        if (selectedTabs.contains(VISIBLE_TAB_ALARM)) {
-            labels.add(getString(R.string.menu_alarm));
+        if (selectedTabs.contains(VISIBLE_TAB_CALENDAR_ALARM)) {
+            labels.add(getString(R.string.menu_calendar_alarm));
         }
 
         if (selectedTabs.contains(VISIBLE_TAB_CLOCK)) {
@@ -458,10 +456,6 @@ public class InterfaceCustomizationFragment extends ScreenFragment
 
         if (selectedTabs.contains(VISIBLE_TAB_STOPWATCH)) {
             labels.add(getString(R.string.menu_stopwatch));
-        }
-
-        if (selectedTabs.contains(VISIBLE_TAB_CALENDAR_ALARM)) {
-            labels.add(getString(R.string.menu_calendar_alarm));
         }
 
         String summary = String.join(" - ", labels);
@@ -490,7 +484,6 @@ public class InterfaceCustomizationFragment extends ScreenFragment
                 String singleTab = visibleTabs.iterator().next();
                 String value = DEFAULT_TAB_TO_DISPLAY;
                 switch (singleTab) {
-                    case VISIBLE_TAB_ALARM -> value = TAB_TO_DISPLAY_ALARM;
                     case VISIBLE_TAB_CLOCK -> value = TAB_TO_DISPLAY_CLOCK;
                     case VISIBLE_TAB_TIMER -> value = TAB_TO_DISPLAY_TIMER;
                     case VISIBLE_TAB_STOPWATCH -> value = TAB_TO_DISPLAY_STOPWATCH;
@@ -512,10 +505,10 @@ public class InterfaceCustomizationFragment extends ScreenFragment
         entries.add(getString(R.string.last_tab_used_title));
         entryValues.add(DEFAULT_TAB_TO_DISPLAY);
 
-        // Follow the visual order (Alarm -> Clock -> Timer -> Stopwatch)
-        if (visibleTabs.contains(VISIBLE_TAB_ALARM)) {
-            entries.add(getString(R.string.menu_alarm));
-            entryValues.add(TAB_TO_DISPLAY_ALARM);
+        // Follow the visual order (Calendar -> Clock -> Timer -> Stopwatch)
+        if (visibleTabs.contains(VISIBLE_TAB_CALENDAR_ALARM)) {
+            entries.add(getString(R.string.menu_calendar_alarm));
+            entryValues.add(TAB_TO_DISPLAY_CALENDAR_ALARM);
         }
 
         if (visibleTabs.contains(VISIBLE_TAB_CLOCK)) {
@@ -531,11 +524,6 @@ public class InterfaceCustomizationFragment extends ScreenFragment
         if (visibleTabs.contains(VISIBLE_TAB_STOPWATCH)) {
             entries.add(getString(R.string.menu_stopwatch));
             entryValues.add(TAB_TO_DISPLAY_STOPWATCH);
-        }
-
-        if (visibleTabs.contains(VISIBLE_TAB_CALENDAR_ALARM)) {
-            entries.add(getString(R.string.menu_calendar_alarm));
-            entryValues.add(TAB_TO_DISPLAY_CALENDAR_ALARM);
         }
 
         // Apply the new lists to mTabToDisplayPref

@@ -27,14 +27,15 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
     static final String DATABASE_NAME = "alarms.db";
     static final String ALARMS_TABLE_NAME = "alarm_templates";
     static final String INSTANCES_TABLE_NAME = "alarm_instances";
-    static final String TAGS_TABLE_NAME = "tags";
-    static final String ALARM_TAGS_TABLE_NAME = "alarm_tags";
+    /** Tables of the removed alarm tags, dropped in the version 43 upgrade. */
+    private static final String LEGACY_TAGS_TABLE_NAME = "tags";
+    private static final String LEGACY_ALARM_TAGS_TABLE_NAME = "alarm_tags";
     static final String EVENT_LOG_TABLE_NAME = "event_log";
     static final String CALENDAR_PROFILES_TABLE_NAME = "calendar_profiles";
     // Stored name from before the feature was called "Calendar Alarm"; kept so existing data still works.
     static final String CALENDAR_ALARM_EVENTS_TABLE_NAME = "calendar_alert_events";
 
-    private static final int DATABASE_VERSION = 42;
+    private static final int DATABASE_VERSION = 43;
     private static final int MINIMUM_SUPPORTED_VERSION = 15;
 
     public ClockDatabaseHelper(Context context) {
@@ -113,31 +114,6 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             "ON UPDATE CASCADE ON DELETE CASCADE);");
 
         LogUtils.i("Instance table created");
-    }
-
-    private static void createTagsTable(SQLiteDatabase db, String tagsTableName) {
-        db.execSQL("CREATE TABLE " + tagsTableName + " (" +
-            ClockContract.TagsColumns._ID + " INTEGER PRIMARY KEY, " +
-            ClockContract.TagsColumns.NAME + " TEXT NOT NULL, " +
-            ClockContract.TagsColumns.COLOR + " INTEGER NOT NULL DEFAULT 0, " +
-            ClockContract.TagsColumns.RINGTONE_URI + " TEXT, " +
-            ClockContract.TagsColumns.CREATED_AT + " INTEGER NOT NULL DEFAULT 0, " +
-            ClockContract.TagsColumns.UPDATED_AT + " INTEGER NOT NULL DEFAULT 0);");
-
-        LogUtils.i("Tags table created");
-    }
-
-    private static void createAlarmTagsTable(SQLiteDatabase db, String alarmTagsTableName,
-                                             String alarmsTableName, String tagsTableName) {
-        db.execSQL("CREATE TABLE " + alarmTagsTableName + " (" +
-            ClockContract.AlarmTagsColumns.ALARM_ID + " INTEGER NOT NULL REFERENCES " +
-            alarmsTableName + "(" + ClockContract.AlarmsColumns._ID + ") ON UPDATE CASCADE ON DELETE CASCADE, " +
-            ClockContract.AlarmTagsColumns.TAG_ID + " INTEGER NOT NULL REFERENCES " +
-            tagsTableName + "(" + ClockContract.TagsColumns._ID + ") ON UPDATE CASCADE ON DELETE CASCADE, " +
-            "PRIMARY KEY(" + ClockContract.AlarmTagsColumns.ALARM_ID + ", " +
-                ClockContract.AlarmTagsColumns.TAG_ID + "));");
-
-        LogUtils.i("AlarmTags table created");
     }
 
     private static void createEventLogTable(SQLiteDatabase db, String eventLogTableName) {
@@ -219,8 +195,6 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         createAlarmsTable(db, ALARMS_TABLE_NAME);
         createInstanceTable(db, INSTANCES_TABLE_NAME);
-        createTagsTable(db, TAGS_TABLE_NAME);
-        createAlarmTagsTable(db, ALARM_TAGS_TABLE_NAME, ALARMS_TABLE_NAME, TAGS_TABLE_NAME);
         createEventLogTable(db, EVENT_LOG_TABLE_NAME);
         createCalendarProfilesTable(db);
         createCalendarAlarmEventsTable(db);
@@ -455,8 +429,6 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
                 + " ADD COLUMN " + ClockContract.InstancesColumns.SNOOZE_COUNT
                 + " INTEGER NOT NULL DEFAULT 0;");
 
-            createTagsTable(db, TAGS_TABLE_NAME);
-            createAlarmTagsTable(db, ALARM_TAGS_TABLE_NAME, ALARMS_TABLE_NAME, TAGS_TABLE_NAME);
             createEventLogTable(db, EVENT_LOG_TABLE_NAME);
 
             // Populate created_at, updated_at and stable_uuid for alarms that existed prior to
@@ -478,7 +450,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
 
             LogUtils.i("Added created_at, updated_at, stable_uuid, ring_count, snooze extend and " +
                 "Wi-Fi rule columns to alarms, snooze_count column to instances, and created " +
-                "tags/alarm_tags/event_log tables for version 27 upgrade.");
+                "the event_log table for version 27 upgrade.");
         }
 
         if (oldVersion < 28) {
@@ -506,6 +478,32 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             addCalendarProfileColumnsIfMissing(db);
             addCalendarAlarmEventColumnsIfMissing(db);
         }
+
+        if (oldVersion < 43) {
+            removeNormalAlarms(db);
+        }
+    }
+
+    /**
+     * Normal alarms were removed from the app; only alarms made from calendar profiles remain.
+     * Deletes every other alarm with its instances, and the alarm tag tables.
+     */
+    static void removeNormalAlarms(SQLiteDatabase db) {
+        final String calendarAlarmIds = "SELECT " + ClockContract.CalendarAlarmEventsColumns.ALARM_ID
+            + " FROM " + CALENDAR_ALARM_EVENTS_TABLE_NAME
+            + " UNION SELECT " + ClockContract.CalendarAlarmEventsColumns.START_ALARM_ID
+            + " FROM " + CALENDAR_ALARM_EVENTS_TABLE_NAME
+            + " UNION SELECT " + ClockContract.CalendarAlarmEventsColumns.END_ALARM_ID
+            + " FROM " + CALENDAR_ALARM_EVENTS_TABLE_NAME;
+        final int instances = db.delete(INSTANCES_TABLE_NAME,
+            ClockContract.InstancesColumns.ALARM_ID + " IS NULL OR "
+                + ClockContract.InstancesColumns.ALARM_ID + " NOT IN (" + calendarAlarmIds + ")", null);
+        final int alarms = db.delete(ALARMS_TABLE_NAME,
+            ClockContract.AlarmsColumns._ID + " NOT IN (" + calendarAlarmIds + ")", null);
+        db.execSQL("DROP TABLE IF EXISTS " + LEGACY_ALARM_TAGS_TABLE_NAME + ";");
+        db.execSQL("DROP TABLE IF EXISTS " + LEGACY_TAGS_TABLE_NAME + ";");
+        LogUtils.i("Removed " + alarms + " normal alarms and " + instances
+            + " of their instances, and the alarm tag tables, for version 43 upgrade.");
     }
 
     /**

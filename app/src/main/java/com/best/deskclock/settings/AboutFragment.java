@@ -48,7 +48,6 @@ import com.best.deskclock.base.KeepAliveService;
 import com.best.deskclock.data.SettingsDAO;
 import com.best.deskclock.provider.Alarm;
 import com.best.deskclock.settings.custompreference.CustomAboutTitlePreference;
-import com.best.deskclock.tiles.AlarmTileService;
 import com.best.deskclock.tiles.StopwatchTileService;
 import com.best.deskclock.tiles.TimerTileService;
 import com.best.deskclock.uicomponents.CustomDialog;
@@ -506,7 +505,6 @@ public class AboutFragment extends ScreenFragment implements Preference.OnPrefer
                 Utils.stopService(appContext, KeepAliveService.class);
 
                 if (SdkUtils.isAtLeastAndroid7()) {
-                    TileService.requestListeningState(appContext, new ComponentName(appContext, AlarmTileService.class));
                     TileService.requestListeningState(appContext, new ComponentName(appContext, TimerTileService.class));
                     TileService.requestListeningState(appContext, new ComponentName(appContext, StopwatchTileService.class));
                 }

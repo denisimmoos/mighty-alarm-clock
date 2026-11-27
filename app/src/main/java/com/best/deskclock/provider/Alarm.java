@@ -6,7 +6,6 @@
 
 package com.best.deskclock.provider;
 
-import static com.best.deskclock.DeskClockApplication.getDefaultSharedPreferences;
 import static com.best.deskclock.settings.PreferencesDefaultValues.*;
 
 import android.content.ContentResolver;
@@ -22,11 +21,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
-import androidx.loader.content.CursorLoader;
 
 import com.best.deskclock.R;
 import com.best.deskclock.data.DataModel;
-import com.best.deskclock.data.SettingsDAO;
 import com.best.deskclock.data.Weekdays;
 import com.best.deskclock.utils.AlarmUtils;
 import com.best.deskclock.utils.RingtoneUtils;
@@ -35,7 +32,6 @@ import com.best.deskclock.utils.SdkUtils;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.TimeZone;
 import java.util.UUID;
 
@@ -64,67 +60,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
     /**
      * The default sort order for this table
      */
-    private static final String DEFAULT_SORT_ORDER =
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + HOUR + " ASC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + MINUTES + " ASC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + ClockContract.AlarmsColumns._ID + " DESC";
-
-    /**
-     * The default sort order for this table with enabled alarms first
-     */
-    private static final String DEFAULT_SORT_ORDER_WITH_ENABLED_FIRST =
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + ENABLED + " DESC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + HOUR + " ASC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + MINUTES + " ASC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + ClockContract.AlarmsColumns._ID + " DESC";
-
-    /**
-     * The sort order by descending ID to display oldest alarms last.
-     */
-    private static final String SORT_ORDER_BY_DESCENDING_CREATION =
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + _ID + " DESC";
-
-    /**
-     * The sort order that places enabled alarms first, then sorts alarms by descending ID
-     * with the oldest last.
-     */
-    private static final String SORT_ORDER_BY_DESCENDING_CREATION_WITH_ENABLED_FIRST =
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + ENABLED + " DESC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + _ID + " DESC";
-
-    /**
-     * The sort order by ascending ID to display oldest alarms first.
-     */
-    private static final String SORT_ORDER_BY_ASCENDING_CREATION =
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + _ID + " ASC";
-
-    /**
-     * The sort order that places enabled alarms first, then sorts alarms by ascending ID
-     * with the oldest first.
-     */
-    private static final String SORT_ORDER_BY_ASCENDING_CREATION_WITH_ENABLED_FIRST =
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + ENABLED + " DESC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + _ID + " ASC";
-
-    /**
-     * The sort order by ascending sort_order to display manually sorted alarms.
-     */
-    private static final String SORT_ORDER_MANUALLY_ASC =
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + MANUAL_SORT_ORDER + " ASC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + HOUR + " ASC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + MINUTES + " ASC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + _ID + " DESC";
-
-    /**
-     * The sort order that places enabled alarms first, then sorts manually.
-     */
-    private static final String SORT_ORDER_MANUALLY_WITH_ENABLED_FIRST =
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + ENABLED + " DESC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + MANUAL_SORT_ORDER + " ASC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + HOUR + " ASC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + MINUTES + " ASC, " +
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + _ID + " DESC";
-
     private static final String[] QUERY_COLUMNS = {
         _ID,
         YEAR,
@@ -156,71 +91,9 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         SNOOZE_EXTEND_ENABLED,
         SNOOZE_EXTEND_MINUTES,
         SNOOZE_EXTEND_MAX_MINUTES,
-        WIFI_RULE_ENABLED,
-        WIFI_SSID,
-        WIFI_CONDITION,
-        WIFI_ACTION,
         REPEAT_INTERVAL_MINUTES,
         REPEAT_MAX_COUNT,
         INTERVAL_FIRE_COUNT
-    };
-    private static final String[] QUERY_ALARMS_WITH_INSTANCES_COLUMNS = {
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + _ID,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + YEAR,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + MONTH,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + DAY,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + HOUR,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + MINUTES,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + DAYS_OF_WEEK,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + ENABLED,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + VIBRATE,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + VIBRATION_PATTERN,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + FLASH,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + LABEL,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + SYNC_BY_LABEL,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + RINGTONE,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + DELETE_AFTER_USE,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + AUTO_SILENCE_DURATION,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + SNOOZE_DURATION,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + MISSED_ALARM_REPEAT_LIMIT,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + CRESCENDO_DURATION,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + ALARM_VOLUME,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + MANUAL_SORT_ORDER,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + PAUSE_START_DATE,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + PAUSE_END_DATE,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + CREATED_AT,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + UPDATED_AT,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + STABLE_UUID,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + RING_COUNT,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + SNOOZE_EXTEND_ENABLED,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + SNOOZE_EXTEND_MINUTES,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + SNOOZE_EXTEND_MAX_MINUTES,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + WIFI_RULE_ENABLED,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + WIFI_SSID,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + WIFI_CONDITION,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + WIFI_ACTION,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + REPEAT_INTERVAL_MINUTES,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + REPEAT_MAX_COUNT,
-        ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + INTERVAL_FIRE_COUNT,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.ALARM_STATE,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns._ID,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.YEAR,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.MONTH,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.DAY,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.HOUR,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.MINUTES,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.LABEL,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.SYNC_BY_LABEL,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.VIBRATE,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.VIBRATION_PATTERN,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.FLASH,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.AUTO_SILENCE_DURATION,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.SNOOZE_DURATION,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.MISSED_ALARM_REPEAT_COUNT,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.MISSED_ALARM_REPEAT_LIMIT,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.CRESCENDO_DURATION,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.ALARM_VOLUME,
-        ClockDatabaseHelper.INSTANCES_TABLE_NAME + "." + ClockContract.InstancesColumns.SNOOZE_COUNT
     };
     /**
      * These save calls to cursor.getColumnIndexOrThrow()
@@ -256,36 +129,12 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
     private static final int SNOOZE_EXTEND_ENABLED_INDEX = 27;
     private static final int SNOOZE_EXTEND_MINUTES_INDEX = 28;
     private static final int SNOOZE_EXTEND_MAX_MINUTES_INDEX = 29;
-    private static final int WIFI_RULE_ENABLED_INDEX = 30;
-    private static final int WIFI_SSID_INDEX = 31;
-    private static final int WIFI_CONDITION_INDEX = 32;
-    private static final int WIFI_ACTION_INDEX = 33;
-    private static final int REPEAT_INTERVAL_MINUTES_INDEX = 34;
-    private static final int REPEAT_MAX_COUNT_INDEX = 35;
-    private static final int INTERVAL_FIRE_COUNT_INDEX = 36;
+    private static final int REPEAT_INTERVAL_MINUTES_INDEX = 30;
+    private static final int REPEAT_MAX_COUNT_INDEX = 31;
+    private static final int INTERVAL_FIRE_COUNT_INDEX = 32;
 
-    public static final int INSTANCE_STATE_INDEX = 37;
-    public static final int INSTANCE_ID_INDEX = 38;
-    public static final int INSTANCE_YEAR_INDEX = 39;
-    public static final int INSTANCE_MONTH_INDEX = 40;
-    public static final int INSTANCE_DAY_INDEX = 41;
-    public static final int INSTANCE_HOUR_INDEX = 42;
-    public static final int INSTANCE_MINUTE_INDEX = 43;
-    public static final int INSTANCE_LABEL_INDEX = 44;
-    public static final int INSTANCE_SYNC_BY_LABEL_INDEX = 45;
-    public static final int INSTANCE_VIBRATE_INDEX = 46;
-    public static final int INSTANCE_VIBRATION_PATTERN_INDEX = 47;
-    public static final int INSTANCE_FLASH_INDEX = 48;
-    public static final int INSTANCE_AUTO_SILENCE_DURATION_INDEX = 49;
-    public static final int INSTANCE_SNOOZE_DURATION_INDEX = 50;
-    public static final int INSTANCE_MISSED_ALARM_REPEAT_COUNT_INDEX = 51;
-    public static final int INSTANCE_MISSED_ALARM_REPEAT_LIMIT_INDEX = 52;
-    public static final int INSTANCE_CRESCENDO_DURATION_INDEX = 53;
-    public static final int INSTANCE_ALARM_VOLUME_INDEX = 54;
-    public static final int INSTANCE_SNOOZE_COUNT_INDEX = 55;
 
     private static final int COLUMN_COUNT = INTERVAL_FIRE_COUNT_INDEX + 1;
-    private static final int ALARM_JOIN_INSTANCE_COLUMN_COUNT = INSTANCE_SNOOZE_COUNT_INDEX + 1;
     // Public fields
     public long id;
     public boolean enabled;
@@ -318,14 +167,9 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
     public boolean snoozeExtendEnabled;
     public int snoozeExtendMinutes;
     public int snoozeExtendMaxMinutes;
-    public boolean wifiRuleEnabled;
-    public String wifiSsid;
-    public String wifiCondition;
-    public String wifiAction;
     public int repeatIntervalMinutes;
     public int repeatMaxCount;
     public int intervalFireCount;
-    public int instanceState;
 
     // Creates a default alarm at the current time.
     public Alarm() {
@@ -371,10 +215,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         this.snoozeExtendEnabled = false;
         this.snoozeExtendMinutes = 5;
         this.snoozeExtendMaxMinutes = 0;
-        this.wifiRuleEnabled = false;
-        this.wifiSsid = "";
-        this.wifiCondition = WIFI_CONDITION_PRESENT;
-        this.wifiAction = WIFI_ACTION_ENABLE;
         this.repeatIntervalMinutes = 0;
         this.repeatMaxCount = 0;
         this.intervalFireCount = 0;
@@ -419,10 +259,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         this.snoozeExtendEnabled = false;
         this.snoozeExtendMinutes = 5;
         this.snoozeExtendMaxMinutes = 0;
-        this.wifiRuleEnabled = false;
-        this.wifiSsid = "";
-        this.wifiCondition = WIFI_CONDITION_PRESENT;
-        this.wifiAction = WIFI_ACTION_ENABLE;
         this.repeatIntervalMinutes = 0;
         this.repeatMaxCount = 0;
         this.intervalFireCount = 0;
@@ -450,7 +286,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         this.missedAlarmRepeatLimit = original.missedAlarmRepeatLimit;
         this.crescendoDuration = original.crescendoDuration;
         this.alarmVolume = original.alarmVolume;
-        this.instanceState = original.instanceState;
         this.manualSortOrder = original.manualSortOrder;
         this.pauseStartDate = original.pauseStartDate;
         this.pauseEndDate = original.pauseEndDate;
@@ -461,10 +296,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         this.snoozeExtendEnabled = original.snoozeExtendEnabled;
         this.snoozeExtendMinutes = original.snoozeExtendMinutes;
         this.snoozeExtendMaxMinutes = original.snoozeExtendMaxMinutes;
-        this.wifiRuleEnabled = original.wifiRuleEnabled;
-        this.wifiSsid = original.wifiSsid;
-        this.wifiCondition = original.wifiCondition;
-        this.wifiAction = original.wifiAction;
         this.repeatIntervalMinutes = original.repeatIntervalMinutes;
         this.repeatMaxCount = original.repeatMaxCount;
         this.intervalFireCount = 0;
@@ -503,17 +334,9 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         snoozeExtendEnabled = c.getInt(SNOOZE_EXTEND_ENABLED_INDEX) == 1;
         snoozeExtendMinutes = c.getInt(SNOOZE_EXTEND_MINUTES_INDEX);
         snoozeExtendMaxMinutes = c.getInt(SNOOZE_EXTEND_MAX_MINUTES_INDEX);
-        wifiRuleEnabled = c.getInt(WIFI_RULE_ENABLED_INDEX) == 1;
-        wifiSsid = c.getString(WIFI_SSID_INDEX);
-        wifiCondition = c.getString(WIFI_CONDITION_INDEX);
-        wifiAction = c.getString(WIFI_ACTION_INDEX);
         repeatIntervalMinutes = c.getInt(REPEAT_INTERVAL_MINUTES_INDEX);
         repeatMaxCount = c.getInt(REPEAT_MAX_COUNT_INDEX);
         intervalFireCount = c.getInt(INTERVAL_FIRE_COUNT_INDEX);
-
-        if (c.getColumnCount() == ALARM_JOIN_INSTANCE_COLUMN_COUNT) {
-            instanceState = c.getInt(INSTANCE_STATE_INDEX);
-        }
 
         if (c.isNull(RINGTONE_INDEX)) {
             // Should we be saving this with the current ringtone or leave it null
@@ -557,10 +380,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         snoozeExtendEnabled = p.readInt() == 1;
         snoozeExtendMinutes = p.readInt();
         snoozeExtendMaxMinutes = p.readInt();
-        wifiRuleEnabled = p.readInt() == 1;
-        wifiSsid = p.readString();
-        wifiCondition = p.readString();
-        wifiAction = p.readString();
         repeatIntervalMinutes = p.readInt();
         repeatMaxCount = p.readInt();
         intervalFireCount = p.readInt();
@@ -600,10 +419,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         values.put(SNOOZE_EXTEND_ENABLED, snoozeExtendEnabled ? 1 : 0);
         values.put(SNOOZE_EXTEND_MINUTES, snoozeExtendMinutes);
         values.put(SNOOZE_EXTEND_MAX_MINUTES, snoozeExtendMaxMinutes);
-        values.put(WIFI_RULE_ENABLED, wifiRuleEnabled ? 1 : 0);
-        values.put(WIFI_SSID, wifiSsid);
-        values.put(WIFI_CONDITION, wifiCondition);
-        values.put(WIFI_ACTION, wifiAction);
         values.put(REPEAT_INTERVAL_MINUTES, repeatIntervalMinutes);
         values.put(REPEAT_MAX_COUNT, repeatMaxCount);
         values.put(INTERVAL_FIRE_COUNT, intervalFireCount);
@@ -649,10 +464,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         p.writeInt(snoozeExtendEnabled ? 1 : 0);
         p.writeInt(snoozeExtendMinutes);
         p.writeInt(snoozeExtendMaxMinutes);
-        p.writeInt(wifiRuleEnabled ? 1 : 0);
-        p.writeString(wifiSsid);
-        p.writeString(wifiCondition);
-        p.writeString(wifiAction);
         p.writeInt(repeatIntervalMinutes);
         p.writeInt(repeatMaxCount);
         p.writeInt(intervalFireCount);
@@ -672,67 +483,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
 
     public static long getId(Uri contentUri) {
         return ContentUris.parseId(contentUri);
-    }
-
-    /**
-     * Get alarm cursor loader for all alarms.
-     *
-     * @param context to query the database.
-     * @return cursor loader with all the alarms.
-     */
-    public static CursorLoader getAlarmsCursorLoader(Context context) {
-        final SharedPreferences prefs = getDefaultSharedPreferences(context);
-        boolean areEnabledAlarmsFirst = SettingsDAO.areEnabledAlarmsDisplayedFirst(prefs);
-
-        String sortOrder = DEFAULT_SORT_ORDER;
-        String sortingPref = SettingsDAO.getAlarmSorting(prefs);
-
-        switch (sortingPref) {
-            case DEFAULT_SORT_BY_ALARM_TIME -> {
-                if (areEnabledAlarmsFirst) {
-                    sortOrder = DEFAULT_SORT_ORDER_WITH_ENABLED_FIRST;
-                }
-            }
-
-            case SORT_ALARM_BY_DESCENDING_CREATION_ORDER -> {
-                if (areEnabledAlarmsFirst) {
-                    sortOrder = SORT_ORDER_BY_DESCENDING_CREATION_WITH_ENABLED_FIRST;
-                } else {
-                    sortOrder = SORT_ORDER_BY_DESCENDING_CREATION;
-                }
-            }
-
-            case SORT_ALARM_BY_ASCENDING_CREATION_ORDER -> {
-                if (areEnabledAlarmsFirst) {
-                    sortOrder = SORT_ORDER_BY_ASCENDING_CREATION_WITH_ENABLED_FIRST;
-                } else {
-                    sortOrder = SORT_ORDER_BY_ASCENDING_CREATION;
-                }
-            }
-
-            case SORT_ALARM_MANUALLY -> {
-                if (areEnabledAlarmsFirst) {
-                    sortOrder = SORT_ORDER_MANUALLY_WITH_ENABLED_FIRST;
-                } else {
-                    sortOrder = SORT_ORDER_MANUALLY_ASC;
-                }
-            }
-        }
-
-        // Alarms created from calendar events are managed in the Calendar Alarm tab.
-        final String selection = CalendarAlarmEvent.buildExcludeCalendarAlarmsSelection(
-            ClockDatabaseHelper.ALARMS_TABLE_NAME + "." + _ID);
-
-        return new CursorLoader(context, ALARMS_WITH_INSTANCES_URI, QUERY_ALARMS_WITH_INSTANCES_COLUMNS, selection, null, sortOrder) {
-            @Override
-            public Cursor loadInBackground() {
-                // Prime the ringtone title cache for later access. Most alarms will refer to
-                // system ringtones.
-                DataModel.getDataModel().loadRingtoneTitles();
-
-                return super.loadInBackground();
-            }
-        };
     }
 
     /**
@@ -783,15 +533,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
      */
     public static List<Alarm> getUserAlarms(ContentResolver cr) {
         return getAlarms(cr, CalendarAlarmEvent.buildExcludeCalendarAlarmsSelection(_ID));
-    }
-
-    /**
-     * @return a list of enabled alarms.
-     */
-    public static List<Alarm> getEnabledAlarms(Context context) {
-        final String selection = String.format("%s=?", Alarm.ENABLED);
-        final String[] args = {"1"};
-        return Alarm.getAlarms(context.getContentResolver(), selection, args);
     }
 
     public Alarm addAlarm(ContentResolver contentResolver) {
@@ -848,32 +589,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
     }
 
     /**
-     * Determines whether the alarm is eligible to show a preemptive dismiss button.
-     * <p>
-     * The behavior depends on user settings and the current alarm state:</p>
-     * <ul>
-     *      <li>Recurring (weekday or interval) alarms always show a skip-to-next button when
-     *          enabled or snoozed.</li>
-     *      <li>If the dismiss button is configured to be shown when the alarm is enabled,
-     *          the method returns {@code true} if the alarm is enabled or currently snoozed.</li>
-     *      <li>Otherwise, it returns true only if the alarm is in SNOOZE_STATE or NOTIFICATION_STATE.</li>
-     * </ul>
-     *
-     * @param context the context used to access shared preferences
-     * @return {@code true} if the alarm can show a preemptive dismiss button; {@code false} otherwise.
-     */
-    public boolean canPreemptivelyDismiss(Context context) {
-        if (isRecurring() && (enabled || instanceState == AlarmInstance.SNOOZE_STATE)) {
-            return true;
-        }
-        if (SettingsDAO.isDismissButtonDisplayedWhenAlarmEnabled(getDefaultSharedPreferences(context))) {
-            return enabled || instanceState == AlarmInstance.SNOOZE_STATE;
-        } else {
-            return instanceState == AlarmInstance.SNOOZE_STATE || instanceState == AlarmInstance.NOTIFICATION_STATE;
-        }
-    }
-
-    /**
      * @return {@code true} if the styled repeat day display is enabled for this alarm;
      * {@code false} otherwise.
      */
@@ -900,74 +615,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         prefs.edit().remove(KEY_SHOW_STYLED_REPEAT_DAY + id).apply();
     }
 
-    /**
-     * Checks if the user has modified the time, date, or repeat days.
-     * These changes are considered "major" because they require recalculating and recreating
-     * the alarm instance.
-     *
-     * @param other The original alarm to compare against.
-     * @return {@code true} if a major time-related field has changed, {@code false} otherwise.
-     */
-    public boolean hasTimeChanged(Alarm other) {
-        if (other == null) {
-            return false;
-        }
-
-        return year != other.year
-            || month != other.month
-            || day != other.day
-            || hour != other.hour
-            || minutes != other.minutes
-            || daysOfWeek.getBits() != other.daysOfWeek.getBits()
-            || pauseStartDate != other.pauseStartDate
-            || pauseEndDate != other.pauseEndDate
-            || repeatIntervalMinutes != other.repeatIntervalMinutes
-            || repeatMaxCount != other.repeatMaxCount;
-    }
-
-    /**
-     * Checks if the user has modified the alarm's behavior settings.
-     * These changes are considered "minor" because they can be applied directly to the existing
-     * instance without having to cancel and recreate the schedule in the {@code AlarmManager}.
-     *
-     * @param other The original alarm to compare against.
-     * @return {@code true} if a minor behavior-related field has changed, {@code false} otherwise.
-     */
-    public boolean hasMinorFieldsChanged(Alarm other) {
-        if (other == null) return false;
-
-        return !Objects.equals(label, other.label)
-            || syncByLabel != other.syncByLabel
-            || vibrate != other.vibrate
-            || !Objects.equals(vibrationPattern, other.vibrationPattern)
-            || flash != other.flash
-            || !Objects.equals(alert, other.alert)
-            || deleteAfterUse != other.deleteAfterUse
-            || autoSilenceDuration != other.autoSilenceDuration
-            || snoozeDuration != other.snoozeDuration
-            || missedAlarmRepeatLimit != other.missedAlarmRepeatLimit
-            || crescendoDuration != other.crescendoDuration
-            || alarmVolume != other.alarmVolume
-            || snoozeExtendEnabled != other.snoozeExtendEnabled
-            || snoozeExtendMinutes != other.snoozeExtendMinutes
-            || snoozeExtendMaxMinutes != other.snoozeExtendMaxMinutes
-            || wifiRuleEnabled != other.wifiRuleEnabled
-            || !Objects.equals(wifiSsid, other.wifiSsid)
-            || !Objects.equals(wifiCondition, other.wifiCondition)
-            || !Objects.equals(wifiAction, other.wifiAction);
-    }
-
-    public boolean isTomorrow(Calendar now) {
-        if (instanceState == AlarmInstance.SNOOZE_STATE) {
-            return false;
-        }
-
-        final int totalAlarmMinutes = hour * 60 + minutes;
-        final int totalNowMinutes = now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE);
-
-        return totalAlarmMinutes <= totalNowMinutes;
-    }
-
     public boolean isDateInThePast() {
         Calendar alarmDate = Calendar.getInstance();
         alarmDate.clear();
@@ -990,34 +637,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         return year != now.get(Calendar.YEAR)
             || month != currentMonth
             || day != now.get(Calendar.DAY_OF_MONTH);
-    }
-
-    public static boolean isSpecifiedDateTomorrow(int alarmYear, int alarmMonth, int alarmDayOfMonth) {
-        Calendar today = Calendar.getInstance();
-        Calendar tomorrow = (Calendar) today.clone();
-
-        tomorrow.add(Calendar.DAY_OF_YEAR, 1);
-
-        // Set this variable to avoid lint warning
-        int nextDayMonth = tomorrow.get(Calendar.MONTH);
-
-        return alarmYear == tomorrow.get(Calendar.YEAR) &&
-            alarmMonth == nextDayMonth &&
-            alarmDayOfMonth == tomorrow.get(Calendar.DAY_OF_MONTH);
-    }
-
-    public boolean isTimeBeforeOrEqual(Calendar referenceTime) {
-        int currentHour = referenceTime.get(Calendar.HOUR_OF_DAY);
-        int currentMinute = referenceTime.get(Calendar.MINUTE);
-
-        return hour < currentHour || (hour == currentHour && minutes <= currentMinute);
-    }
-
-    public boolean isScheduledForToday(Calendar reference) {
-        int currentMonth = reference.get(Calendar.MONTH);
-        return year == reference.get(Calendar.YEAR)
-            && month == currentMonth
-            && day == reference.get(Calendar.DAY_OF_MONTH);
     }
 
     public boolean isPauseSet() {
@@ -1202,117 +821,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         return nextInstanceTime;
     }
 
-    /**
-     * Returns the day of the week (as Calendar.DAY_OF_WEEK) when the alarm will next trigger.
-     *
-     * <p>If a valid {@link AlarmInstance} is provided and its scheduled time is in the future,
-     * that time is used to determine the next alarm day.
-     * Otherwise, the method calculates the next scheduled alarm time based on the current time
-     * and the alarm's repeat settings.</p>
-     *
-     * @param alarmInstance the current {@link AlarmInstance}, or null if not yet created
-     * @return the day of the week (e.g., {@link Calendar#MONDAY}, {@link Calendar#TUESDAY}, ...)
-     */
-    public int getNextAlarmDayOfWeek(AlarmInstance alarmInstance) {
-        return getNextAlarmTimeCalendar(alarmInstance).get(Calendar.DAY_OF_WEEK);
-    }
-
-    /**
-     * Retrieves the exact {@link Calendar} date and time when the alarm will next trigger.
-     *
-     * <p>This method ensures temporal accuracy by verifying the provided {@link AlarmInstance}.
-     * If the instance exists and is scheduled in the future, its time is returned directly.
-     * If the instance is null or its scheduled time has already passed (e.g., the alarm just fired),
-     * this method dynamically calculates the next valid chronological trigger time based on the
-     * current time and the alarm's recurrence rules.</p>
-     *
-     * @param alarmInstance the current {@link AlarmInstance} associated with this alarm, or null.
-     * @return a {@link Calendar} object representing the next valid upcoming alarm time.
-     */
-    public Calendar getNextAlarmTimeCalendar(AlarmInstance alarmInstance) {
-        Calendar referenceTime = Calendar.getInstance();
-        if (alarmInstance != null && alarmInstance.getAlarmTime().after(referenceTime)) {
-            return alarmInstance.getAlarmTime();
-        } else {
-            return getNextAlarmTime(referenceTime);
-        }
-    }
-
-    /**
-     * Returns the next alarm time for sorting purposes.
-     * <p>
-     * When a live instance exists with a future fire time (including snoozed alarms), that
-     * instance time is used so snoozed alarms stay ordered by when they will actually ring
-     * next, instead of falling back to the alarm's nominal schedule (which often pushes them
-     * far down the list after the original time has passed).
-     */
-    public Calendar getSortableNextAlarmTime(AlarmInstance instance, Calendar now) {
-        // Prefer the concrete next fire time from an active/upcoming instance (snooze, fire,
-        // upcoming silent/notification). LEFT JOIN may synthesize a zeroed instance when none
-        // exists — ignore those (id <= 0) and terminal states.
-        if (instance != null && instance.mId > 0) {
-            final int state = instance.mAlarmState;
-            final boolean upcomingState =
-                state == AlarmInstance.SILENT_STATE
-                    || state == AlarmInstance.NOTIFICATION_STATE
-                    || state == AlarmInstance.SNOOZE_STATE
-                    || state == AlarmInstance.FIRED_STATE;
-            if (upcomingState) {
-                final Calendar instanceTime = instance.getAlarmTime();
-                if (instanceTime.getTimeInMillis() > now.getTimeInMillis()) {
-                    return instanceTime;
-                }
-            }
-        }
-
-        Calendar result = Calendar.getInstance(now.getTimeZone());
-        result.set(Calendar.SECOND, 0);
-        result.set(Calendar.MILLISECOND, 0);
-
-        if (daysOfWeek.isRepeating()) {
-            return getNextAlarmTime(now);
-        } else {
-            if (isSpecifiedDate()) {
-                if (isDateInThePast()) {
-                    // Expired specific date → anchor to today at the alarm's time
-                    result.set(Calendar.YEAR, now.get(Calendar.YEAR));
-                    result.set(Calendar.MONTH, now.get(Calendar.MONTH));
-                    result.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH));
-                    result.set(Calendar.HOUR_OF_DAY, hour);
-                    result.set(Calendar.MINUTE, minutes);
-
-                    // If the time has already passed today, shift to tomorrow
-                    if (result.getTimeInMillis() < now.getTimeInMillis()) {
-                        result.add(Calendar.DAY_OF_YEAR, 1);
-                    }
-                } else {
-                    // Future or today’s specified date → respect the defined date/time
-                    result.set(Calendar.YEAR, year);
-                    result.set(Calendar.MONTH, month);
-                    result.set(Calendar.DAY_OF_MONTH, day);
-                    result.set(Calendar.HOUR_OF_DAY, hour);
-                    result.set(Calendar.MINUTE, minutes);
-                }
-
-                return result;
-            }
-        }
-
-        // Alarms with no date and no repetition → today at the alarm time,
-        // and if the time has passed, shift to tomorrow
-        result.set(Calendar.YEAR, now.get(Calendar.YEAR));
-        result.set(Calendar.MONTH, now.get(Calendar.MONTH));
-        result.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH));
-        result.set(Calendar.HOUR_OF_DAY, hour);
-        result.set(Calendar.MINUTE, minutes);
-
-        if (result.getTimeInMillis() < now.getTimeInMillis()) {
-            result.add(Calendar.DAY_OF_YEAR, 1);
-        }
-
-        return result;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof final Alarm other)) return false;
@@ -1358,10 +866,6 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
             ", snoozeExtendEnabled=" + snoozeExtendEnabled +
             ", snoozeExtendMinutes=" + snoozeExtendMinutes +
             ", snoozeExtendMaxMinutes=" + snoozeExtendMaxMinutes +
-            ", wifiRuleEnabled=" + wifiRuleEnabled +
-            ", wifiSsid='" + wifiSsid + '\'' +
-            ", wifiCondition='" + wifiCondition + '\'' +
-            ", wifiAction='" + wifiAction + '\'' +
             ", repeatIntervalMinutes=" + repeatIntervalMinutes +
             ", repeatMaxCount=" + repeatMaxCount +
             ", intervalFireCount=" + intervalFireCount +

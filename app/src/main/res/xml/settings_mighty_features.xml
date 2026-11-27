@@ -50,20 +50,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/mighty_category_wifi_rules"
-        app:iconSpaceReserved="false">
-
-        <Preference
-            android:key="key_mighty_wifi_reevaluate"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/mighty_wifi_reevaluate_title"
-            android:summary="@string/mighty_wifi_reevaluate_summary"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:title="@string/mighty_category_backup"
         app:iconSpaceReserved="false">
 
@@ -98,61 +84,6 @@
             android:key="key_mighty_backup_now"
             android:layout="@layout/settings_preference_layout"
             android:title="@string/mighty_backup_now_title"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/mighty_category_exchange"
-        app:iconSpaceReserved="false">
-
-        <Preference
-            android:key="key_mighty_exchange_device_name"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/mighty_exchange_device_name_title"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <Preference
-            android:key="key_mighty_exchange_add_folder"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/mighty_exchange_add_folder_title"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <Preference
-            android:key="key_mighty_exchange_folders"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/mighty_exchange_folders_title"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <Preference
-            android:key="key_mighty_exchange_scan_now"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/mighty_exchange_scan_now_title"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <Preference
-            android:key="key_mighty_exchange_inbox"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/mighty_exchange_inbox_title"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/mighty_category_tags"
-        app:iconSpaceReserved="false">
-
-        <Preference
-            android:key="key_mighty_manage_tags"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/mighty_manage_tags_title"
-            android:summary="@string/mighty_manage_tags_summary"
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 

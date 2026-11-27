@@ -49,7 +49,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.best.deskclock.R;
-import com.best.deskclock.alarms.AlarmUpdateHandler;
 import com.best.deskclock.base.AppExecutors;
 import com.best.deskclock.data.CustomRingtone;
 import com.best.deskclock.data.DataModel;
@@ -777,8 +776,7 @@ public class RingtonePickerActivity extends CollapsingToolbarBaseActivity
 
     /**
      * Removes a custom ringtone with the given uri. Taking this action has side effects because
-     * all alarms that use the custom ringtone are reassigned to the Android system default alarm
-     * ringtone. If the application's default alarm ringtone is being removed, it is reset to the
+     * calendar profiles that use the custom ringtone go back to the default alarm ringtone. If the application's default alarm ringtone is being removed, it is reset to the
      * Android system default alarm ringtone. If the application's timer ringtone is being removed,
      * it is reset to the application's default timer ringtone.
      */
@@ -801,17 +799,16 @@ public class RingtonePickerActivity extends CollapsingToolbarBaseActivity
                     profilesChanged = true;
                 }
             }
-            final boolean syncCalendarAlarms = profilesChanged;
-
-            // Update all alarms that use the custom ringtone to use the system default.
-            final List<Alarm> alarms = Alarm.getAlarms(cr, null);
-            for (Alarm alarm : alarms) {
+            // Calendar alarms that still ring with this ringtone (also through the default
+            // ringtone setting) are rebuilt from their profiles below.
+            boolean alarmsUseRingtone = false;
+            for (Alarm alarm : Alarm.getAlarms(cr, null)) {
                 if (removeUri.equals(alarm.alert)) {
-                    alarm.alert = systemDefaultRingtoneUri;
-                    // Start a second background task to persist the updated alarm.
-                    new AlarmUpdateHandler(appContext, null, null).asyncUpdateAlarm(alarm, false, true);
+                    alarmsUseRingtone = true;
+                    break;
                 }
             }
+            final boolean syncCalendarAlarms = profilesChanged || alarmsUseRingtone;
 
             try {
                 // Release the permission to read (playback) the audio at the uri.

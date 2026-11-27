@@ -84,7 +84,7 @@
 
     <!-- Label names for Debug mode. -->
     <!-- App title for the debug version. -->
-    <string name="app_label_debug">MightyCalendarAlarmClock</string>
+    <string name="app_label_debug">MightyCalendarAlarm</string>
     <!-- Settings title for the debug version. -->
     <string name="setting_debug_title">Settings debug version</string>
     <string name="debug_category_title">Debug</string>
@@ -99,7 +99,7 @@
 
     <!-- Label names for Nightly mode. -->
     <!-- App title for the nightly version. -->
-    <string name="app_label_nightly">MightyCalendarAlarmClock nightly</string>
+    <string name="app_label_nightly">MightyCalendarAlarm nightly</string>
     <!-- Settings title for the nightly version. -->
     <string name="setting_nightly_title">Settings nightly version</string>
 
@@ -482,47 +482,42 @@
 
     <!-- Entries listed in the MultiSelectListPreference when invoking the tabs visibility preference. -->
     <string-array name="visible_tab_entries">
-        <item>@string/menu_alarm</item>
+        <item>@string/menu_calendar_alarm</item>
         <item>@string/menu_clock</item>
         <item>@string/menu_timer</item>
         <item>@string/menu_stopwatch</item>
-        <item>@string/menu_calendar_alarm</item>
     </string-array>
     <!-- Values that are retrieved from the MultiSelectListPreference. These must match the visible_tab_entries above. -->
     <string-array name="visible_tab_values" translatable="false">
-        <item>alarm</item>
+        <item>calendar_alert</item>
         <item>clock</item>
         <item>timer</item>
         <item>stopwatch</item>
-        <item>calendar_alarm</item>
     </string-array>
     <!-- Default value for the MultiSelectListPreference related to the tabs visibility preference. -->
     <string-array name="visible_tab_default_values" translatable="false">
-        <item>alarm</item>
+        <item>calendar_alert</item>
         <item>clock</item>
         <item>timer</item>
         <item>stopwatch</item>
-        <item>calendar_alarm</item>
     </string-array>
 
     <!-- Entries listed in the ListPreference when selecting the default tab to display. -->
     <string-array name="tab_entries">
         <item>@string/last_tab_used_title</item>
-        <item>@string/menu_alarm</item>
+        <item>@string/menu_calendar_alarm</item>
         <item>@string/menu_clock</item>
         <item>@string/menu_timer</item>
         <item>@string/menu_stopwatch</item>
-        <item>@string/menu_calendar_alarm</item>
     </string-array>
     <!-- Values that are retrieved from the ListPreference. These must match the tab entries above
          and respect the order of the bottom navigation menu. -->
     <string-array name="tab_values" translatable="false">
         <item>-1</item>
-        <item>0</item>
+        <item>4</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
-        <item>4</item>
     </string-array>
 
     <!-- Entries listed in the ListPreference when selecting the language. -->

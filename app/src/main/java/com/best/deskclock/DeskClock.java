@@ -59,7 +59,6 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 
-import com.best.deskclock.alarms.AlarmFragment;
 import com.best.deskclock.base.AppExecutors;
 import com.best.deskclock.base.BaseActivity;
 import com.best.deskclock.base.DeskClockFragment;
@@ -71,7 +70,6 @@ import com.best.deskclock.data.OnSilentSettingsListener;
 import com.best.deskclock.data.SettingsDAO;
 import com.best.deskclock.databinding.DeskClockBinding;
 import com.best.deskclock.events.Events;
-import com.best.deskclock.mighty.exchange.ExchangeManager;
 import com.best.deskclock.settings.PermissionsManagementActivity;
 import com.best.deskclock.settings.SettingsActivity;
 import com.best.deskclock.setup.FirstLaunch;
@@ -109,6 +107,10 @@ import java.util.Map;
  * clocks, timers and stopwatch.
  */
 public class DeskClock extends BaseActivity implements FabContainer {
+
+    /** Opens the Calendar tab, e.g. from an alarm notification. */
+    public static final String ACTION_SHOW_CALENDAR_ALARMS = "com.best.deskclock.action.SHOW_CALENDAR_ALARMS";
+
 
     private DeskClockBinding mBinding;
 
@@ -175,7 +177,6 @@ public class DeskClock extends BaseActivity implements FabContainer {
     /**
      * Whether the exchange-inbox snackbar was already shown for this activity instance.
      */
-    private boolean mExchangeInboxHintShown = false;
 
     /**
      * List of supported preference keys used to monitor UI and behavior changes within
@@ -310,29 +311,6 @@ public class DeskClock extends BaseActivity implements FabContainer {
         if (SettingsDAO.isForegroundServiceEnabled(mPrefs)) {
             ContextCompat.startForegroundService(this, new Intent(this, KeepAliveService.class));
         }
-
-        maybeShowExchangeInboxHint();
-    }
-
-    private void maybeShowExchangeInboxHint() {
-        if (mExchangeInboxHintShown || mBinding == null) {
-            return;
-        }
-        final int count = ExchangeManager.getInbox(this).size();
-        if (count <= 0) {
-            return;
-        }
-        mExchangeInboxHintShown = true;
-        final Snackbar snackbar = Snackbar.make(
-            mBinding.contentView,
-            getString(R.string.mighty_exchange_inbox_pending_hint, count),
-            8000);
-        snackbar.setAction(R.string.mighty_exchange_inbox_show_action, v -> {
-            final Intent intent = new Intent(this, SettingsActivity.class);
-            intent.putExtra(SettingsActivity.EXTRA_OPEN_EXCHANGE_INBOX, true);
-            startActivity(intent);
-        });
-        SnackbarManager.show(snackbar);
     }
 
     @Override
@@ -520,9 +498,7 @@ public class DeskClock extends BaseActivity implements FabContainer {
     private final NavigationBarView.OnItemSelectedListener mNavigationListener = item -> {
         UiDataModel.Tab tab = null;
         int itemId = item.getItemId();
-        if (itemId == R.id.page_alarm) {
-            tab = UiDataModel.Tab.ALARMS;
-        } else if (itemId == R.id.page_clock) {
+        if (itemId == R.id.page_clock) {
             tab = UiDataModel.Tab.CLOCKS;
         } else if (itemId == R.id.page_timer) {
             tab = UiDataModel.Tab.TIMERS;
@@ -830,6 +806,13 @@ public class DeskClock extends BaseActivity implements FabContainer {
                         // Consume the action to prevent it from being reused
                         intent.setAction(null);
                     }
+                    case ACTION_SHOW_CALENDAR_ALARMS -> {
+                        if (UiDataModel.getUiDataModel().isTabVisible(UiDataModel.Tab.CALENDAR_ALARM)) {
+                            UiDataModel.getUiDataModel().setSelectedTab(UiDataModel.Tab.CALENDAR_ALARM);
+                        }
+                        // Consume the action to prevent it from being reused
+                        intent.setAction(null);
+                    }
                     case StopwatchService.ACTION_SHOW_STOPWATCH -> {
                         Events.sendStopwatchEvent(R.string.action_show, label);
                         if (UiDataModel.getUiDataModel().isTabVisible(UiDataModel.Tab.STOPWATCH)) {
@@ -854,16 +837,10 @@ public class DeskClock extends BaseActivity implements FabContainer {
         Menu menu = mBinding.deskClockBottomMenu.getMenu();
         boolean menuChanged = false;
 
-        boolean showAlarm = UiDataModel.getUiDataModel().isTabVisible(UiDataModel.Tab.ALARMS);
         boolean showClock = UiDataModel.getUiDataModel().isTabVisible(UiDataModel.Tab.CLOCKS);
         boolean showTimer = UiDataModel.getUiDataModel().isTabVisible(UiDataModel.Tab.TIMERS);
         boolean showStopwatch = UiDataModel.getUiDataModel().isTabVisible(UiDataModel.Tab.STOPWATCH);
         boolean showCalendarAlarm = UiDataModel.getUiDataModel().isTabVisible(UiDataModel.Tab.CALENDAR_ALARM);
-
-        if (menu.findItem(R.id.page_alarm).isVisible() != showAlarm) {
-            menu.findItem(R.id.page_alarm).setVisible(showAlarm);
-            menuChanged = true;
-        }
 
         if (menu.findItem(R.id.page_clock).isVisible() != showClock) {
             menu.findItem(R.id.page_clock).setVisible(showClock);
@@ -892,7 +869,6 @@ public class DeskClock extends BaseActivity implements FabContainer {
         mBinding.deskClockBottomMenu.post(() -> {
             UiDataModel.Tab currentTab = UiDataModel.getUiDataModel().getSelectedTab();
             int currentItemId = switch (currentTab) {
-                case ALARMS -> R.id.page_alarm;
                 case CLOCKS -> R.id.page_clock;
                 case TIMERS -> R.id.page_timer;
                 case STOPWATCH -> R.id.page_stopwatch;
@@ -1124,10 +1100,6 @@ public class DeskClock extends BaseActivity implements FabContainer {
         public void onPageSelected(int position) {
             DeskClockFragment fragment = mFragmentTabPagerAdapter.getDeskClockFragment(position);
             fragment.selectTab();
-
-            if (fragment instanceof AlarmFragment alarmFragment) {
-                alarmFragment.hideSideButtonsOnlyAnimated();
-            }
         }
     }
 
@@ -1222,7 +1194,6 @@ public class DeskClock extends BaseActivity implements FabContainer {
             // after a configuration change.
             if (DataModel.getDataModel().isApplicationInForeground()) {
                 switch (newSelectedTab) {
-                    case ALARMS -> Events.sendAlarmEvent(R.string.action_show, R.string.label_deskclock);
                     case CLOCKS -> Events.sendClockEvent(R.string.action_show, R.string.label_deskclock);
                     case TIMERS -> Events.sendTimerEvent(R.string.action_show, R.string.label_deskclock);
                     case STOPWATCH -> Events.sendStopwatchEvent(R.string.action_show, R.string.label_deskclock);

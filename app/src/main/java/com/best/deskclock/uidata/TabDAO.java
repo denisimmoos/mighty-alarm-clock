@@ -32,10 +32,9 @@ final class TabDAO {
     static Tab getSelectedTab(SharedPreferences prefs) {
         int tabIndex = SettingsDAO.getTabToDisplay(prefs);
         if (tabIndex == DEFAULT_TAB_TO_DISPLAY_INTEGER) {
-            final int ordinal = prefs.getInt(KEY_SELECTED_TAB, Tab.CLOCKS.ordinal());
-            return Tab.values()[ordinal];
+            return Tab.fromStoredId(prefs.getInt(KEY_SELECTED_TAB, Tab.CALENDAR_ALARM.getStoredId()));
         } else {
-            return Tab.values()[tabIndex];
+            return Tab.fromStoredId(tabIndex);
         }
     }
 
@@ -43,6 +42,6 @@ final class TabDAO {
      * @param tab an enumerated value indicating the newly selected primary tab
      */
     static void setSelectedTab(SharedPreferences prefs, Tab tab) {
-        prefs.edit().putInt(KEY_SELECTED_TAB, tab.ordinal()).apply();
+        prefs.edit().putInt(KEY_SELECTED_TAB, tab.getStoredId()).apply();
     }
 }

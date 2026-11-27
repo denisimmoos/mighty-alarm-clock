@@ -4,8 +4,6 @@
 
 package com.best.deskclock.utils;
 
-import static android.media.AudioManager.STREAM_ALARM;
-
 import static com.best.deskclock.data.CustomRingtoneDAO.NEXT_RINGTONE_ID;
 import static com.best.deskclock.data.CustomRingtoneDAO.RINGTONE_IDS;
 import static com.best.deskclock.data.CustomRingtoneDAO.RINGTONE_TITLE;
@@ -20,7 +18,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -31,9 +28,7 @@ import com.best.deskclock.R;
 import com.best.deskclock.alarms.AlarmStateManager;
 import com.best.deskclock.data.SettingsDAO;
 import com.best.deskclock.data.Timer;
-import com.best.deskclock.data.Weekdays;
 import com.best.deskclock.provider.Alarm;
-import com.best.deskclock.provider.AlarmInstance;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,11 +63,6 @@ public class BackupAndRestoreUtils {
     private static final String KEY_CALENDAR_ALARM_PROFILES = "Calendar alert profiles";
     private static final String KEY_MIGHTY_SETTINGS = "Mighty settings";
 
-    /** Key of the alarm tags in the backup's settings.json. */
-    private static final String KEY_TAGS = "Tags";
-
-    /** Tag ids in the backup mapped to the ids of the restored tags, used while restoring. */
-    private static final Map<Long, Long> sRestoredTagIds = new HashMap<>();
     public static boolean appNeedsRestart = false;
 
     /**
@@ -171,80 +161,12 @@ public class BackupAndRestoreUtils {
         // Convert the Map of timers IDs to a JSONArray
         jsonObject.put("Timers IDs", new JSONArray(timerIds));
 
-        // Convert the alarms to a JSONArray
-        JSONArray alarmsArray = new JSONArray();
-        JSONArray alarmsWithDateArray = new JSONArray();
+        // Normal alarms were removed from the app: alarms come only from calendar profiles, which
+        // are saved below and rebuilt from the calendar after a restore.
 
-        List<Alarm> alarms = Alarm.getUserAlarms(context.getContentResolver());
-        for (Alarm alarm : alarms) {
-            JSONObject alarmObject = new JSONObject();
-
-            alarmObject.put("id", alarm.id);
-            alarmObject.put("enabled", alarm.enabled);
-            alarmObject.put("hour", alarm.hour);
-            alarmObject.put("minutes", alarm.minutes);
-            alarmObject.put("vibrate", alarm.vibrate);
-            alarmObject.put("vibrationPattern", alarm.vibrationPattern);
-            alarmObject.put("flash", alarm.flash);
-            alarmObject.put("daysOfWeek", alarm.daysOfWeek.getBits());
-            alarmObject.put("label", alarm.label);
-            alarmObject.put("syncByLabel", alarm.syncByLabel);
-            alarmObject.put("alert", alarm.alert);
-            alarmObject.put("deleteAfterUse", alarm.deleteAfterUse);
-            alarmObject.put("autoSilenceDuration", alarm.autoSilenceDuration);
-            alarmObject.put("snoozeDuration", alarm.snoozeDuration);
-            alarmObject.put("missedAlarmRepeatLimit", alarm.missedAlarmRepeatLimit);
-            alarmObject.put("crescendoDuration", alarm.crescendoDuration);
-            alarmObject.put("alarmVolume", alarm.alarmVolume);
-            alarmObject.put("manualSortOrder", alarm.manualSortOrder);
-            alarmObject.put("pauseStartDate", alarm.pauseStartDate);
-            alarmObject.put("pauseEndDate", alarm.pauseEndDate);
-            // Mighty features of the alarm, so a restore brings back everything.
-            alarmObject.put("stableUuid", alarm.stableUuid);
-            alarmObject.put("ringCount", alarm.ringCount);
-            alarmObject.put("snoozeExtendEnabled", alarm.snoozeExtendEnabled);
-            alarmObject.put("snoozeExtendMinutes", alarm.snoozeExtendMinutes);
-            alarmObject.put("snoozeExtendMaxMinutes", alarm.snoozeExtendMaxMinutes);
-            alarmObject.put("wifiRuleEnabled", alarm.wifiRuleEnabled);
-            alarmObject.put("wifiSsid", alarm.wifiSsid == null ? JSONObject.NULL : alarm.wifiSsid);
-            alarmObject.put("wifiCondition", alarm.wifiCondition == null ? JSONObject.NULL : alarm.wifiCondition);
-            alarmObject.put("wifiAction", alarm.wifiAction == null ? JSONObject.NULL : alarm.wifiAction);
-            alarmObject.put("repeatIntervalMinutes", alarm.repeatIntervalMinutes);
-            alarmObject.put("repeatMaxCount", alarm.repeatMaxCount);
-            alarmObject.put("tagIds", new JSONArray(
-                com.best.deskclock.provider.Tag.getTagIdsForAlarm(context.getContentResolver(), alarm.id)));
-
-            if (alarm.daysOfWeek.isRepeating() || !alarm.isSpecifiedDate()) {
-                alarmsArray.put(alarmObject);
-            } else {
-                alarmObject.put("year", alarm.year);
-                alarmObject.put("month", alarm.month);
-                alarmObject.put("day", alarm.day);
-
-                alarmsWithDateArray.put(alarmObject);
-            }
-        }
-
-        jsonObject.put("Alarms", alarmsArray);
-
-        jsonObject.put("Alarms with specified date", alarmsWithDateArray);
-
-        // Alarm tags.
-        final JSONArray tagsArray = new JSONArray();
-        for (com.best.deskclock.provider.Tag tag : com.best.deskclock.provider.Tag.getTags(context.getContentResolver())) {
-            final JSONObject tagObject = new JSONObject();
-            tagObject.put("id", tag.id);
-            tagObject.put("name", tag.name);
-            tagObject.put("color", tag.color);
-            tagObject.put("ringtoneUri", tag.ringtoneUri == null ? JSONObject.NULL : tag.ringtoneUri);
-            tagsArray.put(tagObject);
-        }
-        jsonObject.put(KEY_TAGS, tagsArray);
-
-        // Mighty settings kept outside the main settings: automatic backup and alarm exchange.
+        // Mighty settings kept outside the main settings: automatic backup.
         final JSONObject mighty = new JSONObject();
         mighty.put("backup", com.best.deskclock.mighty.backup.JsonBackupManager.exportSettings(context));
-        mighty.put("exchange", com.best.deskclock.mighty.exchange.ExchangeManager.exportSettings(context));
         jsonObject.put(KEY_MIGHTY_SETTINGS, mighty);
 
         // Calendar alarm profiles; their alarms are rebuilt from the calendar after a restore.
@@ -394,45 +316,15 @@ public class BackupAndRestoreUtils {
         editor.commit();
 
         final ContentResolver contentResolver = context.getContentResolver();
-        // Clear the alarm list before restoring to avoid adding duplicates
+        // Remove any alarm that wasn't made from a calendar profile
         final List<Alarm> alarms = Alarm.getUserAlarms(contentResolver);
         for (Alarm alarm : alarms) {
             AlarmStateManager.deleteAllInstances(context, alarm.id);
             Alarm.deleteAlarm(contentResolver, alarm.id);
         }
 
-        // Tags. Backups made before they were included leave the current tags as they are.
-        sRestoredTagIds.clear();
-        final JSONArray tagsArray = jsonObject.optJSONArray(KEY_TAGS);
-        if (tagsArray != null) {
-            for (com.best.deskclock.provider.Tag tag : com.best.deskclock.provider.Tag.getTags(contentResolver)) {
-                com.best.deskclock.provider.Tag.deleteTag(contentResolver, tag.id);
-            }
-            for (int i = 0; i < tagsArray.length(); i++) {
-                final JSONObject tagObject = tagsArray.getJSONObject(i);
-                final com.best.deskclock.provider.Tag tag = new com.best.deskclock.provider.Tag(
-                    tagObject.optString("name", ""), tagObject.optInt("color", 0));
-                tag.ringtoneUri = tagObject.isNull("ringtoneUri") ? null : tagObject.optString("ringtoneUri", null);
-                tag.addTag(contentResolver);
-                sRestoredTagIds.put(tagObject.optLong("id", -1), tag.id);
-            }
-        }
-
-        if (jsonObject.has("Alarms")) {
-            JSONArray alarmsArray = jsonObject.getJSONArray("Alarms");
-            for (int i = 0; i < alarmsArray.length(); i++) {
-                JSONObject alarmObject = alarmsArray.getJSONObject(i);
-                restoreAlarm(context, prefs, contentResolver, alarmObject, false);
-            }
-        }
-
-        if (jsonObject.has("Alarms with specified date")) {
-            JSONArray alarmsWithDateArray = jsonObject.getJSONArray("Alarms with specified date");
-            for (int i = 0; i < alarmsWithDateArray.length(); i++) {
-                JSONObject alarmObject = alarmsWithDateArray.getJSONObject(i);
-                restoreAlarm(context, prefs, contentResolver, alarmObject, true);
-            }
-        }
+        // Alarms, alarm tags and the alarm exchange in older backups belonged to the normal alarms,
+        // which were removed from the app, so they are ignored.
 
         // Mighty settings kept outside the main settings. Older backups leave them as they are.
         final JSONObject mighty = jsonObject.optJSONObject(KEY_MIGHTY_SETTINGS);
@@ -441,11 +333,6 @@ public class BackupAndRestoreUtils {
                 com.best.deskclock.mighty.backup.JsonBackupManager.restoreSettings(context, mighty.optJSONObject("backup"));
             } catch (Throwable e) {
                 LogUtils.e("Could not restore the automatic backup settings", e);
-            }
-            try {
-                com.best.deskclock.mighty.exchange.ExchangeManager.restoreSettings(context, mighty.optJSONObject("exchange"));
-            } catch (Throwable e) {
-                LogUtils.e("Could not restore the exchange settings", e);
             }
         }
 
@@ -459,114 +346,6 @@ public class BackupAndRestoreUtils {
         }
 
         AlarmStateManager.updateNextAlarm(context);
-    }
-
-    private static String optNullableString(JSONObject object, String key, String fallback) {
-        if (!object.has(key)) {
-            return fallback;
-        }
-        return object.isNull(key) ? null : object.optString(key, fallback);
-    }
-
-    /**
-     * Restore alarm data.
-     * If the alarm is enabled, a future instance will be scheduled.
-     */
-    private static void restoreAlarm(Context context, SharedPreferences prefs, ContentResolver contentResolver,
-                                     JSONObject alarmObject, boolean hasSpecifiedDate) throws JSONException {
-
-        AudioManager audioManager = context.getApplicationContext().getSystemService(AudioManager.class);
-
-        long id = alarmObject.optLong("id", System.currentTimeMillis());
-        boolean enabled = alarmObject.optBoolean("enabled", true);
-        int hour = alarmObject.optInt("hour", 8);
-        int minutes = alarmObject.optInt("minutes", 30);
-        boolean vibrate = alarmObject.optBoolean("vibrate", SettingsDAO.areAlarmVibrationsEnabledByDefault(prefs));
-        String vibrationPattern = alarmObject.optString("vibrationPattern", SettingsDAO.getVibrationPattern(prefs));
-        boolean flash = alarmObject.optBoolean("flash", SettingsDAO.shouldTurnOnBackFlashForTriggeredAlarm(prefs));
-        int daysOfWeek = alarmObject.optInt("daysOfWeek", 0);
-        String label = alarmObject.optString("label", "");
-        boolean syncAlarmByLabel = alarmObject.optBoolean("syncByLabel", false);
-        String alert = alarmObject.optString("alert", RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString());
-        boolean deleteAfterUse = alarmObject.optBoolean("deleteAfterUse", SettingsDAO.isOccasionalAlarmDeletedByDefault(prefs));
-        int autoSilenceDuration = alarmObject.optInt("autoSilenceDuration", SettingsDAO.getAlarmTimeout(prefs));
-        int snoozeDuration = alarmObject.optInt("snoozeDuration", SettingsDAO.getSnoozeLength(prefs));
-        int missedAlarmRepeatLimit = alarmObject.optInt("missedAlarmRepeatLimit", SettingsDAO.getMissedAlarmRepeatLimit(prefs));
-        int crescendoDuration = alarmObject.optInt("crescendoDuration", SettingsDAO.getAlarmVolumeCrescendoDuration(prefs));
-        int alarmVolume = alarmObject.optInt("alarmVolume", audioManager.getStreamVolume(STREAM_ALARM));
-        int manualSortOrder = alarmObject.optInt("manualSortOrder", 0);
-        long pauseStartDate = alarmObject.optLong("pauseStartDate", 0);
-        long pauseEndDate = alarmObject.optLong("pauseEndDate", 0);
-
-        // If the pause is in the past during a restore, remove it.
-        if (pauseEndDate > 0 && AlarmUtils.isPauseExpired(pauseEndDate)) {
-            pauseStartDate = 0;
-            pauseEndDate = 0;
-        }
-
-        String alarmRingtone;
-        if (RingtoneUtils.isRandomRingtone(Uri.parse(alert))) {
-            alarmRingtone = RingtoneUtils.RANDOM_RINGTONE.toString();
-        } else if (RingtoneUtils.isRandomCustomRingtone(Uri.parse(alert))) {
-            alarmRingtone = RingtoneUtils.RANDOM_CUSTOM_RINGTONE.toString();
-        } else if (RingtoneUtils.isSystemRingtone(Uri.parse(alert)) && isRingtoneAvailable(context, alert)) {
-            alarmRingtone = alert;
-        } else {
-            alarmRingtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString();
-        }
-
-        Alarm restoredAlarm;
-
-        int year;
-        int month;
-        int day;
-
-        if (hasSpecifiedDate) {
-            year = alarmObject.getInt("year");
-            month = alarmObject.getInt("month");
-            day = alarmObject.getInt("day");
-        } else {
-            Calendar calendar = Calendar.getInstance();
-            year = calendar.get(Calendar.YEAR);
-            month = calendar.get(Calendar.MONTH);
-            day = calendar.get(Calendar.DAY_OF_MONTH);
-        }
-
-        restoredAlarm = new Alarm(id, enabled, year, month, day, hour, minutes, vibrate, vibrationPattern, flash,
-            Weekdays.fromBits(daysOfWeek), label, syncAlarmByLabel, alarmRingtone, deleteAfterUse, autoSilenceDuration, snoozeDuration,
-            missedAlarmRepeatLimit, crescendoDuration, alarmVolume, manualSortOrder, pauseStartDate, pauseEndDate);
-
-        // Mighty features; older backups don't have them and keep the defaults.
-        restoredAlarm.stableUuid = alarmObject.optString("stableUuid", restoredAlarm.stableUuid);
-        restoredAlarm.ringCount = alarmObject.optInt("ringCount", restoredAlarm.ringCount);
-        restoredAlarm.snoozeExtendEnabled = alarmObject.optBoolean("snoozeExtendEnabled", restoredAlarm.snoozeExtendEnabled);
-        restoredAlarm.snoozeExtendMinutes = alarmObject.optInt("snoozeExtendMinutes", restoredAlarm.snoozeExtendMinutes);
-        restoredAlarm.snoozeExtendMaxMinutes = alarmObject.optInt("snoozeExtendMaxMinutes", restoredAlarm.snoozeExtendMaxMinutes);
-        restoredAlarm.wifiRuleEnabled = alarmObject.optBoolean("wifiRuleEnabled", restoredAlarm.wifiRuleEnabled);
-        restoredAlarm.wifiSsid = optNullableString(alarmObject, "wifiSsid", restoredAlarm.wifiSsid);
-        restoredAlarm.wifiCondition = optNullableString(alarmObject, "wifiCondition", restoredAlarm.wifiCondition);
-        restoredAlarm.wifiAction = optNullableString(alarmObject, "wifiAction", restoredAlarm.wifiAction);
-        restoredAlarm.repeatIntervalMinutes = alarmObject.optInt("repeatIntervalMinutes", restoredAlarm.repeatIntervalMinutes);
-        restoredAlarm.repeatMaxCount = alarmObject.optInt("repeatMaxCount", restoredAlarm.repeatMaxCount);
-
-        restoredAlarm.addAlarm(contentResolver);
-
-        final JSONArray tagIds = alarmObject.optJSONArray("tagIds");
-        if (tagIds != null) {
-            for (int i = 0; i < tagIds.length(); i++) {
-                final Long tagId = sRestoredTagIds.get(tagIds.optLong(i, -1));
-                if (tagId != null) {
-                    com.best.deskclock.provider.Tag.addTagToAlarm(contentResolver, restoredAlarm.id, tagId);
-                }
-            }
-        }
-
-        if (restoredAlarm.enabled) {
-            AlarmInstance alarmInstance = restoredAlarm.createInstanceAfter(Calendar.getInstance());
-            alarmInstance.addInstance(contentResolver);
-            AlarmStateManager.registerInstance(context, alarmInstance, false);
-            LogUtils.i("BackupAndRestoreUtils scheduled alarm instance: %s", alarmInstance);
-        }
     }
 
     /**

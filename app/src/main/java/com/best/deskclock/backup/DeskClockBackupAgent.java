@@ -12,8 +12,6 @@ import com.best.deskclock.alarms.AlarmStateManager;
 import com.best.deskclock.base.AlarmAlertWakeLock;
 import com.best.deskclock.mighty.backup.BackupWorker;
 import com.best.deskclock.mighty.backup.JsonBackupManager;
-import com.best.deskclock.mighty.exchange.ExchangeManager;
-import com.best.deskclock.mighty.exchange.ExchangeScanWorker;
 import com.best.deskclock.utils.LogUtils;
 
 /**
@@ -61,9 +59,6 @@ public class DeskClockBackupAgent extends BackupAgent {
         try {
             if (JsonBackupManager.isScheduleEnabled(this)) {
                 BackupWorker.schedulePeriodic(this, JsonBackupManager.getIntervalHours(this));
-            }
-            if (!ExchangeManager.getFolders(this).isEmpty()) {
-                ExchangeScanWorker.schedulePeriodic(this);
             }
         } catch (RuntimeException e) {
             LogUtils.e("DeskClockBackupAgent: failed to reschedule Mighty background work", e);

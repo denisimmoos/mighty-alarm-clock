@@ -9,12 +9,10 @@ package com.best.deskclock.provider;
 import static com.best.deskclock.provider.ClockContract.AlarmsColumns;
 import static com.best.deskclock.provider.ClockContract.InstancesColumns;
 import static com.best.deskclock.provider.ClockDatabaseHelper.ALARMS_TABLE_NAME;
-import static com.best.deskclock.provider.ClockDatabaseHelper.ALARM_TAGS_TABLE_NAME;
 import static com.best.deskclock.provider.ClockDatabaseHelper.CALENDAR_ALARM_EVENTS_TABLE_NAME;
 import static com.best.deskclock.provider.ClockDatabaseHelper.CALENDAR_PROFILES_TABLE_NAME;
 import static com.best.deskclock.provider.ClockDatabaseHelper.EVENT_LOG_TABLE_NAME;
 import static com.best.deskclock.provider.ClockDatabaseHelper.INSTANCES_TABLE_NAME;
-import static com.best.deskclock.provider.ClockDatabaseHelper.TAGS_TABLE_NAME;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -44,9 +42,6 @@ public class ClockProvider extends ContentProvider {
     private static final int INSTANCES = 3;
     private static final int INSTANCES_ID = 4;
     private static final int ALARMS_WITH_INSTANCES = 5;
-    private static final int TAGS = 6;
-    private static final int TAGS_ID = 7;
-    private static final int ALARM_TAGS = 8;
     private static final int EVENT_LOG = 9;
     private static final int EVENT_LOG_ID = 10;
     private static final int CALENDAR_PROFILES = 11;
@@ -194,9 +189,6 @@ public class ClockProvider extends ContentProvider {
         sURIMatcher.addURI(ClockContract.AUTHORITY, "instances", INSTANCES);
         sURIMatcher.addURI(ClockContract.AUTHORITY, "instances/#", INSTANCES_ID);
         sURIMatcher.addURI(ClockContract.AUTHORITY, "alarms_with_instances", ALARMS_WITH_INSTANCES);
-        sURIMatcher.addURI(ClockContract.AUTHORITY, "tags", TAGS);
-        sURIMatcher.addURI(ClockContract.AUTHORITY, "tags/#", TAGS_ID);
-        sURIMatcher.addURI(ClockContract.AUTHORITY, "alarm_tags", ALARM_TAGS);
         sURIMatcher.addURI(ClockContract.AUTHORITY, "event_log", EVENT_LOG);
         sURIMatcher.addURI(ClockContract.AUTHORITY, "event_log/#", EVENT_LOG_ID);
         sURIMatcher.addURI(ClockContract.AUTHORITY, "calendar_profiles", CALENDAR_PROFILES);
@@ -261,13 +253,6 @@ public class ClockProvider extends ContentProvider {
                 qb.appendWhere(ALARM_JOIN_INSTANCE_WHERE_STATEMENT);
                 qb.setProjectionMap(sAlarmsWithInstancesProjection);
             }
-            case TAGS -> qb.setTables(TAGS_TABLE_NAME);
-            case TAGS_ID -> {
-                qb.setTables(TAGS_TABLE_NAME);
-                qb.appendWhere(ClockContract.TagsColumns._ID + "=");
-                qb.appendWhere(Objects.requireNonNull(uri.getLastPathSegment()));
-            }
-            case ALARM_TAGS -> qb.setTables(ALARM_TAGS_TABLE_NAME);
             case EVENT_LOG -> qb.setTables(EVENT_LOG_TABLE_NAME);
             case EVENT_LOG_ID -> {
                 qb.setTables(EVENT_LOG_TABLE_NAME);
@@ -308,9 +293,6 @@ public class ClockProvider extends ContentProvider {
             case ALARMS_ID -> "vnd.android.cursor.item/alarms";
             case INSTANCES -> "vnd.android.cursor.dir/instances";
             case INSTANCES_ID -> "vnd.android.cursor.item/instances";
-            case TAGS -> "vnd.android.cursor.dir/tags";
-            case TAGS_ID -> "vnd.android.cursor.item/tags";
-            case ALARM_TAGS -> "vnd.android.cursor.dir/alarm_tags";
             case EVENT_LOG -> "vnd.android.cursor.dir/event_log";
             case EVENT_LOG_ID -> "vnd.android.cursor.item/event_log";
             case CALENDAR_PROFILES -> "vnd.android.cursor.dir/calendar_profiles";
@@ -334,10 +316,6 @@ public class ClockProvider extends ContentProvider {
             case INSTANCES_ID -> {
                 alarmId = uri.getLastPathSegment();
                 count = db.update(INSTANCES_TABLE_NAME, values, InstancesColumns._ID + "=" + alarmId, null);
-            }
-            case TAGS_ID -> {
-                alarmId = uri.getLastPathSegment();
-                count = db.update(TAGS_TABLE_NAME, values, ClockContract.TagsColumns._ID + "=" + alarmId, null);
             }
             case EVENT_LOG_ID -> {
                 alarmId = uri.getLastPathSegment();
@@ -372,10 +350,6 @@ public class ClockProvider extends ContentProvider {
         rowId = switch (sURIMatcher.match(uri)) {
             case ALARMS -> mOpenHelper.fixAlarmInsert(initialValues);
             case INSTANCES -> db.insert(INSTANCES_TABLE_NAME, null, initialValues);
-            case TAGS -> db.insert(TAGS_TABLE_NAME, null, initialValues);
-            // Duplicate alarm/tag associations are silently ignored rather than crashing.
-            case ALARM_TAGS -> db.insertWithOnConflict(ALARM_TAGS_TABLE_NAME, null, initialValues,
-                SQLiteDatabase.CONFLICT_IGNORE);
             case EVENT_LOG -> db.insert(EVENT_LOG_TABLE_NAME, null, initialValues);
             case CALENDAR_PROFILES -> db.insert(CALENDAR_PROFILES_TABLE_NAME, null, initialValues);
             case CALENDAR_ALARM_EVENTS -> db.insertWithOnConflict(CALENDAR_ALARM_EVENTS_TABLE_NAME, null,
@@ -418,17 +392,6 @@ public class ClockProvider extends ContentProvider {
                 }
                 count = db.delete(INSTANCES_TABLE_NAME, where, whereArgs);
             }
-            case TAGS -> count = db.delete(TAGS_TABLE_NAME, where, whereArgs);
-            case TAGS_ID -> {
-                primaryKey = uri.getLastPathSegment();
-                if (TextUtils.isEmpty(where)) {
-                    where = ClockContract.TagsColumns._ID + "=" + primaryKey;
-                } else {
-                    where = ClockContract.TagsColumns._ID + "=" + primaryKey + " AND (" + where + ")";
-                }
-                count = db.delete(TAGS_TABLE_NAME, where, whereArgs);
-            }
-            case ALARM_TAGS -> count = db.delete(ALARM_TAGS_TABLE_NAME, where, whereArgs);
             case EVENT_LOG -> count = db.delete(EVENT_LOG_TABLE_NAME, where, whereArgs);
             case EVENT_LOG_ID -> {
                 primaryKey = uri.getLastPathSegment();
@@ -489,10 +452,9 @@ public class ClockProvider extends ContentProvider {
         resolver.notifyChange(uri, null);
 
         final int match = sURIMatcher.match(uri);
-        // Also notify the joined table of changes to instances, alarms, or alarm-tag links
-        // (tag changes affect list filtering even when alarm rows themselves are unchanged).
+        // Also notify the joined table of changes to instances, alarms or calendar alarm events.
         if (match == ALARMS || match == INSTANCES || match == ALARMS_ID || match == INSTANCES_ID
-            || match == ALARM_TAGS || match == CALENDAR_ALARM_EVENTS || match == CALENDAR_ALARM_EVENTS_ID) {
+            || match == CALENDAR_ALARM_EVENTS || match == CALENDAR_ALARM_EVENTS_ID) {
             resolver.notifyChange(AlarmsColumns.ALARMS_WITH_INSTANCES_URI, null);
         }
     }

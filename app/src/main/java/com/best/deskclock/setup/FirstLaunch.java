@@ -23,7 +23,6 @@ import com.best.deskclock.ProjectUrls;
 import com.best.deskclock.R;
 import com.best.deskclock.base.BaseActivity;
 import com.best.deskclock.databinding.FirstLaunchActivityBinding;
-import com.best.deskclock.mighty.SampleAlarmsSeeder;
 import com.best.deskclock.settings.PermissionsManagementActivity;
 import com.best.deskclock.utils.InsetsUtils;
 import com.best.deskclock.utils.SdkUtils;
@@ -59,7 +58,6 @@ public class FirstLaunch extends BaseActivity {
         setupImportantInfoMessage();
 
         mBinding.nowButton.setOnClickListener(v -> {
-            SampleAlarmsSeeder.seedIfNeeded(this, sharedPreferences);
             sharedPreferences.edit().putBoolean(KEY_IS_FIRST_LAUNCH, false).apply();
             finish();
             startActivity(new Intent(this, DeskClock.class));
@@ -67,7 +65,6 @@ public class FirstLaunch extends BaseActivity {
         });
 
         mBinding.laterButton.setOnClickListener(v -> {
-            SampleAlarmsSeeder.seedIfNeeded(this, sharedPreferences);
             sharedPreferences.edit().putBoolean(KEY_IS_FIRST_LAUNCH, false).apply();
             finish();
             startActivity(new Intent(this, DeskClock.class));

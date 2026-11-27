@@ -595,7 +595,6 @@ public final class CalendarAlarmSync {
         alarm.snoozeExtendEnabled = false;
         alarm.repeatIntervalMinutes = 0;
         alarm.repeatMaxCount = 0;
-        alarm.wifiRuleEnabled = false;
         // When the max alarm duration runs out, the alarm stops and counts as missed instead of
         // snoozing and ringing again forever.
         alarm.missedAlarmRepeatLimit = 0;

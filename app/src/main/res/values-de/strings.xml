@@ -4,7 +4,7 @@
     modified
     SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarmClock</string>
+    <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
     <string name="default_label" msgid="5590025289805630372">Wecker</string>
     <string name="alarm_vibrate" msgid="3476686921490362230">"Vibrieren"</string>
     <string name="time_picker_dialog_title">Weckzeit auswählen</string>
@@ -892,7 +892,7 @@
     <string name="calendar_alarm_title_regex_invalid">Das ist kein gültiger regulärer Ausdruck.</string>
     <string name="calendar_alarm_section_sound">Ton und Vibration</string>
     <string name="calendar_alarm_volume">Lautstärke: %1$d von %2$d</string>
-    <string name="calendar_alarm_volume_help">Wird verwendet, wenn die Lautstärke pro Wecker in den Wecker-Einstellungen aktiviert ist.</string>
+    <string name="calendar_alarm_volume_help">Der Wecker klingelt mit dieser Lautstärke. Danach wird die vorherige Weckerlautstärke wiederhergestellt.</string>
     <string name="calendar_alarm_vibrate">Vibration</string>
     <string name="calendar_alarm_flash">Taschenlampe blinken</string>
     <string name="calendar_alarm_vibrate_only">Nur vibrieren (kein Ton)</string>

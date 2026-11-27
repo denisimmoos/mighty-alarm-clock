@@ -16,12 +16,9 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.best.deskclock.R;
-import com.best.deskclock.alarms.AlarmUpdateHandler;
-import com.best.deskclock.base.AppExecutors;
 import com.best.deskclock.data.DataModel;
 import com.best.deskclock.data.SettingsDAO;
 import com.best.deskclock.data.Timer;
-import com.best.deskclock.provider.Alarm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,14 +63,13 @@ final class TabModel {
     boolean updateActiveTabs() {
         List<Tab> newActiveTabs = new ArrayList<>();
 
-        final boolean isAlarmTabVisible = SettingsDAO.isAlarmTabVisible(mPrefs);
         final boolean isClockTabVisible = SettingsDAO.isClockTabVisible(mPrefs);
         final boolean isTimerTabVisible = SettingsDAO.isTimerTabVisible(mPrefs);
         final boolean isStopwatchTabVisible = SettingsDAO.isStopwatchTabVisible(mPrefs);
         final boolean isCalendarAlarmTabVisible = SettingsDAO.isCalendarAlarmTabVisible(mPrefs);
 
-        if (isAlarmTabVisible) {
-            newActiveTabs.add(Tab.ALARMS);
+        if (isCalendarAlarmTabVisible) {
+            newActiveTabs.add(Tab.CALENDAR_ALARM);
         }
 
         if (isClockTabVisible) {
@@ -88,13 +84,9 @@ final class TabModel {
             newActiveTabs.add(Tab.STOPWATCH);
         }
 
-        if (isCalendarAlarmTabVisible) {
-            newActiveTabs.add(Tab.CALENDAR_ALARM);
-        }
-
         // This shouldn't happen because it's impossible to uncheck all the entries in the "Visible tabs" setting
         if (newActiveTabs.isEmpty()) {
-            newActiveTabs.add(Tab.ALARMS);
+            newActiveTabs.add(Tab.CALENDAR_ALARM);
         }
 
         if (mActiveTabs.equals(newActiveTabs)) {
@@ -110,22 +102,6 @@ final class TabModel {
         // If the currently selected tab has just been hidden, switch to the first available tab
         if (mSelectedTab != null && !mActiveTabs.contains(mSelectedTab)) {
             setSelectedTab(mActiveTabs.get(0));
-        }
-
-        // Disable alarms if the Alarm tab is not visible
-        if (recentlyHiddenTabs.contains(Tab.ALARMS)) {
-            AppExecutors.getDiskIO().execute(() -> {
-                final AlarmUpdateHandler alarmUpdateHandler = new AlarmUpdateHandler(mContext, null, null);
-                final List<Alarm> alarms = Alarm.getUserAlarms(mContext.getContentResolver());
-
-                for (Alarm alarm : alarms) {
-                    if (alarm.enabled) {
-                        alarm.enabled = false;
-
-                        alarmUpdateHandler.asyncUpdateAlarm(alarm, false, false);
-                    }
-                }
-            });
         }
 
         // Reset running timers if the Timer tab is not visible

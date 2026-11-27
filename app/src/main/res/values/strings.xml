@@ -8,7 +8,7 @@
     tools:ignore="MissingTranslation">
     <!-- Label shown on launcher icon -->
     <!-- Label for the application displayed on-screen when this application must be represented to the user. -->
-    <string name="app_label">MightyCalendarAlarmClock</string>
+    <string name="app_label">MightyCalendarAlarm</string>
     <!-- Default label to display for an alarm -->
     <string name="default_label">Alarm</string>
     <!-- Label title in the alarm editing panel to schedule alarm -->
@@ -1726,7 +1726,7 @@
     <string name="calendar_alarm_title_regex_invalid">This is not a valid regular expression.</string>
     <string name="calendar_alarm_section_sound">Sound and vibration</string>
     <string name="calendar_alarm_volume">Volume: %1$d of %2$d</string>
-    <string name="calendar_alarm_volume_help">Used when per-alarm volume is turned on in the alarm settings.</string>
+    <string name="calendar_alarm_volume_help">The alarm rings at this volume. Afterwards the previous alarm volume is restored.</string>
     <string name="calendar_alarm_vibrate">Vibrate</string>
     <string name="calendar_alarm_flash">Blink flashlight</string>
     <string name="calendar_alarm_vibrate_only">Vibrate only (no sound)</string>

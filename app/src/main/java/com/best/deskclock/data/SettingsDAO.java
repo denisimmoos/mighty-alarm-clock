@@ -17,14 +17,8 @@ import static com.best.deskclock.data.DataModel.VolumeButtonBehavior.DISABLE_ALA
 import static com.best.deskclock.data.DataModel.VolumeButtonBehavior.DISMISS_ALARM;
 import static com.best.deskclock.data.DataModel.VolumeButtonBehavior.DO_NOTHING;
 import static com.best.deskclock.data.DataModel.VolumeButtonBehavior.SNOOZE_ALARM;
-import static com.best.deskclock.data.Weekdays.Order.MON_TO_SUN;
-import static com.best.deskclock.data.Weekdays.Order.SAT_TO_FRI;
-import static com.best.deskclock.data.Weekdays.Order.SUN_TO_SAT;
 import static com.best.deskclock.settings.PreferencesDefaultValues.*;
 import static com.best.deskclock.settings.PreferencesKeys.*;
-import static java.util.Calendar.MONDAY;
-import static java.util.Calendar.SATURDAY;
-import static java.util.Calendar.SUNDAY;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -360,14 +354,22 @@ public final class SettingsDAO {
         }
 
         // Default value must match the one in res/xml/settings_interface_customization.xml
-        return prefs.getStringSet(KEY_VISIBLE_TABS, DEFAULT_VISIBLE_TABS);
-    }
-
-    /**
-     * @return {@code true} if the Alarm tab is visible in the bottom navigation menu. {@code false} otherwise.
-     */
-    public static boolean isAlarmTabVisible(SharedPreferences prefs) {
-        return getVisibleTabs(prefs).contains(VISIBLE_TAB_ALARM);
+        final Set<String> tabs = prefs.getStringSet(KEY_VISIBLE_TABS, DEFAULT_VISIBLE_TABS);
+        // "alarm" belonged to the removed Alarm tab. Older versions also stored the Calendar tab
+        // as "calendar_alarm"; both are mapped here so saved choices keep working.
+        if (tabs.contains("alarm") || tabs.contains("calendar_alarm")) {
+            final Set<String> cleaned = new java.util.HashSet<>(tabs);
+            cleaned.remove("alarm");
+            if (cleaned.remove("calendar_alarm")) {
+                cleaned.add(VISIBLE_TAB_CALENDAR_ALARM);
+            }
+            if (cleaned.isEmpty()) {
+                cleaned.add(VISIBLE_TAB_CALENDAR_ALARM);
+            }
+            prefs.edit().putStringSet(KEY_VISIBLE_TABS, cleaned).apply();
+            return cleaned;
+        }
+        return tabs;
     }
 
     /**
@@ -404,7 +406,13 @@ public final class SettingsDAO {
     public static int getTabToDisplay(SharedPreferences prefs) {
         // Default value must match the one in res/xml/settings_interface_customization.xml
         final String tabToDisplay = prefs.getString(KEY_TAB_TO_DISPLAY, DEFAULT_TAB_TO_DISPLAY);
-        return Integer.parseInt(tabToDisplay);
+        try {
+            final int value = Integer.parseInt(tabToDisplay);
+            // 0 was the removed Alarm tab: open the Calendar tab instead.
+            return value == 0 ? Integer.parseInt(TAB_TO_DISPLAY_CALENDAR_ALARM) : value;
+        } catch (NumberFormatException e) {
+            return DEFAULT_TAB_TO_DISPLAY_INTEGER;
+        }
     }
 
     /**
@@ -975,32 +983,6 @@ public final class SettingsDAO {
     }
 
     /**
-     * @return {@code true} if a custom volume can be set for each alarm.
-     * {@code false} otherwise.
-     */
-    public static boolean isPerAlarmVolumeEnabled(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return prefs.getBoolean(KEY_ENABLE_PER_ALARM_VOLUME, DEFAULT_ENABLE_PER_ALARM_VOLUME);
-    }
-
-    /**
-     * @return {@code true} if a custom volume increase duration cannot be set for each alarm.
-     * {@code false} otherwise.
-     */
-    public static boolean isPerAlarmCrescendoDurationDisabled(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return !prefs.getBoolean(KEY_ENABLE_PER_ALARM_VOLUME_CRESCENDO_DURATION, DEFAULT_ENABLE_PER_ALARM_VOLUME_CRESCENDO_DURATION);
-    }
-
-    /**
-     * @return the duration, in seconds, of the crescendo to apply to alarm ringtone playback;
-     * {@code 0} implies no crescendo should be applied.
-     */
-    public static int getAlarmVolumeCrescendoDuration(SharedPreferences prefs) {
-        return prefs.getInt(KEY_ALARM_VOLUME_CRESCENDO_DURATION, DEFAULT_VOLUME_CRESCENDO_DURATION);
-    }
-
-    /**
      * @return {@code true} if advanced audio playback is enabled for the ringtone.
      * {@code false} otherwise.
      */
@@ -1052,53 +1034,6 @@ public final class SettingsDAO {
     }
 
     /**
-     * @return the alarm sorting by time, by time of next alarm and by name.
-     */
-    public static String getAlarmSorting(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return prefs.getString(KEY_SORT_ALARM, DEFAULT_SORT_ALARM);
-    }
-
-    /**
-     * @return {@code true} if the enabled alarms are displayed first; {@code false} otherwise.
-     */
-    public static boolean areEnabledAlarmsDisplayedFirst(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return prefs.getBoolean(KEY_DISPLAY_ENABLED_ALARMS_FIRST, DEFAULT_DISPLAY_ENABLED_ALARMS_FIRST);
-    }
-
-    /**
-     * @return {@code true} if Syncthing should be nudged before each exchange scan.
-     */
-    public static boolean isExchangeSyncthingNudgeEnabled(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_mighty_features.xml
-        return prefs.getBoolean(KEY_MIGHTY_EXCHANGE_NUDGE_SYNCTHING, DEFAULT_MIGHTY_EXCHANGE_NUDGE_SYNCTHING);
-    }
-
-    /**
-     * @return {@code true} if the long press on the alarm FAB is enabled; {@code false} otherwise.
-     */
-    public static boolean isAlarmFabLongPressEnabled(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return prefs.getBoolean(KEY_ENABLE_ALARM_FAB_LONG_PRESS, DEFAULT_ENABLE_ALARM_FAB_LONG_PRESS);
-    }
-
-    /**
-     * @return the display order of the weekdays, which can start with {@link Calendar#SATURDAY},
-     * {@link Calendar#SUNDAY} or {@link Calendar#MONDAY}
-     */
-    public static Weekdays.Order getWeekdayOrder(SharedPreferences prefs) {
-        final String value = prefs.getString(KEY_WEEK_START, DEFAULT_WEEK_START);
-        final int firstCalendarDay = Integer.parseInt(value);
-        return switch (firstCalendarDay) {
-            case SATURDAY -> SAT_TO_FRI;
-            case SUNDAY -> SUN_TO_SAT;
-            case MONDAY -> MON_TO_SUN;
-            default -> throw new IllegalArgumentException("Unknown weekday: " + firstCalendarDay);
-        };
-    }
-
-    /**
      * @return the behavior to execute when volume button is pressed while firing an alarm
      */
     public static VolumeButtonBehavior getAlarmVolumeButtonBehavior(SharedPreferences prefs) {
@@ -1130,56 +1065,6 @@ public final class SettingsDAO {
     }
 
     /**
-     * @return {@code true} if a custom auto silence duration cannot be set for each alarm.
-     * {@code false} otherwise.
-     */
-    public static boolean isPerAlarmAutoSilenceDisabled(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return !prefs.getBoolean(KEY_ENABLE_PER_ALARM_AUTO_SILENCE, DEFAULT_ENABLE_PER_ALARM_AUTO_SILENCE);
-    }
-
-    /**
-     * @return the number of minutes an alarm may ring before it has timed out
-     */
-    public static int getAlarmTimeout(SharedPreferences prefs) {
-        return prefs.getInt(KEY_AUTO_SILENCE_DURATION, DEFAULT_AUTO_SILENCE_DURATION);
-    }
-
-    /**
-     * @return {@code true} if a custom snooze duration cannot be set for each alarm.
-     * {@code false} otherwise.
-     */
-    public static boolean isPerAlarmSnoozeDurationDisabled(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return !prefs.getBoolean(KEY_ENABLE_PER_ALARM_SNOOZE_DURATION, DEFAULT_ENABLE_PER_ALARM_SNOOZE_DURATION);
-    }
-
-    /**
-     * @return the number of minutes an alarm will remain snoozed before it rings again
-     */
-    public static int getSnoozeLength(SharedPreferences prefs) {
-        return prefs.getInt(KEY_ALARM_SNOOZE_DURATION, DEFAULT_ALARM_SNOOZE_DURATION);
-    }
-
-    /**
-     * @return {@code true} if a custom repeat limit cannot be set for each missed alarm.
-     * {@code false} otherwise.
-     */
-    public static boolean isPerAlarmMissedRepeatLimitDisabled(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return !prefs.getBoolean(KEY_ENABLE_PER_ALARM_MISSED_REPEAT_LIMIT, DEFAULT_ENABLE_PER_ALARM_MISSED_REPEAT_LIMIT);
-    }
-
-    /**
-     * @return the number of times an alarm can ring before being missed.
-     */
-    public static int getMissedAlarmRepeatLimit(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        final String string = prefs.getString(KEY_REPEAT_MISSED_ALARM, DEFAULT_MISSED_ALARM_REPEAT_LIMIT);
-        return Integer.parseInt(string);
-    }
-
-    /**
      * @return the action to be performed after flipping the device.
      */
     public static int getFlipAction(SharedPreferences prefs) {
@@ -1206,29 +1091,11 @@ public final class SettingsDAO {
     }
 
     /**
-     * @return {@code true} if the Dismiss button should appear as soon as the alarm is enabled.
-     * {@code false} otherwise.
-     */
-    public static boolean isDismissButtonDisplayedWhenAlarmEnabled(SharedPreferences pref) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return pref.getBoolean(KEY_DISPLAY_DISMISS_BUTTON, DEFAULT_DISPLAY_DISMISS_BUTTON);
-    }
-
-    /**
      * @return the number of minutes before the upcoming alarm notification appears.
      */
     public static int getAlarmNotificationReminderTime(SharedPreferences prefs) {
         // Default value must match the one in res/xml/settings_alarm.xml
         return prefs.getInt(KEY_ALARM_NOTIFICATION_REMINDER, DEFAULT_ALARM_NOTIFICATION_REMINDER);
-    }
-
-    /**
-     * @return {@code true} if a custom vibration pattern can be set for each alarm.
-     * {@code false} otherwise.
-     */
-    public static boolean isPerAlarmVibrationPatternEnabled(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return prefs.getBoolean(KEY_ENABLE_PER_ALARM_VIBRATION_PATTERN, DEFAULT_ENABLE_PER_ALARM_VIBRATION_PATTERN);
     }
 
     /**
@@ -1246,14 +1113,6 @@ public final class SettingsDAO {
     }
 
     /**
-     * @return {@code true} if alarm vibrations are enabled when creating alarms. {@code false} otherwise.
-     */
-    public static boolean areAlarmVibrationsEnabledByDefault(SharedPreferences pref) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return pref.getBoolean(KEY_ENABLE_ALARM_VIBRATIONS_BY_DEFAULT, DEFAULT_ENABLE_ALARM_VIBRATIONS_BY_DEFAULT);
-    }
-
-    /**
      * @return {@code true} if vibrations are enabled to indicate whether the alarm is snoozed or dismissed.
      * {@code false} otherwise.
      */
@@ -1263,44 +1122,11 @@ public final class SettingsDAO {
     }
 
     /**
-     * @return {@code true} if the back flash should turn on when the alarm is triggered.
-     * {@code false} otherwise.
-     */
-    public static boolean shouldTurnOnBackFlashForTriggeredAlarm(SharedPreferences pref) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return pref.getBoolean(KEY_TURN_ON_BACK_FLASH_FOR_TRIGGERED_ALARM, DEFAULT_TURN_ON_BACK_FLASH_FOR_TRIGGERED_ALARM);
-    }
-
-    /**
-     * @return {@code true} if occasional alarm should be deleted by default. {@code false} otherwise.
-     */
-    public static boolean isOccasionalAlarmDeletedByDefault(SharedPreferences pref) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return pref.getBoolean(KEY_ENABLE_DELETE_OCCASIONAL_ALARM_BY_DEFAULT, DEFAULT_ENABLE_DELETE_OCCASIONAL_ALARM_BY_DEFAULT);
-    }
-
-    /**
      * @return {@code true} true if a warning is displayed when the volume is set to the minimum. {@code false} otherwise.
      */
     public static boolean isLowAlarmVolumeWarningDisplayed(SharedPreferences pref) {
         // Default value must match the one in res/xml/settings_alarm.xml
         return pref.getBoolean(KEY_DISPLAY_LOW_ALARM_VOLUME_WARNING, DEFAULT_DISPLAY_LOW_ALARM_VOLUME_WARNING);
-    }
-
-    /**
-     * @return the time picker style.
-     */
-    public static String getMaterialTimePickerStyle(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return prefs.getString(KEY_MATERIAL_TIME_PICKER_STYLE, DEFAULT_TIME_PICKER_STYLE);
-    }
-
-    /**
-     * @return the date picker style.
-     */
-    public static String getMaterialDatePickerStyle(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return prefs.getString(KEY_MATERIAL_DATE_PICKER_STYLE, DEFAULT_DATE_PICKER_STYLE);
     }
 
     /**

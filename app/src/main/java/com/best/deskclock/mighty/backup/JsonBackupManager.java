@@ -9,18 +9,13 @@ import android.net.Uri;
 
 import androidx.documentfile.provider.DocumentFile;
 
-import com.best.deskclock.mighty.exchange.ExchangeManager;
-import com.best.deskclock.provider.Alarm;
-import com.best.deskclock.provider.Tag;
 import com.best.deskclock.utils.LogUtils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,16 +23,16 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Writes full backups (the same ZIP as the manual backup in the settings: settings, alarms, tags,
+ * Writes full backups (the same ZIP as the manual backup in the settings: settings, timers,
  * calendar alarm profiles, fonts and images) into a user-selected folder (via
  * {@code ACTION_OPEN_DOCUMENT_TREE}), so they can be restored with the settings' restore.
  * <p>
  * Two kinds of files are written on every export:
  * <ul>
- *     <li>A dated file, e.g. {@code backup-Pixel-2026-07-22_16-30-00.zip}, including the
- *     configured exchange device name, rotated so that only the most recent
+ *     <li>A dated file, e.g. {@code MightyCalendarAlarm-backup-Pixel-2026-07-22_16-30-00.zip},
+ *     including the device name, rotated so that only the most recent
  *     {@value #MAX_DATED_BACKUPS} dated files are kept.</li>
- *     <li>{@code backup-latest.zip}, always overwritten with the most recent export.</li>
+ *     <li>{@code MightyCalendarAlarm-backup-latest.zip}, always overwritten with the most recent export.</li>
  * </ul>
  */
 public final class JsonBackupManager {
@@ -48,7 +43,8 @@ public final class JsonBackupManager {
     public static final String KEY_INTERVAL_HOURS = "backup_interval_hours";
 
     private static final int MAX_DATED_BACKUPS = 14;
-    private static final String FILE_PREFIX = "backup-";
+    // Own prefix so the old MightyCalendarAlarmClock app can share the folder without overwriting these files.
+    private static final String FILE_PREFIX = "MightyCalendarAlarm-backup-";
     private static final String FILE_SUFFIX = ".zip";
     private static final String LATEST_FILE_NAME = FILE_PREFIX + "latest" + FILE_SUFFIX;
     private static final String MIME_ZIP = "application/zip";
@@ -158,7 +154,7 @@ public final class JsonBackupManager {
             }
 
             final String dateStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US).format(new Date());
-            final String devicePart = ExchangeManager.sanitizeFileNamePart(ExchangeManager.getDeviceName(context));
+            final String devicePart = deviceNameForFile(context);
             writeBackupFile(context, dir, FILE_PREFIX + devicePart + "-" + dateStamp + FILE_SUFFIX);
             writeLatestBackupFile(context, dir);
 
@@ -170,6 +166,35 @@ public final class JsonBackupManager {
             LogUtils.e("JsonBackupManager: export failed", e);
             return false;
         }
+    }
+
+    /**
+     * @return the device name (or model) made safe for a file name.
+     */
+    private static String deviceNameForFile(Context context) {
+        String name = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1) {
+            try {
+                name = android.provider.Settings.Global.getString(context.getContentResolver(),
+                    android.provider.Settings.Global.DEVICE_NAME);
+            } catch (Exception ignored) {
+                // Fall back to the model below.
+            }
+        }
+        if (name == null || name.trim().isEmpty()) {
+            name = android.os.Build.MODEL;
+        }
+        if (name == null) {
+            return "Device";
+        }
+        final String sanitized = name.trim()
+            .replaceAll("[\\\\/:*?\"<>|\\x00-\\x1F]", "_")
+            .replaceAll("\\s+", " ")
+            .trim();
+        if (sanitized.isEmpty() || sanitized.equals(".") || sanitized.equals("..")) {
+            return "Device";
+        }
+        return sanitized.length() > 80 ? sanitized.substring(0, 80).trim() : sanitized;
     }
 
     private static void writeBackupFile(Context context, DocumentFile dir, String name)

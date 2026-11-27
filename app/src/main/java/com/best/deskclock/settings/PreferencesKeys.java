@@ -9,7 +9,6 @@ public class PreferencesKeys {
     // ***************************
 
     public static final String KEY_IS_FIRST_LAUNCH = "key_is_first_launch";
-    public static final String KEY_SAMPLE_ALARMS_SEEDED = "key_sample_alarms_seeded";
 
     /** True after the default world-clock city (Ebermannsdorf) has been offered once. */
     public static final String KEY_DEFAULT_WORLD_CITY_SEEDED = "key_default_world_city_seeded";
@@ -91,19 +90,8 @@ public class PreferencesKeys {
     // Alarm
     public static final String KEY_ALARM_DISPLAY_CUSTOMIZATION = "key_alarm_display_customization";
     public static final String KEY_ALARM_FONT = "key_alarm_font";
-    public static final String KEY_MATERIAL_TIME_PICKER_STYLE = "key_material_time_picker_style";
-    public static final String KEY_MATERIAL_DATE_PICKER_STYLE = "key_material_date_picker_style";
     public static final String KEY_DEFAULT_ALARM_RINGTONE = "key_default_alarm_ringtone";
-    public static final String KEY_ENABLE_PER_ALARM_AUTO_SILENCE = "key_enable_per_alarm_auto_silence";
-    public static final String KEY_AUTO_SILENCE_DURATION = "key_auto_silence_duration";
-    public static final String KEY_ENABLE_PER_ALARM_SNOOZE_DURATION = "key_enable_per_alarm_snooze_duration";
-    public static final String KEY_ALARM_SNOOZE_DURATION = "key_alarm_snooze_duration";
-    public static final String KEY_ENABLE_PER_ALARM_MISSED_REPEAT_LIMIT = "key_enable_per_alarm_missed_repeat_limit";
-    public static final String KEY_REPEAT_MISSED_ALARM = "key_repeat_missed_alarm";
     public static final String KEY_ALARM_VOLUME_SETTING = "key_volume_setting";
-    public static final String KEY_ENABLE_PER_ALARM_VOLUME_CRESCENDO_DURATION = "key_enable_per_alarm_volume_crescendo_duration";
-    public static final String KEY_ALARM_VOLUME_CRESCENDO_DURATION = "key_alarm_volume_crescendo_duration";
-    public static final String KEY_ENABLE_PER_ALARM_VOLUME = "key_enable_per_alarm_volume";
     public static final String KEY_ADVANCED_AUDIO_PLAYBACK = "key_advanced_audio_playback";
     public static final String KEY_AUTO_ROUTING_TO_EXTERNAL_AUDIO_DEVICE = "key_auto_routing_to_external_audio_device";
     public static final String KEY_SYSTEM_MEDIA_VOLUME = "key_system_media_volume";
@@ -114,19 +102,10 @@ public class PreferencesKeys {
     public static final String KEY_FLIP_ACTION = "key_flip_action";
     public static final String KEY_SHAKE_ACTION = "key_shake_action";
     public static final String KEY_SHAKE_INTENSITY = "key_shake_intensity";
-    public static final String KEY_SORT_ALARM = "key_sort_alarm";
-    public static final String KEY_DISPLAY_ENABLED_ALARMS_FIRST = "key_display_enabled_alarms_first";
-    public static final String KEY_ENABLE_ALARM_FAB_LONG_PRESS = "key_enable_alarm_fab_long_press";
-    public static final String KEY_WEEK_START = "key_week_start";
-    public static final String KEY_DISPLAY_DISMISS_BUTTON = "key_display_dismiss_button";
     public static final String KEY_ALARM_NOTIFICATION_REMINDER = "key_alarm_notification_reminder";
-    public static final String KEY_ENABLE_PER_ALARM_VIBRATION_PATTERN = "key_enable_per_alarm_vibration_pattern";
     public static final String KEY_VIBRATION_PATTERN = "key_vibration_pattern";
     public static final String KEY_VIBRATION_START_DELAY = "key_vibration_start_delay";
-    public static final String KEY_ENABLE_ALARM_VIBRATIONS_BY_DEFAULT = "key_enable_alarm_vibrations_by_default";
     public static final String KEY_ENABLE_SNOOZED_OR_DISMISSED_ALARM_VIBRATIONS = "key_enable_snoozed_or_dismissed_alarm_vibrations";
-    public static final String KEY_TURN_ON_BACK_FLASH_FOR_TRIGGERED_ALARM = "key_turn_on_back_flash_for_triggered_alarm";
-    public static final String KEY_ENABLE_DELETE_OCCASIONAL_ALARM_BY_DEFAULT = "key_enable_delete_occasional_alarm_by_default";
     public static final String KEY_DISPLAY_LOW_ALARM_VOLUME_WARNING = "key_display_low_alarm_volume_warning";
 
     // Alarm Display Customization
@@ -358,26 +337,11 @@ public class PreferencesKeys {
     public static final String KEY_MIGHTY_EXPORT_EVENT_LOG = "key_mighty_export_event_log";
     public static final String KEY_MIGHTY_VIEW_EVENT_LOG = "key_mighty_view_event_log";
     public static final String KEY_MIGHTY_GLOBAL_MUTE = "key_mighty_global_mute";
-    public static final String KEY_MIGHTY_WIFI_REEVALUATE = "key_mighty_wifi_reevaluate";
     public static final String KEY_MIGHTY_BACKUP_FOLDER = "key_mighty_backup_folder";
     public static final String KEY_MIGHTY_BACKUP_SCHEDULE_ENABLED = "key_mighty_backup_schedule_enabled";
     public static final String KEY_MIGHTY_BACKUP_INTERVAL_HOURS = "key_mighty_backup_interval_hours";
     public static final String KEY_MIGHTY_BACKUP_NOW = "key_mighty_backup_now";
-    public static final String KEY_MIGHTY_EXCHANGE_DEVICE_NAME = "key_mighty_exchange_device_name";
-    public static final String KEY_MIGHTY_EXCHANGE_ADD_FOLDER = "key_mighty_exchange_add_folder";
-    public static final String KEY_MIGHTY_EXCHANGE_FOLDERS = "key_mighty_exchange_folders";
-    public static final String KEY_MIGHTY_EXCHANGE_NUDGE_SYNCTHING = "key_mighty_exchange_nudge_syncthing";
-    public static final String KEY_MIGHTY_EXCHANGE_SCAN_NOW = "key_mighty_exchange_scan_now";
-    public static final String KEY_MIGHTY_EXCHANGE_INBOX = "key_mighty_exchange_inbox";
-    public static final String KEY_MIGHTY_MANAGE_TAGS = "key_mighty_manage_tags";
     public static final String KEY_DISPLAY_TIMEZONE_GLOBE = "key_display_timezone_globe";
-
-    // Alarm list filter/sort UI state (persisted across app restarts)
-    public static final String KEY_ALARM_LIST_FILTER_ENABLED = "key_alarm_list_filter_enabled";
-    public static final String KEY_ALARM_LIST_FILTER_REPEATING = "key_alarm_list_filter_repeating";
-    public static final String KEY_ALARM_LIST_FILTER_ONE_SHOT = "key_alarm_list_filter_one_shot";
-    public static final String KEY_ALARM_LIST_EXTRA_SORT = "key_alarm_list_extra_sort";
-    public static final String KEY_ALARM_LIST_FILTER_TAG_ID = "key_alarm_list_filter_tag_id";
 
     // ****************
     // ** FILE NAMES **

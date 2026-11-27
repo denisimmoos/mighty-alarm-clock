@@ -15,7 +15,6 @@ import androidx.annotation.StringRes;
 
 import com.best.deskclock.DeskClockApplication;
 import com.best.deskclock.R;
-import com.best.deskclock.alarms.AlarmFragment;
 import com.best.deskclock.clock.ClockFragment;
 import com.best.deskclock.mighty.calendar.CalendarAlarmFragment;
 import com.best.deskclock.stopwatch.StopwatchFragment;
@@ -279,20 +278,41 @@ public final class UiDataModel {
      * Identifies each of the primary tabs within the application.
      */
     public enum Tab {
-        ALARMS(AlarmFragment.class, R.id.page_alarm, R.string.menu_alarm),
-        CLOCKS(ClockFragment.class, R.id.page_clock, R.string.menu_clock),
-        TIMERS(TimerFragment.class, R.id.page_timer, R.string.menu_timer),
-        STOPWATCH(StopwatchFragment.class, R.id.page_stopwatch, R.string.menu_stopwatch),
-        CALENDAR_ALARM(CalendarAlarmFragment.class, R.id.page_calendar_alarm, R.string.menu_calendar_alarm);
+        CALENDAR_ALARM(CalendarAlarmFragment.class, R.id.page_calendar_alarm, R.string.menu_calendar_alarm, 4),
+        CLOCKS(ClockFragment.class, R.id.page_clock, R.string.menu_clock, 1),
+        TIMERS(TimerFragment.class, R.id.page_timer, R.string.menu_timer, 2),
+        STOPWATCH(StopwatchFragment.class, R.id.page_stopwatch, R.string.menu_stopwatch, 3);
 
         private final String mFragmentClassName;
         private final int mPageResId;
         private final int mLabelResId;
+        private final int mStoredId;
 
-        Tab(Class<?> fragmentClass, int pageResId, @StringRes int labelResId) {
+        Tab(Class<?> fragmentClass, int pageResId, @StringRes int labelResId, int storedId) {
             mFragmentClassName = fragmentClass.getName();
             mPageResId = pageResId;
             mLabelResId = labelResId;
+            mStoredId = storedId;
+        }
+
+        /**
+         * @return the number saved in the preferences for this tab. It never changes, so saved
+         * values stay valid when tabs are reordered or removed (0 was the removed Alarm tab).
+         */
+        public int getStoredId() {
+            return mStoredId;
+        }
+
+        /**
+         * @return the tab saved as {@code storedId}, or the Calendar tab when it is unknown.
+         */
+        public static Tab fromStoredId(int storedId) {
+            for (Tab tab : values()) {
+                if (tab.mStoredId == storedId) {
+                    return tab;
+                }
+            }
+            return CALENDAR_ALARM;
         }
 
         public String getFragmentClassName() {

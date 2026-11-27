@@ -38,22 +38,16 @@
         android:name="android.permission.ACCESS_NETWORK_STATE"
         tools:node="remove" />
 
-    <!-- Used by the Wi-Fi alarm rules feature to read the currently connected SSID. -->
+    <!-- Used by calendar profiles that only ring near a Wi-Fi, to read the current network. -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- Reading Wi-Fi names and MAC addresses needs location access. Android 12 and newer only
          grant fine location if coarse location is requested with it. -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- Needed on API 27+ to read the SSID of the connected Wi-Fi network for per-alarm Wi-Fi rules. -->
+    <!-- Needed on API 27+ to read the SSID of the connected Wi-Fi network for calendar profiles. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- Calendar profiles that only ring near a Wi-Fi check it when the alarm is about to ring,
          with the app in the background. Android 10 and newer need "Allow all the time" for that. -->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-
-    <!-- Package visibility for optional Syncthing Fork nudge before exchange scans -->
-    <queries>
-        <package android:name="com.github.catfriend1.syncthingfork" />
-        <package android:name="com.github.catfriend1.syncthingandroid" />
-    </queries>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -192,11 +186,9 @@
             android:exported="true"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
-                <action android:name="android.intent.action.DISMISS_ALARM" />
                 <action android:name="android.intent.action.DISMISS_TIMER" />
                 <action android:name="android.intent.action.SHOW_ALARMS" />
                 <action android:name="android.intent.action.SHOW_TIMERS" />
-                <action android:name="android.intent.action.SNOOZE_ALARM" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -208,7 +200,6 @@
             android:exported="true"
             android:targetActivity="com.best.deskclock.controller.HandleApiCalls">
             <intent-filter>
-                <action android:name="android.intent.action.SET_ALARM" />
                 <action android:name="android.intent.action.SET_TIMER" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -237,11 +228,6 @@
             android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/Theme.DeskClock.Wallpaper" />
-
-        <activity
-            android:name="com.best.deskclock.alarms.alarmselection.AlarmSelectionActivity"
-            android:label="@string/dismiss_alarm"
-            android:theme="@android:style/Theme.Material.Dialog.NoActionBar" />
 
         <provider
             android:name="com.best.deskclock.provider.ClockProvider"
@@ -486,22 +472,6 @@
         <!-- ============================================================== -->
         <!-- Tiles.                                                         -->
         <!-- ============================================================== -->
-
-        <!-- Alarm tile -->
-        <service
-            android:name="com.best.deskclock.tiles.AlarmTileService"
-            android:exported="true"
-            android:label="@string/menu_alarm"
-            android:icon="@drawable/ic_tab_alarm_static"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.service.quicksettings.ACTIVE_TILE"
-                android:value="true" />
-        </service>
 
         <!-- Timer tile -->
         <service

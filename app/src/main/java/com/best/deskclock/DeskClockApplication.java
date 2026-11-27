@@ -37,9 +37,6 @@ import com.best.deskclock.events.LogEventTracker;
 import com.best.deskclock.mighty.backup.BackupWorker;
 import com.best.deskclock.mighty.calendar.CalendarAlarmWorker;
 import com.best.deskclock.mighty.backup.JsonBackupManager;
-import com.best.deskclock.mighty.exchange.ExchangeManager;
-import com.best.deskclock.mighty.exchange.ExchangeScanWorker;
-import com.best.deskclock.mighty.wifi.WifiRuleReceiver;
 import com.best.deskclock.uidata.UiDataModel;
 import com.best.deskclock.utils.LogUtils;
 import com.best.deskclock.utils.NotificationUtils;
@@ -83,26 +80,13 @@ public class DeskClockApplication extends Application implements Application.Act
     }
 
     /**
-     * Registers/schedules background work for the Mighty fork features (Wi-Fi rules, scheduled
-     * JSON backup, exchange folder scanning) that needs to happen once per process start.
+     * Schedules background work for the Mighty fork features (scheduled JSON backup and
+     * calendar alarm scanning) that needs to happen once per process start.
      */
     private void initMightyFeatures() {
         try {
-            if (SdkUtils.isAtLeastAndroid13()) {
-                registerReceiver(new WifiRuleReceiver(), WifiRuleReceiver.createIntentFilter(), Context.RECEIVER_NOT_EXPORTED);
-            } else {
-                registerReceiver(new WifiRuleReceiver(), WifiRuleReceiver.createIntentFilter());
-            }
-        } catch (Exception e) {
-            LogUtils.e("DeskClockApplication: failed to register WifiRuleReceiver", e);
-        }
-
-        try {
             if (JsonBackupManager.isScheduleEnabled(this)) {
                 BackupWorker.schedulePeriodic(this, JsonBackupManager.getIntervalHours(this));
-            }
-            if (!ExchangeManager.getFolders(this).isEmpty()) {
-                ExchangeScanWorker.schedulePeriodic(this);
             }
             CalendarAlarmWorker.ensureScheduled(this);
         } catch (Exception e) {

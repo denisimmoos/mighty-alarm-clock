@@ -109,25 +109,30 @@ public final class AlarmKlaxon {
         if (!isRingtoneSilent) {
             // Crescendo duration always in milliseconds
             final int crescendoDuration = alarmInstance.mCrescendoDuration * 1000;
+
+            // Every alarm comes from a calendar profile, which sets its own volume. The previous
+            // alarm volume is restored in stop().
+            final AudioManager audioManager = appContext.getSystemService(AudioManager.class);
+            if (instance.mPreviousAlarmVolume == -1) {
+                instance.mPreviousAlarmVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
+            }
+            final int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
+            final int profileVolume = Math.max(0, Math.min(maxVolume, alarmInstance.mAlarmVolume));
+            if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != profileVolume) {
+                try {
+                    audioManager.setStreamVolume(AudioManager.STREAM_ALARM, profileVolume, 0);
+                } catch (SecurityException e) {
+                    // Do Not Disturb can block volume changes; ring at the current volume then.
+                    LogUtils.w("AlarmKlaxon: could not set the alarm volume: " + e);
+                }
+            }
+
             if (DeviceUtils.isUserUnlocked(appContext) && SettingsDAO.isAdvancedAudioPlaybackEnabled(prefs)) {
                 LogUtils.v("AlarmKlaxon.start() with ExoPlayer");
 
                 instance.getRingtonePlayer().play(alarmInstance.mRingtone, crescendoDuration);
             } else {
                 LogUtils.v("AlarmKlaxon.start() with MediaPlayer");
-
-                if (SettingsDAO.isPerAlarmVolumeEnabled(prefs)) {
-                    AudioManager audioManager = appContext.getSystemService(AudioManager.class);
-
-                    if (instance.mPreviousAlarmVolume == -1) {
-                        instance.mPreviousAlarmVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
-                    }
-
-                    int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
-                    if (currentVolume != alarmInstance.mAlarmVolume) {
-                        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, alarmInstance.mAlarmVolume, 0);
-                    }
-                }
 
                 instance.getAsyncRingtonePlayer().play(alarmInstance.mRingtone, crescendoDuration);
             }
@@ -175,9 +180,7 @@ public final class AlarmKlaxon {
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .build();
 
-                String patternKey = SettingsDAO.isPerAlarmVibrationPatternEnabled(prefs)
-                    ? alarmInstance.mVibrationPattern
-                    : SettingsDAO.getVibrationPattern(prefs);
+                String patternKey = SettingsDAO.getVibrationPattern(prefs);
                 long[] pattern = Utils.getVibrationPatternForKey(patternKey);
 
                 VibrationEffect strengthEffect = null;

@@ -588,8 +588,9 @@ public final class AlarmNotifications {
 
     static Intent createViewAlarmIntent(Context context, AlarmInstance instance) {
         final long alarmId = instance.mAlarmId == null ? Alarm.INVALID_ID : instance.mAlarmId;
+        // Alarms are listed in the Calendar tab.
         return Alarm.createIntent(context, DeskClock.class, alarmId)
-            .putExtra(AlarmFragment.SCROLL_TO_ALARM_INTENT_EXTRA, alarmId)
+            .setAction(DeskClock.ACTION_SHOW_CALENDAR_ALARMS)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 

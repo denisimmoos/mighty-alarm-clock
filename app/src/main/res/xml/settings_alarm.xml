@@ -27,26 +27,6 @@
             app:singleLineTitle="false"
             tools:title="@string/custom_font_title" />
 
-        <ListPreference
-            android:key="key_material_time_picker_style"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/material_time_picker_style_title"
-            android:entries="@array/time_picker_style_entries"
-            android:entryValues="@array/time_picker_style_values"
-            android:defaultValue="analog"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <ListPreference
-            android:key="key_material_date_picker_style"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/date_picker_style_title"
-            android:entries="@array/date_picker_style_entries"
-            android:entryValues="@array/date_picker_style_values"
-            android:defaultValue="calendar"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -61,82 +41,11 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <com.best.deskclock.settings.custompreference.AutoSilenceDurationPreference
-            android:key="key_auto_silence_duration"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/auto_silence_title"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <SwitchPreferenceCompat
-            android:key="key_enable_per_alarm_auto_silence"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/enable_per_alarm_auto_silence_title"
-            android:defaultValue="true"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <com.best.deskclock.settings.custompreference.AlarmSnoozeDurationPreference
-            android:key="key_alarm_snooze_duration"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/snooze_duration_title"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <SwitchPreferenceCompat
-            android:key="key_enable_per_alarm_snooze_duration"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/enable_per_alarm_snooze_duration_title"
-            android:defaultValue="true"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <ListPreference
-            android:key="key_repeat_missed_alarm"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/missed_alarm_repeat_limit_title"
-            android:entries="@array/missed_alarm_repeat_limit_entries"
-            android:entryValues="@array/missed_alarm_repeat_limit_values"
-            android:defaultValue="-1"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <SwitchPreferenceCompat
-            android:key="key_enable_per_alarm_missed_repeat_limit"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/enable_per_alarm_missed_repeat_limit_title"
-            android:defaultValue="true"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
         <com.best.deskclock.settings.custompreference.AlarmVolumePreference
             android:key="key_volume_setting"
             android:layout="@layout/settings_preference_slider_layout"
             android:title="@string/alarm_volume_title"
             android:summary="0"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <SwitchPreferenceCompat
-            android:key="key_enable_per_alarm_volume"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/enable_per_alarm_volume_title"
-            android:defaultValue="false"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <com.best.deskclock.settings.custompreference.VolumeCrescendoDurationPreference
-            android:key="key_alarm_volume_crescendo_duration"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/crescendo_duration_title"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <SwitchPreferenceCompat
-            android:key="key_enable_per_alarm_volume_crescendo_duration"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/enable_per_alarm_crescendo_duration_title"
-            android:defaultValue="true"
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
@@ -184,27 +93,10 @@
         app:allowDividerAbove="false"
         app:iconSpaceReserved="false">
 
-        <SwitchPreferenceCompat
-            android:key="key_enable_alarm_vibrations_by_default"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/enable_alarm_vibrations_by_default_setting_title"
-            android:summary="@string/alarm_settings_general_summary"
-            android:defaultValue="false"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
         <com.best.deskclock.settings.custompreference.VibrationPatternPreference
             android:key="key_vibration_pattern"
             android:layout="@layout/settings_preference_layout"
             android:title="@string/vibration_pattern_title"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <SwitchPreferenceCompat
-            android:key="key_enable_per_alarm_vibration_pattern"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/enable_per_alarm_vibration_pattern_title"
-            android:defaultValue="false"
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
@@ -288,81 +180,10 @@
         app:allowDividerAbove="false"
         app:iconSpaceReserved="false">
 
-        <ListPreference
-            android:key="key_sort_alarm"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/sort_alarm_title"
-            android:entries="@array/sort_alarm_entries"
-            android:entryValues="@array/sort_alarm_values"
-            android:defaultValue="1"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <SwitchPreferenceCompat
-            android:key="key_display_enabled_alarms_first"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/display_enabled_alarms_first_title"
-            android:defaultValue="false"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <SwitchPreferenceCompat
-            android:key="key_enable_alarm_fab_long_press"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/enable_alarm_fab_long_press_title"
-            android:summary="@string/enable_alarm_fab_long_press_summary"
-            android:defaultValue="false"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <ListPreference
-            android:key="key_week_start"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/week_start_title"
-            android:entries="@array/week_start_entries"
-            android:entryValues="@array/week_start_values"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <SwitchPreferenceCompat
-            android:key="key_display_dismiss_button"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/display_dismiss_button_title"
-            android:summary="@string/display_dismiss_button_summary"
-            android:defaultValue="false"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
         <com.best.deskclock.settings.custompreference.AlarmNotificationReminderPreference
             android:key="key_alarm_notification_reminder"
             android:layout="@layout/settings_preference_layout"
             android:title="@string/alarm_notification_reminder_title"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <SwitchPreferenceCompat
-            android:key="key_turn_on_back_flash_for_triggered_alarm"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/turn_on_back_flash_for_triggered_alarm_title"
-            android:summary="@string/alarm_settings_general_summary"
-            android:defaultValue="false"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <SwitchPreferenceCompat
-            android:key="key_enable_delete_occasional_alarm_by_default"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/enable_delete_occasional_alarm_by_default_setting_title"
-            android:summary="@string/alarm_settings_general_summary"
-            android:defaultValue="false"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <SwitchPreferenceCompat
-            android:key="key_display_low_alarm_volume_warning"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/display_low_alarm_volume_warning_title"
-            android:defaultValue="true"
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 

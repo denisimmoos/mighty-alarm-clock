@@ -42,7 +42,6 @@ import com.best.deskclock.base.AppExecutors;
 import com.best.deskclock.base.KeepAliveService;
 import com.best.deskclock.data.DataModel;
 import com.best.deskclock.data.SettingsDAO;
-import com.best.deskclock.tiles.AlarmTileService;
 import com.best.deskclock.tiles.StopwatchTileService;
 import com.best.deskclock.tiles.TimerTileService;
 import com.best.deskclock.uicomponents.CollapsingToolbarBaseActivity;
@@ -59,7 +58,6 @@ import com.best.deskclock.utils.Utils;
 import org.json.JSONException;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,14 +65,12 @@ import java.io.OutputStream;
 import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
 
 /**
  * Application settings
  */
 public final class SettingsActivity extends CollapsingToolbarBaseActivity {
 
-    public static final String EXTRA_OPEN_EXCHANGE_INBOX = "com.best.deskclock.extra.OPEN_EXCHANGE_INBOX";
 
     private static final String KEY_APPBAR_EXPANDED = "key_appbar_expanded";
     private boolean mIsAppBarExpanded = true;
@@ -305,21 +301,6 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
             updateSettingsVisibility();
 
             displayWarningIfEssentialPermissionAreNotGranted();
-
-            maybeOpenExchangeInbox();
-        }
-
-        private void maybeOpenExchangeInbox() {
-            final Intent intent = requireActivity().getIntent();
-            if (intent == null || !intent.getBooleanExtra(EXTRA_OPEN_EXCHANGE_INBOX, false)) {
-                return;
-            }
-            intent.removeExtra(EXTRA_OPEN_EXCHANGE_INBOX);
-            final MightyFeaturesFragment fragment = new MightyFeaturesFragment();
-            final Bundle args = new Bundle();
-            args.putBoolean(MightyFeaturesFragment.ARG_OPEN_EXCHANGE_INBOX, true);
-            fragment.setArguments(args);
-            animateAndShowFragment(fragment);
         }
 
         @Override
@@ -397,7 +378,7 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
 
         private void updateSettingsVisibility() {
             mClockSettingsPref.setVisible(SettingsDAO.isClockTabVisible(mPrefs));
-            mAlarmSettingsPref.setVisible(SettingsDAO.isAlarmTabVisible(mPrefs));
+            mAlarmSettingsPref.setVisible(SettingsDAO.isCalendarAlarmTabVisible(mPrefs));
             mTimerSettingsPref.setVisible(SettingsDAO.isTimerTabVisible(mPrefs));
             mStopwatchSettingsPref.setVisible(SettingsDAO.isStopwatchTabVisible(mPrefs));
         }
@@ -529,7 +510,7 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
             // Required to update the tab to display.
             final int tabToDisplay = SettingsDAO.getTabToDisplay(mPrefs);
             if (tabToDisplay != DEFAULT_TAB_TO_DISPLAY_INTEGER) {
-                UiDataModel.getUiDataModel().setSelectedTab(UiDataModel.Tab.values()[tabToDisplay]);
+                UiDataModel.getUiDataModel().setSelectedTab(UiDataModel.Tab.fromStoredId(tabToDisplay));
             }
 
             // Required to start/stop the foreground notification
@@ -541,7 +522,6 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
 
             // Required to update the tiles
             if (SdkUtils.isAtLeastAndroid7()) {
-                TileService.requestListeningState(context, new ComponentName(context, AlarmTileService.class));
                 TileService.requestListeningState(context, new ComponentName(context, TimerTileService.class));
                 TileService.requestListeningState(context, new ComponentName(context, StopwatchTileService.class));
             }

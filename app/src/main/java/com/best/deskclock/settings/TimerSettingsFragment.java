@@ -176,7 +176,7 @@ public class TimerSettingsFragment extends ScreenFragment
         mDisplayWarningBeforeDeletingTimerPref = findPreference(KEY_DISPLAY_WARNING_BEFORE_DELETING_TIMER);
         mDisplayLowAlarmVolumeWarningPref = findPreference(KEY_DISPLAY_LOW_ALARM_VOLUME_WARNING);
 
-        mIsAlarmTabHidden = !SettingsDAO.isAlarmTabVisible(mPrefs);
+        mIsAlarmTabHidden = !SettingsDAO.isCalendarAlarmTabVisible(mPrefs);
 
         if (mIsAlarmTabHidden) {
             mAudioManager = requireContext().getApplicationContext().getSystemService(AudioManager.class);

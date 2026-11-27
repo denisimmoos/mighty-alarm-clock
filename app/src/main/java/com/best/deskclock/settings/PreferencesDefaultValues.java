@@ -45,25 +45,22 @@ public class PreferencesDefaultValues {
     public static final String DEBUG_LANGUAGE_CODE = "en-US";
     public static final String DEFAULT_TAB_TO_DISPLAY = "-1";
     public static final int DEFAULT_TAB_TO_DISPLAY_INTEGER = -1;
-    public static final String TAB_TO_DISPLAY_ALARM = "0";
     public static final String TAB_TO_DISPLAY_CLOCK = "1";
     public static final String TAB_TO_DISPLAY_TIMER = "2";
     public static final String TAB_TO_DISPLAY_STOPWATCH = "3";
     public static final String TAB_TO_DISPLAY_CALENDAR_ALARM = "4";
     public static final boolean DEFAULT_VIBRATIONS = false;
     public static final boolean DEFAULT_TOOLBAR_TITLE = true;
-    public static final String VISIBLE_TAB_ALARM = "alarm";
     public static final String VISIBLE_TAB_CLOCK = "clock";
     public static final String VISIBLE_TAB_TIMER = "timer";
     public static final String VISIBLE_TAB_STOPWATCH = "stopwatch";
     // Stored name from before the feature was called "Calendar Alarm"; kept so existing data still works.
     public static final String VISIBLE_TAB_CALENDAR_ALARM = "calendar_alert";
     public static final Set<String> DEFAULT_VISIBLE_TABS = Set.of(
-        VISIBLE_TAB_ALARM,
+        VISIBLE_TAB_CALENDAR_ALARM,
         VISIBLE_TAB_CLOCK,
         VISIBLE_TAB_TIMER,
-        VISIBLE_TAB_STOPWATCH,
-        VISIBLE_TAB_CALENDAR_ALARM
+        VISIBLE_TAB_STOPWATCH
     );
     public static final String DEFAULT_TAB_TITLE_VISIBILITY = "0";
     public static final String TAB_TITLE_VISIBILITY_NEVER = "1";
@@ -89,20 +86,10 @@ public class PreferencesDefaultValues {
     public static final boolean DEFAULT_AUTO_HOME_CLOCK = true;
     public static final String DEFAULT_HOME_TIME_ZONE = null;
 
-    // Alarm
-    public static final String DEFAULT_TIME_PICKER_STYLE = "analog";
-    public static final String SPINNER_TIME_PICKER_STYLE = "spinner";
-    public static final String DEFAULT_DATE_PICKER_STYLE = "calendar";
-    public static final String SPINNER_DATE_PICKER_STYLE = "spinner";
-    public static final boolean DEFAULT_ENABLE_PER_ALARM_AUTO_SILENCE = true;
     public static final int DEFAULT_AUTO_SILENCE_DURATION = 600;
-    public static final boolean DEFAULT_ENABLE_PER_ALARM_SNOOZE_DURATION = true;
     public static final int DEFAULT_ALARM_SNOOZE_DURATION = 10;
     public static final int ALARM_SNOOZE_DURATION_DISABLED = -1;
-    public static final boolean DEFAULT_ENABLE_PER_ALARM_MISSED_REPEAT_LIMIT = true;
     public static final String DEFAULT_MISSED_ALARM_REPEAT_LIMIT = "-1";
-    public static final boolean DEFAULT_ENABLE_PER_ALARM_VOLUME_CRESCENDO_DURATION = true;
-    public static final boolean DEFAULT_ENABLE_PER_ALARM_VOLUME = false;
     public static final int DEFAULT_ALARM_VOLUME = 5;
     public static final boolean DEFAULT_ADVANCED_AUDIO_PLAYBACK = false;
     public static final boolean DEFAULT_AUTO_ROUTING_TO_EXTERNAL_AUDIO_DEVICE = false;
@@ -120,20 +107,8 @@ public class PreferencesDefaultValues {
     public static final String DEFAULT_FLIP_ACTION = "1";
     public static final String DEFAULT_SHAKE_ACTION = "0";
     public static final int DEFAULT_SHAKE_INTENSITY = 16;
-    public static final String DEFAULT_SORT_BY_ALARM_TIME = "0";
     public static final String SORT_ALARM_BY_NEXT_ALARM_TIME = "1";
-    public static final String SORT_ALARM_BY_NAME = "2";
-    public static final String SORT_ALARM_BY_DESCENDING_CREATION_ORDER = "3";
-    public static final String SORT_ALARM_BY_ASCENDING_CREATION_ORDER = "4";
-    public static final String SORT_ALARM_MANUALLY = "5";
-    /** Default alarm-list sort for fresh installs. */
-    public static final String DEFAULT_SORT_ALARM = SORT_ALARM_BY_NEXT_ALARM_TIME;
-    public static final boolean DEFAULT_DISPLAY_ENABLED_ALARMS_FIRST = false;
-    public static final boolean DEFAULT_ENABLE_ALARM_FAB_LONG_PRESS = false;
-    public static final String DEFAULT_WEEK_START = String.valueOf(Calendar.getInstance().getFirstDayOfWeek());
-    public static final boolean DEFAULT_DISPLAY_DISMISS_BUTTON = false;
     public static final int DEFAULT_ALARM_NOTIFICATION_REMINDER = 30;
-    public static final boolean DEFAULT_ENABLE_PER_ALARM_VIBRATION_PATTERN = false;
     public static final String DEFAULT_VIBRATION_PATTERN = "default";
     public static final String VIBRATION_PATTERN_SOFT = "soft";
     public static final String VIBRATION_PATTERN_STRONG = "strong";
@@ -141,9 +116,7 @@ public class PreferencesDefaultValues {
     public static final String VIBRATION_PATTERN_ESCALATING = "escalating";
     public static final String VIBRATION_PATTERN_TICK_TOCK = "tick_tock";
     public static final int DEFAULT_VIBRATION_START_DELAY = 0;
-    public static final boolean DEFAULT_ENABLE_ALARM_VIBRATIONS_BY_DEFAULT = false;
     public static final boolean DEFAULT_ENABLE_SNOOZED_OR_DISMISSED_ALARM_VIBRATIONS = false;
-    public static final boolean DEFAULT_TURN_ON_BACK_FLASH_FOR_TRIGGERED_ALARM = false;
     public static final boolean DEFAULT_ENABLE_DELETE_OCCASIONAL_ALARM_BY_DEFAULT = false;
     public static final boolean DEFAULT_DISPLAY_LOW_ALARM_VOLUME_WARNING = true;
 
@@ -275,6 +248,4 @@ public class PreferencesDefaultValues {
     public static final int DEFAULT_WIDGETS_FONT_SIZE = 70;
     public static final boolean DEFAULT_WIDGETS_APPLY_HORIZONTAL_PADDING = true;
 
-    // Mighty / exchange
-    public static final boolean DEFAULT_MIGHTY_EXCHANGE_NUDGE_SYNCTHING = false;
 }
