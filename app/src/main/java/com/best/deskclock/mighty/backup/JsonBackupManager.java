@@ -29,10 +29,10 @@ import java.util.Locale;
  * <p>
  * Two kinds of files are written on every export:
  * <ul>
- *     <li>A dated file, e.g. {@code MightyCalendarAlarm-backup-Pixel-2026-07-22_16-30-00.zip},
+ *     <li>A dated file, e.g. {@code MightyCalendarAlarms-backup-Pixel-2026-07-22_16-30-00.zip},
  *     including the device name, rotated so that only the most recent
  *     {@value #MAX_DATED_BACKUPS} dated files are kept.</li>
- *     <li>{@code MightyCalendarAlarm-backup-latest.zip}, always overwritten with the most recent export.</li>
+ *     <li>{@code MightyCalendarAlarms-backup-latest.zip}, always overwritten with the most recent export.</li>
  * </ul>
  */
 public final class JsonBackupManager {
@@ -43,8 +43,11 @@ public final class JsonBackupManager {
     public static final String KEY_INTERVAL_HOURS = "backup_interval_hours";
 
     private static final int MAX_DATED_BACKUPS = 14;
-    // Own prefix so the old MightyCalendarAlarmClock app can share the folder without overwriting these files.
-    private static final String FILE_PREFIX = "MightyCalendarAlarm-backup-";
+    // Own prefix so other apps can share the folder without overwriting these files.
+    private static final String FILE_PREFIX = "MightyCalendarAlarms-backup-";
+    // Name used before the app was called "Mighty Calendar Alarms". Dated files with it still
+    // count towards MAX_DATED_BACKUPS, so they are cleaned up over time.
+    private static final String OLD_FILE_PREFIX = "MightyCalendarAlarm-backup-";
     private static final String FILE_SUFFIX = ".zip";
     private static final String LATEST_FILE_NAME = FILE_PREFIX + "latest" + FILE_SUFFIX;
     private static final String MIME_ZIP = "application/zip";
@@ -261,7 +264,9 @@ public final class JsonBackupManager {
         final List<DocumentFile> dated = new ArrayList<>();
         for (DocumentFile file : dir.listFiles()) {
             final String name = file.getName();
-            if (name != null && name.startsWith(FILE_PREFIX) && name.endsWith(FILE_SUFFIX) && !name.equals(LATEST_FILE_NAME)) {
+            if (name != null && (name.startsWith(FILE_PREFIX) || name.startsWith(OLD_FILE_PREFIX))
+                && name.endsWith(FILE_SUFFIX) && !name.equals(LATEST_FILE_NAME)
+                && !name.equals(OLD_FILE_PREFIX + "latest" + FILE_SUFFIX)) {
                 dated.add(file);
             }
         }

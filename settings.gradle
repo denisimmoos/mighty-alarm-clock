@@ -16,6 +16,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AlarmClockDeluxe"
+rootProject.name = "MightyCalendarAlarms"
 
 include ':app'

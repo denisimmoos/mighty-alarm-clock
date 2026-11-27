@@ -208,11 +208,11 @@
         <!-- Duration for more than one minute -->
         <item quantity="other"><xliff:g example="7" id="number">%s</xliff:g> seconds</item>
     </plurals>
-    <!-- Repeat options that appear under an alarm on main Alarm Clock
+    <!-- Repeat options that appear under an alarm on the main
          screen to identify repetition schedule: special case for when
          the alarm is set to repeat every day -->
     <string name="every_day">Every day</string>
-    <!-- Repeat options that appear under an alarm on main Alarm Clock
+    <!-- Repeat options that appear under an alarm on the main
          screen to identify repetition schedule: concatenate days with
          this character, i.e. "Mon, Tue, Wed" -->
     <string name="day_concat">", "</string>

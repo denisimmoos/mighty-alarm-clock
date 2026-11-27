@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2026 The Mighty Alarm Clock Project
+ * Copyright (C) 2026 The Mighty Calendar Alarms Project
  * SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
  */
 
