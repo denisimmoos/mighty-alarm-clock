@@ -1829,10 +1829,6 @@
     <string name="calendar_alarm_max_snoozes">Max snoozes</string>
     <string name="calendar_alarm_max_snoozes_help">Empty = unlimited</string>
     <string name="calendar_alarm_section_dismiss">Lock screen</string>
-    <string name="calendar_alarm_dismiss_label">Dismiss by</string>
-    <string name="calendar_alarm_dismiss_default">Same as other alarms</string>
-    <string name="calendar_alarm_dismiss_slide">Slide</string>
-    <string name="calendar_alarm_dismiss_button">Buttons</string>
     <string name="calendar_alarm_save">Save</string>
     <string name="calendar_alarm_delete_profile">Delete profile</string>
     <string name="calendar_alarm_delete_confirm">Delete this profile and its upcoming alarms?</string>

@@ -995,10 +995,6 @@
     <string name="calendar_alarm_max_snoozes">Max. Schlummern</string>
     <string name="calendar_alarm_max_snoozes_help">Leer = unbegrenzt</string>
     <string name="calendar_alarm_section_dismiss">Sperrbildschirm</string>
-    <string name="calendar_alarm_dismiss_label">Beenden durch</string>
-    <string name="calendar_alarm_dismiss_default">Wie bei anderen Weckern</string>
-    <string name="calendar_alarm_dismiss_slide">Wischen</string>
-    <string name="calendar_alarm_dismiss_button">Tasten</string>
     <string name="calendar_alarm_save">Speichern</string>
     <string name="calendar_alarm_delete_profile">Profil löschen</string>
     <string name="calendar_alarm_delete_confirm">Dieses Profil und seine anstehenden Wecker löschen?</string>

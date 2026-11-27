@@ -263,14 +263,6 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
                 mBinding.snoozeMinutes3Input.setText(String.valueOf(mProfile.snoozeMinutes3));
             }
             mBinding.maxSnoozesInput.setText(mProfile.maxSnoozeCount > 0 ? String.valueOf(mProfile.maxSnoozeCount) : "");
-
-            if (mProfile.isSlideDismissForced()) {
-                mBinding.dismissGroup.check(mBinding.dismissSlide.getId());
-            } else if (mProfile.isButtonDismissForced()) {
-                mBinding.dismissGroup.check(mBinding.dismissButton.getId());
-            } else {
-                mBinding.dismissGroup.check(mBinding.dismissDefault.getId());
-            }
         }
 
         // Volume
@@ -821,14 +813,8 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mProfile.maxSnoozeCount = 0;
         }
 
-        final int dismissId = mBinding.dismissGroup.getCheckedRadioButtonId();
-        if (dismissId == mBinding.dismissSlide.getId()) {
-            mProfile.dismissMethod = CalendarProfile.DISMISS_METHOD_SLIDE;
-        } else if (dismissId == mBinding.dismissButton.getId()) {
-            mProfile.dismissMethod = CalendarProfile.DISMISS_METHOD_BUTTON;
-        } else {
-            mProfile.dismissMethod = CalendarProfile.DISMISS_METHOD_DEFAULT;
-        }
+        // A calendar alarm is always dismissed with its Dismiss button; there is no slider.
+        mProfile.dismissMethod = CalendarProfile.DISMISS_METHOD_BUTTON;
 
         final Context appContext = getApplicationContext();
         final CalendarProfile profile = mProfile;

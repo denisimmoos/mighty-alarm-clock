@@ -516,14 +516,6 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         }
     }
 
-    public boolean isSlideDismissForced() {
-        return DISMISS_METHOD_SLIDE.equals(dismissMethod);
-    }
-
-    public boolean isButtonDismissForced() {
-        return DISMISS_METHOD_BUTTON.equals(dismissMethod);
-    }
-
     @NonNull
     @Override
     public String toString() {

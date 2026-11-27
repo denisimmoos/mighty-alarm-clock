@@ -162,7 +162,7 @@ public class MainBackupRestoreTest {
         profile.autoSilenceDuration = 600;
         profile.snoozeDuration = 7;
         profile.maxSnoozeCount = 4;
-        profile.dismissMethod = CalendarProfile.DISMISS_METHOD_SLIDE;
+        profile.dismissMethod = CalendarProfile.DISMISS_METHOD_BUTTON;
         profile.lookaheadDays = 21;
         profile.flash = true;
         profile.vibrateOnly = false;
