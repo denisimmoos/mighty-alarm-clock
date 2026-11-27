@@ -88,10 +88,10 @@ android {
             def outputFileName
 
             if (variant.buildType == "nightly") {
-                outputFileName = "MightyCalendarAlarm_${versionName}-nightly-${commitNumber}-${buildCommit}.apk"
+                outputFileName = "MightyCalendarAlarms_${versionName}-nightly-${commitNumber}-${buildCommit}.apk"
             } else {
                 def suffix = versionNameSuffix ?: (keystorePropertiesFile.exists() ? "-release" : "-unsigned")
-                outputFileName = "MightyCalendarAlarm_${versionName}${suffix}.apk"
+                outputFileName = "MightyCalendarAlarms_${versionName}${suffix}.apk"
             }
 
             variant.outputs.forEach { output ->
