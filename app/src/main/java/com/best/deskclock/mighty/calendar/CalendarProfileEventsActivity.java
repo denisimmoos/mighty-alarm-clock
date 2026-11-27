@@ -282,7 +282,15 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
             final Context context = itemView.getContext();
             final boolean profileEnabled = profile.enabled;
 
-            mItem.eventTime.setText(DateFormat.getTimeFormat(context).format(new java.util.Date(event.begin)));
+            // Events that ring at their end show when they start and end, for example 07:00–09:00.
+            // The end follows the calendar, also after snoozing extended the event.
+            final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
+            final boolean showsEnd = event.end > event.begin && (event.endAlarmId >= 0
+                || CalendarAlarmSync.ringsAtEnd(profile, event, System.currentTimeMillis()));
+            mItem.eventTime.setText(showsEnd
+                ? timeFormat.format(new java.util.Date(event.begin)) + "–" + timeFormat.format(new java.util.Date(event.end))
+                : timeFormat.format(new java.util.Date(event.begin)));
+            mItem.eventTime.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, showsEnd ? 28 : 36);
             mItem.eventTitle.setText(event.title);
 
             final String date = DateUtils.formatDateTime(context, event.begin,
