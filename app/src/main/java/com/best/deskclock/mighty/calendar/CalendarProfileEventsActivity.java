@@ -297,7 +297,7 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
             final boolean showsEnd = event.end > event.begin && (event.endAlarmId >= 0
                 || CalendarAlarmSync.ringsAtEnd(profile, event, System.currentTimeMillis()));
             mItem.eventTime.setText(showsEnd
-                ? timeFormat.format(new java.util.Date(event.begin)) + "–" + timeFormat.format(new java.util.Date(event.end))
+                ? timeFormat.format(new java.util.Date(event.begin)) + "-" + timeFormat.format(new java.util.Date(event.end))
                 : timeFormat.format(new java.util.Date(event.begin)));
             mItem.eventTime.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, showsEnd ? 28 : 36);
             mItem.eventTitle.setText(event.title);

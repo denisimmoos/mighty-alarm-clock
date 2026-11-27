@@ -491,13 +491,17 @@ public final class CalendarAlarmSync {
             return alarm.id;
         }
 
-        // Once its moment (the event start, or its end for the alarm at the end) has passed,
-        // an alarm that has not rung yet is not needed any more.
-        if (!shouldBeArmed || moment <= System.currentTimeMillis()) {
+        if (!shouldBeArmed) {
             if (alarm != null) {
                 deleteAlarm(context, alarm.id);
             }
             return Alarm.INVALID_ID;
+        }
+        if (moment <= System.currentTimeMillis()) {
+            // Its moment (the event start, or its end for the alarm at the end) has passed. A new
+            // alarm is not needed any more, but one that is due right now must still ring: the
+            // calendar check can run in the seconds before Android delivers it.
+            return alarm != null ? alarm.id : Alarm.INVALID_ID;
         }
 
         final Calendar start = Calendar.getInstance();

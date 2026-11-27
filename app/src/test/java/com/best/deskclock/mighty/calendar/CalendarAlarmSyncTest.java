@@ -1241,4 +1241,20 @@ public class CalendarAlarmSyncTest {
         assertEquals(newEnd, AlarmInstance.getInstancesByAlarmId(mCr, row.endAlarmId).get(0)
             .getAlarmTime().getTimeInMillis());
     }
+
+    @Test
+    public void alarmDueRightNowIsKeptWhenTheEventHasJustStarted() throws Exception {
+        final long begin = System.currentTimeMillis() + 1500;
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, "Alarm: Now"));
+        CalendarAlarmSync.syncAll(mContext);
+        final long alarmId = events().get(0).alarmId;
+        assertTrue(alarmId >= 0);
+
+        // The event has started, the alarm was not delivered yet. A calendar check now must not
+        // remove it.
+        Thread.sleep(1600);
+        CalendarAlarmSync.syncAll(mContext);
+        assertNotNull(Alarm.getAlarm(mCr, alarmId));
+        assertEquals(alarmId, events().get(0).alarmId);
+    }
 }
