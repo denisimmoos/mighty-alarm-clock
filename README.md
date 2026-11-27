@@ -6,7 +6,7 @@ You decide which events ring with profiles: each profile watches one calendar an
 every event whose title matches its pattern, for example every event that starts with ⏰.
 Clock, Timer and Stopwatch are included. The app has no internet permission.
 
-It is a fork of [Clock](https://github.com/BlackyHawky/Clock) by BlackyHawky, which is based on AOSP Clock.
+It is a fork of [mighty-alarm-clock](https://github.com/RapidAppCoder/mighty-alarm-clock) (AlarmClock Deluxe by HutterSoft), which itself is a fork of [Clock](https://github.com/BlackyHawky/Clock) by BlackyHawky, based on AOSP Clock.
 
 # 📅 Calendar alarms
 
@@ -112,6 +112,7 @@ Mighty Calendar Alarms is licensed under the **GNU General Public License v3.0**
 See [LICENSE](LICENSE). As it is based on **AOSP Clock**, which uses the Apache License 2.0, the [Apache 2.0](LICENSE-Apache-2.0) license file is included too.
 
 # 🏅 Credits
-* [Clock](https://github.com/BlackyHawky/Clock) by BlackyHawky and its contributors, the base of this app
+* [mighty-alarm-clock](https://github.com/RapidAppCoder/mighty-alarm-clock) (AlarmClock Deluxe) by HutterSoft, the direct base of this app
+* [Clock](https://github.com/BlackyHawky/Clock) by BlackyHawky and its contributors, the base of AlarmClock Deluxe
 * Code references from [LineageOS](https://github.com/LineageOS/android_packages_apps_DeskClock) and [crDroid](https://github.com/crdroidandroid/android_packages_apps_DeskClock)
 * Translations of the original app by the community via [Weblate](https://translate.codeberg.org/projects/clock/)

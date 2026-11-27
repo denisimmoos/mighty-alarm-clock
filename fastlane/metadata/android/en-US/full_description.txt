@@ -1,6 +1,7 @@
 Mighty Calendar Alarms (redpantyhose.claude.mightycalendaralarm) turns your calendar
-events into fullscreen alarms. It is a fork of BlackyHawky's Clock (based on AOSP),
-released under the GNU General Public License v3.0 (GPL-3.0).
+events into fullscreen alarms. It is a fork of HutterSoft's AlarmClock Deluxe
+(github.com/RapidAppCoder/mighty-alarm-clock), itself a fork of BlackyHawky's Clock
+(based on AOSP), released under the GNU General Public License v3.0 (GPL-3.0).
 
 The app has no internet permission and is 100% offline. Location access is only
 used to read nearby Wi-Fi networks for the optional Wi-Fi condition of a profile.
