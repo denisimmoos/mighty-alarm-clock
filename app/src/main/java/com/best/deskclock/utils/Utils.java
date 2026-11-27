@@ -9,7 +9,6 @@ package com.best.deskclock.utils;
 import static android.app.PendingIntent.FLAG_IMMUTABLE;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static com.best.deskclock.DeskClockApplication.getDefaultSharedPreferences;
-import static com.best.deskclock.settings.PreferencesDefaultValues.DEBUG_LANGUAGE_CODE;
 import static com.best.deskclock.settings.PreferencesDefaultValues.DEFAULT_SYSTEM_LANGUAGE_CODE;
 import static com.best.deskclock.settings.PreferencesDefaultValues.VIBRATION_PATTERN_ESCALATING;
 import static com.best.deskclock.settings.PreferencesDefaultValues.VIBRATION_PATTERN_HEARTBEAT;
@@ -244,11 +243,7 @@ public class Utils {
      */
     public static void applyAppLanguage(Context context, boolean isResettingApp) {
         if (isResettingApp) {
-            if (BuildConfig.IS_DEBUG_BUILD || BuildConfig.IS_NIGHTLY_BUILD) {
-                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(DEBUG_LANGUAGE_CODE));
-            } else {
-                AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList());
-            }
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList());
         } else {
             SharedPreferences prefs = getDefaultSharedPreferences(context);
             String customLanguageCode = SettingsDAO.getLanguageCode(prefs);

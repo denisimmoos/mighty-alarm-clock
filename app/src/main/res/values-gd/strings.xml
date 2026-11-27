@@ -5,7 +5,7 @@
     SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_label">MightyCalendarAlarm</string>
+    <string name="app_label">Mighty Calendar Alarm</string>
     <string name="default_label">Caismeachd</string>
     <string name="delete">Sguab às</string>
     <string name="default_timer_ringtone_title">Falbhaidh an ùine air an tìmear</string>

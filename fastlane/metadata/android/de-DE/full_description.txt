@@ -1,46 +1,25 @@
-MightyCalendarAlarm (de.huttersoft.mightyalarmclock)
-ist ein Fork von BlackyHawkys Clock (basierend auf AOSP) und steht unter der
-GNU General Public License v3.0 (GPL-3.0).
+Mighty Calendar Alarm (redpantyhose.claude.mightycalendaralarm) macht aus deinen
+Kalenderterminen Vollbild-Wecker. Die App ist ein Fork von BlackyHawkys Clock
+(basierend auf AOSP) und steht unter der GNU General Public License v3.0 (GPL-3.0).
 
-Die App benötigt keine Internet-Berechtigung und ist daher zu 100 % offline.
+Die App hat keine Internet-Berechtigung und ist zu 100 % offline. Der Standortzugriff
+dient nur dazu, WLANs in der Nähe für die optionale WLAN-Bedingung eines Profils zu lesen.
 
-Die Standortberechtigung wird nur verwendet, um die SSID des verbundenen WLANs
-für optionale WLAN-Regeln pro Wecker auszulesen. Es werden keine Standortdaten
-erfasst oder gesendet; die App kann nicht auf das Internet zugreifen.
-
-Zusätzlich zum Funktionsumfang der ursprünglichen Clock-App bietet
-MightyCalendarAlarm:
+Kalender-Wecker:
 <ul>
-  <li>Eine Klingel-Warteschlange: mehrere nah beieinander liegende Wecker werden nacheinander angezeigt, statt als verpasst zu gelten;</li>
-  <li>Progressives Schlummern (jedes Schlummern kann automatisch länger werden) sowie manuelle Schlummerdauer;</li>
-  <li>Globaler Stumm-Modus: alle Wecker bis zu einem gewählten Zeitpunkt stumm oder nur vibrierend;</li>
-  <li>Benennung eines neuen Weckers direkt bei der Erstellung;</li>
-  <li>Suche, Filter und zusätzliche Sortieroptionen in der Weckerliste;</li>
-  <li>Tags mit eigenem Klingelton, der automatisch für Wecker ohne eigenen Ton gilt;</li>
-  <li>Geräteweite Wecker-Statistik mit exportierbarem Ereignislog;</li>
-  <li>WLAN-Regeln zum automatischen Ein-/Ausschalten von Weckern je nach verbundenem Netz;</li>
-  <li>Einfache JSON-Backups (ohne ZIP) in einen Ordner Ihrer Wahl, optional zeitgesteuert;</li>
-  <li>Experimenteller „Exchange“-Mechanismus zum Verschieben/Teilen von Weckern über einen gemeinsamen Ordner;</li>
-  <li>Mehrere benannte Stoppuhren parallel, mit Protokollierung der Läufe im Ereignislog;</li>
-  <li>Drehbarer Zeitzonen-Globus auf dem Uhr-Tab mit den gewählten Weltstädten;</li>
+  <li>Profile wählen Termine aus einem Kalender über ein Titelmuster (zum Beispiel „Alarm:“);</li>
+  <li>Pro Profil: Klingelton, Lautstärke (Anteil der Wecker-Lautstärke der App), Vibration, Taschenlampe, ansteigende Lautstärke und maximale Klingeldauer;</li>
+  <li>Optionaler Wecker vor dem Termin und optionaler Wecker am Terminende;</li>
+  <li>Drei Schlummerlängen auf dem Weckerbildschirm und in der Benachrichtigung, optional mit Verlängern des Termins;</li>
+  <li>Optionale WLAN-Bedingung: nur in der Nähe gewählter Netze klingeln;</li>
+  <li>Vorausschau von 7 bis 30 Tagen, laufend geprüft; Tippen auf ein Profil zeigt die kommenden Wecker;</li>
+  <li>Sicherung und Wiederherstellung von Profilen und Einstellungen, auch zeitgesteuert.</li>
 </ul>
 
-…sowie der volle Funktionsumfang der ursprünglichen Clock-App:
+Außerdem enthalten:
 <ul>
-  <li>Wecker auf ein bestimmtes Datum setzen;</li>
-  <li>Umdrehen und Schütteln zum Ausschalten/Aufschieben;</li>
-  <li>Ausschalten/Aufschieben mit Power- oder Lautstärketasten;</li>
-  <li>Wischen zum Löschen eines Weckers;</li>
-  <li>Wecker duplizieren;</li>
-  <li>Anpassbarer Wecker-Titel und Klingelton;</li>
-  <li>Helles, dunkles oder System-Thema, inkl. AMOLED-Modus;</li>
-  <li>Anpassbare Oberfläche;</li>
-  <li>Digitaler oder analoger Uhrenstil;</li>
-  <li>Heimatzeit auf Reisen und Uhrzeiten vieler Städte weltweit;</li>
-  <li>Timer und Stoppuhr;</li>
-  <li>Anpassbarer Bildschirmschoner;</li>
-  <li>Moderne, anpassbare Widgets;</li>
-  <li>Kacheln in den Schnelleinstellungen (Android 7+);</li>
-  <li>Sichern und Wiederherstellen der App-Daten;</li>
-  <li>Material Design mit dynamischen Farben für Android 12+;</li>
+  <li>Weltuhr mit Ortszeit und Städten, digital oder analog;</li>
+  <li>Timer und mehrere Stoppuhren;</li>
+  <li>Widgets mit dem nächsten Kalender-Wecker;</li>
+  <li>Helles, dunkles oder System-Design mit AMOLED-Modus und anpassbarer Oberfläche.</li>
 </ul>

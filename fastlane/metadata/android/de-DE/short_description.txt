@@ -1,1 +1,1 @@
-Wecker, Uhr, Timer und Stoppuhr mit erweiterten Wecker-Funktionen
+Vollbild-Wecker aus Kalenderterminen, dazu Uhr, Timer und Stoppuhr

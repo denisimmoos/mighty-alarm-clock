@@ -1,1 +1,1 @@
-Alarm, clock, timer and stopwatch with advanced alarm tools
+Fullscreen alarms from your calendar events, plus clock, timer and stopwatch

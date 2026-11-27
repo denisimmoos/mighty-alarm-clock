@@ -4,9 +4,6 @@ package com.best.deskclock.settings;
 
 import static com.best.deskclock.data.CustomRingtoneDAO.RINGTONE_IDS;
 import static com.best.deskclock.data.CustomRingtoneDAO.RINGTONE_URI;
-import static com.best.deskclock.settings.PreferencesDefaultValues.DEBUG_LANGUAGE_CODE;
-import static com.best.deskclock.settings.PreferencesDefaultValues.PURPLE_ACCENT_COLOR;
-import static com.best.deskclock.settings.PreferencesDefaultValues.RED_ACCENT_COLOR;
 import static com.best.deskclock.settings.PreferencesKeys.*;
 import static com.best.deskclock.utils.WidgetUtils.EXTRA_UPDATE_WIDGETS;
 
@@ -488,7 +485,6 @@ public class AboutFragment extends ScreenFragment implements Preference.OnPrefer
                 }
             }
 
-            applyDebugAndNightlyDefaults(editor);
 
             editor.commit();
 
@@ -519,21 +515,6 @@ public class AboutFragment extends ScreenFragment implements Preference.OnPrefer
                 }
             });
         });
-    }
-
-    /**
-     * Applies the default accent color and locale for debug and nightly builds.
-     */
-    private void applyDebugAndNightlyDefaults(SharedPreferences.Editor editor) {
-        if (BuildConfig.IS_DEBUG_BUILD) {
-            editor.putString(KEY_ACCENT_COLOR, RED_ACCENT_COLOR);
-        } else if (BuildConfig.IS_NIGHTLY_BUILD) {
-            editor.putString(KEY_ACCENT_COLOR, PURPLE_ACCENT_COLOR);
-        }
-
-        if (BuildConfig.IS_DEBUG_BUILD || BuildConfig.IS_NIGHTLY_BUILD) {
-            editor.putString(KEY_LANGUAGE_CODE, DEBUG_LANGUAGE_CODE);
-        }
     }
 
     /**

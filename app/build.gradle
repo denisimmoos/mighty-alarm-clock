@@ -6,7 +6,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "de.huttersoft.mightycalendaralarm"
+        applicationId = "redpantyhose.claude.mightycalendaralarm"
         minSdk = 23
         targetSdk = 36
         versionCode = 202608001

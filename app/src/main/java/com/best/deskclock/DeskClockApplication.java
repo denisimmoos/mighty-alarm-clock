@@ -7,16 +7,11 @@
 package com.best.deskclock;
 
 import static com.best.deskclock.settings.PreferencesDefaultValues.DARK_THEME;
-import static com.best.deskclock.settings.PreferencesDefaultValues.DEBUG_LANGUAGE_CODE;
 import static com.best.deskclock.settings.PreferencesDefaultValues.DEFAULT_FLIP_ACTION;
 import static com.best.deskclock.settings.PreferencesDefaultValues.LIGHT_THEME;
-import static com.best.deskclock.settings.PreferencesDefaultValues.PURPLE_ACCENT_COLOR;
-import static com.best.deskclock.settings.PreferencesDefaultValues.RED_ACCENT_COLOR;
 import static com.best.deskclock.settings.PreferencesDefaultValues.SYSTEM_THEME;
-import static com.best.deskclock.settings.PreferencesKeys.KEY_ACCENT_COLOR;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_FLIP_ACTION;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_FLIP_SNOOZE_DEFAULT_APPLIED;
-import static com.best.deskclock.settings.PreferencesKeys.KEY_LANGUAGE_CODE;
 
 import android.app.Activity;
 import android.app.Application;
@@ -27,7 +22,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.os.LocaleListCompat;
 import androidx.preference.PreferenceManager;
 
 import com.best.deskclock.controller.Controller;
@@ -58,7 +52,6 @@ public class DeskClockApplication extends Application implements Application.Act
 
         sInstance = this;
 
-        initDebugAndNightlyDefaults();
         migrateFlipActionDefaultToSnooze();
 
         String theme = SettingsDAO.getTheme(getDefaultSharedPreferences(this));
@@ -139,24 +132,6 @@ public class DeskClockApplication extends Application implements Application.Act
             editor.putString(KEY_FLIP_ACTION, DEFAULT_FLIP_ACTION);
         }
         editor.putBoolean(KEY_FLIP_SNOOZE_DEFAULT_APPLIED, true).apply();
-    }
-
-    private void initDebugAndNightlyDefaults() {
-        SharedPreferences prefs = getDefaultSharedPreferences(this);
-        if (!prefs.contains(KEY_ACCENT_COLOR)) {
-            if (BuildConfig.IS_DEBUG_BUILD) {
-                prefs.edit().putString(KEY_ACCENT_COLOR, RED_ACCENT_COLOR).apply();
-            } else if (BuildConfig.IS_NIGHTLY_BUILD) {
-                prefs.edit().putString(KEY_ACCENT_COLOR, PURPLE_ACCENT_COLOR).apply();
-            }
-        }
-
-        if (!prefs.contains(KEY_LANGUAGE_CODE)) {
-            if (BuildConfig.IS_DEBUG_BUILD || BuildConfig.IS_NIGHTLY_BUILD) {
-                prefs.edit().putString(KEY_LANGUAGE_CODE, DEBUG_LANGUAGE_CODE).apply();
-                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(DEBUG_LANGUAGE_CODE));
-            }
-        }
     }
 
     private void applySystemNightMode(String theme) {

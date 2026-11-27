@@ -175,10 +175,6 @@ public class DeskClock extends BaseActivity implements FabContainer {
     private boolean mShouldRecreate = false;
 
     /**
-     * Whether the exchange-inbox snackbar was already shown for this activity instance.
-     */
-
-    /**
      * List of supported preference keys used to monitor UI and behavior changes within
      * {@link #registerPrefListener()}.
      *

@@ -1,45 +1,25 @@
-MightyCalendarAlarm (de.huttersoft.mightyalarmclock)
-is a fork of BlackyHawky's Clock, itself based on AOSP, released under the GNU
-General Public License v3.0 (GPL-3.0).
+Mighty Calendar Alarm (redpantyhose.claude.mightycalendaralarm) turns your calendar
+events into fullscreen alarms. It is a fork of BlackyHawky's Clock (based on AOSP),
+released under the GNU General Public License v3.0 (GPL-3.0).
 
-Does not use the internet permission, and thus is 100% offline.
+The app has no internet permission and is 100% offline. Location access is only
+used to read nearby Wi-Fi networks for the optional Wi-Fi condition of a profile.
 
-The location permission is used only to read the SSID of the connected Wi-Fi
-network for optional per-alarm Wi-Fi rules. No location data is collected or
-sent; the app cannot access the internet.
-
-On top of everything the original Clock app offers, MightyCalendarAlarm adds:
+Calendar alarms:
 <ul>
-  <li>A fire queue so multiple alarms firing close together are presented one after another instead of being marked missed;</li>
-  <li>Progressive snooze (each snooze can automatically get longer) plus a manual snooze duration picker;</li>
-  <li>Global mute: silence or vibrate-only every alarm until a chosen time;</li>
-  <li>Naming a new alarm right when it's created;</li>
-  <li>Searching, filtering and extra sorting options for the alarm list;</li>
-  <li>Tags with their own ringtone, automatically used by alarms that don't set one explicitly;</li>
-  <li>Device-wide alarm statistics with a shareable event log;</li>
-  <li>Wi-Fi based rules to automatically enable/disable alarms depending on the connected network;</li>
-  <li>Plain JSON backups (no ZIP) to a folder of your choice, with optional scheduled backups;</li>
-  <li>An experimental "exchange" mechanism to move or share alarms between devices via a shared folder;</li>
-  <li>Multiple named stopwatches that can run in parallel, with runs recorded in the event log;</li>
-  <li>A small rotatable timezone globe on the clock screen showing your selected world cities;</li>
+  <li>Profiles pick events from one calendar by a title pattern (for example "Alarm:");</li>
+  <li>Per profile: ringtone, volume (a share of the app's alarm volume), vibration, flashlight, escalation and maximum ring time;</li>
+  <li>Optional alarm before the event, and optional alarm at the end of the event;</li>
+  <li>Three snooze lengths on the alarm screen and in the notification, with optional extending of the event;</li>
+  <li>Optional Wi-Fi condition: ring only near chosen networks;</li>
+  <li>Lookahead of 7 to 30 days, checked continuously; tap a profile to see its upcoming alarms;</li>
+  <li>Backup and restore of profiles and settings, optionally scheduled.</li>
 </ul>
 
-...and the full original Clock feature set:
+Also included:
 <ul>
-  <li>Set the alarms to a specific date;</li>
-  <li>Flip and shake action to dismiss/postpone alarm;</li>
-  <li>Turn off/postpone the alarm with the power button or volume buttons;</li>
-  <li>Swipe to delete an alarm;</li>
-  <li>Duplicate alarms;</li>
-  <li>Customizable alarm title and ringtone;</li>
-  <li>Light, dark or system theme, with AMOLED mode;</li>
-  <li>Customizable interface;</li>
-  <li>Digital or analog clock style;</li>
-  <li>Display home time when traveling, and the time in many cities around the world;</li>
-  <li>Timer and stopwatch included;</li>
-  <li>Customizable screensaver;</li>
-  <li>Modern, customizable widgets;</li>
-  <li>Support for tiles in quick settings (for Android 7+);</li>
-  <li>Backup and restore application data;</li>
-  <li>Material design with dynamic colors for Android 12+;</li>
+  <li>World clock with local time and cities, digital or analog style;</li>
+  <li>Timer and multiple stopwatches;</li>
+  <li>Widgets showing the next calendar alarm;</li>
+  <li>Light, dark or system theme with AMOLED mode, and a customizable interface.</li>
 </ul>

@@ -4,7 +4,7 @@
     modified
     SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
 --><resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingQuantity">
-    <string name="app_label" msgid="6674495003718166674">MightyCalendarAlarm</string>
+    <string name="app_label" msgid="6674495003718166674">Mighty Calendar Alarm</string>
     <string name="default_label" msgid="5590025289805630372">"Alarme"</string>
     <string name="alarm_label_box_title">Libellé de l\'alarme</string>
     <string name="label_default">Par défaut</string>

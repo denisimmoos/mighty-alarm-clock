@@ -34,7 +34,7 @@ public class AppExecutors {
      *
      * <p>Ideal for:
      * <ul>
-     *   <li>Database queries or deletions (e.g., in AlarmClockFragment)</li>
+     *   <li>Database queries or deletions (e.g., calendar alarm checks)</li>
      *   <li>Any long-running task that shouldn't block the UI Thread</li>
      * </ul>
      *
