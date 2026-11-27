@@ -36,7 +36,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public static final int DEFAULT_SNOOZE_MINUTES_3 = 20;
     public static final int MAX_SNOOZE_MINUTES = 999;
 
-    public static final int DEFAULT_ALARM_VOLUME = 5;
+    public static final int MIN_VOLUME_PERCENT = 10;
+    public static final int MAX_VOLUME_PERCENT = 100;
+    public static final int DEFAULT_VOLUME_PERCENT = 100;
 
     public static final int MIN_LOOKAHEAD_DAYS = 7;
     public static final int MAX_LOOKAHEAD_DAYS = 30;
@@ -68,7 +70,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         CALENDAR_NAME,
         TITLE_REGEX,
         RINGTONE,
-        ALARM_VOLUME,
+        VOLUME_PERCENT,
         VIBRATE,
         AUTO_SILENCE_DURATION,
         SNOOZE_DURATION,
@@ -108,7 +110,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     private static final int CALENDAR_NAME_INDEX = 5;
     private static final int TITLE_REGEX_INDEX = 6;
     private static final int RINGTONE_INDEX = 7;
-    private static final int ALARM_VOLUME_INDEX = 8;
+    private static final int VOLUME_PERCENT_INDEX = 8;
     private static final int VIBRATE_INDEX = 9;
     private static final int AUTO_SILENCE_DURATION_INDEX = 10;
     private static final int SNOOZE_DURATION_INDEX = 11;
@@ -148,7 +150,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     /** Alarm sound, or {@code null} for the app's default alarm sound. */
     @Nullable
     public Uri ringtone;
-    public int alarmVolume;
+    /** Volume in percent of the alarm volume set in the app, see {@link #clampVolumePercent}. */
+    public int volumePercent;
     public boolean vibrate;
     /** Maximum ring time in seconds, or {@link #RING_UNTIL_DISMISSED}. */
     public int autoSilenceDuration;
@@ -213,7 +216,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         calendarName = "";
         titleRegex = "^Alarm:";
         ringtone = null;
-        alarmVolume = DEFAULT_ALARM_VOLUME;
+        volumePercent = DEFAULT_VOLUME_PERCENT;
         vibrate = true;
         autoSilenceDuration = RING_UNTIL_DISMISSED;
         snoozeDuration = DEFAULT_SNOOZE_MINUTES;
@@ -254,7 +257,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         calendarName = c.getString(CALENDAR_NAME_INDEX);
         titleRegex = c.getString(TITLE_REGEX_INDEX);
         ringtone = c.isNull(RINGTONE_INDEX) ? null : Uri.parse(c.getString(RINGTONE_INDEX));
-        alarmVolume = c.getInt(ALARM_VOLUME_INDEX);
+        volumePercent = clampVolumePercent(c.getInt(VOLUME_PERCENT_INDEX));
         vibrate = c.getInt(VIBRATE_INDEX) == 1;
         autoSilenceDuration = c.getInt(AUTO_SILENCE_DURATION_INDEX);
         snoozeDuration = c.getInt(SNOOZE_DURATION_INDEX);
@@ -301,7 +304,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         } else {
             values.put(RINGTONE, ringtone.toString());
         }
-        values.put(ALARM_VOLUME, alarmVolume);
+        values.put(VOLUME_PERCENT, clampVolumePercent(volumePercent));
         values.put(VIBRATE, vibrate ? 1 : 0);
         values.put(AUTO_SILENCE_DURATION, autoSilenceDuration);
         values.put(SNOOZE_DURATION, snoozeDuration);
@@ -418,6 +421,28 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         public String toString() {
             return mText.toString();
         }
+    }
+
+    /** @return the percent brought into 10 to 100, rounded to a step of 10. */
+    public static int clampVolumePercent(int percent) {
+        final int rounded = Math.round(percent / 10f) * 10;
+        return Math.max(MIN_VOLUME_PERCENT, Math.min(MAX_VOLUME_PERCENT, rounded));
+    }
+
+    /**
+     * @return the percent for an old profile volume given in absolute steps of {@code maxSteps}.
+     */
+    public static int volumePercentFromSteps(int steps, int maxSteps) {
+        return clampVolumePercent(Math.round(steps * 100f / Math.max(1, maxSteps)));
+    }
+
+    /**
+     * @return the alarm stream volume to ring at: the profile's percent of the alarm volume set in
+     * the app. A profile with sound never rings fully silent, so it rings at least at step 1.
+     */
+    public static int effectiveVolume(int masterVolume, int percent, int maxVolume) {
+        final int volume = Math.round(Math.max(0, masterVolume) * clampVolumePercent(percent) / 100f);
+        return Math.max(1, Math.min(maxVolume, volume));
     }
 
     public static int clampVibrationStrength(int percent) {

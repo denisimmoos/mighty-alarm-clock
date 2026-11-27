@@ -8,12 +8,10 @@ package com.best.deskclock.data;
 
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static com.best.deskclock.data.DataModel.PowerButtonBehavior.DISABLE;
 import static com.best.deskclock.data.DataModel.PowerButtonBehavior.DISMISS;
 import static com.best.deskclock.data.DataModel.PowerButtonBehavior.NOTHING;
 import static com.best.deskclock.data.DataModel.PowerButtonBehavior.SNOOZE;
 import static com.best.deskclock.data.DataModel.VolumeButtonBehavior.CHANGE_VOLUME;
-import static com.best.deskclock.data.DataModel.VolumeButtonBehavior.DISABLE_ALARM;
 import static com.best.deskclock.data.DataModel.VolumeButtonBehavior.DISMISS_ALARM;
 import static com.best.deskclock.data.DataModel.VolumeButtonBehavior.DO_NOTHING;
 import static com.best.deskclock.data.DataModel.VolumeButtonBehavior.SNOOZE_ALARM;
@@ -340,35 +338,14 @@ public final class SettingsDAO {
      * @return the set of currently visible tabs.
      */
     public static Set<String> getVisibleTabs(SharedPreferences prefs) {
-        // The Calendar Alarm tab was added after users may already have saved their visible tabs.
-        // Show it once for them; afterwards their own choice is kept.
-        if (!prefs.getBoolean(KEY_CALENDAR_ALARM_TAB_ADDED, false)) {
-            final SharedPreferences.Editor editor = prefs.edit().putBoolean(KEY_CALENDAR_ALARM_TAB_ADDED, true);
-            final Set<String> saved = prefs.getStringSet(KEY_VISIBLE_TABS, null);
-            if (saved != null && !saved.contains(VISIBLE_TAB_CALENDAR_ALARM)) {
-                final Set<String> updated = new java.util.HashSet<>(saved);
-                updated.add(VISIBLE_TAB_CALENDAR_ALARM);
-                editor.putStringSet(KEY_VISIBLE_TABS, updated);
-            }
-            editor.apply();
-        }
-
         // Default value must match the one in res/xml/settings_interface_customization.xml
-        final Set<String> tabs = prefs.getStringSet(KEY_VISIBLE_TABS, DEFAULT_VISIBLE_TABS);
-        // "alarm" belonged to the removed Alarm tab. Older versions also stored the Calendar tab
-        // as "calendar_alarm"; both are mapped here so saved choices keep working.
-        if (tabs.contains("alarm") || tabs.contains("calendar_alarm")) {
-            final Set<String> cleaned = new java.util.HashSet<>(tabs);
-            cleaned.remove("alarm");
-            if (cleaned.remove("calendar_alarm")) {
-                cleaned.add(VISIBLE_TAB_CALENDAR_ALARM);
-            }
-            if (cleaned.isEmpty()) {
-                cleaned.add(VISIBLE_TAB_CALENDAR_ALARM);
-            }
-            prefs.edit().putStringSet(KEY_VISIBLE_TABS, cleaned).apply();
-            return cleaned;
-        }
+        final Set<String> saved = prefs.getStringSet(KEY_VISIBLE_TABS, DEFAULT_VISIBLE_TABS);
+        // The Calendar tab is always shown: it holds the alarms. "alarm" belonged to the removed
+        // Alarm tab, and older versions stored the Calendar tab as "calendar_alarm".
+        final Set<String> tabs = new java.util.HashSet<>(saved);
+        tabs.remove("alarm");
+        tabs.remove("calendar_alarm");
+        tabs.add(VISIBLE_TAB_CALENDAR_ALARM);
         return tabs;
     }
 
@@ -391,13 +368,6 @@ public final class SettingsDAO {
      */
     public static boolean isStopwatchTabVisible(SharedPreferences prefs) {
         return getVisibleTabs(prefs).contains(VISIBLE_TAB_STOPWATCH);
-    }
-
-    /**
-     * @return {@code true} if the Calendar Alarm tab is visible in the bottom navigation menu. {@code false} otherwise.
-     */
-    public static boolean isCalendarAlarmTabVisible(SharedPreferences prefs) {
-        return getVisibleTabs(prefs).contains(VISIBLE_TAB_CALENDAR_ALARM);
     }
 
     /**
@@ -1026,14 +996,6 @@ public final class SettingsDAO {
     }
 
     /**
-     * @return {@code true} if swipe action is enabled to dismiss or snooze alarms. {@code false} otherwise.
-     */
-    public static boolean isSwipeActionEnabled(SharedPreferences pref) {
-        // Default value must match the one in res/xml/settings_alarm.xml
-        return pref.getBoolean(KEY_SWIPE_ACTION, DEFAULT_SWIPE_ACTION);
-    }
-
-    /**
      * @return the behavior to execute when volume button is pressed while firing an alarm
      */
     public static VolumeButtonBehavior getAlarmVolumeButtonBehavior(SharedPreferences prefs) {
@@ -1044,7 +1006,8 @@ public final class SettingsDAO {
             case VOLUME_BEHAVIOR_CHANGE_VOLUME -> CHANGE_VOLUME;
             case VOLUME_BEHAVIOR_SNOOZE -> SNOOZE_ALARM;
             case VOLUME_BEHAVIOR_DISMISS -> DISMISS_ALARM;
-            case VOLUME_BEHAVIOR_DISABLE -> DISABLE_ALARM;
+            // "Dismiss and disable" was for repeating alarms; calendar alarms just dismiss.
+            case VOLUME_BEHAVIOR_DISABLE -> DISMISS_ALARM;
             default -> throw new IllegalArgumentException("Unknown volume button behavior: " + value);
         };
     }
@@ -1059,7 +1022,8 @@ public final class SettingsDAO {
             case DEFAULT_POWER_BEHAVIOR -> NOTHING;
             case POWER_BEHAVIOR_SNOOZE -> SNOOZE;
             case POWER_BEHAVIOR_DISMISS -> DISMISS;
-            case POWER_BEHAVIOR_DISABLE -> DISABLE;
+            // "Dismiss and disable" was for repeating alarms; calendar alarms just dismiss.
+            case POWER_BEHAVIOR_DISABLE -> DISMISS;
             default -> throw new IllegalArgumentException("Unknown power button behavior: " + value);
         };
     }
@@ -1070,7 +1034,7 @@ public final class SettingsDAO {
     public static int getFlipAction(SharedPreferences prefs) {
         // Default value must match the one in res/xml/settings_alarm.xml
         final String string = prefs.getString(KEY_FLIP_ACTION, DEFAULT_FLIP_ACTION);
-        return Integer.parseInt(string);
+        return withoutDisable(Integer.parseInt(string));
     }
 
     /**
@@ -1079,7 +1043,15 @@ public final class SettingsDAO {
     public static int getShakeAction(SharedPreferences prefs) {
         // Default value must match the one in res/xml/settings_alarm.xml
         final String string = prefs.getString(KEY_SHAKE_ACTION, DEFAULT_SHAKE_ACTION);
-        return Integer.parseInt(string);
+        return withoutDisable(Integer.parseInt(string));
+    }
+
+    /**
+     * "Dismiss and disable" (3) was for repeating alarms, which no longer exist. A setting saved
+     * with it dismisses (2) instead.
+     */
+    private static int withoutDisable(int action) {
+        return action == 3 ? 2 : action;
     }
 
     /**
@@ -1174,15 +1146,6 @@ public final class SettingsDAO {
     }
 
     /**
-     * @return {@code true} if the snooze selector is displayed on the triggered alarm view.
-     * {@code false} otherwise.
-     */
-    public static boolean isSnoozeSelectorDisplayed(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm_display.xml
-        return prefs.getBoolean(KEY_DISPLAY_SNOOZE_SELECTOR, DEFAULT_DISPLAY_SNOOZE_SELECTOR);
-    }
-
-    /**
      * @return the font applied to the alarm.
      */
     public static String getAlarmFont(SharedPreferences prefs) {
@@ -1230,43 +1193,11 @@ public final class SettingsDAO {
     }
 
     /**
-     * @return a value indicating the slide zone color.
-     */
-    public static int getSlideZoneColor(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm_display.xml
-        return prefs.getInt(KEY_SLIDE_ZONE_COLOR, DEFAULT_SLIDE_ZONE_COLOR);
-    }
-
-    /**
-     * @return a value indicating the alarm button color.
-     */
-    public static int getAlarmButtonColor(SharedPreferences prefs, Context context) {
-        // Default value must match the one in res/xml/settings_alarm_display.xml
-        return prefs.getInt(KEY_ALARM_BUTTON_COLOR, getDefaultAlarmInversePrimaryColor(context));
-    }
-
-    /**
      * @return a value indicating the color of "Snooze" title.
      */
     public static int getSnoozeTitleColor(SharedPreferences prefs) {
         // Default value must match the one in res/xml/settings_alarm_display.xml
         return prefs.getInt(KEY_SNOOZE_TITLE_COLOR, DEFAULT_SNOOZE_TITLE_COLOR);
-    }
-
-    /**
-     * @return a value indicating the snooze button color.
-     */
-    public static int getSnoozeButtonColor(SharedPreferences prefs, Context context) {
-        // Default value must match the one in res/xml/settings_alarm_display.xml
-        return prefs.getInt(KEY_SNOOZE_BUTTON_COLOR, getDefaultAlarmInversePrimaryColor(context));
-    }
-
-    /**
-     * @return a value indicating the color of "Dismiss" title.
-     */
-    public static int getDismissTitleColor(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm_display.xml
-        return prefs.getInt(KEY_DISMISS_TITLE_COLOR, DEFAULT_DISMISS_TITLE_COLOR);
     }
 
     /**
@@ -1286,43 +1217,11 @@ public final class SettingsDAO {
     }
 
     /**
-     * @return a value indicating the snooze minus button color.
-     */
-    public static int getSnoozeMinusButtonColor(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm_display.xml
-        return prefs.getInt(KEY_SNOOZE_MINUS_BUTTON_COLOR, DEFAULT_SNOOZE_BUTTON_COLOR);
-    }
-
-    /**
-     * @return a value indicating the snooze plus button color.
-     */
-    public static int getSnoozePlusButtonColor(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm_display.xml
-        return prefs.getInt(KEY_SNOOZE_PLUS_BUTTON_COLOR, DEFAULT_SNOOZE_BUTTON_COLOR);
-    }
-
-    /**
      * @return a value indicating the snooze selector text color.
      */
     public static int getSnoozeSelectorTextColor(SharedPreferences prefs) {
         // Default value must match the one in res/xml/settings_alarm_display.xml
         return prefs.getInt(KEY_SNOOZE_SELECTOR_TEXT_COLOR, DEFAULT_SNOOZE_TEXT_COLOR);
-    }
-
-    /**
-     * @return a value indicating the snooze minus symbol color.
-     */
-    public static int getSnoozeMinusSymbolColor(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm_display.xml
-        return prefs.getInt(KEY_SNOOZE_MINUS_SYMBOL_COLOR, DEFAULT_SNOOZE_TEXT_COLOR);
-    }
-
-    /**
-     * @return a value indicating the snooze plus symbol color.
-     */
-    public static int getSnoozePlusSymbolColor(SharedPreferences prefs) {
-        // Default value must match the one in res/xml/settings_alarm_display.xml
-        return prefs.getInt(KEY_SNOOZE_PLUS_SYMBOL_COLOR, DEFAULT_SNOOZE_TEXT_COLOR);
     }
 
     /**

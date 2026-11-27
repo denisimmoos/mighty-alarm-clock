@@ -169,7 +169,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Procesa accións das notificacións do temporizador."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Procesa accións das notificacións do cronómetro."</string>
     <string name="swn_paused" msgid="6364358842808263589">"En pausa"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">"Pasa o dedo cara á esquerda para adiar e cara á dereita para apagar"</string>
     <string name="timer_settings" msgid="7955522143086154795">"Temporizadores"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Vibración do temporizador"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Pausouse o temporizador"</string>
@@ -200,7 +199,6 @@
     <string name="stopwatch_channel">Cronómetro</string>
     <string name="timer_channel">Temporizador</string>
     <string name="label_hours">Horas</string>
-    <string name="occasional_alarm_alert_predismiss_title">Alarma ocasional próxima</string>
     <string name="blue_gray_accent_color">Gris azulado</string>
     <string name="brown_accent_color">Marrón</string>
     <string name="green_accent_color">Verde</string>
@@ -243,7 +241,6 @@
     <string name="blue_accent_color">Azul</string>
     <string name="purple_accent_color">Violeta</string>
     <string name="red_accent_color">Vermello</string>
-    <string name="display_background_border_summary">Amosar o borde do fondo dalgúns elementos da aplicación (alarmas, cidades, botón temporizador etc.)</string>
     <string name="settings_language_title">Idioma</string>
     <string name="settings_language_system">Idioma do sistema</string>
     <string name="settings_language_english_us">Inglés (EEUU)</string>
@@ -257,8 +254,6 @@
     <string name="label_default">Predefinido</string>
     <string name="settings_fade_transitions_title">Activar transicións ao alternar pantallas</string>
     <string name="pink_accent_color">Rosa</string>
-    <string name="alarm_alert_off_and_deleted_text">Alarma desactivada e eliminada</string>
     <string name="title_dark_theme_mode">Modo de tema escuro</string>
     <string name="display_card_background_title">Amosar fondo das tarxetas</string>
-    <string name="display_card_background_summary">Amosar fondo para algúns elementos da aplicación (alarmas, cidades, botón temporizador etc.)</string>
 </resources>

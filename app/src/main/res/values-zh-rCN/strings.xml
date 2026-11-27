@@ -162,7 +162,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">处理来自定时器通知的操作。</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">处理来自秒表通知的操作。</string>
     <string name="swn_paused" msgid="6364358842808263589">"已暂停"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">向左滑动以暂停，向右滑动以关闭</string>
     <string name="timer_settings" msgid="7955522143086154795">"定时器"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"定时器振动"</string>
     <string name="timer_paused" msgid="5941160896040771462">"定时器已暂停"</string>
@@ -212,10 +211,8 @@
     <string name="FSN_dialog_title">全屏通知</string>
     <string name="ignore_battery_optimizations_dialog_text">默认情况下，Android 系统将所有用户安装的应用配置为优化以节省电池寿命。\n\n虽然这对于许多应用来说是可以接受的，但此应用是闹钟应用，如果配置为优化电池，通常会导致问题。一旦启用，Android 系统可以随时终止此应用和/或取消已设置的闹钟，这将对应用的运行产生不利影响。\n\n我们建议将此应用列入电池优化白名单。</string>
     <string name="settings_permission_message">一个或多个基本权限被拒绝。不授予它们可能会导致故障。</string>
-    <string name="display_card_background_summary">为某些应用程序元素（闹钟、城市、定时器按钮等）显示背景</string>
     <string name="alarm_notification_reminder_title">通知提醒</string>
     <string name="about_github_link">在 GitHub 查看</string>
-    <string name="alarm_settings_summary">自定义样式、字体、默认铃声、音量、关闭或暂停闹钟的操作、一周的第一天以及提醒通知时间</string>
     <string name="timer_label_box_title">定时器标签</string>
     <string name="whats_new_title">更新日志</string>
     <string name="first_launch_main_feature_link">…还有更多！</string>
@@ -225,7 +222,6 @@
     <string name="city_clock_color_title">城市时钟自定义颜色</string>
     <string name="city_name_color_title">城市名称自定义颜色</string>
     <string name="permission_management_summary">显示应用程序正常工作所需的权限</string>
-    <string name="swipe_action_title">滑动以关闭或暂停闹钟</string>
     <string name="power_button_title">电源按钮</string>
     <string name="add_label">添加标签</string>
     <string name="clock_settings_summary">自定义样式、字体、时区以及设备日期和时间</string>
@@ -235,7 +231,6 @@
     <string name="license">开放源代码许可</string>
     <string name="gnu_gpl">GNU General Public License v3.0</string>
     <string name="dialog_close">关闭</string>
-    <string name="description_direction_both_for_non_repeatable_alarm">向左或向右滑动以关闭</string>
     <string name="timer_settings_summary">自定义样式、字体、默认铃声、停止定时器的操作以及定时器排序</string>
     <string name="default_time_to_add_to_timer_title">添加到定时器的默认时间</string>
     <string name="screensaver_settings_summary">自定义屏幕保护程序的样式、字体和颜色</string>
@@ -283,15 +278,12 @@
     <string name="display_background_border_title">显示背景边框</string>
     <string name="settings_vibration_title">启用振动</string>
     <string name="settings_vibration_summary">只有某些界面按钮受到影响（例如：定时器播放/暂停按钮或开关）</string>
-    <string name="display_background_border_summary">为某些应用程序元素（闹钟、城市、定时器按钮等）显示背景边框</string>
     <string name="ignore_battery_optimizations_title">忽略电池优化</string>
     <string name="permission_denied">已拒绝</string>
     <string name="revoke_permission_dialog_message">确定要撤销此权限吗？</string>
     <string name="permission_status_title">状态： </string>
     <string name="permission_granted">已授予</string>
-    <string name="snooze_button_color">“暂停”按钮的颜色</string>
     <string name="dismiss_button_color">“关闭”按钮的颜色</string>
-    <string name="alarm_button_color">闹钟按钮颜色</string>
     <string name="transparent_background_for_expired_timer_title">定时器结束时的透明背景</string>
     <string name="alarm_title_color">闹钟标题颜色</string>
     <string name="second_hand_color_title">秒针颜色</string>
@@ -334,12 +326,7 @@
     <string name="sort_timer_ascending_duration">按时长（升序）</string>
     <string name="sort_timer_descending_duration">按时长（降序）</string>
     <string name="sort_name">按名称</string>
-    <string name="snooze_duration_none">无</string>
     <string name="alarm_alert_dismiss_and_delete_text">关闭并删除</string>
-    <string name="description_direction_both_for_occasional_alarm">向左滑动以暂停，向右滑动以关闭并删除闹钟</string>
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">向左或向右滑动以关闭并删除闹钟</string>
-    <string name="alarm_alert_off_and_deleted_text">闹钟已关闭并删除</string>
-    <string name="occasional_alarm_alert_predismiss_title">预定的临时闹钟</string>
     <string name="backup_restore_title">备份和还原</string>
     <string name="backup_restore_summary">备份或还原应用程序数据，自定义铃声除外</string>
     <string name="backup_restore_dialog_message">要备份还是还原应用程序数据？</string>
@@ -371,8 +358,6 @@
     <string name="warning_dialog_title">删除定时器</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">闹钟暂停时双次振动，闹钟关闭时单次振动</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">闹钟暂停或关闭时启用振动</string>
-    <string name="translate_dialog_message">访问 Codeberg 页面：\n\n%s</string>
-    <string name="about_translate_link">在 Codeberg 上翻译</string>
     <string name="shake_intensity_title">摇晃强度</string>
     <string name="settings_language_title">语言</string>
     <string name="settings_language_system">系统语言</string>
@@ -399,15 +384,9 @@
     <string name="tab_title_visibility_always">始终</string>
     <string name="tab_title_visibility_when_selected">选择时</string>
     <string name="settings_keep_screen_on_summary">注意：无论此设置的状态如何，如果定时器或秒表正在运行，并且显示了相应的标签页，则屏幕将始终开启</string>
-    <string name="dismiss_title_color">“关闭”标题的颜色</string>
     <string name="description_dismiss_button">点击即可关闭闹钟</string>
-    <string name="description_dismiss_button_for_occasional_alarm">点击即可关闭并删除闹钟</string>
     <string name="ringtone_title_color">铃声标题颜色</string>
-    <string name="slide_zone_color_title">滑动区域颜色</string>
-    <string name="snooze_title_color">“暂停”标题的颜色</string>
-    <string name="description_snooze_button">点击即可暂停闹钟</string>
     <string name="display_next_alarm_title">显示下次闹钟</string>
-    <string name="alarm_is_dismissed_and_deleted">已关闭并删除 <xliff:g example="14:20" id="alarm_time">%s</xliff:g> 的闹钟</string>
     <string name="random_ringtone_title">随机铃声</string>
     <string name="warning">警告</string>
     <string name="timer_add_custom_time_with_seconds_description">添加 %1$s 分钟 %2$s 秒</string>
@@ -464,7 +443,6 @@
     <string name="vibration_start_delay_warning_box_text">请输入 0 到 10 分钟之间的值</string>
     <string name="confirm_action_prompt">\n\n要继续吗？</string>
     <string name="features_dialog_message">访问主要功能页面：\n\n%s</string>
-    <string name="repetitive_alarm_is_dismissed">闹钟已关闭。<xliff:g example="Next alarm Monday." id="alarm_day">已重新设置 %s。</xliff:g></string>
     <string name="blur_intensity_title">模糊强度</string>
     <string name="background_image_title">选择背景图片</string>
     <string name="background_image_toast_message_selected">图片已成功选择</string>
@@ -505,16 +483,9 @@
     <string name="sync_alarm_by_label_title">同步共享相同标签的闹钟</string>
     <string name="button_tip_title">长按“+”按钮添加文件夹</string>
     <string name="permissions_category_title">权限</string>
-    <string name="snooze_zone_color_title">暂停区域颜色</string>
-    <string name="snooze_minus_button_color_title">“-”按钮颜色</string>
-    <string name="snooze_plus_button_color_title">“+”按钮颜色</string>
-    <string name="snooze_selector_text_color_title">暂停选择器文本颜色</string>
-    <string name="snooze_minus_symbol_color_title">“-”符号颜色</string>
-    <string name="snooze_plus_symbol_color_title">“+”符号颜色</string>
     <string name="background_image_summary">设置透明背景颜色以查看图片</string>
     <string name="alarm_volume_low">闹钟音量过低</string>
     <string name="fix_alarm_volume">修复</string>
-    <string name="display_snooze_selector_title">显示暂停选择器</string>
     <string name="clock_dial_with_roman_numbers">带罗马数字</string>
     <string name="clock_second_hand_lollipop">棒棒糖</string>
     <string name="timezone_baker_howland">贝克岛和豪兰岛</string>

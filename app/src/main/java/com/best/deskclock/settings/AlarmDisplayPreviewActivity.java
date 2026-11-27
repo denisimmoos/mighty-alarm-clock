@@ -12,26 +12,18 @@ import static androidx.core.util.TypedValueCompat.dpToPx;
 import static com.best.deskclock.DeskClockApplication.getDefaultSharedPreferences;
 import static com.best.deskclock.settings.PreferencesDefaultValues.AMOLED_DARK_MODE;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -41,16 +33,11 @@ import android.os.Looper;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.TypedValue;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.ColorUtils;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.WindowCompat;
 
 import com.best.deskclock.R;
@@ -58,9 +45,7 @@ import com.best.deskclock.base.BaseActivity;
 import com.best.deskclock.data.DataModel;
 import com.best.deskclock.data.SettingsDAO;
 import com.best.deskclock.databinding.AlarmActivityBinding;
-import com.best.deskclock.uicomponents.PillView;
 import com.best.deskclock.utils.AlarmUtils;
-import com.best.deskclock.utils.AnimatorUtils;
 import com.best.deskclock.utils.ClockUtils;
 import com.best.deskclock.utils.FormattedTextUtils;
 import com.best.deskclock.utils.LogUtils;
@@ -69,15 +54,8 @@ import com.best.deskclock.utils.ThemeUtils;
 
 import java.io.File;
 
-public class AlarmDisplayPreviewActivity extends BaseActivity
-    implements View.OnClickListener, View.OnTouchListener {
+public class AlarmDisplayPreviewActivity extends BaseActivity {
 
-    private static final int DEFAULT_SNOOZE_VALUE = 10;
-    private static final float TEXT_FADE_START_THRESHOLD = 0.5f;
-    private static final int TRANSLATION_DURATION_START_DELAY = 1000;
-    private static final int TRANSLATION_DURATION_DELAY = 400;
-    private static final int TRANSLATION_DURATION_MILLIS = 1000;
-    private static final int ALPHA_DURATION_MILLIS = 400;
     private static final int ALERT_REVEAL_DURATION_MILLIS = 500;
     private static final int ALERT_DISMISS_DELAY_MILLIS = 2500;
 
@@ -88,23 +66,7 @@ public class AlarmDisplayPreviewActivity extends BaseActivity
     private final Handler mHandler = new Handler(Looper.getMainLooper());
     private float mAlarmTitleFontSize;
     private int mAlarmTitleColor;
-    private int mAlarmButtonColor;
-    private int mDefaultSnoozeMinutes;
-    private int mSnoozeMinutes;
-    private boolean mIsSwipeActionEnabled;
-    private boolean mIsSnoozeSelectorDisplayed;
 
-    private String[] mSnoozeSelectorEntries;
-    private int[] mSnoozeSelectorValues;
-    private int mSnoozeSelectorIndex = 0;
-    private int mSnoozeMinusButtonColor;
-    private int mSnoozePlusButtonColor;
-    private int mSnoozeMinusSymbolColor;
-    private int mSnoozePlusSymbolColor;
-    private Animator mTranslationAnimator;
-    private int mInitialPointerIndex = MotionEvent.INVALID_POINTER_ID;
-    private float mInitialTouchX = 0;
-    private float mInitialTouchY = 0;
     private Vibrator mVibrator;
     private boolean mAreSnoozedOrDismissedAlarmVibrationsEnabled;
     private boolean mIsFadeTransitionsEnabled;
@@ -113,7 +75,6 @@ public class AlarmDisplayPreviewActivity extends BaseActivity
     private int mShadowOffset;
     private float mShadowRadius;
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,22 +94,13 @@ public class AlarmDisplayPreviewActivity extends BaseActivity
         // To manually manage insets
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
-        initDefaultSnoozeValue();
-
         setContentView(mBinding.getRoot());
 
         initAlarmBackground();
 
-        mIsSwipeActionEnabled = SettingsDAO.isSwipeActionEnabled(mPrefs);
-        mIsSnoozeSelectorDisplayed = SettingsDAO.isSnoozeSelectorDisplayed(mPrefs);
         mIsFadeTransitionsEnabled = SettingsDAO.isFadeTransitionsEnabled(mPrefs);
         mAlarmTitleFontSize = SettingsDAO.getAlarmTitleFontSize(mPrefs);
         mAlarmTitleColor = SettingsDAO.getAlarmTitleColor(mPrefs);
-        mAlarmButtonColor = SettingsDAO.getAlarmButtonColor(mPrefs, this);
-        mSnoozeMinusButtonColor = SettingsDAO.getSnoozeMinusButtonColor(mPrefs);
-        mSnoozePlusButtonColor = SettingsDAO.getSnoozePlusButtonColor(mPrefs);
-        mSnoozeMinusSymbolColor = SettingsDAO.getSnoozeMinusSymbolColor(mPrefs);
-        mSnoozePlusSymbolColor = SettingsDAO.getSnoozePlusSymbolColor(mPrefs);
         mIsTextShadowDisplayed = SettingsDAO.isAlarmTextShadowDisplayed(mPrefs);
         mShadowColor = SettingsDAO.getAlarmShadowColor(mPrefs);
         mShadowOffset = SettingsDAO.getAlarmShadowOffset(mPrefs);
@@ -158,20 +110,7 @@ public class AlarmDisplayPreviewActivity extends BaseActivity
 
         initAlarmTitle();
 
-        initDismissOnlyButton();
-
-        if (mIsSwipeActionEnabled) {
-            initSlideModeUI();
-        } else {
-            initButtonModeUI();
-        }
-
-        if (mIsSnoozeSelectorDisplayed) {
-            initSnoozeSelector();
-            updateSnoozeText();
-        } else {
-            mBinding.snoozeSelectorLayout.setVisibility(GONE);
-        }
+        initCalendarActions();
 
         initRingtoneTitle();
 
@@ -186,19 +125,11 @@ public class AlarmDisplayPreviewActivity extends BaseActivity
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        resetAnimations();
-    }
-
-    @Override
     protected void onDestroy() {
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
         }
 
-        mTranslationAnimator = null;
         mVibrator = null;
 
         mGeneralBoldTypeface = null;
@@ -206,147 +137,6 @@ public class AlarmDisplayPreviewActivity extends BaseActivity
         mBinding = null;
 
         super.onDestroy();
-    }
-
-    @Override
-    public void onClick(View view) {
-        // If alarm swiping is disabled in settings, allow snooze/dismiss by tapping on respective buttons.
-        if (!mIsSwipeActionEnabled) {
-            if (view == mBinding.snoozeButton) {
-                snooze();
-            } else if (view == mBinding.dismissButton) {
-                dismiss();
-            }
-        }
-
-        if (mIsSnoozeSelectorDisplayed) {
-            if (view == mBinding.snoozeSelectorPlus) {
-                if (mSnoozeSelectorIndex < mSnoozeSelectorEntries.length - 1) {
-                    mSnoozeSelectorIndex++;
-                    updateSnoozeText();
-                    updateSnoozeButtonsState();
-                }
-            } else if (view == mBinding.snoozeSelectorMinus) {
-                if (mSnoozeSelectorIndex > 0) {
-                    mSnoozeSelectorIndex--;
-                    updateSnoozeText();
-                    updateSnoozeButtonsState();
-                }
-            }
-
-            mSnoozeMinutes = mSnoozeSelectorValues[mSnoozeSelectorIndex];
-        }
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    @Override
-    public boolean onTouch(View view, MotionEvent event) {
-        final int action = event.getActionMasked();
-
-        if (action == MotionEvent.ACTION_DOWN) {
-            // Track the pointer that initiated the touch sequence.
-            mInitialPointerIndex = event.getPointerId(event.getActionIndex());
-
-            // Stop the translation
-            if (mTranslationAnimator != null && (mTranslationAnimator.isRunning() || mTranslationAnimator.isStarted())) {
-                mTranslationAnimator.cancel();
-            }
-
-            final int[] contentLocation = {0, 0};
-            mBinding.contentView.getLocationOnScreen(contentLocation);
-
-            mInitialTouchX = event.getRawX() - contentLocation[0];
-            mInitialTouchY = event.getRawY() - contentLocation[1];
-        } else if (action == MotionEvent.ACTION_CANCEL) {
-            // Clear the pointer index.
-            mInitialPointerIndex = MotionEvent.INVALID_POINTER_ID;
-
-            // Reset everything.
-            resetAnimations();
-            return true;
-        }
-
-        final int actionIndex = event.getActionIndex();
-        if (mInitialPointerIndex == MotionEvent.INVALID_POINTER_ID || mInitialPointerIndex != event.getPointerId(actionIndex)) {
-            // Ignore any pointers other than the initial one, bail early.
-            return true;
-        }
-
-        final int[] contentLocation = {0, 0};
-        mBinding.contentView.getLocationOnScreen(contentLocation);
-
-        final float x = event.getRawX() - contentLocation[0];
-        final float y = event.getRawY() - contentLocation[1];
-
-        float deltaX = x - mInitialTouchX;
-        float deltaY = y - mInitialTouchY;
-
-        // Limit movement within the parent
-        float maxDeltaX = (getAvailableSlideZoneWidth() - mBinding.alarmButton.getWidth()) / 2f;
-        float maxDeltaY = Math.max(mBinding.alarmButton.getHeight(), dpToPx(48, getResources().getDisplayMetrics()));
-
-        final boolean verticalGesture = Math.abs(deltaY) > Math.abs(deltaX);
-
-        if (verticalGesture) {
-            deltaY = Math.max(0f, Math.min(deltaY, maxDeltaY));
-            mBinding.alarmButton.setTranslationX(0f);
-            mBinding.alarmButton.setTranslationY(deltaY);
-            mBinding.snoozeText.setAlpha(1.0f);
-            mBinding.dismissText.setAlpha(1.0f);
-
-            if (deltaY >= maxDeltaY) {
-                if (mTranslationAnimator != null && (mTranslationAnimator.isRunning() || mTranslationAnimator.isStarted())) {
-                    mTranslationAnimator.cancel();
-                }
-            }
-        } else {
-            deltaX = Math.max(-maxDeltaX, Math.min(deltaX, maxDeltaX));
-            mBinding.alarmButton.setTranslationX(deltaX);
-            mBinding.alarmButton.setTranslationY(0f);
-
-            if (Math.abs(deltaX) >= maxDeltaX) {
-                if (mTranslationAnimator != null && (mTranslationAnimator.isRunning() || mTranslationAnimator.isStarted())) {
-                    mTranslationAnimator.cancel();
-                }
-            }
-
-            updateTextAlpha(deltaX);
-        }
-
-        if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP) {
-            mInitialPointerIndex = MotionEvent.INVALID_POINTER_ID;
-
-            if (verticalGesture) {
-                if (deltaY >= maxDeltaY) {
-                    dismissAndDisable();
-                } else {
-                    resetAnimations();
-                }
-            } else if (mBinding.contentView.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
-                if (deltaX <= -maxDeltaX) {
-                    dismiss(); // Left = Dismiss in RTL
-                } else if (deltaX >= maxDeltaX) {
-                    snooze(); // Right = Snooze in RTL
-                } else {
-                    resetAnimations();
-                }
-            } else {
-                if (deltaX >= maxDeltaX) {
-                    dismiss(); // Right = Dismiss in LTR
-                } else if (deltaX <= -maxDeltaX) {
-                    snooze(); // Left = snooze in LTR
-                } else {
-                    resetAnimations();
-                }
-            }
-        }
-
-        return true;
-    }
-
-    private void initDefaultSnoozeValue() {
-        mDefaultSnoozeMinutes = DEFAULT_SNOOZE_VALUE;
-        mSnoozeMinutes = mDefaultSnoozeMinutes;
     }
 
     /**
@@ -434,240 +224,6 @@ public class AlarmDisplayPreviewActivity extends BaseActivity
     }
 
     /**
-     * Initializes the slide mode.
-     */
-    private void initSlideModeUI() {
-        mBinding.slideZoneLayout.setVisibility(VISIBLE);
-        mBinding.snoozeButton.setVisibility(GONE);
-        mBinding.dismissButton.setVisibility(GONE);
-
-        initSlideColors();
-        initSlideTexts();
-        initSlideAnimations();
-        initDisableHint();
-    }
-
-    private void initDisableHint() {
-        mBinding.disableHintText.setText(R.string.swipe_down_to_disable_hint);
-        mBinding.disableHintText.setTypeface(mGeneralBoldTypeface);
-        mBinding.disableHintText.setTextColor(SettingsDAO.getDismissTitleColor(mPrefs));
-        mBinding.disableHintText.setVisibility(VISIBLE);
-    }
-
-    /**
-     * Initializes the slide mode colors.
-     */
-    private void initSlideColors() {
-        int slideZoneColor = SettingsDAO.getSlideZoneColor(mPrefs);
-
-        Drawable background = AppCompatResources.getDrawable(this, R.drawable.bg_alarm_slide_zone);
-        if (background != null) {
-            DrawableCompat.setTint(background, slideZoneColor);
-        }
-
-        mBinding.slideZoneLayout.setBackground(background);
-        mBinding.alarmButton.setBackgroundColor(mAlarmButtonColor);
-    }
-
-    /**
-     * Initializes the slide mode texts.
-     */
-    private void initSlideTexts() {
-        mBinding.alarmButton.setContentDescription(getString(R.string.description_direction_both_with_disable));
-
-        mBinding.snoozeText.setTypeface(mGeneralBoldTypeface);
-        mBinding.snoozeText.setTextColor(SettingsDAO.getSnoozeTitleColor(mPrefs));
-        mBinding.snoozeText.setText(getString(R.string.button_action_snooze));
-
-        mBinding.dismissText.setTypeface(mGeneralBoldTypeface);
-        mBinding.dismissText.setTextColor(SettingsDAO.getDismissTitleColor(mPrefs));
-        mBinding.dismissText.setText(getString(R.string.button_action_dismiss));
-    }
-
-    /**
-     * Initializes the slide mode animations.
-     */
-    private void initSlideAnimations() {
-        mBinding.alarmButton.setOnTouchListener(this);
-
-        mBinding.pill.setFillColor(ColorUtils.setAlphaComponent(mAlarmButtonColor, 128));
-
-        mBinding.pill.post(() -> {
-            mBinding.pill.setPillHeight(mBinding.alarmButton.getHeight()
-                - mBinding.alarmButton.getInsetTop()
-                - mBinding.alarmButton.getInsetBottom()
-            );
-            final float pillStretchWidth = getAvailableSlideZoneWidth() / 2f;
-            final int originalFillColor = mBinding.pill.getFillColor();
-
-            // Move to left
-            AnimatorSet toLeftAnimator = new AnimatorSet();
-            toLeftAnimator.playTogether(translationAnimator(mBinding.pill, pillStretchWidth,
-                mBinding.pill.getPillCenterX() - pillStretchWidth / 2), alphaAnimator(mBinding.pill, originalFillColor)
-            );
-            toLeftAnimator.setStartDelay(TRANSLATION_DURATION_START_DELAY);
-            toLeftAnimator.setDuration(TRANSLATION_DURATION_MILLIS);
-
-            // Apply alpha
-            Animator alphaLeft = alphaAnimator(mBinding.pill, ColorUtils.setAlphaComponent(originalFillColor, 0));
-            alphaLeft.setDuration(ALPHA_DURATION_MILLIS);
-
-            // Reset position and alpha
-            AnimatorSet resetAndRestoreLeft = new AnimatorSet();
-            resetAndRestoreLeft.playTogether(translationAnimator(mBinding.pill, 0, mBinding.pill.getPillCenterX()),
-                alphaAnimator(mBinding.pill, originalFillColor)
-            );
-            resetAndRestoreLeft.setDuration(0);
-
-            // Move to right
-            Animator toRightAnimator = translationAnimator(mBinding.pill, pillStretchWidth,
-                mBinding.pill.getPillCenterX() + pillStretchWidth / 2);
-            toRightAnimator.setStartDelay(TRANSLATION_DURATION_DELAY);
-            toRightAnimator.setDuration(TRANSLATION_DURATION_MILLIS);
-
-            // Apply alpha
-            Animator alphaRight = alphaAnimator(mBinding.pill, ColorUtils.setAlphaComponent(originalFillColor, 0));
-            alphaRight.setDuration(ALPHA_DURATION_MILLIS);
-
-            // Reset position and alpha
-            AnimatorSet resetAndRestoreRight = new AnimatorSet();
-            resetAndRestoreRight.playTogether(translationAnimator(mBinding.pill, 0, mBinding.pill.getPillCenterX()),
-                alphaAnimator(mBinding.pill, originalFillColor)
-            );
-            resetAndRestoreRight.setDuration(0);
-
-            // Sequence
-            AnimatorSet translationSequence = new AnimatorSet();
-            translationSequence.playSequentially(
-                toLeftAnimator, alphaLeft, resetAndRestoreLeft, toRightAnimator, alphaRight, resetAndRestoreRight);
-            translationSequence.setInterpolator(new AccelerateDecelerateInterpolator());
-            // Listener to repeat animation if needed
-            translationSequence.addListener(new AnimatorListenerAdapter() {
-
-                private boolean wasCancelled = false;
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-                    mBinding.pill.setFillColor(Color.TRANSPARENT);
-
-                    wasCancelled = true;
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    if (!wasCancelled && mTranslationAnimator == animation) {
-                        mTranslationAnimator.start();
-                    }
-
-                    wasCancelled = false;
-                }
-            });
-
-            mTranslationAnimator = translationSequence;
-            mTranslationAnimator.start();
-        });
-    }
-
-    /**
-     * Initializes the button mode.
-     */
-    private void initButtonModeUI() {
-        mBinding.slideZoneLayout.setVisibility(GONE);
-        mBinding.disableHintText.setVisibility(GONE);
-
-        initSnoozeAndDismissButtons();
-    }
-
-    /**
-     * Initializes the "Dismiss only" button.
-     */
-    private void initDismissOnlyButton() {
-        mBinding.dismissOnlyButton.setVisibility(GONE);
-    }
-
-    /**
-     * Initializes the "Snooze" and "Dismiss" buttons.
-     */
-    private void initSnoozeAndDismissButtons() {
-        mBinding.snoozeButton.setBackgroundColor(SettingsDAO.getSnoozeButtonColor(mPrefs, this));
-        mBinding.snoozeButton.setText(getString(R.string.button_action_snooze));
-        mBinding.snoozeButton.setTypeface(mGeneralBoldTypeface);
-        mBinding.snoozeButton.setContentDescription(getString(R.string.description_snooze_button));
-        mBinding.snoozeButton.setVisibility(VISIBLE);
-        mBinding.snoozeButton.setOnClickListener(this);
-
-        mBinding.dismissButton.setBackgroundColor(SettingsDAO.getDismissButtonColor(mPrefs, this));
-        mBinding.dismissButton.setText(getString(R.string.button_action_dismiss));
-        mBinding.dismissButton.setTypeface(mGeneralBoldTypeface);
-        mBinding.dismissButton.setContentDescription(getString(R.string.description_dismiss_button_with_disable));
-        mBinding.dismissButton.setVisibility(VISIBLE);
-        mBinding.dismissButton.setOnClickListener(this);
-        mBinding.dismissButton.setOnLongClickListener(v -> {
-            dismissAndDisable();
-            return true;
-        });
-
-        // Allow text scrolling (all other attributes are indicated in the "alarm_activity.xml" file)
-        mBinding.snoozeButton.setSelected(true);
-        mBinding.dismissButton.setSelected(true);
-    }
-
-    /**
-     * Initializes the snooze selector.
-     */
-    private void initSnoozeSelector() {
-        mSnoozeSelectorValues = getResources().getIntArray(R.array.alarm_snooze_selector_values);
-        mSnoozeSelectorEntries = new String[mSnoozeSelectorValues.length];
-
-        for (int i = 0; i < mSnoozeSelectorValues.length; i++) {
-            int snoozeValue = mSnoozeSelectorValues[i];
-
-            if (snoozeValue == -1) {
-                String defaultTimeStr = buildTimeString(mDefaultSnoozeMinutes);
-                mSnoozeSelectorEntries[i] = String.format("%s (%s)", getString(R.string.label_default), defaultTimeStr);
-            } else {
-                String timeStr = buildTimeString(snoozeValue);
-                mSnoozeSelectorEntries[i] = getString(R.string.alarm_alert_snooze_text) + " " + timeStr;
-            }
-        }
-
-        initSnoozeSelectorStyle();
-        initSnoozeSelectorListeners();
-        updateSnoozeButtonsState();
-        mBinding.snoozeSelectorLayout.setVisibility(VISIBLE);
-    }
-
-    /**
-     * Initializes the snooze selector style.
-     */
-    private void initSnoozeSelectorStyle() {
-        int snoozeZoneColor = SettingsDAO.getSnoozeZoneColor(mPrefs);
-        int snoozeTextColor = SettingsDAO.getSnoozeSelectorTextColor(mPrefs);
-
-        mBinding.snoozeSelectorText.setBackground(ThemeUtils.pillRippleDrawable(this, snoozeZoneColor));
-        mBinding.snoozeSelectorText.setTypeface(mGeneralBoldTypeface);
-        mBinding.snoozeSelectorText.setTextColor(snoozeTextColor);
-
-        styleSnoozeButton(mBinding.snoozeSelectorMinus, mSnoozeMinusButtonColor, mSnoozeMinusSymbolColor, true);
-
-        styleSnoozeButton(mBinding.snoozeSelectorPlus, mSnoozePlusButtonColor, mSnoozePlusSymbolColor, true);
-    }
-
-    /**
-     * Initializes the snooze selector listeners when the buttons are pressed and the selector area
-     * is long-pressed.
-     */
-    private void initSnoozeSelectorListeners() {
-        mBinding.snoozeSelectorText.setOnLongClickListener(v -> {
-            snooze();
-            return true;
-        });
-
-        mBinding.snoozeSelectorMinus.setOnClickListener(this);
-        mBinding.snoozeSelectorPlus.setOnClickListener(this);
-    }
-
-    /**
      * Initializes the ringtone title.
      */
     private void initRingtoneTitle() {
@@ -678,47 +234,6 @@ public class AlarmDisplayPreviewActivity extends BaseActivity
         } else {
             mBinding.ringtoneLayout.setVisibility(GONE);
         }
-    }
-
-    /**
-     * Enables or disables the plus and minus buttons based on the current snooze selector index.
-     */
-    private void updateSnoozeButtonsState() {
-        boolean minusEnabled = mSnoozeSelectorIndex > 0;
-        boolean plusEnabled = mSnoozeSelectorIndex < mSnoozeSelectorEntries.length - 1;
-
-        styleSnoozeButton(mBinding.snoozeSelectorMinus, mSnoozeMinusButtonColor, mSnoozeMinusSymbolColor, minusEnabled);
-
-        styleSnoozeButton(mBinding.snoozeSelectorPlus, mSnoozePlusButtonColor, mSnoozePlusSymbolColor, plusEnabled);
-    }
-
-    /**
-     * Applies visual styling to a snooze button, including background, symbol color, and
-     * enabled/disabled state.
-     *
-     * @param imageView       the button to style
-     * @param backgroundColor the background color when enabled
-     * @param symbolColor     the symbol color when enabled
-     * @param enabled         true to enable the button, false to disable it
-     */
-    private void styleSnoozeButton(ImageView imageView, int backgroundColor, int symbolColor,
-                                   boolean enabled) {
-
-        GradientDrawable circle = (GradientDrawable) ThemeUtils.circleDrawable();
-
-        if (!enabled) {
-            circle.setColor(Color.parseColor("#80808080"));
-            imageView.setBackground(circle);
-            imageView.setColorFilter(ContextCompat.getColor(this, R.color.colorDisabled));
-            imageView.setClickable(false);
-            return;
-        }
-
-        circle.setColor(backgroundColor);
-
-        imageView.setBackground(ThemeUtils.rippleDrawable(this, circle));
-        imageView.setColorFilter(symbolColor);
-        imageView.setClickable(true);
     }
 
     private String buildTimeString(int totalMinutes) {
@@ -733,104 +248,54 @@ public class AlarmDisplayPreviewActivity extends BaseActivity
     }
 
     /**
-     * Updates the displayed snooze text according to the current selector index.
+     * Shows the calendar alarm screen as it rings: a big Dismiss bubble and three snooze bubbles
+     * with the default snooze lengths of a new profile.
      */
-    private void updateSnoozeText() {
-        if (!mIsSnoozeSelectorDisplayed || mSnoozeSelectorEntries == null) {
-            return;
+    private void initCalendarActions() {
+        final com.google.android.material.button.MaterialButton dismiss = mBinding.calendarDismissButton;
+        dismiss.setBackgroundColor(SettingsDAO.getDismissButtonColor(mPrefs, this));
+        dismiss.setTypeface(mGeneralBoldTypeface);
+        dismiss.setContentDescription(getString(R.string.description_dismiss_button));
+        dismiss.setOnClickListener(v -> dismiss());
+        mBinding.calendarActions.setVisibility(VISIBLE);
+
+        final int snoozeZoneColor = SettingsDAO.getSnoozeZoneColor(mPrefs);
+        final int snoozeTextColor = SettingsDAO.getSnoozeSelectorTextColor(mPrefs);
+        final int[] minutes = {
+            com.best.deskclock.provider.CalendarProfile.DEFAULT_SNOOZE_MINUTES,
+            com.best.deskclock.provider.CalendarProfile.DEFAULT_SNOOZE_MINUTES_2,
+            com.best.deskclock.provider.CalendarProfile.DEFAULT_SNOOZE_MINUTES_3
+        };
+        final android.widget.TextView[] buttons = {
+            mBinding.calendarSnoozeChoice1, mBinding.calendarSnoozeChoice2, mBinding.calendarSnoozeChoice3
+        };
+        for (int i = 0; i < buttons.length; i++) {
+            final int length = minutes[i];
+            final android.widget.TextView button = buttons[i];
+            button.setText(getString(R.string.calendar_alarm_snooze_button, length));
+            button.setContentDescription(getResources().getQuantityString(R.plurals.alarm_alert_snooze_set, length, length));
+            button.setBackground(ThemeUtils.pillRippleDrawable(this, snoozeZoneColor));
+            button.setTypeface(mGeneralBoldTypeface);
+            button.setTextColor(snoozeTextColor);
+            button.setOnClickListener(v -> snooze(length));
         }
-
-        mBinding.snoozeSelectorText.setText(mSnoozeSelectorEntries[mSnoozeSelectorIndex]);
-    }
-
-    /**
-     * Returns the width available for animations or interactions in the slide area,
-     * excluding the left and right paddings of the layout.
-     */
-    private float getAvailableSlideZoneWidth() {
-        return mBinding.slideZoneLayout.getWidth() - mBinding.slideZoneLayout.getPaddingStart() - mBinding.slideZoneLayout.getPaddingEnd();
-    }
-
-    /**
-     * Helper method to create a translation animation.
-     */
-    private Animator translationAnimator(View view, float targetWidth, float targetCenterX) {
-        return ObjectAnimator.ofPropertyValuesHolder(view,
-            PropertyValuesHolder.ofFloat(PillView.PILL_WIDTH, targetWidth),
-            PropertyValuesHolder.ofFloat(PillView.PILL_CENTER_X, targetCenterX));
-    }
-
-    /**
-     * Helper method to create an alpha color change animation.
-     */
-    private Animator alphaAnimator(View view, int alphaColor) {
-        return ObjectAnimator.ofPropertyValuesHolder(view, PropertyValuesHolder.ofObject(
-            PillView.FILL_COLOR, AnimatorUtils.ARGB_EVALUATOR, alphaColor));
-    }
-
-    /**
-     * Apply transparency to "Snooze" and "Dismiss" texts based on movement direction.
-     */
-    private void updateTextAlpha(float deltaX) {
-        final View parentView = (View) mBinding.alarmButton.getParent();
-        int parentPaddingHorizontal = parentView.getPaddingStart() + parentView.getPaddingLeft();
-        int parentWidth = parentView.getWidth() - (parentPaddingHorizontal);
-        float maxDeltaX = parentWidth - mBinding.alarmButton.getWidth();
-        maxDeltaX /= 2f; // since the displacement is centered
-
-        float threshold = TEXT_FADE_START_THRESHOLD * maxDeltaX;
-        float absDeltaX = Math.abs(deltaX);
-
-        if (absDeltaX <= threshold) {
-            mBinding.snoozeText.setAlpha(1.0f);
-            mBinding.dismissText.setAlpha(1.0f);
-            return;
+        mBinding.calendarSnoozeLabel.setTypeface(mGeneralBoldTypeface);
+        mBinding.calendarSnoozeLabel.setTextColor(SettingsDAO.getSnoozeTitleColor(mPrefs));
+        if (mIsTextShadowDisplayed) {
+            mBinding.calendarSnoozeLabel.setShadowLayer(mShadowRadius, mShadowOffset, mShadowOffset, mShadowColor);
         }
-
-        float fadeFraction = (absDeltaX - threshold) / (maxDeltaX - threshold);
-        fadeFraction = Math.min(fadeFraction, 1.0f);
-        float alpha = 1.0f - fadeFraction;
-
-        boolean isRTL = mBinding.contentView.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
-
-        if ((deltaX > 0 && !isRTL) || (deltaX < 0 && isRTL)) {
-            // Swipe right (Dismiss right side in LTR, left in RTL)
-            mBinding.dismissText.setAlpha(alpha);
-            mBinding.snoozeText.setAlpha(1.0f);
-        } else {
-            // Swipe left (Snooze left in LTR, right in RTL)
-            mBinding.snoozeText.setAlpha(alpha);
-            mBinding.dismissText.setAlpha(1.0f);
-        }
-    }
-
-    /**
-     * Set animators to initial values, reset text transparency and restart translation on pill view.
-     */
-    private void resetAnimations() {
-        mBinding.snoozeText.setAlpha(1.0f);
-        mBinding.dismissText.setAlpha(1.0f);
-
-        mBinding.alarmButton.animate()
-            .translationX(0)
-            .translationY(0)
-            .setDuration(200)
-            .start();
-
-        if (mTranslationAnimator != null && !mTranslationAnimator.isRunning()) {
-            mTranslationAnimator.start();
-        }
+        mBinding.calendarSnoozeChoices.setVisibility(VISIBLE);
     }
 
     /**
      * Perform snooze animation.
      */
-    private void snooze() {
+    private void snooze(int minutes) {
         if (mAreSnoozedOrDismissedAlarmVibrationsEnabled) {
             performDoubleVibration();
         }
 
-        displayAlarmActionMessage(R.string.alarm_alert_snoozed_text, buildTimeString(mSnoozeSelectorIndex == 0 ? DEFAULT_SNOOZE_VALUE : mSnoozeMinutes));
+        displayAlarmActionMessage(R.string.alarm_alert_snoozed_text, buildTimeString(minutes));
     }
 
     /**
@@ -842,17 +307,6 @@ public class AlarmDisplayPreviewActivity extends BaseActivity
         }
 
         displayAlarmActionMessage(R.string.alarm_alert_off_text, null);
-    }
-
-    /**
-     * Preview feedback for permanently disabling a repeating alarm.
-     */
-    private void dismissAndDisable() {
-        if (mAreSnoozedOrDismissedAlarmVibrationsEnabled) {
-            performSingleVibration();
-        }
-
-        displayAlarmActionMessage(R.string.alarm_alert_disabled_text, null);
     }
 
     /**

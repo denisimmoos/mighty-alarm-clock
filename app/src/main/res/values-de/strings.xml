@@ -25,7 +25,6 @@
     <string name="alarm_missed_text" msgid="6585658367289194023"><xliff:g id="alarm_time">%1$s</xliff:g> - <xliff:g id="alarm_label">%2$s</xliff:g></string>
     <string name="alarm_alert_snoozed_text" msgid="7064642998528766113">Stumm</string>
     <string name="alarm_alert_off_text" msgid="4472073417593915002">Wecker ausgeschaltet</string>
-    <string name="alarm_alert_disabled_text">Wecker dauerhaft ausgeschaltet</string>
     <string name="alarm_alert_snooze_text" msgid="1774416052207651584">"Schlummern"</string>
     <plurals name="alarm_alert_snooze_set" formatted="false" msgid="3212729193036041768">
         <item quantity="one">1 Minute schlummern.</item>
@@ -95,7 +94,6 @@
     <string name="volume_button_setting_title" msgid="6937131248843413357">Lautstärketasten</string>
     <string name="button_action_snooze">Schlummern</string>
     <string name="button_action_dismiss">Verwerfen</string>
-    <string name="button_action_disable">Dauerhaft ausschalten</string>
     <string name="button_action_control_volume">Lautstärke regeln</string>
     <string name="button_action_nothing">Keine Aktion</string>
     <string name="menu_alarm" msgid="4772010125376647519">Wecker</string>
@@ -172,9 +170,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Verarbeitet Aktionen von Timer-Benachrichtigungen."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Verarbeitet Aktionen von Stoppuhr-Benachrichtigungen."</string>
     <string name="swn_paused" msgid="6364358842808263589">"Angehalten"</string>
-    <string name="swipe_down_to_disable_hint">Nach unten wischen: dauerhaft ausschalten</string>
-    <string name="description_direction_both" msgid="1841309486023845685">Zum Schlummern nach links oder zum Verwerfen nach rechts wischen</string>
-    <string name="description_direction_both_with_disable">Zum Schlummern nach links, zum Verwerfen nach rechts oder zum dauerhaften Ausschalten nach unten wischen</string>
     <string name="timer_settings" msgid="7955522143086154795">"Timer"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Vibrationsalarm des Timers"</string>
     <string name="timer_paused" msgid="5941160896040771462">Angehalten</string>
@@ -207,18 +202,17 @@
     <string name="timer_channel">Timer</string>
     <string name="selected">Ausgewählt</string>
     <string name="alarm_label_box_title">Weckername</string>
-    <string name="alarm_settings_summary">Stil, Standard-Weckton, Lautstärke, Aktionen zum Verwerfen oder Schlummern von Weckern, ersten Wochentag und Benachrichtigung über anstehende Wecker einstellen</string>
+    <string name="alarm_settings_summary">Weckbildschirm, Standard-Weckton, Weckerlautstärke, Vibration, Tasten- und Gestenaktionen sowie die Erinnerungsbenachrichtigung einstellen</string>
     <string name="first_launch_button_later">Später</string>
     <string name="first_launch_button_now">Jetzt</string>
     <string name="first_launch_important_info_title">WICHTIGE INFORMATION</string>
     <string name="revoke_permission_dialog_message">Sind Sie sicher, dass Sie diese Berechtigung widerrufen wollen?</string>
     <string name="more_options">Mehr Optionen</string>
     <string name="first_launch_dialog_message">Sind Sie sicher, dass Sie die App verlassen wollen?</string>
-    <string name="display_card_background_summary">Hintergrund für einige Elemente der App anzeigen (Wecker, Städte, Timer usw.)</string>
+    <string name="display_card_background_summary">Hintergrund für einige Elemente der App anzeigen (Profile, Städte, Timer usw.)</string>
     <string name="power_button_title">Ein/Aus-Taste</string>
     <string name="add_label">Name hinzufügen</string>
-    <string name="display_background_border_summary">Rahmen für einige Elemente der App anzeigen (Wecker, Städte, Timer usw.)</string>
-    <string name="swipe_action_title">Wischen zum Verwerfen oder Schlummern von Weckern</string>
+    <string name="display_background_border_summary">Rahmen für einige Elemente der App anzeigen (Profile, Städte, Timer usw.)</string>
     <string name="style_category_title">Stil</string>
     <string name="font_category_title">Schrift</string>
     <string name="ringtone_category_title">Weckton</string>
@@ -237,7 +231,6 @@
     <string name="about_github_link">Auf GitHub ansehen</string>
     <string name="license">Open-Source-Lizenz</string>
     <string name="dialog_close">Schließen</string>
-    <string name="description_direction_both_for_non_repeatable_alarm">Zum Verwerfen nach links oder rechts wischen</string>
     <string name="timer_settings_summary">Stil, Schriftart, Standardton, Timer-Stop und -Sortierung festlegen</string>
     <string name="default_time_to_add_to_timer_title">Standardzeit zur Verlängerung des Timers</string>
     <string name="screensaver_daydream_settings">Bildschirmschoner auswählen/aktivieren</string>
@@ -320,9 +313,7 @@
         ► Sichern und Wiederherstellen von Profilen und Einstellungen (außer eigene Wecktöne); &lt;br&gt; &lt;br&gt;
         ► %s</string>
     <string name="first_launch_important_info_message">Um sicherzustellen, dass die Anwendung ordnungsgemäß funktioniert, &lt;b&gt;müssen einige Ihrer Geräteeinstellungen geändert werden:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;AKKU-OPTIMIERUNG;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;BENACHRICHTIGUNGEN;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;KALENDERZUGRIFF;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;Abhängig von der Android-Version Ihres Geräts sind einige dieser Einstellungen bereits optimiert (z. B. Benachrichtigungen).&lt;/i&gt; &lt;br&gt; &lt;br&gt; Sie können sie jetzt oder später in den Einstellungen zur Berechtigungsverwaltung ändern:</string>
-    <string name="snooze_button_color">Farbe des „Schlummern“-Buttons</string>
     <string name="dismiss_button_color">Farbe des „Verwerfen“-Buttons</string>
-    <string name="alarm_button_color">Farbe des Schiebereglers</string>
     <string name="clock_font_size">Schriftgröße der Uhr</string>
     <string name="alarm_title_font_size">Schriftgröße des Weckernamens</string>
     <string name="settings_tab_indicator_title">Unten im Navigationsmenü aktives Tab-Symbol mit Hintergrund anzeigen</string>
@@ -355,7 +346,6 @@
     <string name="red_accent_color">Rot</string>
     <string name="dark_theme">Dunkel</string>
     <string name="system_theme">System</string>
-    <string name="snooze_duration_none">Keine</string>
     <string name="sort_timer_ascending_duration">Nach Dauer (aufsteigend)</string>
     <string name="sort_name">Nach Name</string>
     <string name="sort_timer_descending_duration">Nach Dauer (absteigend)</string>
@@ -368,7 +358,6 @@
     <string name="sw_start_pause_action">Start / Pause</string>
     <string name="sw_long_press_volume_down_action_title">Leiser-Taste (lange drücken)</string>
     <string name="alarm_alert_dismiss_and_delete_text">Verwerfen &amp; Löschen</string>
-    <string name="alarm_alert_off_and_deleted_text">Wecker ausgeschaltet und gelöscht</string>
     <string name="hour_default_color_title">Standardfarbe für Stunden verwenden</string>
     <string name="widget_max_font_size_title">Schriftgröße des Widgets</string>
     <string name="restart_app_dialog_title_for_restore">Wiederherstellung abgeschlossen</string>
@@ -381,9 +370,6 @@
     <string name="day_accent_color_title">Akzentfarbe für Tag-Modus</string>
     <string name="indigo_accent_color">Indigo</string>
     <string name="amoled_dark_theme_mode">AMOLED</string>
-    <string name="description_direction_both_for_occasional_alarm">Zum Schlummern nach links oder zum Verwerfen und Löschen des Weckers nach rechts wischen</string>
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">Nach links oder rechts wischen, um den Wecker zu verwerfen und zu löschen</string>
-    <string name="occasional_alarm_alert_predismiss_title">Anstehender einmaliger Wecker</string>
     <string name="backup_button_title">Sichern</string>
     <string name="restore_button_title">Wiederherstellen</string>
     <string name="backup_restore_title">Sichern &amp; Wiederherstellen</string>
@@ -405,8 +391,6 @@
     <string name="settings_language_english_us">Englisch (US)</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">Vibration aktivieren, wenn der Wecker schlummert oder verworfen wird</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Doppelte Vibration beim Schlummern des Weckers und einfache Vibration beim Verwerfen des Weckers</string>
-    <string name="about_translate_link">Auf Codeberg übersetzen</string>
-    <string name="translate_dialog_message">Besuchen Sie die Codeberg-Seite:\n\n%s</string>
     <string name="permission_info_title">Nur für Xiaomi-Geräte</string>
     <string name="show_lockscreen_dialog_title">Auf dem Sperrbildschirm anzeigen</string>
     <string name="show_lockscreen_permission_title">AUF DEM SPERRBILDSCHIRM ANZEIGEN</string>
@@ -430,14 +414,8 @@
     <string name="settings_keep_screen_on_summary">Hinweis: Der Bildschirm ist immer eingeschaltet, wenn ein Timer oder eine Stoppuhr läuft und der entsprechende Tab angezeigt wird, unabhängig vom Status dieser Einstellung</string>
     <string name="display_next_alarm_title">Nächsten Wecker anzeigen</string>
     <string name="ringtone_title_color">Farbe des Weckton-Namens</string>
-    <string name="alarm_is_dismissed_and_deleted">Der Wecker um <xliff:g example="14:20" id="alarm_time">%s</xliff:g> wurde verworfen und gelöscht</string>
-    <string name="slide_zone_color_title">Farbe der Wischzone</string>
     <string name="snooze_title_color">Schriftfarbe „Schlummern“</string>
-    <string name="dismiss_title_color">Schriftfarbe „Verwerfen“</string>
     <string name="description_dismiss_button">Zum Verwerfen des Weckers tippen</string>
-    <string name="description_dismiss_button_with_disable">Tippen zum Verwerfen; lange drücken zum dauerhaften Ausschalten</string>
-    <string name="description_snooze_button">Zum Schlummern des Weckers tippen</string>
-    <string name="description_dismiss_button_for_occasional_alarm">Zum Verwerfen und Löschen des Weckers tippen</string>
     <string name="random_ringtone_title">Zufälliger Weckton</string>
     <string name="warning">Warnung</string>
     <string name="timer_button_time_seconds_warning_box_text">Gib einen Wert von 0 bis 59 Sekunden ein</string>
@@ -501,7 +479,6 @@
     <string name="background_image_title">Ein Hintergrundbild auswählen</string>
     <string name="enable_blur_effect_title">Unschärfeeffekt auf das Hintergrundbild anwenden</string>
     <string name="features_dialog_message">Seite mit den wichtigsten Funktionen besuchen:\n\n%s</string>
-    <string name="repetitive_alarm_is_dismissed">Wecker verworfen. <xliff:g example="Nächster Wecker am Montag" id="alarm_day">Neu geplant für %s.</xliff:g></string>
     <string name="progress_ringtones">Klingeltöne hinzufügen… (%1$d/%2$d)</string>
     <string name="display_timer_state_indicator_title">Zustandsanzeigen für Timer anzeigen</string>
     <string name="running_timer_indicator_color_title">Farbe für laufendenen Timer</string>
@@ -538,8 +515,6 @@
     <string name="screensaver_italic_battery_title">Batteriestand in kursiv</string>
     <string name="sync_alarm_by_label_title">Ein- und Ausschalten mit anderen Weckern synchronisieren, die den gleichen Namen haben</string>
     <string name="permissions_category_title">Berechtigungen</string>
-    <string name="snooze_plus_symbol_color_title">Farbe des „+“ Symbols</string>
-    <string name="snooze_minus_symbol_color_title">Farbe des „-“ Symbols</string>
     <string name="clock_dial_with_roman_numbers">Mit römischen Ziffern</string>
     <string name="timezone_baker_howland">Bakerinsel &amp; Howlandinsel</string>
     <string name="timezone_marquesas">Marquesas-Inseln</string>
@@ -554,11 +529,8 @@
     <string name="timezone_macquarie">Macquarieinsel</string>
     <string name="foreground_service_dialog_message">Um zu verhindern, dass Ihr Gerät die App zwangsweise schließt und Sie dadurch Wecker verpassen, wird dauerhaft eine Benachrichtigung eingeblendet.\n\nDadurch bleibt die App im Arbeitsspeicher, was jedoch zu einem leicht erhöhten Akkuverbrauch führen kann.\n\nHinweis: Bei den meisten Geräten ist es nicht notwendig, diese Einstellung zu aktivieren. Aktivieren Sie sie nur, wenn Sie Wecker verpassen.</string>
     <string name="button_tip_title">Taste „+“ gedrückt halten, um Ordner hinzuzufügen</string>
-    <string name="snooze_minus_button_color_title">Farbe der „-“ Taste</string>
-    <string name="snooze_plus_button_color_title">Farbe der „+“ Taste</string>
-    <string name="display_snooze_selector_title">Schaltflächen für abweichende Schlummerdauer anzeigen</string>
-    <string name="snooze_zone_color_title">Hintergrundfarbe der Schlummerdauer-Schaltfläche</string>
-    <string name="snooze_selector_text_color_title">Schriftfarbe der Schlummerdauer-Schaltfläche</string>
+    <string name="snooze_zone_color_title">Farbe der Schlummer-Blasen</string>
+    <string name="snooze_selector_text_color_title">Schriftfarbe der Schlummer-Blasen</string>
     <string name="background_image_summary">Hintergrundfarbe auf transparent einstellen, um das Hintergrundbild sichtbar zu machen</string>
     <string name="missed_timer_indicator_color_title">Farbe für verpassten Timer</string>
     <string name="clock_second_hand_lollipop">Breguet</string>
@@ -590,7 +562,6 @@
     <!-- **     MIGHTY ADDITIONS      ** -->
     <!-- ******************************* -->
 
-    <string name="mighty_choose_snooze_duration_title">Schlummern für…</string>
 
 
     <string name="mighty_features_title">Mighty-Funktionen</string>
@@ -680,8 +651,8 @@
     <string name="calendar_alarm_title_regex_help">Termine, deren Titel einen Treffer enthält, klingeln als Wecker. Beispiel: ^Alarm: passt auf Titel, die mit „Alarm:“ beginnen.</string>
     <string name="calendar_alarm_title_regex_invalid">Das ist kein gültiger regulärer Ausdruck.</string>
     <string name="calendar_alarm_section_sound">Ton und Vibration</string>
-    <string name="calendar_alarm_volume">Lautstärke: %1$d von %2$d</string>
-    <string name="calendar_alarm_volume_help">Der Wecker klingelt mit dieser Lautstärke. Danach wird die vorherige Weckerlautstärke wiederhergestellt.</string>
+    <string name="calendar_alarm_volume">Lautstärke: %1$d %% der Weckerlautstärke</string>
+    <string name="calendar_alarm_volume_help">Die Weckerlautstärke stellst du in Einstellungen, Wecker ein. Dieses Profil klingelt mit diesem Anteil davon.</string>
     <string name="calendar_alarm_vibrate">Vibration</string>
     <string name="calendar_alarm_flash">Taschenlampe blinken</string>
     <string name="calendar_alarm_vibrate_only">Nur vibrieren (kein Ton)</string>

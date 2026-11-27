@@ -41,8 +41,8 @@ import java.util.TimeZone;
  */
 final class CityModel {
 
-    /** Default world-clock city: Ebermannsdorf (Bavaria). */
-    private static final String DEFAULT_WORLD_CITY_ID = "C364";
+    /** Default world-clock entry: "Local Time", the phone's own time zone. */
+    private static final String DEFAULT_WORLD_CITY_ID = City.LOCAL_TIME_ID;
 
     private final Context mContext;
 
@@ -218,7 +218,7 @@ final class CityModel {
     }
 
     /**
-     * On first use (empty world-clock selection), preselect Ebermannsdorf ({@code C364}).
+     * On first use (empty world-clock selection), preselect "Local Time" ({@link City#LOCAL_TIME_ID}).
      */
     private List<City> ensureDefaultWorldCity(List<City> selectedCities) {
         if (mPrefs.getBoolean(PreferencesKeys.KEY_DEFAULT_WORLD_CITY_SEEDED, false)) {

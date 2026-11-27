@@ -10,7 +10,7 @@ public class PreferencesKeys {
 
     public static final String KEY_IS_FIRST_LAUNCH = "key_is_first_launch";
 
-    /** True after the default world-clock city (Ebermannsdorf) has been offered once. */
+    /** True after the default world-clock entry (Local Time) has been offered once. */
     public static final String KEY_DEFAULT_WORLD_CITY_SEEDED = "key_default_world_city_seeded";
 
     /** True after flip-to-snooze was applied as the new default for existing installs. */
@@ -40,7 +40,6 @@ public class PreferencesKeys {
     public static final String KEY_ABOUT_WHATS_NEW = "key_about_whats_new";
     public static final String KEY_ABOUT_FEATURES = "key_about_features";
     public static final String KEY_ABOUT_VIEW_ON_GITHUB = "key_about_view_on_github";
-    public static final String KEY_ABOUT_TRANSLATE = "key_about_translate";
     public static final String KEY_ABOUT_READ_LICENCE = "key_about_read_licence";
     public static final String KEY_ABOUT_KEEP_ANDROID_OPEN = "key_about_keep_android_open";
     public static final String KEY_DISPLAY_KEEP_ANDROID_OPEN_DIALOG = "key_display_keep_android_open";
@@ -60,7 +59,6 @@ public class PreferencesKeys {
     public static final String KEY_LANGUAGE_CODE = "key_language_code";
     public static final String KEY_VISIBLE_TABS = "key_visible_tabs";
     // Stored name from before the feature was called "Calendar Alarm"; kept so existing data still works.
-    public static final String KEY_CALENDAR_ALARM_TAB_ADDED = "key_calendar_alert_tab_added";
     public static final String KEY_TAB_TO_DISPLAY = "key_tab_to_display";
     public static final String KEY_VIBRATIONS = "key_vibrations";
     public static final String KEY_TOOLBAR_TITLE = "key_toolbar_title";
@@ -115,25 +113,15 @@ public class PreferencesKeys {
     public static final String KEY_ALARM_ANALOG_CLOCK_SIZE = "key_alarm_analog_clock_size";
     public static final String KEY_DISPLAY_ALARM_SECOND_HAND = "key_display_alarm_second_hand";
     public static final String KEY_ALARM_CLOCK_SECOND_HAND = "key_alarm_clock_second_hand";
-    public static final String KEY_SWIPE_ACTION = "key_swipe_action";
-    public static final String KEY_DISPLAY_SNOOZE_SELECTOR = "key_display_snooze_selector";
     public static final String KEY_ALARM_BACKGROUND_COLOR = "key_alarm_background_color";
     public static final String KEY_ALARM_BACKGROUND_AMOLED_COLOR = "key_alarm_background_amoled_color";
     public static final String KEY_ALARM_CLOCK_COLOR = "key_alarm_clock_color";
     public static final String KEY_ALARM_SECOND_HAND_COLOR = "key_alarm_second_hand_color";
     public static final String KEY_ALARM_TITLE_COLOR = "key_alarm_title_color";
-    public static final String KEY_SLIDE_ZONE_COLOR = "key_slide_zone_color";
-    public static final String KEY_ALARM_BUTTON_COLOR = "key_alarm_button_color";
     public static final String KEY_SNOOZE_TITLE_COLOR = "key_snooze_title_color";
-    public static final String KEY_SNOOZE_BUTTON_COLOR = "key_snooze_button_color";
-    public static final String KEY_DISMISS_TITLE_COLOR = "key_dismiss_title_color";
     public static final String KEY_DISMISS_BUTTON_COLOR = "key_dismiss_button_color";
     public static final String KEY_SNOOZE_ZONE_COLOR = "key_snooze_zone_color";
-    public static final String KEY_SNOOZE_MINUS_BUTTON_COLOR = "key_snooze_minus_button_color";
-    public static final String KEY_SNOOZE_PLUS_BUTTON_COLOR = "key_snooze_plus_button_color";
     public static final String KEY_SNOOZE_SELECTOR_TEXT_COLOR = "key_snooze_selector_text_color";
-    public static final String KEY_SNOOZE_MINUS_SYMBOL_COLOR = "key_snooze_minus_symbol_color";
-    public static final String KEY_SNOOZE_PLUS_SYMBOL_COLOR = "key_snooze_plus_symbol_color";
     public static final String KEY_ALARM_DIGITAL_CLOCK_FONT_SIZE = "key_alarm_digital_clock_font_size";
     public static final String KEY_ALARM_TITLE_FONT_SIZE_PREF = "key_alarm_title_font_size_pref";
     public static final String KEY_ALARM_DISPLAY_TEXT_SHADOW = "key_alarm_display_text_shadow";

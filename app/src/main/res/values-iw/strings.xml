@@ -173,7 +173,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">מעבד פעולות מההתראות של הטיימרים.</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"מעבד פעולות מההודעות של שעון העצר."</string>
     <string name="swn_paused" msgid="6364358842808263589">"מושהה"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">החלקה שמאלה לדחייה עם „נודניק” או ימינה לכיבוי ההתראה</string>
     <string name="timer_settings" msgid="7955522143086154795">טיימרים</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">רטט טיימר</string>
     <string name="timer_paused" msgid="5941160896040771462">הטיימר מושהה</string>
@@ -250,7 +249,6 @@
     <string name="whats_new_title">מה חדש</string>
     <string name="features_title">תכונות עיקריות</string>
     <string name="about_github_link">הצגה ב־Github</string>
-    <string name="about_translate_link">תרגום ב־Codeberg</string>
     <string name="license">רישיון קוד פתוח</string>
     <string name="reset_settings_title">איפוס ההגדרות</string>
     <string name="restart_app_dialog_title_for_reset">האיפוס הושלם</string>
@@ -284,8 +282,6 @@
     <string name="label_new_image">הוספת תמונה</string>
     <string name="label_new_font">הוספת גופן</string>
     <string name="selected">נבחר</string>
-    <string name="alarm_alert_off_and_deleted_text">ההתראה כובתה ונמחקה</string>
-    <string name="occasional_alarm_alert_predismiss_title">ההתראה השגרתית הקרובה</string>
     <string name="vertical_widget">שעון אנכי</string>
     <string name="custom_font_title">בחירת גופן מותאם אישית</string>
     <string name="custom_font_title_variant">החלפה או מחיקה של הגופן המותאם אישית</string>
@@ -305,10 +301,6 @@
     <string name="vibration_pattern_soft">עדין</string>
     <string name="vibration_pattern_strong">חזק</string>
     <string name="vibration_pattern_heartbeat">פעימות מהירות</string>
-    <string name="snooze_button_color">צבע הכפתור „נודניק”</string>
-    <string name="description_dismiss_button_for_occasional_alarm">יש ללחוץ בשביל לסגור ולמחוק את ההתראה</string>
-    <string name="description_direction_both_for_non_repeatable_alarm">החלקה ימינה או שמאלה תכבה את ההתראה</string>
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">החלקה ימינה או שמאלה תסגור ותמחק את ההתראה</string>
     <string name="description_dismiss_button">יש ללחוץ כדי לסגור את ההתראה</string>
     <string name="settings_permission_message">נדחתה הרשאה חיונית אחת או יותר. אי הענקת ההרשאות עלולה לגרום לתפקוד לקוי של היישום.</string>
     <string name="last_tab_used_title">לשונית אחרונה בשימוש</string>
@@ -318,10 +310,7 @@
     <string name="advanced_audio_playback_summary">משפר את התאימות למכשירי שמע חיצוניים ומונע הפרעות לצלילים במהלך החזרה עליהם\n\nהערה: לצלצולים מסוימים יהיו קרטועי שמע קלים</string>
     <string name="system_media_volume_title">שימוש בעוצמת הקול למדיה של המערכת</string>
     <string name="vibration_start_delay_none">ללא</string>
-    <string name="snooze_title_color">צבע הכותרת „נודניק”</string>
-    <string name="dismiss_title_color">צבע הכותרת „כיבוי התראה”</string>
     <string name="dismiss_button_color">צבע הכפתור „כיבוי התראה”</string>
-    <string name="alarm_button_color">צבע כפתור ההתראה</string>
     <string name="clock_font_size">גודל גופן השעון</string>
     <string name="alarm_title_font_size">גודל גופן כותרת ההתראה</string>
     <string name="shadow_color_title">צבע צללית</string>
@@ -331,8 +320,6 @@
     <string name="background_image_toast_message_selected">התמונה יובאה בהצלחה</string>
     <string name="background_image_toast_message_deleted">התמונה נמחקה בהצלחה</string>
     <string name="enable_blur_effect_title">החלת אפקט טשטוש על תמונת הרקע</string>
-    <string name="snooze_duration_none">ללא</string>
-    <string name="swipe_action_title">החלקה לכיבוי התראות או דחייתן עם „נודניק”</string>
     <string name="power_button_title">כפתור ההפעלה</string>
     <string name="add_label">הוספת תווית</string>
     <string name="sw_settings_summary">התאמה אישית של הגופן ופעולות מקשי עוצמת השמע</string>
@@ -379,13 +366,6 @@
     <string name="external_audio_device_volume_title">עוצמת קול של התראה במכשירי שמע חיצוניים</string>
     <string name="connect_external_audio_device_title">יש לחבר מכשיר שמע חיצוני כדי לגשת להגדרה זו</string>
     <string name="disconnect_external_audio_device_title">יש לנתק את מכשיר השמע החיצוני כדי לגשת להגדרה זו</string>
-    <string name="display_card_background_summary">הצגת רקע לחלק מהרכיבים של היישום (התראות, ערים, כפתורי טיימר וכו׳)</string>
-    <string name="slide_zone_color_title">צבע אזור ההחלקה</string>
-    <string name="snooze_zone_color_title">צבע אזור הנודניק</string>
-    <string name="snooze_minus_button_color_title">צבע הכפתור „-”</string>
-    <string name="snooze_plus_button_color_title">צבע הכפתור „+”</string>
-    <string name="snooze_minus_symbol_color_title">צבע הסימן „-”</string>
-    <string name="snooze_plus_symbol_color_title">צבע הסימן „+”</string>
     <string name="background_image_summary">יש להגדיר רקע שקוף בשביל לראות את התמונה</string>
     <string name="settings_tab_to_display">לשונית להצגה בעת פתיחת היישום</string>
     <string name="settings_vibration_summary">רק חלק מכפתורי הממשק מושפעים (למשל: כפתור ההתחלה/השהיה של טיימר או המתגים)</string>
@@ -393,10 +373,8 @@
     <string name="timezone_easter_island">אי הפסחא</string>
     <string name="timezone_lord_howe">אי הלורד האו</string>
     <string name="github_dialog_message">ביקור בעמוד ה־GitHub של המיזם:\n\n%s</string>
-    <string name="translate_dialog_message">ביקור בעמוד ה־Codeberg:‏\n\n%s</string>
     <string name="features_dialog_message">ביקור בעמוד התכונות הראשיות:\n\n%s</string>
     <string name="license_dialog_message">לקריאת הרישיון:\n\n%s</string>
-    <string name="description_snooze_button">יש ללחוץ בשביל לשים את ההתראה במצב נודניק</string>
     <string name="timer_creation_view_style_keypad">לוח מקשים</string>
     <string name="display_compact_timers_title">הצגת הטיימרים הפעילים במצב התצוגה המצומצמת</string>
     <string name="display_background_border_title">הצגת גבולות הרקעים</string>
@@ -410,8 +388,6 @@
     <string name="restart_app_dialog_title_for_restore">השחזור הושלם</string>
     <string name="restart_app_dialog_message">על היישום להיפתח מחדש לצורך החלת השינויים.</string>
     <string name="shortcut_disabled">הלשונית מוסתרת</string>
-    <string name="alarm_settings_summary">התאמה אישית של הסגנון, הגופן, צלצול ברירת המחדל, הפעולות לכיבוי התראות או דחייתן עם „נודניק”, היום הראשון בשבוע, וזמן תזכורות ההתראה</string>
-    <string name="description_direction_both_for_occasional_alarm">החלקה שמאלה לדחייה עם „נודניק” או ימינה בשביל לכבות ולמחוק את ההתראה</string>
     <string name="sort_timer_ascending_duration">לפי משך זמן (בסדר עולה)</string>
     <string name="sort_timer_descending_duration">לפי משך זמן (בסדר יורד)</string>
     <string name="display_warning_before_deleting_timer_title">הצגת אזהרה לפני מחיקת טיימר</string>
@@ -519,8 +495,6 @@
     <string name="backup_restore_summary">גיבוי או שחזור של נתוני היישום למעט צלצולים</string>
     <string name="customize_background_corner_radius_summary">מאפשרת לך לעגל את פינות היישומון אם מסך הבית שלך לא תומך באפשרות הזו</string>
     <string name="customize_background_corner_radius_title">התאמה אישית של רדיוס פינות הרקע</string>
-    <string name="repetitive_alarm_is_dismissed">ההתראה כובתה. <xliff:g example="Next alarm Monday." id="alarm_day">מתוכננת מחדש ליום %s.</xliff:g></string>
-    <string name="alarm_is_dismissed_and_deleted">ההתראה של <xliff:g example="14:20" id="alarm_time">%s</xliff:g> כובתה ונמחקה</string>
     <string name="amoled_dark_theme_mode">תצוגת AMOLED</string>
     <string name="vibration_pattern_tick_tock">תיק־תק</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">רטט כפול בעת דחיית התראה עם „נודניק” ורטט בודד בעת כיבוי התראה</string>

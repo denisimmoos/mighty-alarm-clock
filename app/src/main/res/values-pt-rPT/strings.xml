@@ -176,7 +176,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Processa as ações das notificações do temporizador."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Processa as ações das notificações do cronómetro."</string>
     <string name="swn_paused" msgid="6364358842808263589">Pausado</string>
-    <string name="description_direction_both" msgid="1841309486023845685">Deslizar para a esquerda para adiar ou direita para ignorar</string>
     <string name="timer_settings" msgid="7955522143086154795">"Temporizadores"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Vibração do temporizador"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Temporizador interrompido"</string>
@@ -238,8 +237,6 @@
     <string name="features_title">Funcionalidades principais</string>
     <string name="about_github_link">Ver no GitHub</string>
     <string name="github_dialog_message">Visite a página do projeto no GitHub:\n\n%s</string>
-    <string name="about_translate_link">Traduzir em Codeberg</string>
-    <string name="translate_dialog_message">Visite a página de Codeberg:\n\n%s</string>
     <string name="license">Licença de código aberto</string>
     <string name="license_dialog_message">Leia a licença:\n\n%s</string>
     <string name="gnu_gpl">Licença Pública Geral v3.0 GNU</string>
@@ -247,13 +244,7 @@
     <string name="reset_settings_message">Deseja reiniciar as definições da aplicação?</string>
     <string name="restart_app_dialog_title_for_reset">Reinício concluído</string>
     <string name="dialog_close">Fechar</string>
-    <string name="alarm_settings_summary">Definir estilo, toque predefinido, volume, ações para ignorar ou adiar alarmes, primeiro dia da semana e hora de notificação do lembrete</string>
-    <string name="description_direction_both_for_occasional_alarm">Deslizar para a esquerda para adiar ou direita para ignorar e eliminar o alarme</string>
-    <string name="description_direction_both_for_non_repeatable_alarm">Deslizar para a esquerda ou direita para ignorar</string>
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">Deslizar para a esquerda ou direita para ignorar e eliminar o alarme</string>
-    <string name="description_snooze_button">Clique para adiar o alarme</string>
     <string name="description_dismiss_button">Clique para ignorar o alarme</string>
-    <string name="description_dismiss_button_for_occasional_alarm">Clique para ignorar e eliminar o alarme</string>
     <string name="timer_settings_summary">Definir o toque predefinido, volume e ordenar o temporizador</string>
     <string name="timer_creation_view_style_title">Estilo da visualização da criação do temporizador</string>
     <string name="timer_creation_view_style_keypad">Teclado</string>
@@ -279,7 +270,6 @@
     <string name="screensaver_bold_date_title">Data em negrito</string>
     <string name="screensaver_italic_date_title">Data em itálico</string>
     <string name="preview_title">Pré-visualizar</string>
-    <string name="alarm_is_dismissed_and_deleted">Alarme das <xliff:g example="14:20" id="alarm_time">%s</xliff:g> ignorado e eliminado</string>
     <string name="shake_intensity_title">Intensidade de abanar</string>
     <string name="first_launch_version">Versão %s</string>
     <string name="first_launch_main_feature_title">FUNCIONALIDADES PRINCIPAIS</string>
@@ -333,13 +323,10 @@
     <string name="timer_label_box_title">Etiqueta do temporizador</string>
     <string name="timer_time_box_title">Nova duração do temporizador</string>
     <string name="clock_style_spinner">Spinner</string>
-    <string name="slide_zone_color_title">Cor da zona de deslizar</string>
     <string name="sort_name">Por nome</string>
     <string name="selected">Selecionado</string>
     <string name="more_options">Mais opções</string>
     <string name="alarm_alert_dismiss_and_delete_text">Ignorar e Eliminar</string>
-    <string name="alarm_alert_off_and_deleted_text">Alarme desligado e eliminado</string>
-    <string name="occasional_alarm_alert_predismiss_title">Próximo alarme ocasional</string>
     <string name="vertical_widget">Relógio digital vertical</string>
     <string name="next_alarm_widget">Alarme seguinte</string>
     <string name="settings_permission_summary">Clique aqui para exibir a página de gestão das \'Permissões\'.</string>
@@ -381,15 +368,12 @@
     <string name="tab_title_visibility_when_selected">Quando selecionado</string>
     <string name="alarm_notification_reminder_title">Lembrete de notificação</string>
     <string name="advanced_audio_playback_title">Usar reprodução de áudio avançada</string>
-    <string name="alarm_button_color">Cor do botão do alarme</string>
     <string name="clock_font_size">Tamanho da letra do relógio</string>
     <string name="alarm_title_font_size">Tamanho da letra do título do alarme</string>
     <string name="display_ringtone_title">Exibir título do toque</string>
     <string name="ringtone_title_color">Cor do título do toque</string>
     <string name="auto_silence_end_of_ringtone">No fim do toque</string>
-    <string name="snooze_duration_none">Nenhum</string>
     <string name="random_ringtone_title">Toque aleatório</string>
-    <string name="swipe_action_title">Deslize para ignorar ou suspender os alarmes</string>
     <string name="power_button_title">Botão de ligar</string>
     <string name="add_label">Adicionar etiqueta</string>
     <string name="city_search_hint">Procurar por uma cidade</string>
@@ -428,7 +412,5 @@
     <string name="display_settings_title">Definições do ecrã</string>
     <string name="day_accent_color_title">Cor de destaque para o modo dia</string>
     <string name="display_card_background_title">Planos de fundo dos cartões de visualização</string>
-    <string name="display_card_background_summary">Exibe um fundo para alguns elementos da aplicação (alarmes, cidades, botão de temporizador, etc.)</string>
-    <string name="display_background_border_summary">Exibe uma borda do fundo para alguns elementos da aplicação (alarmes, cidades, botão de temporizador, etc.)</string>
     <string name="settings_vibration_summary">Apenas alguns botões na interface são afetados (ex: o cronómetro botão de reproduzir/pausar ou interruptores)</string>
 </resources>

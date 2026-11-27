@@ -176,7 +176,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Procesează acțiunile din notificările de la temporizator."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Procesează acțiunile din notificările de la cronometru."</string>
     <string name="swn_paused" msgid="6364358842808263589">"Întrerupt"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">Glisează spre stânga pentru a amâna sau spre dreapta pentru a închide</string>
     <string name="timer_settings" msgid="7955522143086154795">"Temporizatoare"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Vibrare pentru temporizator"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Temporizator întrerupt"</string>
@@ -214,7 +213,6 @@
     <string name="settings_permission_summary">Clic aici pentru a afișa pagina de gestionare a permisiunilor.</string>
     <string name="title_dark_theme_mode">Modul temă întunecată</string>
     <string name="display_background_border_title">Afișează chenarele de fundal</string>
-    <string name="display_background_border_summary">Afișează un chenar de fundal pentru unele elemente ale aplicației (alarme, orașe, buton cronometru etc.)</string>
     <string name="settings_vibration_title">Activează vibrațiile</string>
     <string name="settings_vibration_summary">Numai unele butoane ale interfeței sunt afectate (de exemplu: butonul de redare/pauză sau comutatoare cu temporizator)</string>
     <string name="power_button_title">Butonul de pornire</string>
@@ -266,7 +264,6 @@
     <string name="interface_customization_settings">Interfață</string>
     <string name="style_category_title">Stil</string>
     <string name="font_category_title">Font</string>
-    <string name="display_card_background_summary">Afișează un fundal pentru unele elemente ale aplicației (alarme, orașe, buton cronometru etc.)</string>
     <string name="first_launch_main_feature_title">CARACTERISTICI PRINCIPALE</string>
     <string name="permission_granted">Acordată</string>
     <string name="title_theme">Temă</string>

@@ -168,7 +168,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"டைமர் அறிவிப்புகள் தொடர்பான செயல்பாடுகளைச் செயலாக்கும்."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"ஸ்டாப்வாட்ச் அறிவிப்புகள் தொடர்பான செயல்பாடுகளைச் செயலாக்கும்."</string>
     <string name="swn_paused" msgid="6364358842808263589">"இடைநிறுத்தப்பட்டது"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">"உறக்கநிலையாக்க இடதுபுறம் அல்லது விலக்க வலதுபுறம் ஸ்வைப் செய்யவும்"</string>
     <string name="timer_settings" msgid="7955522143086154795">"டைமர்கள்"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"டைமர் அதிர்வு"</string>
     <string name="timer_paused" msgid="5941160896040771462">"டைமர் இடைநிறுத்தப்பட்டது"</string>
@@ -225,8 +224,6 @@
     <string name="confirm_action_prompt">\n\nதொடர வேண்டுமா?</string>
     <string name="more_options">மேலும் விருப்பங்கள்</string>
     <string name="progress_ringtones">ரிங்டோன்களைச் சேர்க்கிறது… (%1$d/%2$d)</string>
-    <string name="alarm_alert_off_and_deleted_text">அலாரம் அணைக்கப்பட்டு நீக்கப்பட்டது</string>
-    <string name="occasional_alarm_alert_predismiss_title">வரவிருக்கும் எப்போதாவது அலாரம்</string>
     <string name="settings_permission_message">ஒன்று அல்லது அதற்கு மேற்பட்ட அத்தியாவசிய அனுமதிகள் மறுக்கப்படுகின்றன. அவற்றை வழங்காதது செயலிழப்புக்கு வழிவகுக்கும்.</string>
     <string name="settings_permission_summary">அனுமதிகள் மேலாண்மை பக்கத்தைக் காட்ட இங்கே சொடுக்கு செய்யவும்.</string>
     <string name="style_category_title">சூல் தண்டு</string>
@@ -245,9 +242,7 @@
     <string name="day_accent_color_title">நாள் பயன்முறைக்கான உச்சரிப்பு நிறம்</string>
     <string name="night_accent_color_title">இரவு பயன்முறைக்கான உச்சரிப்பு நிறம்</string>
     <string name="display_card_background_title">அட்டை பின்னணியைக் காண்பி</string>
-    <string name="display_card_background_summary">சில பயன்பாட்டு உறுப்புகளுக்கான பின்னணியைக் காட்டுகிறது (அலாரம்கள், நகரங்கள், நேரங்குறிகருவி பொத்தான் போன்றவை)</string>
     <string name="display_background_border_title">பின்னணி எல்லைகளைக் காண்பி</string>
-    <string name="display_background_border_summary">சில பயன்பாட்டு உறுப்புகளுக்கு (அறிவிப்பொலிகள், நகரங்கள், நேரங்குறிகருவி பொத்தான் போன்றவை) பின்னணி எல்லையைக் காட்டுகிறது</string>
     <string name="settings_tab_to_display">பயன்பாட்டைத் திறக்கும்போது காட்ட தாவல்</string>
     <string name="last_tab_used_title">கடைசியாக பயன்படுத்தப்பட்ட தாவல்</string>
     <string name="settings_vibration_summary">சில இடைமுக பொத்தான்கள் மட்டுமே பாதிக்கப்படுகின்றன (எ.கா: நேரங்குறிகருவி பிளே/பாச் பட்டன் அல்லது சுவிட்சுகள்)</string>
@@ -278,12 +273,7 @@
     <string name="vibration_start_delay_warning_box_text">0 முதல் 10 நிமிடங்கள் வரை மதிப்பை உள்ளிடவும்</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">அலாரத்தை உறக்கநிலையில் வைக்கும்போது இரட்டை அதிர்வு மற்றும் அலாரத்தை நிராகரிக்கும் போது ஒற்றை அதிர்வு</string>
     <string name="sort_name">பெயரால்</string>
-    <string name="slide_zone_color_title">ச்லைடு மண்டலத்தின் நிறம்</string>
-    <string name="snooze_title_color">\"உறக்கநிலை\" தலைப்பின் நிறம்</string>
-    <string name="snooze_button_color">\"உறக்கநிலை\" பொத்தானின் நிறம்</string>
-    <string name="dismiss_title_color">\"நீக்கம்\" தலைப்பின் நிறம்</string>
     <string name="dismiss_button_color">\"நிராகரி\" பொத்தானின் நிறம்</string>
-    <string name="alarm_button_color">அலாரம் பொத்தான் நிறம்</string>
     <string name="clock_font_size">அலாரம் கடிகார எழுத்துரு அளவு</string>
     <string name="alarm_title_font_size">அலாரத்தின் தலைப்பு எழுத்துரு அளவு</string>
     <string name="display_text_shadow_title">உரை நிழலைக் காண்பி</string>
@@ -299,9 +289,7 @@
     <string name="background_image_toast_message_deleted">படம் வெற்றிகரமாக நீக்கப்பட்டது</string>
     <string name="enable_blur_effect_title">பின்னணி படத்திற்கு மங்கலான விளைவைப் பயன்படுத்தவும்</string>
     <string name="auto_silence_end_of_ringtone">ரிங்டோனின் முடிவு</string>
-    <string name="snooze_duration_none">எதுவுமில்லை</string>
     <string name="random_ringtone_title">சீரற்ற ரிங்டோன்</string>
-    <string name="swipe_action_title">அலாரங்களை நிராகரிக்க அல்லது உறக்கநிலையில் வைக்க ச்வைப் செய்யவும்</string>
     <string name="button_action_nothing">ஒன்றுமில்லை</string>
     <string name="power_button_title">ஆற்றல் பொத்தான்</string>
     <string name="add_label">லேபிளைச் சேர்க்கவும்</string>
@@ -349,8 +337,6 @@
     <string name="features_dialog_message">முக்கிய நற்பொருத்தங்கள் பக்கத்தைப் பார்வையிடவும்: \n\n%s</string>
     <string name="about_github_link">GitHub இல் காண்க</string>
     <string name="github_dialog_message">திட்ட GitHub பக்கத்தைப் பார்வையிடவும்: \n\n%s</string>
-    <string name="about_translate_link">கோட்பெர்க்கில் மொழிபெயர்க்கவும்</string>
-    <string name="translate_dialog_message">கோட்பெர்க் பக்கத்தைப் பார்வையிடவும்: \n\n%s</string>
     <string name="license">திறந்த மூல உரிமம்</string>
     <string name="license_dialog_message">உரிமத்தைப் படிக்கவும்: \n\n%s</string>
     <string name="gnu_gpl">குனு பொது பொதுமக்கள் உரிமம் v3.0</string>
@@ -358,13 +344,7 @@
     <string name="reset_settings_message">எல்லா ஆப்ச் அமைப்புகளையும் மீட்டமைக்க விரும்புகிறீர்களா?</string>
     <string name="restart_app_dialog_title_for_reset">மீட்டமைப்பு முடிந்தது</string>
     <string name="dialog_close">மூடு</string>
-    <string name="alarm_settings_summary">நடை, இயல்புநிலை ரிங்டோன், வால்யூம், அலாரங்களை நிராகரிப்பதற்கான அல்லது உறக்கநிலையில் வைக்கும் செயல்கள், வாரத்தின் முதல் நாள் மற்றும் நினைவூட்டல் அறிவிப்பு நேரத்தை அமைக்கவும்</string>
-    <string name="description_direction_both_for_occasional_alarm">உறக்கநிலையில் வைக்க இடதுபுறம் அல்லது அலாரத்தை நிராகரிக்க மற்றும் நீக்க வலதுபுறமாக ச்வைப் செய்யவும்</string>
-    <string name="description_direction_both_for_non_repeatable_alarm">நிராகரிக்க இடது அல்லது வலதுபுறமாக ச்வைப் செய்யவும்</string>
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">அலாரத்தை நிராகரிக்கவும் நீக்கவும் இடது அல்லது வலதுபுறமாக ச்வைப் செய்யவும்</string>
-    <string name="description_snooze_button">அலாரத்தை உறக்கநிலையில் வைக்க சொடுக்கு செய்யவும்</string>
     <string name="description_dismiss_button">அலாரத்தை நிராகரிக்க சொடுக்கு செய்யவும்</string>
-    <string name="description_dismiss_button_for_occasional_alarm">அலாரத்தை நிராகரிக்கவும் நீக்கவும் சொடுக்கு செய்யவும்</string>
     <string name="timer_settings_summary">இயல்புநிலை ரிங்டோன், தொகுதி மற்றும் நேரங்குறிகருவி வரிசையாக்கத்தை அமைக்கவும்</string>
     <string name="timer_creation_view_style_title">நேரங்குறிகருவி உருவாக்கும் காட்சி பாணி</string>
     <string name="timer_creation_view_style_keypad">விசைப்பலகை</string>
@@ -422,8 +402,6 @@
     <string name="screensaver_italic_next_alarm_title">சாய்வு எழுத்துக்களில் அடுத்த அலாரம்</string>
     <string name="preview_title">முன்னோட்டம்</string>
     <string name="screensaver_preview_summary">ச்கிரீன்சேவரை உடனடியாகத் தொடங்கும்</string>
-    <string name="repetitive_alarm_is_dismissed">அலாரம் நிராகரிக்கப்பட்டது. <xliff:g example="அடுத்த அலாரம் திங்கள்." id="alarm_day">%sக்கு மீண்டும் திட்டமிடப்பட்டது.</xliff:g></string>
-    <string name="alarm_is_dismissed_and_deleted"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> அலாரம் நிராகரிக்கப்பட்டது மற்றும் நீக்கப்பட்டது</string>
     <string name="flip_action_title">சாதனத்தை புரட்டுதல்</string>
     <string name="shake_action_title">சாதனத்தை அசைக்கும் செயல்</string>
     <string name="shake_intensity_title">குலுக்கல் தீவிரம்</string>

@@ -126,7 +126,6 @@ public class AboutFragment extends ScreenFragment implements Preference.OnPrefer
     Preference mWhatsNewPref;
     Preference mAboutFeaturesPref;
     Preference mViewOnGitHubPref;
-    Preference mTranslatePref;
     Preference mReadLicencePref;
     Preference mKeepAndroidOpenPref;
     PreferenceCategory mDebugCategoryPref;
@@ -155,7 +154,6 @@ public class AboutFragment extends ScreenFragment implements Preference.OnPrefer
         mWhatsNewPref = findPreference(KEY_ABOUT_WHATS_NEW);
         mAboutFeaturesPref = findPreference(KEY_ABOUT_FEATURES);
         mViewOnGitHubPref = findPreference(KEY_ABOUT_VIEW_ON_GITHUB);
-        mTranslatePref = findPreference(KEY_ABOUT_TRANSLATE);
         mReadLicencePref = findPreference(KEY_ABOUT_READ_LICENCE);
         mKeepAndroidOpenPref = findPreference(KEY_ABOUT_KEEP_ANDROID_OPEN);
         mDebugCategoryPref = findPreference(KEY_DEBUG_CATEGORY);
@@ -257,7 +255,7 @@ public class AboutFragment extends ScreenFragment implements Preference.OnPrefer
 
     @Override
     public void onDestroy() {
-        nullifyPreferenceListeners(mTitlePref, mVersionPref, mWhatsNewPref, mAboutFeaturesPref, mViewOnGitHubPref, mTranslatePref,
+        nullifyPreferenceListeners(mTitlePref, mVersionPref, mWhatsNewPref, mAboutFeaturesPref, mViewOnGitHubPref,
             mReadLicencePref, mKeepAndroidOpenPref, mDebugCategoryPref, mEnableLocalLoggingPref
         );
 
@@ -282,7 +280,7 @@ public class AboutFragment extends ScreenFragment implements Preference.OnPrefer
                 }
             }
 
-            case KEY_ABOUT_WHATS_NEW, KEY_ABOUT_FEATURES, KEY_ABOUT_VIEW_ON_GITHUB, KEY_ABOUT_TRANSLATE, KEY_ABOUT_READ_LICENCE ->
+            case KEY_ABOUT_WHATS_NEW, KEY_ABOUT_FEATURES, KEY_ABOUT_VIEW_ON_GITHUB, KEY_ABOUT_READ_LICENCE ->
                 triggerLinkDialog(preference.getKey());
 
             case KEY_ABOUT_KEEP_ANDROID_OPEN -> showKeepAndroidOpenDialog();
@@ -366,12 +364,6 @@ public class AboutFragment extends ScreenFragment implements Preference.OnPrefer
                 titleId = R.string.about_github_link;
                 messageId = R.string.github_dialog_message;
             }
-            case KEY_ABOUT_TRANSLATE -> {
-                link = ProjectUrls.TRANSLATE;
-                iconId = R.drawable.ic_about_translate;
-                titleId = R.string.about_translate_link;
-                messageId = R.string.translate_dialog_message;
-            }
             case KEY_ABOUT_READ_LICENCE -> {
                 link = ProjectUrls.GITHUB_LICENSE;
                 iconId = R.drawable.ic_about_license;
@@ -436,7 +428,6 @@ public class AboutFragment extends ScreenFragment implements Preference.OnPrefer
         mWhatsNewPref.setOnPreferenceClickListener(this);
         mAboutFeaturesPref.setOnPreferenceClickListener(this);
         mViewOnGitHubPref.setOnPreferenceClickListener(this);
-        mTranslatePref.setOnPreferenceClickListener(this);
         mReadLicencePref.setOnPreferenceClickListener(this);
         mKeepAndroidOpenPref.setOnPreferenceClickListener(this);
 
@@ -693,7 +684,6 @@ public class AboutFragment extends ScreenFragment implements Preference.OnPrefer
         mWhatsNewPref = null;
         mAboutFeaturesPref = null;
         mViewOnGitHubPref = null;
-        mTranslatePref = null;
         mReadLicencePref = null;
         mKeepAndroidOpenPref = null;
         mDebugCategoryPref = null;

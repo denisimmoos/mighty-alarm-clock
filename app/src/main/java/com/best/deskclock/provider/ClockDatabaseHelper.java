@@ -35,11 +35,17 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
     // Stored name from before the feature was called "Calendar Alarm"; kept so existing data still works.
     static final String CALENDAR_ALARM_EVENTS_TABLE_NAME = "calendar_alert_events";
 
-    private static final int DATABASE_VERSION = 43;
+    private static final int DATABASE_VERSION = 44;
     private static final int MINIMUM_SUPPORTED_VERSION = 15;
+
+    /** Steps of the alarm stream on this phone, to turn old profile volumes into percent. */
+    private final int mMaxAlarmVolume;
 
     public ClockDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        final android.media.AudioManager audioManager = context.getSystemService(android.media.AudioManager.class);
+        mMaxAlarmVolume = audioManager == null ? 7
+            : Math.max(1, audioManager.getStreamMaxVolume(android.media.AudioManager.STREAM_ALARM));
     }
 
     private static void createAlarmsTable(SQLiteDatabase db, String alarmsTableName) {
@@ -166,6 +172,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             ClockContract.CalendarProfilesColumns.EXTEND_ON_SNOOZE + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.SNOOZE_MINUTES_2 + " INTEGER NOT NULL DEFAULT 10, " +
             ClockContract.CalendarProfilesColumns.SNOOZE_MINUTES_3 + " INTEGER NOT NULL DEFAULT 20, " +
+            ClockContract.CalendarProfilesColumns.VOLUME_PERCENT + " INTEGER NOT NULL DEFAULT 100, " +
             ClockContract.CalendarProfilesColumns.CREATED_AT + " INTEGER NOT NULL DEFAULT 0, " +
             ClockContract.CalendarProfilesColumns.UPDATED_AT + " INTEGER NOT NULL DEFAULT 0);");
 
@@ -482,6 +489,43 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
         if (oldVersion < 43) {
             removeNormalAlarms(db);
         }
+
+        if (oldVersion >= 29 && oldVersion < 44) {
+            volumeStepsToPercent(db, mMaxAlarmVolume);
+        }
+    }
+
+    /**
+     * Profile volumes were absolute steps of the alarm stream. They are now a percent of the alarm
+     * volume set in the app, so the app's alarm volume affects every alarm.
+     */
+    static void volumeStepsToPercent(SQLiteDatabase db, int maxAlarmVolume) {
+        if (!profileColumnExists(db, ClockContract.CalendarProfilesColumns.ALARM_VOLUME)) {
+            return;
+        }
+        try (Cursor c = db.query(CALENDAR_PROFILES_TABLE_NAME,
+            new String[]{ClockContract.CalendarProfilesColumns._ID, ClockContract.CalendarProfilesColumns.ALARM_VOLUME},
+            null, null, null, null, null)) {
+            while (c.moveToNext()) {
+                final ContentValues values = new ContentValues();
+                values.put(ClockContract.CalendarProfilesColumns.VOLUME_PERCENT,
+                    CalendarProfile.volumePercentFromSteps(c.getInt(1), maxAlarmVolume));
+                db.update(CALENDAR_PROFILES_TABLE_NAME, values,
+                    ClockContract.CalendarProfilesColumns._ID + " = ?", new String[]{String.valueOf(c.getLong(0))});
+            }
+        }
+        LogUtils.i("Calendar profile volumes turned into percent for version 44 upgrade.");
+    }
+
+    private static boolean profileColumnExists(SQLiteDatabase db, String column) {
+        try (Cursor c = db.rawQuery("PRAGMA table_info(" + CALENDAR_PROFILES_TABLE_NAME + ")", null)) {
+            while (c.moveToNext()) {
+                if (column.equals(c.getString(c.getColumnIndexOrThrow("name")))) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -555,6 +599,7 @@ class ClockDatabaseHelper extends SQLiteOpenHelper {
             {ClockContract.CalendarProfilesColumns.EXTEND_ON_SNOOZE, "INTEGER NOT NULL DEFAULT 0"},
             {ClockContract.CalendarProfilesColumns.SNOOZE_MINUTES_2, "INTEGER NOT NULL DEFAULT 10"},
             {ClockContract.CalendarProfilesColumns.SNOOZE_MINUTES_3, "INTEGER NOT NULL DEFAULT 20"},
+            {ClockContract.CalendarProfilesColumns.VOLUME_PERCENT, "INTEGER NOT NULL DEFAULT 100"},
         };
         for (String[] column : added) {
             if (!columns.contains(column[0])) {

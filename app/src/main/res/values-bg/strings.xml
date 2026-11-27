@@ -169,7 +169,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">Обработва действията от известията на отброяванетио.</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Обработва действията от известията на хронометъра."</string>
     <string name="swn_paused" msgid="6364358842808263589">"На пауза"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">Плъзнете на ляво за отлагане или на дясно за изключване</string>
     <string name="timer_settings" msgid="7955522143086154795">Отброяване</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">Вибриране при отброяване</string>
     <string name="timer_paused" msgid="5941160896040771462">Спряно на пауза</string>
@@ -211,8 +210,6 @@
     <string name="more_options">Повече настройки</string>
     <string name="progress_ringtones">Добавяне на звуци… (%1$d/%2$d)</string>
     <string name="alarm_alert_dismiss_and_delete_text">Изключване и премахване</string>
-    <string name="alarm_alert_off_and_deleted_text">Будилникът е изключен и премахнат</string>
-    <string name="occasional_alarm_alert_predismiss_title">Предстоящ случаен будилник</string>
     <string name="vertical_widget">Вертикален цифров часовник</string>
     <string name="next_alarm_widget">Следващ будилник</string>
     <string name="settings_permission_message">Едно или повече основни разрешения са отказани. Без тях приложението може да не работи правилно.</string>
@@ -247,9 +244,7 @@
     <string name="title_dark_theme_mode">Режим на тъмна тема</string>
     <string name="amoled_dark_theme_mode">AMOLED</string>
     <string name="display_card_background_title">Фон на картичките</string>
-    <string name="display_card_background_summary">Показване на фон на някои елементи на приложението (будилници, градове, бутони и други)</string>
     <string name="display_background_border_title">Кант на картичките</string>
-    <string name="display_background_border_summary">Показване на кантове на някои елементи на приложението (будилници, градове, бутони и други)</string>
     <string name="settings_language_title">Език</string>
     <string name="settings_language_system">Език на системата</string>
     <string name="settings_language_english_us">Английски (САЩ)</string>
@@ -287,12 +282,7 @@
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">Вибриране при отложен или изключен будилник</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Двойно вибриране при отложен будилник и единично при изключен</string>
     <string name="sort_name">По име</string>
-    <string name="slide_zone_color_title">Цвят на мястото за плъзване</string>
-    <string name="snooze_title_color">Цвят на заглавието „Отлагане“</string>
-    <string name="snooze_button_color">Цвят на бутона „Отлагане“</string>
-    <string name="dismiss_title_color">Цвят на заглавието „Изключване“</string>
     <string name="dismiss_button_color">Цвят на бутона „Изключване“</string>
-    <string name="alarm_button_color">Цвят на бутона на будилника</string>
     <string name="clock_font_size">Цвят на текста на часовника</string>
     <string name="alarm_title_font_size">Цвят на заглавието на будилника</string>
     <string name="display_text_shadow_title">Цвят на сянката текста</string>
@@ -308,9 +298,7 @@
     <string name="background_image_toast_message_deleted">Изображението е премахнато</string>
     <string name="enable_blur_effect_title">Замъгляване на фоновото изображение</string>
     <string name="auto_silence_end_of_ringtone">На края на мелодията</string>
-    <string name="snooze_duration_none">Без</string>
     <string name="random_ringtone_title">Случайна мелодия</string>
-    <string name="swipe_action_title">Изключване и отлагане чрез плъзгане</string>
     <string name="power_button_title">Бутон за захранването</string>
     <string name="add_label">Въведете наименование</string>
     <string name="city_search_hint">Търсене на град</string>
@@ -357,8 +345,6 @@
     <string name="features_dialog_message">Посетете страницата за основните възможности:\n\n%s</string>
     <string name="about_github_link">Преглед в Гитхъб</string>
     <string name="github_dialog_message">Посетете проекта в Гитгъб:\n\n%s</string>
-    <string name="about_translate_link">Преведете в Codeberg</string>
-    <string name="translate_dialog_message">Посетете страницата в Codeberg:\n\n%s</string>
     <string name="license">Лиценз с отворен код</string>
     <string name="license_dialog_message">Прочетете лиценза:\n\n%s</string>
     <string name="gnu_gpl">Общ публичен лиценз на GNU издание 3.0</string>
@@ -366,18 +352,10 @@
     <string name="reset_settings_message">Желаете ли настройките на приложението да бъдат нулирани?</string>
     <string name="restart_app_dialog_title_for_reset">Нулирането е извършено</string>
     <string name="dialog_close">Затваряне</string>
-    <string name="alarm_settings_summary">Задаване на стила, подразбирана мелодия, отлагане и изключване на будилника, първи ден от седмицата и време на известието за напомняне</string>
     <string name="screensaver_settings_summary">Задаване на стила, цвета и шрифта на заставката</string>
     <string name="widgets_settings_summary">Задаване на стила, цвета и шрифта на приспособленията</string>
-    <string name="description_direction_both_for_occasional_alarm">Плъзнете на ляво за отлагане или на дясно за изключване и премахване</string>
-    <string name="description_direction_both_for_non_repeatable_alarm">Плъзнете на ляво или на дясно за изключване</string>
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">Плъзнете на ляво или на дясно за изключване и премахване</string>
-    <string name="description_snooze_button">Докоснете за отлагане на будилника</string>
     <string name="description_dismiss_button">Докоснете за изключване на будилника</string>
-    <string name="description_dismiss_button_for_occasional_alarm">Докоснете за изключване и премахване на будилника</string>
     <string name="timer_settings_summary">Задаване на мелодия, сила на звука и сортиране</string>
-    <string name="repetitive_alarm_is_dismissed">Будилникът е изключен. <xliff:g id="alarm_day">Насрочен е за %s.</xliff:g></string>
-    <string name="alarm_is_dismissed_and_deleted">Будилникът в <xliff:g id="alarm_time">%s</xliff:g> е изключен и премахнат</string>
     <string name="timer_creation_view_style_title">Стил на екрана за ново отброяване</string>
     <string name="timer_creation_view_style_keypad">Клавиатура</string>
     <string name="transparent_background_for_expired_timer_title">Прозрачен фон при завършило отброяване</string>

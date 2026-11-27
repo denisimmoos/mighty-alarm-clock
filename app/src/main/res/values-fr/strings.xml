@@ -109,28 +109,22 @@
     <string name="title_dark_theme_mode">Mode du thème sombre</string>
     <string name="amoled_dark_theme_mode">AMOLED</string>
     <string name="display_card_background_title">Afficher les arrière-plans</string>
-    <string name="display_card_background_summary">Affiche un arrière-plan pour certains éléments de l\'application (alarmes, villes, bouton du minuteur, etc.)</string>
     <string name="display_background_border_title">Afficher les bordures d\'arrière-plan</string>
-    <string name="display_background_border_summary">Affiche une bordure d\'arrière-plan pour certains éléments de l\'application (alarmes, villes, bouton du minuteur, etc.)</string>
     <string name="settings_vibration_title">Activer les vibrations</string>
     <string name="settings_vibration_summary">Seuls certains boutons de l\'interface sont concernés (ex. : le bouton lecture/pause du minuteur ou les interrupteurs)</string>
     <string name="alarm_notification_reminder_title">Rappel de la notification</string>
     <string name="alarm_title_color">Couleur du titre de l\'alarme</string>
-    <string name="snooze_button_color">Couleur du bouton \"Répéter\"</string>
     <string name="dismiss_button_color">Couleur du bouton \"Arrêter\"</string>
-    <string name="alarm_button_color">Couleur du bouton d\'alarme</string>
     <string name="crescendo_duration_title" msgid="8606408542726189528">"Augmenter le volume progressivement"</string>
     <string name="auto_silence_title" msgid="2012754009554434544">"Arrêter l\'alarme après"</string>
     <string name="label_never" msgid="4821982647348750809">"Jamais"</string>
     <string name="auto_silence_end_of_ringtone">La fin de la sonnerie</string>
-    <string name="snooze_duration_none">Aucune</string>
     <string name="alarm_volume_title" msgid="8506245173912428522">"Volume de l\'alarme"</string>
     <string name="silent_ringtone_title" msgid="6177287302898634765">"Silencieux"</string>
     <string name="unknown_ringtone_title" msgid="6637522029614550112">"Inconnue"</string>
     <string name="silent_default_alarm_ringtone" msgid="6012855475009670997">"La sonnerie d\'alarme par défaut est silencieuse."</string>
     <string name="change_setting_action" msgid="1224356633832430160">"Modifier"</string>
     <string name="alarms_blocked_by_dnd" msgid="6089433757505898969">"L\'appareil est défini sur \"Aucune interruption\"."</string>
-    <string name="swipe_action_title">Glisser pour arrêter ou répéter les alarmes</string>
     <string name="volume_button_setting_title" msgid="6937131248843413357">"Boutons du volume"</string>
     <string name="button_action_snooze">Répéter</string>
     <string name="button_action_dismiss">Arrêter</string>
@@ -221,12 +215,9 @@
     <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Économ. d\'écran"</string>
     <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Démarrer l\'éco. d\'écran"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Alarmes"</string>
-    <string name="alarm_settings_summary">Personnaliser le style, la police, la sonnerie par défaut, le volume, les actions pour reporter ou arrêter les alarmes, le premier jour de la semaine et l\'heure de la notification du rappel</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Traite les actions issues des notifications du minuteur."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Traite les actions issues des notifications du chronomètre."</string>
     <string name="swn_paused" msgid="6364358842808263589">"Interrompu"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">Glisser vers la gauche pour répéter ou vers la droite pour arrêter</string>
-    <string name="description_direction_both_for_non_repeatable_alarm">Glisser vers la gauche ou la droite pour arrêter</string>
     <string name="timer_settings" msgid="7955522143086154795">"Minuteurs"</string>
     <string name="timer_settings_summary">Personnaliser le style, la police, la sonnerie par défaut, l\'action pour arrêter les minuteurs et le tri des minuteurs</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Minuteur en mode vibreur"</string>
@@ -351,10 +342,6 @@
     <string name="sort_timer_descending_duration">Par durée (ordre décroissant)</string>
     <string name="sort_name">Par nom</string>
     <string name="alarm_alert_dismiss_and_delete_text">Ignorer &amp; Supprimer</string>
-    <string name="alarm_alert_off_and_deleted_text">Alarme arrêtée et supprimée</string>
-    <string name="description_direction_both_for_occasional_alarm">Glisser vers la gauche pour répéter ou vers la droite pour arrêter et supprimer l\'alarme</string>
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">Glisser vers la gauche ou la droite pour arrêter et supprimer l\'alarme</string>
-    <string name="occasional_alarm_alert_predismiss_title">Alarme occasionnelle imminente</string>
     <string name="backup_restore_title">Sauvegarde &amp; Restauration</string>
     <string name="backup_restore_dialog_message">Voulez-vous sauvegarder ou restaurer les données de l\'application ?</string>
     <string name="backup_button_title">Sauvegarder</string>
@@ -386,8 +373,6 @@
     <string name="display_ringtone_title">Afficher le titre de la sonnerie</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">Activer les vibrations lorsque l\'alarme est répétée ou arrêtée</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Double vibration lorsque l\'alarme est répétée et simple vibration lorsque l\'alarme est arrêtée</string>
-    <string name="about_translate_link">Traduire sur Codeberg</string>
-    <string name="translate_dialog_message">Visiter la page Codeberg :\n\n%s</string>
     <string name="shake_intensity_title">Intensité des secousses</string>
     <string name="settings_language_system">Langue du système</string>
     <string name="settings_language_german">Allemand</string>
@@ -414,15 +399,9 @@
     <string name="tab_title_visibility_when_selected">Lorsqu\'ils sont sélectionnés</string>
     <string name="settings_keep_screen_on_title">Maintenir l\'écran allumé</string>
     <string name="settings_keep_screen_on_summary">Remarque : l\'écran sera toujours allumé si un minuteur ou un chronomètre est en cours d\'exécution et que l\'onglet correspondant est affiché, quel que soit l\'état de ce paramètre</string>
-    <string name="slide_zone_color_title">Couleur de la zone de glissement</string>
-    <string name="snooze_title_color">Couleur du titre \"Répéter\"</string>
-    <string name="dismiss_title_color">Couleur du titre \"Arrêter\"</string>
     <string name="ringtone_title_color">Couleur du titre de la sonnerie</string>
-    <string name="description_snooze_button">Cliquer pour répéter l\'alarme</string>
     <string name="description_dismiss_button">Cliquer pour arrêter l\'alarme</string>
-    <string name="description_dismiss_button_for_occasional_alarm">Cliquer pour arrêter et supprimer l\'alarme</string>
     <string name="display_next_alarm_title">Afficher la prochaine alarme</string>
-    <string name="alarm_is_dismissed_and_deleted">L\'alarme de <xliff:g example="14:20" id="alarm_time">%s</xliff:g> a été ignorée et supprimée</string>
     <string name="random_ringtone_title">Sonnerie aléatoire</string>
     <string name="warning">Avertissement</string>
     <string name="timer_button_time_seconds_warning_box_text">Saisir une valeur de 0 à 59 secondes</string>
@@ -479,7 +458,6 @@
     <string name="vibration_start_delay_warning_box_text">Saisir une valeur de 0 à 10 minutes</string>
     <string name="confirm_action_prompt">\n\nVoulez-vous continuer ?</string>
     <string name="features_dialog_message">Visiter la page des fonctionnalités principales :\n\n%s</string>
-    <string name="repetitive_alarm_is_dismissed">Alarme ignorée. <xliff:g example="Next alarm Monday." id="alarm_day">Reprogramée pour %s.</xliff:g></string>
     <string name="blur_intensity_title">Intensité du flou</string>
     <string name="background_image_title">Sélectionner une image d\'arrière-plan</string>
     <string name="background_image_toast_message_selected">Image sélectionnée avec succès</string>
@@ -520,16 +498,9 @@
     <string name="sync_alarm_by_label_title">Synchroniser les alarmes partageant le même libellé</string>
     <string name="button_tip_title">Appuyez longuement sur le bouton \"+\" pour ajouter un dossier</string>
     <string name="permissions_category_title">Autorisations</string>
-    <string name="snooze_zone_color_title">Couleur de la zone de répétition</string>
-    <string name="snooze_minus_button_color_title">Couleur du bouton \"-\"</string>
-    <string name="snooze_plus_button_color_title">Couleur du bouton \"+\"</string>
-    <string name="snooze_selector_text_color_title">Couleur du texte du sélecteur de répétition</string>
-    <string name="snooze_minus_symbol_color_title">Couleur du symbole \"-\"</string>
-    <string name="snooze_plus_symbol_color_title">Couleur du symbole \"+\"</string>
     <string name="background_image_summary">Définissez une couleur de fond transparente pour voir l\'image</string>
     <string name="alarm_volume_low">Le volume de l\'alarme est faible</string>
     <string name="fix_alarm_volume">Corriger</string>
-    <string name="display_snooze_selector_title">Afficher le sélecteur de répétition</string>
     <string name="clock_dial_with_roman_numbers">Avec chiffres romains</string>
     <string name="clock_second_hand_lollipop">Lollipop</string>
     <string name="timezone_baker_howland">Îles Baker &amp; Howland</string>

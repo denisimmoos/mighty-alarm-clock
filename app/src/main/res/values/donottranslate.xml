@@ -58,7 +58,6 @@
     <string name="action_lap">Lap</string>
     <string name="action_disable">Disable</string>
     <string name="action_set_label">Set Label</string>
-    <string name="action_delete_alarm_after_use">Delete Alarm After Use</string>
 
     <!-- Label names for events describe the entity responsible for the event. -->
     <string name="label_deskclock">DeskClock</string>
@@ -195,17 +194,6 @@
     <!-- Values that are retrieved from the ListPreference. These must match the missed_alarm_repeat_limit_entries above. -->
 
     <!-- Values that are retrieved from the snooze selector. -->
-    <integer-array name="alarm_snooze_selector_values" translatable="false">
-        <item>-1</item>
-        <item>5</item>
-        <item>10</item>
-        <item>15</item>
-        <item>20</item>
-        <item>25</item>
-        <item>30</item>
-        <item>45</item>
-        <item>60</item>
-    </integer-array>
 
     <!-- Entries listed in ListPreference for start day. -->
     <!-- Values for ListPreference for start day of week. -->
@@ -233,7 +221,6 @@
     <string-array name="volume_button_setting_entries">
         <item>@string/button_action_snooze</item>
         <item>@string/button_action_dismiss</item>
-        <item>@string/button_action_disable</item>
         <item>@string/button_action_control_volume</item>
         <item>@string/button_action_nothing</item>
     </string-array>
@@ -241,7 +228,6 @@
     <string-array name="volume_button_setting_values" translatable="false">
         <item>1</item>
         <item>2</item>
-        <item>3</item>
         <item>0</item>
         <item>-1</item>
     </string-array>
@@ -250,14 +236,12 @@
     <string-array name="action_setting_entries">
         <item>@string/button_action_snooze</item>
         <item>@string/button_action_dismiss</item>
-        <item>@string/button_action_disable</item>
         <item>@string/button_action_nothing</item>
     </string-array>
     <!-- Values for the power button and flip and shake settings. -->
     <string-array name="side_button_setting_values" translatable="false">
         <item>1</item>
         <item>2</item>
-        <item>3</item>
         <item>0</item>
     </string-array>
 
@@ -402,21 +386,18 @@
 
     <!-- Entries listed in the MultiSelectListPreference when invoking the tabs visibility preference. -->
     <string-array name="visible_tab_entries">
-        <item>@string/menu_calendar_alarm</item>
         <item>@string/menu_clock</item>
         <item>@string/menu_timer</item>
         <item>@string/menu_stopwatch</item>
     </string-array>
     <!-- Values that are retrieved from the MultiSelectListPreference. These must match the visible_tab_entries above. -->
     <string-array name="visible_tab_values" translatable="false">
-        <item>calendar_alert</item>
         <item>clock</item>
         <item>timer</item>
         <item>stopwatch</item>
     </string-array>
     <!-- Default value for the MultiSelectListPreference related to the tabs visibility preference. -->
     <string-array name="visible_tab_default_values" translatable="false">
-        <item>calendar_alert</item>
         <item>clock</item>
         <item>timer</item>
         <item>stopwatch</item>

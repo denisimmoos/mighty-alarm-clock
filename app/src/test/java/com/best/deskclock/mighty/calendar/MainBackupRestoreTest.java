@@ -114,7 +114,7 @@ public class MainBackupRestoreTest {
         assertTrue(!prefs.contains("key_sort_alarm"));
         final java.util.Set<String> tabs = com.best.deskclock.data.SettingsDAO.getVisibleTabs(prefs);
         assertTrue(!tabs.contains("alarm"));
-        assertTrue(com.best.deskclock.data.SettingsDAO.isCalendarAlarmTabVisible(prefs));
+        assertTrue(tabs.contains(com.best.deskclock.settings.PreferencesDefaultValues.VISIBLE_TAB_CALENDAR_ALARM));
         assertTrue(com.best.deskclock.data.SettingsDAO.isClockTabVisible(prefs));
         // The removed Alarm tab as start tab opens the Calendar tab.
         assertEquals(com.best.deskclock.uidata.UiDataModel.Tab.CALENDAR_ALARM,
@@ -166,7 +166,7 @@ public class MainBackupRestoreTest {
         profile.titleRegex = "^Wake";
         // A sound the restoring phone can play; unreadable ones fall back to the default sound.
         profile.ringtone = android.net.Uri.parse("android.resource://com.best.deskclock/raw/alarm_sound");
-        profile.alarmVolume = 3;
+        profile.volumePercent = 40;
         profile.vibrate = false;
         profile.autoSilenceDuration = 600;
         profile.snoozeDuration = 7;

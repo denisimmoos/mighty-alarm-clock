@@ -378,7 +378,6 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
 
         private void updateSettingsVisibility() {
             mClockSettingsPref.setVisible(SettingsDAO.isClockTabVisible(mPrefs));
-            mAlarmSettingsPref.setVisible(SettingsDAO.isCalendarAlarmTabVisible(mPrefs));
             mTimerSettingsPref.setVisible(SettingsDAO.isTimerTabVisible(mPrefs));
             mStopwatchSettingsPref.setVisible(SettingsDAO.isStopwatchTabVisible(mPrefs));
         }

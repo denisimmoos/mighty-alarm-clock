@@ -169,7 +169,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Feldolgozza az időzítő értesítéseiből származó műveleteket."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Feldolgozza a stopperóra értesítéseiből származó műveleteket."</string>
     <string name="swn_paused" msgid="6364358842808263589">"Szüneteltetve"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">A szundihoz húzza balra, az elvetéshez pedig jobbra</string>
     <string name="timer_settings" msgid="7955522143086154795">"Időzítők"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Időzítő rezgése"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Időzítő szüneteltetve"</string>
@@ -245,8 +244,6 @@
     <string name="confirm_action_prompt">\n\nBiztosan folytatni kívánja?</string>
     <string name="progress_ringtones">Hangok hozzáadása… (%1$d/%2$d)</string>
     <string name="alarm_alert_dismiss_and_delete_text">Elvet &amp; Töröl</string>
-    <string name="alarm_alert_off_and_deleted_text">Ébresztő kikapcsolva és törölve</string>
-    <string name="occasional_alarm_alert_predismiss_title">Közelgő alkalmi ébresztő</string>
     <string name="vertical_widget">Függőleges digitális óra</string>
     <string name="next_alarm_widget">Következő ébresztő</string>
     <string name="next_alarm_widget_title_no_alarm">Nincs közelgő ébresztő</string>
@@ -282,9 +279,7 @@
     <string name="yellow_accent_color">Citromsárga</string>
     <string name="amoled_dark_theme_mode">AMOLED</string>
     <string name="display_card_background_title">Kártyák hátterének megjelenítése</string>
-    <string name="display_card_background_summary">Megjeleníti az egyes applikáció elemek hátterét (ébresztők, városok, időzítő gomb, stb.)</string>
     <string name="display_background_border_title">Háttér keretek megjelenítése</string>
-    <string name="display_background_border_summary">Megjeleníti az egyes applikáció elemek körvonalát (ébresztők, városok, időzítő gomb, stb.)</string>
     <string name="settings_language_title">Nyelv</string>
     <string name="settings_language_system">Rendszer nyelv</string>
     <string name="settings_language_english_us">Angol (US)</string>
@@ -317,12 +312,7 @@
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">Rezgés engedélyezése szundi vagy ébresztő elvetésekor</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Dupla rezgés szundikor, és egyszeri rezgés amikor az ébresztést elveti</string>
     <string name="sort_name">Név szerint</string>
-    <string name="slide_zone_color_title">Csúsztató zóna szín</string>
-    <string name="snooze_title_color">A \"Szundi\" szöveg színe</string>
-    <string name="snooze_button_color">A \"Szundi\" gomb színe</string>
-    <string name="dismiss_title_color">Az \"Elvetés\" szöveg színe</string>
     <string name="dismiss_button_color">Az \"Elvetés\" gomb színe</string>
-    <string name="alarm_button_color">Ébresztő gomb szín</string>
     <string name="clock_font_size">Óra betűtípus méret</string>
     <string name="alarm_title_font_size">Ébresztő cím betűtípus méret</string>
     <string name="display_text_shadow_title">Szöveg árnyék megjelenítése</string>
@@ -338,9 +328,7 @@
     <string name="background_image_toast_message_deleted">Kép sikeresen törölve</string>
     <string name="enable_blur_effect_title">Homályosítás effekt a háttérképen</string>
     <string name="auto_silence_end_of_ringtone">A csengőhang vége</string>
-    <string name="snooze_duration_none">Nincs</string>
     <string name="random_ringtone_title">Véletlenszerű csengőhang</string>
-    <string name="swipe_action_title">Szundi vagy ébresztő elvetés félrehúzással</string>
     <string name="city_search_hint">Rendezés város szerint</string>
     <string name="sw_settings_summary">Funkciók társítása hangerőgombokhoz</string>
     <string name="sw_volume_up_action_title">Hang fel</string>
@@ -377,20 +365,12 @@
     <string name="features_title">Fő funkciók</string>
     <string name="features_dialog_message">Látogassa meg a fő funkció oldalt:\n\n%s</string>
     <string name="github_dialog_message">Keresse fel a projekt GitHub oldalát:\n\n%s</string>
-    <string name="about_translate_link">Fordítsa le a Codeberg-en</string>
-    <string name="translate_dialog_message">Keresse fel a Codeberg oldalt:\n\n%s</string>
     <string name="license_dialog_message">Licenc elolvasása:\n\n%s</string>
     <string name="gnu_gpl">GNU Általános Publikus Licenc v3.0</string>
     <string name="reset_settings_title">Beállítások visszaállítása alaphelyzetbe</string>
     <string name="reset_settings_message">Biztosan minden beállítást vissza akar állítani alaphelyzetbe?</string>
     <string name="restart_app_dialog_title_for_reset">Visszaállítva alaphelyzetbe</string>
-    <string name="alarm_settings_summary">Állítson be stílust, alap csengőhangot, hangerőt, szundi és elvető műveleteket, hét első napját és emlékeztető értesítő időt</string>
-    <string name="description_direction_both_for_occasional_alarm">Húzza balra a szundihoz, és jobbra az elvetéshez majd törléshez</string>
-    <string name="description_direction_both_for_non_repeatable_alarm">Húzza balra vagy jobbra az elvetéshez</string>
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">Húzza balra vagy jobbra az elvetésre majd törlésre</string>
-    <string name="description_snooze_button">Koppintson a szundihoz</string>
     <string name="description_dismiss_button">Koppintson az elvetéshez</string>
-    <string name="description_dismiss_button_for_occasional_alarm">Koppintson az elvetéshez majd törléshez</string>
     <string name="timer_settings_summary">Alap csengőhang beállítása, hangerő és időzítő rendezés</string>
     <string name="timer_creation_view_style_title">Időzítő létrehozás stílusa</string>
     <string name="timer_creation_view_style_keypad">Billentyű</string>
@@ -444,8 +424,6 @@
     <string name="alarm_title_default_color">Alap szín használata az ébresztő címhez</string>
     <string name="screensaver_bold_battery_title">Félkövér töltöttség</string>
     <string name="screensaver_italic_battery_title">Dőlt töltöttség</string>
-    <string name="repetitive_alarm_is_dismissed">Ébresztő elvetve. <xliff:g example="Next alarm Monday." id="alarm_day">Rescheduled for %s.</xliff:g></string>
-    <string name="alarm_is_dismissed_and_deleted"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> ébresztő elvetve és törölve</string>
     <string name="shake_intensity_title">Rázás intenzitás</string>
     <string name="first_launch_version">Verzió %s</string>
     <string name="first_launch_main_feature_title">FŐ FUNKCIÓK</string>

@@ -122,17 +122,12 @@ public class PreferencesDefaultValues {
 
     // Alarm Display Customization
     public static final boolean DEFAULT_DISPLAY_ALARM_SECOND_HAND = true;
-    public static final boolean DEFAULT_SWIPE_ACTION = true;
-    public static final boolean DEFAULT_DISPLAY_SNOOZE_SELECTOR = false;
     public static final int DEFAULT_ALARM_BACKGROUND_COLOR = Color.parseColor("#FF191C1E");
     public static final int DEFAULT_ALARM_BACKGROUND_AMOLED_COLOR = Color.BLACK;
-    public static final int DEFAULT_SLIDE_ZONE_COLOR = Color.parseColor("#FF2E3337");
     public static final int DEFAULT_ALARM_CLOCK_COLOR = Color.WHITE;
     public static final int DEFAULT_ALARM_TITLE_COLOR = Color.WHITE;
     public static final int DEFAULT_SNOOZE_TITLE_COLOR = Color.WHITE;
-    public static final int DEFAULT_DISMISS_TITLE_COLOR = Color.WHITE;
     public static final int DEFAULT_SNOOZE_ZONE_COLOR = Color.parseColor("#80FFFFFF");
-    public static final int DEFAULT_SNOOZE_BUTTON_COLOR = Color.parseColor("#80FFFFFF");
     public static final int DEFAULT_SNOOZE_TEXT_COLOR = Color.parseColor("#FFFFFFFF");
     public static final int DEFAULT_ALARM_TITLE_FONT_SIZE_PREF = 30;
     public static final int DEFAULT_ALARM_SHADOW_COLOR = Color.parseColor("#80FFFFFF");

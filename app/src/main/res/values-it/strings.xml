@@ -177,7 +177,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Consente di elaborare le azioni derivanti dalle notifiche relative al timer."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Consente di elaborare le azioni derivanti dalle notifiche relative al cronometro."</string>
     <string name="swn_paused" msgid="6364358842808263589">"In pausa"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">Fai scorrere a sinistra per rimandarla o a destra per chiuderla</string>
     <string name="timer_settings" msgid="7955522143086154795">"Timer"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Vibrazione timer"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Timer in pausa"</string>
@@ -236,7 +235,6 @@
     <string name="next_alarm_widget_title_no_alarm">Nessuna sveglia in programma</string>
     <string name="notifications_permission_title">ABILITA NOTIFICHE</string>
     <string name="restart_app_dialog_title_for_restore">Ripristino completato</string>
-    <string name="alarm_settings_summary">Imposta lo stile, la suoneria predefinita, il volume, le azioni per disattivare o rimandare le sveglie, il primo giorno della settimana e l\'ora di notifica del promemoria</string>
     <string name="sw_settings_summary">Imposta azione dei pulsanti del volume</string>
     <string name="next_alarm_default_color_title">Usa colore predefinito per la prossima sveglia</string>
     <string name="ignore_battery_optimizations_dialog_text">Per impostazione predefinita, il sistema Android configura tutte le app installate dall\'utente in modo che siano ottimizzate per risparmiare la durata della batteria. \n\nSebbene ciò sia accettabile per molte applicazioni, questa app è un\'applicazione per le sveglie e spesso causa problemi se configurata per ottimizzare la batteria. Una volta abilitata, il sistema Android può disattivare l\'app in qualsiasi momento e/o annullare le sveglie programmate, il che influisce negativamente sul funzionamento dell\'app. \n\nSi consiglia di escludere questa app dall\'ottimizzazione della batteria.</string>
@@ -255,7 +253,6 @@
     <string name="font_category_title">Carattere</string>
     <string name="alarm_title_color">Colore titolo sveglia</string>
     <string name="dismiss_button_color">Colore del tasto \"Disattiva\"</string>
-    <string name="snooze_button_color">Colore pulsante \"Rimanda\"</string>
     <string name="screensaver_settings_summary">Imposta stile, colore e carattere del salvaschermo</string>
     <string name="clock_color_title">Colore orologio</string>
     <string name="second_hand_color_title">Colore lancetta dei secondi</string>
@@ -284,7 +281,6 @@
     <string name="city_name_default_color_title">Usa colore predefinito per il nome della città</string>
     <string name="max_clock_font_size_title">Dimensione massima caratteri dell\'orologio principale</string>
     <string name="city_clock_default_color_title">Usa colore predefinito per orologio della città</string>
-    <string name="display_background_border_summary">Visualizza un bordo di sfondo per alcuni elementi dell\'applicazione (sveglie, città, pulsante del timer, ecc.)</string>
     <string name="settings_vibration_title">Abilita vibrazioni</string>
     <string name="add_label">Aggiungi etichetta</string>
     <string name="timer_label_box_title">Etichetta Timer</string>
@@ -292,9 +288,7 @@
     <string name="preview_title">Anteprima</string>
     <string name="screensaver_preview_summary">Avvia subito il salvaschermo</string>
     <string name="permission_status_title">Stato:</string>
-    <string name="swipe_action_title">Scorri per fermare o rimandare la sveglia</string>
     <string name="label_default">Predefinita</string>
-    <string name="alarm_button_color">Colore pulsante sveglia</string>
     <string name="clock_settings_summary">Imposta stile, fuso orario e modifica della data e dell\'ora del dispositivo</string>
     <string name="version">Versione</string>
     <string name="sort_timer_ascending_duration">Per durata (ordine crescente)</string>
@@ -313,11 +307,9 @@
     <string name="first_launch_main_feature_title">CARATTERISTICHE PRINCIPALI</string>
     <string name="selected">Selezionato</string>
     <string name="more_options">Altre opzioni</string>
-    <string name="alarm_alert_off_and_deleted_text">Sveglia spenta e rimossa</string>
     <string name="alarm_alert_dismiss_and_delete_text">Spegni e rimuovi</string>
     <string name="system_theme">Sistema</string>
     <string name="whats_new_title">Novità</string>
-    <string name="occasional_alarm_alert_predismiss_title">Prossima sveglia occasionale</string>
     <string name="settings_permission_message">Una o più autorizzazioni essenziali sono state negate. La mancata concessione di tali autorizzazioni può causare malfunzionamenti.</string>
     <string name="light_theme">Chiaro</string>
     <string name="dark_theme">Scuro</string>
@@ -335,8 +327,6 @@
     <string name="about_github_link">Vai su GitHub</string>
     <string name="license">Licenza open-source</string>
     <string name="gnu_gpl">Licenza pubblica generale GNU v3.0</string>
-    <string name="description_direction_both_for_non_repeatable_alarm">Scorri a destra o a sinistra per fermare</string>
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">Scorri a destra o a sinistra per fermare e rimuovere la sveglia</string>
     <string name="vertical_widget">Orologio digitale verticale</string>
     <string name="settings_permission_summary">Premi qui per visualizzare la pagina di gestione delle autorizzazioni.</string>
     <string name="miscellaneous_category_title">Varie</string>
@@ -347,7 +337,6 @@
     <string name="title_theme">Tema</string>
     <string name="title_accent_color">Colore accento</string>
     <string name="settings_tab_indicator_title">Mostra l\'indicatore di scheda nel menu di navigazione in basso</string>
-    <string name="display_card_background_summary">Visualizza uno sfondo per alcuni elementi dell\'applicazione (sveglie, città, pulsante del timer, ecc.)</string>
     <string name="display_background_border_title">Mostra bordi dello sfondo</string>
     <string name="alarm_notification_reminder_title">Promemoria notifiche</string>
     <string name="screensaver_italic_date_title">Data in corsivo</string>
@@ -372,8 +361,6 @@
     <string name="night_accent_color_title">Colore accento per modalità notte</string>
     <string name="clock_font_size">Dimensione caratteri dell\'orologio</string>
     <string name="alarm_title_font_size">Dimensione carattere del titolo della sveglia</string>
-    <string name="snooze_duration_none">Nessuno</string>
-    <string name="description_direction_both_for_occasional_alarm">Scorri a sinistra per rimandare o a destra per fermare e rimuovere la sveglia</string>
     <string name="sort_manually">Manualmente (trascinandoli)</string>
     <string name="black_accent_color">Nero</string>
     <string name="purple_accent_color">Viola</string>
@@ -389,8 +376,6 @@
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Doppia vibrazione quando la sveglia viene rinviata e vibrazione singola quando la sveglia viene spenta</string>
     <string name="display_warning_before_deleting_timer_title">Mostra un avviso prima di rimuovere un timer</string>
     <string name="warning_dialog_title">Rimuovi timer</string>
-    <string name="about_translate_link">Traduci su Codeberg</string>
-    <string name="translate_dialog_message">Visita la pagina su Codeberg:\n\n%s</string>
     <string name="warning_dialog_message">Si è sicuri di voler rimuovere il timer \"%s\"?</string>
     <string name="clock_style_spinner">Rotativo</string>
     <string name="clock_style_analog_material">Analogico (Material)</string>
@@ -413,15 +398,9 @@
     <string name="tab_title_visibility_when_selected">Quando selezionata</string>
     <string name="settings_keep_screen_on_title">Tieni lo schermo acceso</string>
     <string name="settings_keep_screen_on_summary">Nota: lo schermo sarà sempre acceso se è in funzione un contaminuti o un cronometro e se è visualizzata la scheda corrispondente, indipendentemente dallo stato di questa impostazione</string>
-    <string name="alarm_is_dismissed_and_deleted">Sveglia delle <xliff:g example="14:20" id="alarm_time">%s</xliff:g> disattivata e cancellata</string>
-    <string name="slide_zone_color_title">Colore zona di scorrimento</string>
-    <string name="snooze_title_color">Colore del titolo \"Rimanda\"</string>
-    <string name="description_snooze_button">Clicca per rimandare la sveglia</string>
     <string name="display_next_alarm_title">Mostra la prossima sveglia sul widget</string>
-    <string name="dismiss_title_color">Colore del titolo \"Disattiva\"</string>
     <string name="ringtone_title_color">Colore titolo suoneria</string>
     <string name="description_dismiss_button">Clicca per posticipare la sveglia</string>
-    <string name="description_dismiss_button_for_occasional_alarm">Clicca per disattivare e cancellare la sveglia</string>
     <string name="label_hours">Ore</string>
     <string name="label_seconds">Secondi</string>
     <string name="label_minutes">Minuti</string>
@@ -493,8 +472,4 @@
     <string name="display_settings_title">Impostazioni di visualizzazione</string>
     <string name="visible_tabs_title">Schede visibili</string>
     <string name="display_low_alarm_volume_warning_title">Visualizza un avviso quando il volume della sveglia è impostato al minimo</string>
-    <string name="snooze_zone_color_title">Colore della zona di rinvio</string>
-    <string name="snooze_minus_button_color_title">Colore del pulsante \"-\"</string>
-    <string name="snooze_plus_button_color_title">colore del pulsante \"+\"</string>
-    <string name="snooze_selector_text_color_title">Colore del testo del selettore di posticipo</string>
 </resources>

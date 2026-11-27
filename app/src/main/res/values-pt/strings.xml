@@ -175,7 +175,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Processa ações de notificações do timer."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Processa ações de notificações do cronômetro."</string>
     <string name="swn_paused" msgid="6364358842808263589">"Pausado"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">"Deslize para a esquerda para adiar ou para a direita para dispensar"</string>
     <string name="timer_settings" msgid="7955522143086154795">"Timers"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">Timer com vibração</string>
     <string name="timer_paused" msgid="5941160896040771462">"Timer pausado"</string>
@@ -202,7 +201,6 @@
     <string name="power_button_title">Botão de ligar</string>
     <string name="selected">Selecionado</string>
     <string name="more_options">Mais opções</string>
-    <string name="display_background_border_summary">Mostra a borda do plano de fundo para elementos do app (alarmes, cidades, botão do timer, etc.)</string>
     <string name="settings_vibration_summary">Apenas alguns botões da interface são afetados (ex: o botão play/pause ou os interruptores do timer)</string>
     <string name="settings_vibration_title">Habilitar vibrações</string>
     <string name="title_accent_color">Cor do acento</string>
@@ -211,7 +209,6 @@
     <string name="interface_customization_summary">Ajustar estilo e cor aplicados para o app</string>
     <string name="title_theme">Tema</string>
     <string name="display_card_background_title">Mostrar plano de fundo do card</string>
-    <string name="display_card_background_summary">Mostra um plano de fundo para alguns elementos do app (alarmes, cidades, botão do timer, etc.)</string>
     <string name="display_background_border_title">Mostrar as bordas do plano de fundo</string>
     <string name="alarm_notification_reminder_title">Lembrete de notificação</string>
     <string name="auto_silence_end_of_ringtone">O fim do toque</string>
@@ -223,7 +220,6 @@
     <string name="actions_category_title">Ações</string>
     <string name="settings_permission_message">Uma ou mais permissões essenciais foram recusadas. Não as permitindo pode levar à mal funcionamento.</string>
     <string name="settings_permission_summary">Toque aqui para mostrar a Página de gerenciamento de permissões.</string>
-    <string name="swipe_action_title">Deslizar para dispensar ou para soneca</string>
     <string name="label_default">Padrão</string>
     <string name="sort_timer_title">Classificar timers</string>
     <string name="transparent_background_for_expired_timer_title">Fundo transparente quando os timers expiram</string>
@@ -233,15 +229,12 @@
     <string name="gnu_gpl">GNU General Public License v3.0</string>
     <string name="timer_label_box_title">Etiqueta de Timer</string>
     <string name="timer_button_time_box_title">Minutos para adicionar ao timer</string>
-    <string name="alarm_settings_summary">Definir toque padrão, volume, ações para ignorar ou adiar alarmes, o primeiro dia da semana e a hora da notificação do lembrete</string>
     <string name="orange_accent_color">Laranja</string>
     <string name="indigo_accent_color">Índigo</string>
     <string name="red_accent_color">Vermelho</string>
     <string name="amoled_dark_theme_mode">AMOLED</string>
     <string name="alarm_title_color">Cor do título do alarme</string>
-    <string name="snooze_button_color">Cor do botão de Soneca</string>
     <string name="dismiss_button_color">Cor do botão \"Dispensar\"</string>
-    <string name="alarm_button_color">Cor do botão de Alarme</string>
     <string name="alarm_title_font_size">Tamanho da fonte do título do alarme</string>
     <string name="clock_font_size">Tamanho da fonte do relógio</string>
     <string name="version">Versão</string>
@@ -273,14 +266,9 @@
     <string name="screensaver_bold_next_alarm_title">Próximo alarme em negrito</string>
     <string name="whats_new_dialog_message">Descubra o que há de novo:\n\n%s</string>
     <string name="alarm_alert_dismiss_and_delete_text">Dispensar &amp; Excluir</string>
-    <string name="alarm_alert_off_and_deleted_text">Alarme desativado e excluído</string>
-    <string name="description_direction_both_for_occasional_alarm">Deslize para esquerda para soneca ou direita para dispensar e excluir o alarme</string>
-    <string name="description_direction_both_for_non_repeatable_alarm">Deslize para esquerda ou direita para dispensar</string>
     <string name="system_theme">Sistema</string>
-    <string name="occasional_alarm_alert_predismiss_title">Alarme ocasional próximo</string>
     <string name="light_theme">Claro</string>
     <string name="dark_theme">Escuro</string>
-    <string name="snooze_duration_none">Nenhum</string>
     <string name="about_github_link">Veja no GitHub</string>
     <string name="vertical_widget">Relógio digital vertical</string>
     <string name="settings_tab_indicator_title">Mostre o indicador de aba no menu de navegação inferior</string>
@@ -295,7 +283,6 @@
     <string name="screensaver_italic_date_title">Data em itálico</string>
     <string name="night_accent_color_title">Cor de destaque para o modo noturno</string>
     <string name="pink_accent_color">Rosa</string>
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">Deslize para esquerda ou direita para dispensar e excluir o alarme</string>
     <string name="auto_night_accent_color_title">Aplicar cor de destaque para o modo noturno</string>
     <string name="first_launch_button_now">Agora</string>
     <string name="city_name_color_title">Cor personalizada para o nome da cidade</string>
@@ -390,8 +377,6 @@
     <string name="display_warning_before_deleting_timer_title">Exibir um aviso antes de excluir um cronômetro</string>
     <string name="warning_dialog_title">Excluir timer</string>
     <string name="warning_dialog_message">Você tem certeza que quer excluir o timer \"%s\"?</string>
-    <string name="about_translate_link">Traduza no Codeberg</string>
-    <string name="translate_dialog_message">Visite a página do Codeberg:\n\n%s</string>
     <string name="label_hours">Horas</string>
     <string name="last_tab_used_title">Última aba utilizada</string>
     <string name="label_minutes">Minutos</string>
@@ -404,14 +389,10 @@
     <string name="blue_accent_color">Azul</string>
     <string name="settings_tab_to_display">Aba exibida ao abir o app</string>
     <string name="settings_tab_title_visibility_title">Exibir título das abas</string>
-    <string name="repetitive_alarm_is_dismissed">Alarme dispensado. <xliff:g id="alarm_day">Remarcado para %s.</xliff:g></string>
-    <string name="alarm_is_dismissed_and_deleted"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> alarme dispensado e excluído</string>
     <string name="custom_font_title_variant">Selecionar ou excluir fonte personalizada</string>
     <string name="custom_font_toast_message_deleted">Fonte excluída com sucesso</string>
     <string name="background_image_title_variant">Selecionar ou excluir a imagem de fundo</string>
     <string name="background_image_toast_message_deleted">Imagem excluída com sucesso</string>
-    <string name="description_dismiss_button_for_occasional_alarm">Clique para dispensar e excluir o alarme</string>
-    <string name="dismiss_title_color">Cor do título \"Dispensar\"</string>
     <string name="description_dismiss_button">Clique para dispensar o alarme</string>
     <string name="label_new_image">Nova imagem</string>
     <string name="label_new_font">Nova fonte</string>

@@ -18,7 +18,6 @@
     <string name="brown_accent_color">Aqehwi</string>
     <string name="settings">Iɣewwaren</string>
     <string name="app_label">MightyCalendarAlarm</string>
-    <string name="snooze_duration_none">Ulac</string>
     <string name="label_never">Urǧin</string>
     <string name="silent_ringtone_title">Tasusmi</string>
     <string name="button_action_dismiss">Anef</string>
@@ -70,7 +69,6 @@
     <string name="colors_category_title">Initen</string>
     <string name="first_launch_version">Lqem %s</string>
     <string name="gnu_gpl">Turagt Tazayazt Tamatut GNU v3.0</string>
-    <string name="about_translate_link">Suqel-it deg Codeberg</string>
     <string name="timer_start">Bdu</string>
     <string name="blue_accent_color">Azegzaw</string>
     <string name="backup_button_title">Aḥraz</string>
@@ -120,7 +118,6 @@
     <string name="alarm_label_box_title">Tabzimt n tengedwit</string>
     <string name="next_alarm_widget">Tangedwit d-iteddun</string>
     <string name="alarm_title_color">Ini n wezwel n tengedwit</string>
-    <string name="alarm_button_color">Ini n tqeffalt n tengedwit</string>
     <string name="alarm_alert_dismiss_and_delete_text">Zgel-itt syen kkes-itt</string>
     <string name="license">Turagt n uɣbalu yeldin</string>
     <string name="add_label">Rnu tabzimt</string>

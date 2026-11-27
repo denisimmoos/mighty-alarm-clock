@@ -169,7 +169,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Töötleb taimeri märguannete toiminguid."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Töötleb stopperi märguannete toiminguid."</string>
     <string name="swn_paused" msgid="6364358842808263589">"Peatatud"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">Edasilükkamiseks viipa vasakule ja loobumiseks paremale</string>
     <string name="timer_settings" msgid="7955522143086154795">"Taimerid"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Taimeri vibratsioon"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Taimer peatati"</string>
@@ -208,7 +207,6 @@
     <string name="title_accent_color">Aktsentvärv</string>
     <string name="title_dark_theme_mode">Tume kujundus</string>
     <string name="display_card_background_title">Näita kaartide taustu</string>
-    <string name="display_card_background_summary">See eelistus võimaldab kuvada mõnede liidese elementide taustu (äratused, linnad, taimerinupud, jne)</string>
     <string name="font_category_title">Kirjatüüp</string>
     <string name="miscellaneous_category_title">Muud seadistused</string>
     <string name="ringtone_category_title">Helin</string>
@@ -217,7 +215,6 @@
     <string name="style_category_title">Välimus</string>
     <string name="alarm_notification_reminder_title">Teavituse meeldetuletus</string>
     <string name="timer_add_custom_time">+ %s</string>
-    <string name="display_background_border_summary">See eelistus võimaldab mõnede rakenduse elementide (äratused, linnad, taimeri nupud, jne) puhul kuvada taustu äärejoontega</string>
     <string name="display_background_border_title">Kuva taustade äärejooni</string>
     <string name="settings_vibration_title">Kasuta vibreerimist/värinat</string>
     <string name="settings_vibration_summary">Toimib vaid mõnede kasutajaliidese nuppude puhul (näiteks taimeri käivita/peate nuppudel)</string>
@@ -226,7 +223,6 @@
     <string name="add_label">Lisa silt</string>
     <string name="power_button_title">Toitenupp</string>
     <string name="interface_customization_summary">Vali rakenduse stiil, kirjatüüp, keel ja värvid</string>
-    <string name="swipe_action_title">Äratuse lõpetamiseks või edasilükkamiseks viipa</string>
     <string name="timer_label_box_title">Taimeri silt</string>
     <string name="auto_silence_end_of_ringtone">Helina lõppedes</string>
     <string name="timer_button_time_box_title">Taimerile lisatavad minutid</string>
@@ -240,8 +236,6 @@
     <string name="dialog_close">Sulge</string>
     <string name="screensaver_daydream_settings_summary">Järgnevaga avame Androidi ekraanisäästja seadistused</string>
     <string name="notifications_dialog_text">Lisaks äratamisele saad seda rakendust kasutada ka taimerina ja stopperina. \n \nEt kõik teavitused toimiksid korrektsel kõikide nende valikute, eriti aga äratuste, puhul, siis palun luba rakendusel kuvada teavitusi.</string>
-    <string name="alarm_settings_summary">Seadista välimust, kirjatüüpi, vaikimisi helinat, valjust, tegevusi äratuste edasilükkamiseks või katkestamiseks, nädala alguspäeva ja meeldetuletuste teavituse aega</string>
-    <string name="description_direction_both_for_non_repeatable_alarm">Loobumiseks viipa vasakule või paremale</string>
     <string name="default_time_to_add_to_timer_title">Taimeritele vaikimisi lisatav aeg</string>
     <string name="screensaver_clock_dynamic_colors_title">Kella dünaamilised värvid</string>
     <string name="clock_color_title">Kella värv</string>
@@ -301,9 +295,7 @@
     <string name="permission_granted">Lubatud</string>
     <string name="digital_widget_message_summary">Selle seadistuse jaoks peab „Näita vidinas linnu“ olema välja lülitatud</string>
     <string name="notifications_dialog_title">Teavitused</string>
-    <string name="snooze_button_color">„Lükka edasi“ nupu värv</string>
     <string name="dismiss_button_color">„Loobu“ nupu värv</string>
-    <string name="alarm_button_color">Äratuse nupu värv</string>
     <string name="clock_font_size">Kella kirjatüübi suurus</string>
     <string name="alarm_title_font_size">Äratuse nime kirjatüübi suurus</string>
     <string name="transparent_background_for_expired_timer_title">Taimerite aegumisel kuva läbipaistev taust</string>
@@ -344,7 +336,6 @@
     <string name="pink_accent_color">Roosa</string>
     <string name="red_accent_color">Punane</string>
     <string name="amoled_dark_theme_mode">AMOLED</string>
-    <string name="snooze_duration_none">Määramata</string>
     <string name="sort_name">Nime alusel</string>
     <string name="denied_permission_label">Õigused puuduvad</string>
     <string name="sort_timer_descending_duration">Kestuse alusel (kahanevalt)</string>
@@ -352,10 +343,6 @@
     <string name="orange_accent_color">Oranž</string>
     <string name="sort_timer_ascending_duration">Kestuse alusel (kasvavalt)</string>
     <string name="alarm_alert_dismiss_and_delete_text">Loobu ja kustuta</string>
-    <string name="alarm_alert_off_and_deleted_text">Loobusid äratusest ja kustutasid ta</string>
-    <string name="description_direction_both_for_occasional_alarm">Edasilükkamiseks viipa vasakule ja äratusest loobumiseks ning tema kustutamiseks paremale</string>
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">Äratusest loobumiseks ning tema kustutamiseks viipa vasakule või paremale</string>
-    <string name="occasional_alarm_alert_predismiss_title">Tulevane juhuäratus</string>
     <string name="backup_restore_dialog_message">Kas sa soovid rakenduse andmeid varundada faili või neid taastada sealt?</string>
     <string name="backup_button_title">Varunda</string>
     <string name="restore_button_title">Taasta</string>
@@ -387,8 +374,6 @@
     <string name="warning_dialog_message">Kas sa oled kindel, et soovid kustutada „%s“ taimeri?</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">Kasuta värinat, kui äratus on edasilükatud või katkestatud</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Kasuta topeltvärinat, kui äratus on edasilükatud või ühekordset värinat, kui äratus on katkestatud</string>
-    <string name="translate_dialog_message">Vaata meie lehte Codebergis:\n\n%s</string>
-    <string name="about_translate_link">Tõlgi Codebergis</string>
     <string name="shake_intensity_title">Raputamise tugevus</string>
     <string name="settings_language_title">Keel</string>
     <string name="settings_language_system">Süsteemi keel</string>
@@ -415,15 +400,9 @@
     <string name="tab_title_visibility_when_selected">Kui on valitud</string>
     <string name="settings_keep_screen_on_title">Hoia ekraan sisselülitatuna</string>
     <string name="settings_keep_screen_on_summary">Märkus: Kui stopper töötab ja vahekaart on kuvatud, siis on ekraan alati sisselülitatud sõltumata selle seadistuse olekust</string>
-    <string name="dismiss_title_color">„Loobu“ nupu pealkiri</string>
-    <string name="slide_zone_color_title">Viipamisala värv</string>
     <string name="ringtone_title_color">Helina pealkirja värv</string>
     <string name="description_dismiss_button">Klõpsi äratusest loobumiseks</string>
-    <string name="description_snooze_button">Klõpsi äratuse edasilükkamiseks</string>
-    <string name="description_dismiss_button_for_occasional_alarm">Klõpsi äratusest loobumiseks ja tema kustutamiseks</string>
     <string name="display_next_alarm_title">Näita vidinas järgmist äratust</string>
-    <string name="snooze_title_color">„Lükka edasi“ nupu pealkiri</string>
-    <string name="alarm_is_dismissed_and_deleted"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> äratusest on loobutud ja ta on kustutatud</string>
     <string name="random_ringtone_title">Juhuslik helin</string>
     <string name="warning">Hoiatus</string>
     <string name="timer_button_time_seconds_warning_box_text">Sisesta väärtus 0 ja 59 sekundi vahemikust</string>
@@ -480,7 +459,6 @@
     <string name="vibration_start_delay_warning_box_text">Sisesta väärtus vahemikust 0 kuni 10 minutit</string>
     <string name="confirm_action_prompt">\n\nKas sa soovid jätkata?</string>
     <string name="features_dialog_message">Vaata põhiliste funktsionaalsuste lehte:\n\n%s</string>
-    <string name="repetitive_alarm_is_dismissed">Oled äratusest loobunud. <xliff:g example="Järgmine äratus on esmaspäeval." id="alarm_day">Uus aeg on - %s.</xliff:g></string>
     <string name="blur_intensity_title">Hägustamise tugevus</string>
     <string name="background_image_title">Vali taustapilt</string>
     <string name="background_image_toast_message_selected">Pildi valimine õnnestus</string>
@@ -521,10 +499,6 @@
     <string name="sync_alarm_by_label_title">Sünkrooni sama sildiga äratused</string>
     <string name="button_tip_title">Kausta lisamiseks klõpsa + ikooniga nuppu</string>
     <string name="permissions_category_title">Õigused</string>
-    <string name="snooze_minus_button_color_title">„-“ nupu värv</string>
-    <string name="snooze_plus_button_color_title">„+“ nupu värv</string>
-    <string name="snooze_minus_symbol_color_title">„-“ sümboli värv</string>
-    <string name="snooze_plus_symbol_color_title">„+“ sümboli värv</string>
     <string name="alarm_volume_low">Äratus pole piisavalt vali</string>
     <string name="fix_alarm_volume">Kohenda</string>
     <string name="timezone_baker_howland">Bakeri ja Howlandi saared</string>
@@ -549,9 +523,6 @@
     <string name="display_next_alarm_title_setting_title">Näita vidinas järgmise äratuse pealkirja</string>
     <string name="foreground_service_title">Näita teavitust esiplaanil</string>
     <string name="foreground_service_dialog_message">Vältimaks olukorda, kus seade sulgeb rakenduse jõuliselt ja sul jääb äratus märkamata, kuvatakse ekraanil püsiv, helitu teade.\n\nSee tagab, et rakendus jääb mällu, kuigi see võib veidi suurendada aku tarbimist.\n\nMärkus: enamiku seadmete puhul pole selle seade sisselülitamine vajalik. Lülita see sisse ainult juhul, kui sinu äratused jäävad vahele.</string>
-    <string name="snooze_zone_color_title">„Lükka edasi“ tsooni värv</string>
-    <string name="snooze_selector_text_color_title">„Lükka edasi“ valiku teksti värv</string>
-    <string name="display_snooze_selector_title">Näita „Lükka edasi“ valikut</string>
     <string name="missed_timer_indicator_color_title">Vahelejäänud taimeri tunnusvärv</string>
     <string name="background_image_summary">Pildi nägemiseks muuda taustavärv läbipaistvaks</string>
     <string name="display_low_alarm_volume_warning_title">Näita hoiatust, kui äratuse helivaljus on sätitud vaikseks</string>

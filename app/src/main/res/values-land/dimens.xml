@@ -11,7 +11,6 @@
 
 
     <dimen name="city_list_padding_bottom">0dp</dimen>
-    <dimen name="city_empty_view_bottom_padding">0dp</dimen>
 
     <dimen name="timer_list_padding_end">80dp</dimen>
     <dimen name="timer_list_padding_bottom">0dp</dimen>

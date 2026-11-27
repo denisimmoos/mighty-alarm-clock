@@ -169,7 +169,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Zamanlayıcı bildirimlerinden gelen etkinlikleri işler."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Kronometre bildirimlerinden gelen etkinlikleri işler."</string>
     <string name="swn_paused" msgid="6364358842808263589">"Duraklatıldı"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">"Ertelemek için sola, kapatmak için sağa hızlıca kaydırın"</string>
     <string name="timer_settings" msgid="7955522143086154795">"Zamanlayıcılar"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Zamanlayıcı titreşimi"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Zamanlayıcı duraklatıldı"</string>
@@ -211,7 +210,6 @@
     <string name="light_theme">Aydınlık</string>
     <string name="dark_theme">Karanlık</string>
     <string name="sw_volume_up_action_title">Ses açma</string>
-    <string name="snooze_duration_none">Hiçbiri</string>
     <string name="sw_start_pause_action">Başlat / Duraklat</string>
     <string name="timer_label_box_title">Zamanlayıcı etiketi</string>
     <string name="timer_button_time_box_title">Zamanlayıcıya eklenecek dakika</string>
@@ -228,7 +226,6 @@
     <string name="sw_settings_summary">Ses tuşlarına eylem atayın</string>
     <string name="sw_long_press_volume_up_action_title">Ses açma (uzun basınca)</string>
     <string name="sw_volume_down_action_title">Ses kısma</string>
-    <string name="alarm_alert_off_and_deleted_text">Alarm kapatıldı ve silindi</string>
     <string name="next_alarm_widget">Sonraki alarm</string>
     <string name="auto_night_accent_color_title">Gece moduna vurgu rengi uygulayın</string>
     <string name="night_accent_color_title">Karanlık modu vurgu rengi</string>
@@ -245,7 +242,6 @@
     <string name="actions_category_title">Eylemler</string>
     <string name="interface_customization_settings">Arayüz</string>
     <string name="interface_customization_summary">Uygulamanın stilini, yazı tipini, dilini ve rengini özelleştirin</string>
-    <string name="swipe_action_title">Alarmları kapatmak veya ertelemek için kaydırın</string>
     <string name="power_button_title">Güç tuşu</string>
     <string name="add_label">Etiket ekle</string>
     <string name="timer_add_custom_time">+ %s</string>
@@ -253,7 +249,6 @@
     <string name="selected">Seçildi</string>
     <string name="alarm_alert_dismiss_and_delete_text">Kapat &amp; Sil</string>
     <string name="clock_settings_summary">Stili, zaman dilimini ve cihazın tarih ve zamanını ayarlayın</string>
-    <string name="description_direction_both_for_occasional_alarm">Alarmı ertelemek için sola, kapatıp silmek için sağa kaydırın</string>
     <string name="clock_color_title">Saat rengi</string>
     <string name="permission_highly_recommended">Şiddetle tavsiye edilir</string>
     <string name="timer_volume_buttons_action_title">Süresi dolmuş zamanlayıcıları ses düğmelerini kullanarak sıfırlayın</string>
@@ -313,9 +308,7 @@
     <string name="clock_font_size">Saat yazı boyutu</string>
     <string name="alarm_title_font_size">Alarm başlığı yazı boyutu</string>
     <string name="license">Açık kaynak lisansı</string>
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">Alarmı kapatmak ve silmek için sağa veya sola kaydırın</string>
     <string name="sort_timer_descending_duration">Süreye göre (azalan)</string>
-    <string name="alarm_settings_summary">Stil, varsayılan zil sesi, ses düzeyi, alarmı kapatma veya erteleme eylemleri, haftanın ilk gününü ve hatırlatıcı bildirim süresini ayarlayın</string>
     <string name="date_color_title">Tarih rengi</string>
     <string name="screensaver_brightness_title">Parlaklık</string>
     <string name="digital_widget_message_summary">Bu ayara erişim için \"Widget\'ta şehirleri göster\" devre dışı bırakılmalı</string>
@@ -324,14 +317,11 @@
     <string name="widgets_settings_summary">Widget\'ların stilini, rengini ve yazı boyutunu özelleştirin</string>
     <string name="next_alarm_default_color_title">Sonraki alarm için varsayılan rengi kullanın</string>
     <string name="amoled_dark_theme_mode">AMOLED</string>
-    <string name="alarm_button_color">Alarm butonu rengi</string>
     <string name="alarm_title_color">Alarm başlık rengi</string>
-    <string name="snooze_button_color">\"Erteleme\" butonu rengi</string>
     <string name="dismiss_button_color">Alarm kapatma butonu rengi</string>
     <string name="screensaver_clock_dynamic_colors_title">Dinamik saat renkleri</string>
     <string name="first_launch_main_feature_link">… ve daha fazlası!</string>
     <string name="permission_requirement_title">Gereklilik:</string>
-    <string name="description_direction_both_for_non_repeatable_alarm">Alarmı kapatmak için sağa veya sola kaydırın</string>
     <string name="permission_status_title">Durum:</string>
     <string name="minute_default_color_title">Dakikalar için varsayılan rengi kullan</string>
     <string name="minute_color_title">Dakika rengi</string>
@@ -364,8 +354,6 @@
     <string name="first_launch_important_info_title">ÖNEMLİ BİLGİLENDİRME</string>
     <string name="first_launch_dialog_title">Çıkış</string>
     <string name="timer_flip_action_title">Alarmı durdurmak için cihazı ters çevir</string>
-    <string name="about_translate_link">Codeberg\'de çeviri yap</string>
-    <string name="translate_dialog_message">Codeberg sayfasını ziyaret et:\n\n%s</string>
     <string name="timer_shake_action_title">Alarmı durdurmak için cihazı salla</string>
     <string name="about_title">Hakkında</string>
     <string name="preview_title">Ön izleme</string>
@@ -386,14 +374,11 @@
     <string name="notifications_dialog_text">Alarm ayarlarına ek olarak bu uygulamanın aynı zamanda zamanlayıcı ve kronomotre modu da vardır. \n\nÖzellikle alarmın çalışması ve bütün modüllerin bildirimlerinin gözükmesi için uygulamanın bildirimlerini etkinleştirmenizi tavsiye ederiz.</string>
     <string name="display_card_background_title">Kart arka planlarını görüntüle</string>
     <string name="display_background_border_title">Arka plan kenarlıklarını göster</string>
-    <string name="display_card_background_summary">Bazı öğelerde (alarm, şehirler, zamanlayıcı butonu vb.) kart görünümünü gösterir</string>
-    <string name="display_background_border_summary">Bazı öğelerde (alarm, şehirler, zamanlayıcı butonu vb.) kenarlıkları gösterir</string>
     <string name="screensaver_bold_date_title">Kalın tarih</string>
     <string name="screensaver_italic_date_title">İtalik tarih</string>
     <string name="screensaver_italic_next_alarm_title">İtalik sonraki alarm</string>
     <string name="screensaver_bold_next_alarm_title">Kalın sonraki alarm</string>
     <string name="screensaver_bold_digital_clock_title">Kalın dijital saat</string>
-    <string name="occasional_alarm_alert_predismiss_title">Yaklaşan etkinlik alarmı</string>
     <string name="reset_settings_title">Ayarları sıfırla</string>
     <string name="reset_settings_message">Uygulamanın bütün ayarlarını sıfırlamak istediğinize emin misiniz?</string>
     <string name="restart_app_dialog_title_for_reset">Sıfırlama tamamlandı</string>
@@ -405,15 +390,9 @@
     <string name="tab_title_visibility_when_selected">Seçildiğinde</string>
     <string name="settings_keep_screen_on_title">Ekranı açık tut</string>
     <string name="settings_keep_screen_on_summary">Not: Bu ayarın durumundan bağımsız olarak, bir zamanlayıcı veya kronometre çalışıyorsa ve ilgili sekme gösteriliyorsa, ekran her zaman açık kalacaktır</string>
-    <string name="slide_zone_color_title">Sürgü alanı rengi</string>
-    <string name="snooze_title_color">\"Sürgü\" başlığı rengi</string>
-    <string name="dismiss_title_color">\"Alarm Kapatma\" başlığı rengi</string>
     <string name="ringtone_title_color">Zil sesi başlığı rengi</string>
     <string name="description_dismiss_button">Alarmı kapatmak için tıklayın</string>
-    <string name="description_dismiss_button_for_occasional_alarm">Alarmı kapatmak ve silmek için tıklayın</string>
     <string name="display_next_alarm_title">Sonraki alarmı göster</string>
-    <string name="description_snooze_button">Alarmı ertelemek için tıklayın</string>
-    <string name="alarm_is_dismissed_and_deleted"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> alarmı susturuldu ve silindi</string>
     <string name="random_ringtone_title">Rasgele zil sesi</string>
     <string name="warning">Uyaru</string>
     <string name="timer_button_time_seconds_warning_box_text">0 ile 59 saniye arasında bir değer girin</string>
@@ -510,17 +489,10 @@
     <string name="display_settings_title">Ekran ayarları</string>
     <string name="visible_tabs_title">Görünür sekmeler</string>
     <string name="display_low_alarm_volume_warning_title">Alarm ses seviyesi minimuma ayarlandığında bir uyarı görüntülenecektir</string>
-    <string name="snooze_zone_color_title">Erteleme bölgesi rengi</string>
-    <string name="snooze_minus_button_color_title">\"-\" Düğmesinin rengi</string>
-    <string name="snooze_plus_button_color_title">\"+\" Düğmesinin rengi</string>
-    <string name="snooze_selector_text_color_title">Erteleme seçici metin rengi</string>
-    <string name="snooze_minus_symbol_color_title">\"-\" Sembolünün rengi</string>
-    <string name="snooze_plus_symbol_color_title">\"+\" Sembolünün rengi</string>
     <string name="display_alarm_action_message_title">Alarmı erteledikten veya kapattıktan sonra bir mesaj görüntüle</string>
     <string name="background_image_summary">Arka plan resmini görebilmek için şeffaf bir arka plan rengi ayarlayın</string>
     <string name="alarm_volume_low">Alarm sesi düşük</string>
     <string name="fix_alarm_volume">Düzelt</string>
-    <string name="display_snooze_selector_title">Erteleme seçiciyi görüntüle</string>
     <string name="alarm_minutes_warning_box_text">0 ile 59 dakika arasında bir değer girin</string>
     <string name="clock_dial_with_roman_numbers">Roma rakamlarıyla</string>
     <string name="clock_second_hand_lollipop">Lollipop</string>
@@ -545,7 +517,6 @@
     <string name="next_alarm_title_default_color_title">Sonraki alarm başlığı için varsayılan rengi kullanın</string>
     <string name="city_note_color_title">Şehir notu rengi</string>
     <string name="city_note_default_color_title">Şehir notu için varsayılan rengi kullanın</string>
-    <string name="repetitive_alarm_is_dismissed">Alarm kapatıldı. <xliff:g example="Next alarm Monday." id="alarm_day">Rescheduled for %s.</xliff:g></string>
     <string name="foreground_service_channel">Ön plan bildirimi</string>
     <string name="foreground_service_message">Arka planda çalışıyor</string>
     <string name="customize_background_corner_radius_title">Arka plan köşe yarıçapını özelleştirin</string>

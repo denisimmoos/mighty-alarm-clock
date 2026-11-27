@@ -588,7 +588,7 @@ public final class CalendarAlarmSync {
         }
         alarm.autoSilenceDuration = profile.autoSilenceDuration;
         alarm.snoozeDuration = profile.snoozeDuration;
-        alarm.alarmVolume = profile.alarmVolume;
+        alarm.alarmVolume = profile.volumePercent;
         alarm.crescendoDuration = escalationSecondsFor(profile);
         alarm.deleteAfterUse = true;
         alarm.syncByLabel = false;

@@ -169,7 +169,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Ekintzak prozesatzen ditu tenporizadorearen jakinarazpenetatik abiatuta."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Ekintzak prozesatzen ditu kronometroaren jakinarazpenetatik abiatuta."</string>
     <string name="swn_paused" msgid="6364358842808263589">"Pausatu da kronometroa"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">"Atzeratzeko, pasatu hatza ezkerrera. Baztertzeko, pasatu hatza eskuinera."</string>
     <string name="timer_settings" msgid="7955522143086154795">"Tenporizadoreak"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Tenporizadorearen dardara"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Pausatu da tenporizadorea"</string>
@@ -216,7 +215,6 @@
     <string name="interface_customization_summary">Ezarri estiloa eta kolorea aplikazioari</string>
     <string name="more_options">Aukera gehiago</string>
     <string name="purple_accent_color">Morea</string>
-    <string name="display_card_background_summary">Atzealdea erakusten du aplikazioaren elementu batzuetan (Alarmak, hiriak, tenporizadorea, etab.)</string>
     <string name="yellow_accent_color">Horia</string>
     <string name="warning">Ohartarazpen</string>
     <string name="alarm_alert_dismiss_and_delete_text">Baztertu ta ezabatu</string>
@@ -236,6 +234,4 @@
     <string name="actions_category_title">Ekintzak</string>
     <string name="display_card_background_title">Erakutsi atzealdea</string>
     <string name="label_default">Defektuz</string>
-    <string name="alarm_alert_off_and_deleted_text">Alarma itzalia eta ezabatua</string>
-    <string name="occasional_alarm_alert_predismiss_title">Noizbehinkako alarma berealakoan</string>
 </resources>

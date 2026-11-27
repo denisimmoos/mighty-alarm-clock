@@ -176,7 +176,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Procesa acciones de las notificaciones del temporizador."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Procesa acciones de las notificaciones del cronómetro."</string>
     <string name="swn_paused" msgid="6364358842808263589">"En pausa"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">"Desliza el dedo hacia la izquierda para posponer la alarma o hacia la derecha para ignorarla."</string>
     <string name="timer_settings" msgid="7955522143086154795">"Temporizadores"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Vibración del temporizador"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Se pausó el temporizador"</string>
@@ -209,12 +208,10 @@
     <string name="selected">Selecionado</string>
     <string name="more_options">Más opciones</string>
     <string name="alarm_alert_dismiss_and_delete_text">Descartar y eliminar</string>
-    <string name="occasional_alarm_alert_predismiss_title">Próxima alarma ocasional</string>
     <string name="restart_app_dialog_title_for_restore">Restauración completada</string>
     <string name="toast_message_for_backup">Respaldo completado</string>
     <string name="restore_button_title">Restaurar</string>
     <string name="alarm_label_box_title">Etiqueta de la alarma</string>
-    <string name="alarm_alert_off_and_deleted_text">Alarma desactivada y eliminada</string>
     <string name="vertical_widget">Reloj digital vertical</string>
     <string name="next_alarm_widget">Siguiente alarma</string>
     <string name="settings_permission_message">Se han denegado uno o más permisos esenciales. No concederlos puede provocar fallos de funcionamiento.</string>

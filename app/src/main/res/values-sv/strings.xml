@@ -169,7 +169,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Bearbetar åtgärder från timeraviseringar."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Bearbetar åtgärder från stoppursaviseringar."</string>
     <string name="swn_paused" msgid="6364358842808263589">"Pausat"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">"Dra åt vänster för att snooza eller höger för att stänga av"</string>
     <string name="timer_settings" msgid="7955522143086154795">"Timer"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Vibration för timer"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Timern har pausats"</string>
@@ -243,7 +242,6 @@
     <string name="shadow_color_title">Skuggfärg</string>
     <string name="about_github_link">Visa på GitHub</string>
     <string name="screensaver_clock_dynamic_colors_title">Dynamiska klockfärger</string>
-    <string name="about_translate_link">Översätt på Codeberg</string>
     <string name="show_lockscreen_permission_title">VISA PÅ LÅSSKÄRM</string>
     <string name="show_lockscreen_dialog_title">Visa på låsskärm</string>
     <string name="display_text_shadow_title">Visa textskugga</string>

@@ -376,7 +376,15 @@ public class RingtonePickerActivity extends CollapsingToolbarBaseActivity
     protected void onPause() {
         if (mSelectedRingtoneUri != null && !mReturnResultOnly) {
             if (mTitleResourceId == R.string.default_alarm_ringtone_title) {
+                final Uri previous = DataModel.getDataModel().getAlarmRingtoneUriFromSettings();
                 DataModel.getDataModel().setAlarmRingtoneUriFromSettings(mSelectedRingtoneUri);
+                // Alarms already set from profiles with the default sound take the new one now,
+                // not only at the next calendar check.
+                if (!mSelectedRingtoneUri.equals(previous)) {
+                    final android.content.Context appContext = getApplicationContext();
+                    com.best.deskclock.mighty.calendar.CalendarAlarmSync.EXECUTOR.execute(() ->
+                        com.best.deskclock.mighty.calendar.CalendarAlarmSync.syncAll(appContext));
+                }
             } else {
                 DataModel.getDataModel().setTimerRingtoneUri(mSelectedRingtoneUri);
             }

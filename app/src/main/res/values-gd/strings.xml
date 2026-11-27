@@ -132,7 +132,6 @@
     <string name="timer_service_desc">Dèilig ri gnìomhan o bhrathan tìmeir.</string>
     <string name="stopwatch_service_desc">Dèilig ri gnìomhan o bhrathan stad-uaireadair.</string>
     <string name="swn_paused">’Na stad</string>
-    <string name="description_direction_both">Grad-shlaighd gun taobh chlì ’ga chur ’na dhùsal no gun taobh deas ’ga leigeil seachad</string>
     <string name="timer_settings">Tìmearan</string>
     <string name="timer_paused">Tha an tìmear ’na stad</string>
     <string name="timers_in_use"><xliff:g example="7" id="number">%d</xliff:g> tìmear(an)</string>

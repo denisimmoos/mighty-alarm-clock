@@ -162,7 +162,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Memproses tindakan dari notifikasi pewaktu."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Memproses tindakan dari notifikasi stopwatch."</string>
     <string name="swn_paused" msgid="6364358842808263589">"Dijeda"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">"Geser ke kiri untuk menunda atau ke kanan untuk menutup"</string>
     <string name="timer_settings" msgid="7955522143086154795">"Timer"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Timer bergetar"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Timer dijeda"</string>
@@ -194,8 +193,6 @@
     <string name="more_options">Lebih banyak pilihan</string>
     <string name="selected">Dipilih</string>
     <string name="alarm_alert_dismiss_and_delete_text">Tutup &amp; Hapus</string>
-    <string name="alarm_alert_off_and_deleted_text">Alarm mati dan dihapus</string>
     <string name="vertical_widget">Jam digital vertikal</string>
     <string name="next_alarm_widget">Alarm selanjutnya</string>
-    <string name="occasional_alarm_alert_predismiss_title">Alarm sesekali yang akan datang</string>
 </resources>

@@ -224,13 +224,10 @@ public class InterfaceCustomizationFragment extends ScreenFragment
 
             case KEY_VISIBLE_TABS -> {
                 @SuppressWarnings("unchecked")
-                Set<String> newSelectedTabs = (Set<String>) newValue;
+                // The Calendar tab is always shown, so it is not in the list to choose from.
+                Set<String> newSelectedTabs = new java.util.HashSet<>((Set<String>) newValue);
+                newSelectedTabs.add(VISIBLE_TAB_CALENDAR_ALARM);
                 Set<String> oldSelectedTabs = SettingsDAO.getVisibleTabs(mPrefs);
-
-                if (newSelectedTabs.isEmpty()) {
-                    // This shouldn't happen because it's impossible to uncheck all the entries.
-                    return false;
-                }
 
                 updateVisibleTabsSummary(newSelectedTabs);
 

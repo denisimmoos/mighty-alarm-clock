@@ -73,17 +73,8 @@ public class AlarmUtils {
     public static void showDismissToast(Context context, Alarm alarm, AlarmInstance instance) {
         final Context localizedContext = Utils.getLocalizedContext(context);
         final String time = DateFormat.getTimeFormat(context).format(instance.getAlarmTime().getTime());
-        final Calendar nextTime = alarm.getNextAlarmTime(instance.getAlarmTime());
-        final String date = getDateFormat(context, nextTime);
-
-        final String text;
-        if (alarm.isDeleteAfterUse()) {
-            text = localizedContext.getString(R.string.alarm_is_dismissed_and_deleted, time);
-        } else if (alarm.daysOfWeek.isRepeating() || alarm.isIntervalRepeating()) {
-            text = localizedContext.getString(R.string.repetitive_alarm_is_dismissed, date);
-        } else {
-            text = localizedContext.getString(R.string.alarm_is_dismissed, time);
-        }
+        // Calendar alarms ring once per event; dismissing one leaves the calendar event as it is.
+        final String text = localizedContext.getString(R.string.alarm_is_dismissed, time);
 
         if (DataModel.getDataModel().isApplicationInForeground()) {
             CustomToast.showLongWithManager(context, text);

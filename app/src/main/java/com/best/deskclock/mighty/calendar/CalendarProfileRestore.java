@@ -171,6 +171,15 @@ public final class CalendarProfileRestore {
                 }
             }
 
+            // Backups from before version 44 have the volume in absolute steps of the alarm stream.
+            if (!json.has(CalendarProfile.VOLUME_PERCENT) && json.has(CalendarProfile.ALARM_VOLUME)) {
+                final android.media.AudioManager audioManager = context.getSystemService(android.media.AudioManager.class);
+                final int maxSteps = audioManager == null ? 7
+                    : audioManager.getStreamMaxVolume(android.media.AudioManager.STREAM_ALARM);
+                values.put(CalendarProfile.VOLUME_PERCENT,
+                    CalendarProfile.volumePercentFromSteps(json.optInt(CalendarProfile.ALARM_VOLUME), maxSteps));
+            }
+
             // Calendar ids differ between phones. Find the same calendar by account and name.
             final String account = values.getAsString(CalendarProfile.ACCOUNT_NAME);
             final String calendarName = values.getAsString(CalendarProfile.CALENDAR_NAME);

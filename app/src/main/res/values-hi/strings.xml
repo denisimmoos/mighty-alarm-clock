@@ -168,7 +168,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"टाइमर नोटिफ़िकेशन से कार्यवाइयां संसाधित करती है."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"स्‍टॉपवॉच नोटिफ़िकेशन से कार्यवाइयां संसाधित करती है."</string>
     <string name="swn_paused" msgid="6364358842808263589">"रोका गया"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">"याद दिलाने के लिए बाएं या ख़ारिज करने के लिए दाएं स्‍वाइप करें"</string>
     <string name="timer_settings" msgid="7955522143086154795">"टाइमर"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"टाइमर कंपन"</string>
     <string name="timer_paused" msgid="5941160896040771462">"टाइमर रोका गया"</string>
@@ -199,8 +198,6 @@
     <string name="alarm_label_box_title">अलार्म का नाम</string>
     <string name="selected">चुना हुआ</string>
     <string name="alarm_alert_dismiss_and_delete_text">बंद करें और हटाएँ</string>
-    <string name="alarm_alert_off_and_deleted_text">अलार्म बंद होकर हट गया</string>
-    <string name="occasional_alarm_alert_predismiss_title">आगामी एक-बार का अलार्म</string>
     <string name="notifications_dialog_title">सूचनाएं</string>
     <string name="notifications_permission_title">सूचनाएं चालू करें</string>
     <string name="notifications_dialog_text">अलार्म सेट करने के अलावा, इस ऐप में टाइमर और स्टॉपवॉच मोड भी है।\n\nसभी मोड के नोटिफ़िकेशन सही ढंग से दिखने और खासकर अलार्म बजने के लिए, हम सुझाव देते हैं कि इस ऐप के लिए नोटिफ़िकेशन चालू करें।</string>

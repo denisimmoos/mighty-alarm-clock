@@ -182,7 +182,6 @@
     <string name="timer_service_desc" msgid="2256002649882602433">"Обробляє дії зі сповіщень таймера."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Обробляє дії зі сповіщень секундоміра."</string>
     <string name="swn_paused" msgid="6364358842808263589">"Призупинено"</string>
-    <string name="description_direction_both" msgid="1841309486023845685">"Проведіть пальцем ліворуч, щоб відкласти, або праворуч, щоб вимкнути"</string>
     <string name="timer_settings" msgid="7955522143086154795">"Таймери"</string>
     <string name="timer_vibrate_title" msgid="7788920024785587518">"Вібросигнал таймера"</string>
     <string name="timer_paused" msgid="5941160896040771462">"Таймер призупинено"</string>
@@ -247,7 +246,6 @@
     <string name="screensaver_clock_dynamic_colors_title">Динамічні кольори годинника</string>
     <string name="clock_color_title">Колір годинника</string>
     <string name="date_color_title">Колір дати</string>
-    <string name="description_direction_both_for_non_repeatable_alarm">Щоб вимкнути, проведіть пальцем ліворуч або праворуч</string>
     <string name="default_time_to_add_to_timer_title">Час за замовчуванням, який додається до таймерів</string>
     <string name="miscellaneous_category_title">Різне</string>
     <string name="actions_category_title">Дії</string>
@@ -270,9 +268,7 @@
     <string name="notifications_dialog_text">Окрім встановлення будильників, цей додаток також має режими таймера та секундоміра. \n \nЩоб сповіщення коректно відображалися для всіх модулів, а особливо щоб спрацьовував будильник, рекомендуємо активувати сповіщення для цього додатка.</string>
     <string name="max_clock_font_size_title">Максимальний розмір шрифту для основного годинника</string>
     <string name="city_name_color_title">Колір назви міста</string>
-    <string name="display_card_background_summary">Відображає фон для деяких елементів (будильники, міста, кнопка таймера тощо)</string>
     <string name="display_background_border_title">Рамки фону</string>
-    <string name="display_background_border_summary">Відображає рамки фону для деяких елементів (будильники, міста, кнопка таймера тощо)</string>
     <string name="title_dark_theme_mode">Темна тема</string>
     <string name="screensaver_bold_digital_clock_title">Цифровий годинник жирним</string>
     <string name="screensaver_italic_digital_clock_title">Цифровий годинник курсивом</string>
@@ -283,7 +279,6 @@
     <string name="interface_customization_summary">Налаштування стилю, шрифту, мови і кольорів додатка</string>
     <string name="timer_settings_summary">Налаштування стилю, шрифту, сигналу за замовчуванням, дії для зупинки таймерів, а також сортування таймерів</string>
     <string name="revoke_permission_dialog_message">Ви впевнені, що хочете відкликати цей дозвіл?</string>
-    <string name="swipe_action_title">Жести, щоб вимкнути або відкласти будильник</string>
     <string name="screensaver_daydream_settings">Вибрати/ввімкнути заставку</string>
     <string name="screensaver_daydream_settings_summary">Відкриває основні налаштування заставки Android</string>
     <string name="screensaver_settings_summary">Налаштування стилю, шрифту і кольору заставки</string>
@@ -297,7 +292,6 @@
     <string name="timer_label_box_title">Мітка таймера</string>
     <string name="timer_button_time_box_title">Хвилини для додавання до таймера</string>
     <string name="license">Ліцензія з відкритим кодом</string>
-    <string name="alarm_settings_summary">Налаштування стилю, шрифту, сигналу за замовчуванням, гучності, дій для вимкнення або відкладення будильника, а також початок тижня і час нагадування</string>
     <string name="flip_action_title">Дія перевертання пристрою</string>
     <string name="firing_alarms_timers_channel">Сигнали і таймери</string>
     <string name="alarm_missed_channel">Пропущені сигнали</string>
@@ -318,9 +312,7 @@
     <string name="FSN_dialog_text">Починаючи з Android 14, щоб будильник спрацював, коли екран вимкнено, необхідно надати дозвіл на повноекранні сповіщення.</string>
     <string name="second_hand_color_title">Колір секундної стрілки</string>
     <string name="alarm_title_color">Колір заголовка будильника</string>
-    <string name="snooze_button_color">Колір кнопки «Відкласти»</string>
     <string name="dismiss_button_color">Колір кнопки «Вимкнути»</string>
-    <string name="alarm_button_color">Колір кнопки «Будильник»</string>
     <string name="transparent_background_for_expired_timer_title">Прозорий фон, коли час таймерів вичерпано</string>
     <string name="clock_font_size">Розмір шрифту годинника</string>
     <string name="alarm_title_font_size">Розмір шрифту заголовка будильника</string>
@@ -363,15 +355,10 @@
     <string name="system_theme">Системна</string>
     <string name="light_theme">Світла</string>
     <string name="label_default">За замовчуванням</string>
-    <string name="snooze_duration_none">Немає</string>
     <string name="sort_timer_ascending_duration">За тривалістю (зростання)</string>
     <string name="sort_timer_descending_duration">За тривалістю (спадання)</string>
     <string name="sort_name">За назвою</string>
     <string name="alarm_alert_dismiss_and_delete_text">Вимкнути і видалити</string>
-    <string name="alarm_alert_off_and_deleted_text">Будильник вимкнено і видалено</string>
-    <string name="description_direction_both_for_occasional_alarm">Проведіть пальцем ліворуч, щоб відкласти, або праворуч, щоб вимкнути і видалити будильник</string>
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">Проведіть пальцем ліворуч або праворуч, щоб вимкнути і видалити будильник</string>
-    <string name="occasional_alarm_alert_predismiss_title">Наступний нерегулярний будильник</string>
     <string name="backup_restore_title">Резервне копіювання та відновлення</string>
     <string name="backup_restore_dialog_message">Бажаєте створити резервну копію чи відновити дані додатка?</string>
     <string name="backup_button_title">Створити</string>
@@ -403,8 +390,6 @@
     <string name="display_ringtone_title">Показувати назву мелодії сигналу</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Вібрувати двічі при відкладенні будильника, вібрувати один раз при вимкненні будильника</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_title">Увімкнути вібрацію, коли будильник відкладено або вимкнено</string>
-    <string name="about_translate_link">Переклад на Codeberg</string>
-    <string name="translate_dialog_message">Відвідайте сторінку на Codeberg:\n\n%s</string>
     <string name="shake_intensity_title">Інтенсивність струшування</string>
     <string name="settings_language_title">Мова</string>
     <string name="settings_language_german">Німецька</string>
@@ -431,15 +416,9 @@
     <string name="tab_title_visibility_when_selected">Коли вибрана</string>
     <string name="settings_keep_screen_on_title">Тримати дисплей увімкненим</string>
     <string name="settings_keep_screen_on_summary">Примітка: екран завжди буде ввімкнений, якщо працює таймер або секундомір і відображається відповідна вкладка, незалежно від стану цього параметра</string>
-    <string name="snooze_title_color">Колір заголовка «Відкласти»</string>
     <string name="description_dismiss_button">Натисніть, щоб вимкнути будильник</string>
-    <string name="dismiss_title_color">Колір заголовка «Вимкнути»</string>
-    <string name="slide_zone_color_title">Колір слайд-зони</string>
-    <string name="description_snooze_button">Натисніть, щоб відкласти будильник</string>
-    <string name="description_dismiss_button_for_occasional_alarm">Натисніть, щоб вимкнути і видалити будильник</string>
     <string name="display_next_alarm_title">Показувати наступний будильник</string>
     <string name="ringtone_title_color">Колір назви мелодії сигналу</string>
-    <string name="alarm_is_dismissed_and_deleted">Будильник <xliff:g example="14:20" id="alarm_time">%s</xliff:g> вимкнено і видалено</string>
     <string name="random_ringtone_title">Випадкова мелодія сигналу</string>
     <string name="warning">Попередження</string>
     <string name="timer_add_custom_time_with_seconds_for_notification">Додати %1$s хв %2$s с</string>
@@ -495,7 +474,6 @@
     <string name="vibration_pattern_strong">Сильний</string>
     <string name="vibration_pattern_escalating">Посилення</string>
     <string name="confirm_action_prompt">\n\nПродовжити?</string>
-    <string name="repetitive_alarm_is_dismissed">Будильник вимкнено. <xliff:g example="Next alarm Monday." id="alarm_day">Перенесено на %s.</xliff:g></string>
     <string name="features_dialog_message">Відвідайте сторінку основних функцій:\n\n%s</string>
     <string name="blur_intensity_title">Інтенсивність розмиття</string>
     <string name="background_image_title">Вибрати фонове зображення</string>
@@ -548,11 +526,6 @@
     <string name="button_tip_title">Натисніть і утримуйте кнопку «+», щоб додати папку</string>
     <string name="permissions_category_title">Дозволи</string>
     <string name="sync_alarm_by_label_title">Синхронізувати будильники з однаковою міткою</string>
-    <string name="snooze_minus_button_color_title">Колір кнопки «−»</string>
-    <string name="snooze_plus_button_color_title">Колір кнопки «+»</string>
-    <string name="snooze_minus_symbol_color_title">Колір символа «−»</string>
-    <string name="snooze_plus_symbol_color_title">Колір символа «+»</string>
-    <string name="snooze_zone_color_title">Колір зони «Відкласти»</string>
     <string name="clock_dial_with_roman_numbers">Римські цифри</string>
     <string name="clock_second_hand_lollipop">Lollipop</string>
     <string name="missed_timer_indicator_color_title">Колір індикатора пропущеного таймера</string>
@@ -563,8 +536,6 @@
     <string name="foreground_service_message">Працює у фоновому режимі</string>
     <string name="alarm_volume_low">Низька гучність будильника</string>
     <string name="background_image_summary">Щоб побачити зображення, встановіть прозорий колір фону</string>
-    <string name="snooze_selector_text_color_title">Колір тексту при виборі відкладення</string>
-    <string name="display_snooze_selector_title">Показувати вибір відкладення</string>
     <string name="next_alarm_title_color_title">Колір заголовка наступного будильника</string>
     <string name="next_alarm_title_default_color_title">Колір за замовчуванням для заголовка наступного будильника</string>
     <string name="city_note_color_title">Колір примітки до міста</string>

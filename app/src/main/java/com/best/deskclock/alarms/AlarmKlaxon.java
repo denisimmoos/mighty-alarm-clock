@@ -110,14 +110,16 @@ public final class AlarmKlaxon {
             // Crescendo duration always in milliseconds
             final int crescendoDuration = alarmInstance.mCrescendoDuration * 1000;
 
-            // Every alarm comes from a calendar profile, which sets its own volume. The previous
-            // alarm volume is restored in stop().
+            // The alarm volume set in the app (the alarm stream volume) is the master volume; every
+            // alarm comes from a calendar profile, which rings at its percent of it. The alarm
+            // volume is restored in stop().
             final AudioManager audioManager = appContext.getSystemService(AudioManager.class);
             if (instance.mPreviousAlarmVolume == -1) {
                 instance.mPreviousAlarmVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
             }
             final int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
-            final int profileVolume = Math.max(0, Math.min(maxVolume, alarmInstance.mAlarmVolume));
+            final int profileVolume = com.best.deskclock.provider.CalendarProfile.effectiveVolume(
+                instance.mPreviousAlarmVolume, alarmInstance.mAlarmVolume, maxVolume);
             if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != profileVolume) {
                 try {
                     audioManager.setStreamVolume(AudioManager.STREAM_ALARM, profileVolume, 0);

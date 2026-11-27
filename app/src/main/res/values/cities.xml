@@ -1109,7 +1109,8 @@
     <!-- Format: [index]=[city name]|[timezone id] - DO NOT TRANSLATE THE TIME ZONE -->
     <string name="C363">A<xliff:g id="separator">=</xliff:g>Amberg<xliff:g id="timezone">|Europe/Berlin</xliff:g></string>
     <!-- Format: [index]=[city name]|[timezone id] - DO NOT TRANSLATE THE TIME ZONE -->
-    <string name="C364">E<xliff:g id="separator">=</xliff:g>Ebermannsdorf<xliff:g id="timezone">|Europe/Berlin</xliff:g></string>
+    <!-- Local Time: shows the phone's own time zone; the time zone here is only a placeholder. -->
+    <string name="C364">L<xliff:g id="separator">=</xliff:g>Local Time<xliff:g id="timezone">|Europe/Berlin</xliff:g></string>
     <!-- Format: [index]=[city name]|[timezone id] - DO NOT TRANSLATE THE TIME ZONE -->
     <string name="C365">P<xliff:g id="separator">=</xliff:g>Polsingen<xliff:g id="timezone">|Europe/Berlin</xliff:g></string>
 </resources>

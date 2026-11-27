@@ -66,11 +66,8 @@ final class TabModel {
         final boolean isClockTabVisible = SettingsDAO.isClockTabVisible(mPrefs);
         final boolean isTimerTabVisible = SettingsDAO.isTimerTabVisible(mPrefs);
         final boolean isStopwatchTabVisible = SettingsDAO.isStopwatchTabVisible(mPrefs);
-        final boolean isCalendarAlarmTabVisible = SettingsDAO.isCalendarAlarmTabVisible(mPrefs);
-
-        if (isCalendarAlarmTabVisible) {
-            newActiveTabs.add(Tab.CALENDAR_ALARM);
-        }
+        // The Calendar tab is always shown: it holds the alarms.
+        newActiveTabs.add(Tab.CALENDAR_ALARM);
 
         if (isClockTabVisible) {
             newActiveTabs.add(Tab.CLOCKS);

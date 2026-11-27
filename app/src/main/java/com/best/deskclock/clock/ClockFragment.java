@@ -239,7 +239,6 @@ public final class ClockFragment extends DeskClockFragment {
         mItemTouchHelper = new ItemTouchHelper(mTouchHelperCallback);
         updateDragAndDrop();
 
-        updateEmptyStateVisibility();
 
         getParentFragmentManager().setFragmentResultListener(LabelDialogFragment.REQUEST_CITY_NOTE, getViewLifecycleOwner(),
             (requestKey, bundle) -> {
@@ -280,7 +279,6 @@ public final class ClockFragment extends DeskClockFragment {
             applySettingsChanges();
         }
 
-        updateEmptyStateVisibility();
 
         if (isTabSelected() && mBinding != null && mBinding.timezoneGlobeView != null) {
             mBinding.timezoneGlobeView.resumeAutoRotation();
@@ -371,20 +369,6 @@ public final class ClockFragment extends DeskClockFragment {
     private void refreshAlarm() {
         if (mBinding != null) {
             AlarmUtils.refreshAlarm(mBinding.mainClockFrame.mainClockContainer, false, mSettings.isTextUppercase);
-        }
-    }
-
-    private void updateEmptyStateVisibility() {
-        if ( mBinding == null || mCityAdapter == null) {
-            return;
-        }
-
-        final boolean isEmpty = !mSettings.showHomeClock && mCityAdapter.getCities().isEmpty();
-
-        if (mBinding.citiesEmptyView != null) {
-            mBinding.citiesEmptyView.setVisibility(isEmpty ? VISIBLE : GONE);
-        } else if (mBinding.emptyCityViewRightPanel != null) {
-            mBinding.emptyCityViewRightPanel.setVisibility(isEmpty ? VISIBLE : GONE);
         }
     }
 

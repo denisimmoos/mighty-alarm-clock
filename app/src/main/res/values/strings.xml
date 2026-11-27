@@ -103,9 +103,7 @@
     <!-- The text shown after user dismissed a repeated alarm -->
     <string name="alarm_alert_off_text">Alarm off</string>
     <!-- Text displayed while a repeating alarm is being permanently disabled -->
-    <string name="alarm_alert_disabled_text">Alarm turned off permanently</string>
     <!-- The text shown after user dismissed a single alarm -->
-    <string name="alarm_alert_off_and_deleted_text">Alarm off and deleted</string>
     <!-- Button labels on the alarm dialog: Snooze -->
     <string name="alarm_alert_snooze_text">Snooze</string>
     <!-- Toast that appears after Alarm is snoozed from the Alarm
@@ -121,7 +119,6 @@
     <!-- Text to appear in the notification title while an alarm is about to go off. -->
     <string name="alarm_alert_predismiss_title">Upcoming alarm</string>
     <!-- Text to appear in the notification title while an occasional alarm is about to go off. -->
-    <string name="occasional_alarm_alert_predismiss_title">Upcoming occasional alarm</string>
     <!-- Text to appear in when trying to view a missed alarm that has been deleted -->
     <!-- 0: nothing
          1: days
@@ -314,11 +311,11 @@
     <!-- Setting title to display the background or not. -->
     <string name="display_card_background_title">Display the card backgrounds</string>
     <!-- Setting summary about background display. -->
-    <string name="display_card_background_summary">Displays a background for some application elements (alarms, cities, timer button, etc.)</string>
+    <string name="display_card_background_summary">Displays a background for some application elements (profiles, cities, timer button, etc.)</string>
     <!-- Setting title to display the background border or not. -->
     <string name="display_background_border_title">Display the background borders</string>
     <!-- Setting summary about background border display. -->
-    <string name="display_background_border_summary">Displays a background border for some application elements (alarms, cities, timer button, etc.)</string>
+    <string name="display_background_border_summary">Displays a background border for some application elements (profiles, cities, timer button, etc.)</string>
     <!-- Setting title to choose the language. -->
     <string name="settings_language_title">Language</string>
     <!-- Setting title for changing the language to system language. -->
@@ -468,29 +465,21 @@
     <!-- Setting title for changing the date picker style to text. -->
     <!-- Setting summary to indicate that this setting can be changed for each alarm -->
     <!-- Setting title for customizing the slide zone color. -->
-    <string name="slide_zone_color_title">Slide zone color</string>
     <!-- Setting title for customizing the color of "Snooze" title. -->
-    <string name="snooze_title_color">Color of the \"Snooze\" title</string>
+    <string name="snooze_title_color">Color of the \"Snooze\" label</string>
     <!-- Setting title for customizing the color of the "Snooze" button. -->
-    <string name="snooze_button_color">Color of the \"Snooze\" button</string>
     <!-- Setting title for customizing the color of "Dismiss" title. -->
-    <string name="dismiss_title_color">Color of the \"Dismiss\" title</string>
     <!-- Setting title for customizing the color of the "Dismiss" button. -->
     <string name="dismiss_button_color">Color of the \"Dismiss\" button</string>
     <!-- Setting title for customizing the alarm button color. -->
-    <string name="alarm_button_color">Alarm button color</string>
     <!-- Setting title for customizing the snooze zone color. -->
-    <string name="snooze_zone_color_title">Snooze zone color</string>
+    <string name="snooze_zone_color_title">Snooze bubble color</string>
     <!-- Setting title for customizing the color of the "-" button. -->
-    <string name="snooze_minus_button_color_title">Color of the \"-\" button</string>
     <!-- Setting title for customizing the color of the "+" button. -->
-    <string name="snooze_plus_button_color_title">Color of the \"+\" button</string>
     <!-- Setting title for customizing the snooze selector text color. -->
-    <string name="snooze_selector_text_color_title">Snooze selector text color</string>
+    <string name="snooze_selector_text_color_title">Snooze bubble text color</string>
     <!-- Setting title for customizing the color of the "-" symbol. -->
-    <string name="snooze_minus_symbol_color_title">Color of the \"-\" symbol</string>
     <!-- Setting title for customizing the color of the "+" symbol. -->
-    <string name="snooze_plus_symbol_color_title">Color of the \"+\" symbol</string>
     <!-- Setting title for customizing the alarm clock font size. -->
     <string name="clock_font_size">Clock font size</string>
     <!-- Setting title for customizing the alarm title font size. -->
@@ -534,7 +523,6 @@
     <!-- Auto silence summary when set at "The end of the ringtone" or for changing the auto silence.-->
     <string name="auto_silence_end_of_ringtone">The end of the ringtone</string>
     <!-- Setting title for changing the snooze duration to None. -->
-    <string name="snooze_duration_none">None</string>
     <!-- Week start day preference title. -->
     <!-- Setting title for changing the start of the week to Saturday. -->
     <!-- Setting title for changing the start of the week to Sunday. -->
@@ -558,9 +546,7 @@
     <!-- Text to display when do-not-disturb is blocking alarms. [CHAR LIMIT=60] -->
     <string name="alarms_blocked_by_dnd">Device is set to total silence</string>
     <!-- Title of the setting to enable swiping to dismiss or snooze alarms -->
-    <string name="swipe_action_title">Swipe to dismiss or snooze the alarms</string>
     <!-- Title of the setting to display the snooze selector -->
-    <string name="display_snooze_selector_title">Display the snooze selector</string>
     <!-- Title of the setting to change hardware button behavior. This string
          should be changed for each piece of hardware. [CHAR LIMIT=20] -->
     <string name="volume_button_setting_title">Volume buttons</string>
@@ -569,7 +555,6 @@
     <!-- Setting title for changing the button action to Dismiss. -->
     <string name="button_action_dismiss">Dismiss</string>
     <!-- Setting title for permanently disabling a repeating alarm when dismissing. -->
-    <string name="button_action_disable">Turn off permanently</string>
     <!-- Setting title for changing the button action to Control volume. -->
     <string name="button_action_control_volume">Control volume</string>
     <!-- Setting title for changing the button action to Nothing. -->
@@ -860,9 +845,7 @@
     <!-- GitHub dialog message in about screen -->
     <string name="github_dialog_message">Visit the project GitHub page:\n\n%s</string>
     <!-- Translate link for about screen -->
-    <string name="about_translate_link">Translate on Codeberg</string>
     <!-- Translate dialog message in about screen -->
-    <string name="translate_dialog_message">Visit the Codeberg page:\n\n%s</string>
     <!-- License for about screen -->
     <string name="license">Open-source license</string>
     <!-- License dialog message in about screen -->
@@ -914,7 +897,7 @@
     <!-- Alarm preferences title in the settings -->
     <string name="alarm_settings">Alarms</string>
     <!-- Alarm preferences summary in the settings -->
-    <string name="alarm_settings_summary">Customize the style, font, default ringtone, volume, actions to dismiss or snooze the alarms, first day of the week, and reminder notification time</string>
+    <string name="alarm_settings_summary">Customize the alarm screen, default sound, alarm volume, vibration, button and gesture actions, and the reminder notification</string>
     <!-- Describes the service that processes actions originating from timer notifications. -->
     <string name="timer_service_desc">Processes actions from timer notifications.</string>
     <!-- Describes the service that processes actions originating from stopwatch notifications. -->
@@ -922,27 +905,18 @@
     <!-- Description for the paused stop watch -->
     <string name="swn_paused">Paused</string>
     <!-- Hint under the slide control for permanently disabling a repeating alarm. -->
-    <string name="swipe_down_to_disable_hint">Swipe down to turn off permanently</string>
     <!-- Text instruction for alarm icon on alarm lock screen when swipe action is enabled.
          The snooze button will still be on the left even on RTL languages so please do not reverse this during translation. -->
-    <string name="description_direction_both">Swipe left to snooze or right to dismiss</string>
     <!-- Accessibility: swipe left/right/down for recurring alarms. -->
-    <string name="description_direction_both_with_disable">Swipe left to snooze, right to dismiss, or down to turn off permanently</string>
     <!-- Text instruction for occasional alarm icon on alarm lock screen when swipe action is enabled.
          The snooze button will still be on the left even on RTL languages so please do not reverse this during translation. -->
-    <string name="description_direction_both_for_occasional_alarm">Swipe left to snooze or right to dismiss and delete alarm</string>
     <!-- Text instruction for non-repeatable alarm icon on alarm lock screen when swipe action is enabled. -->
-    <string name="description_direction_both_for_non_repeatable_alarm">Swipe left or right to dismiss</string>
     <!-- Text instruction for occasional non-repeatable alarm icon on alarm lock screen when swipe action is enabled. -->
-    <string name="description_direction_both_for_occasional_non_repeatable_alarm">Swipe left or right to dismiss and delete alarm</string>
     <!-- Text instruction for the "Snooze" button on alarm lock screen when swipe action is disabled. -->
-    <string name="description_snooze_button">Click to snooze alarm</string>
     <!-- Text instruction for the "Dismiss" button on alarm lock screen when swipe action is disabled. -->
     <string name="description_dismiss_button">Click to dismiss alarm</string>
     <!-- Text instruction for the "Dismiss" button on a repeating alarm: tap dismisses once, long-press disables. -->
-    <string name="description_dismiss_button_with_disable">Click to dismiss; long-press to turn off permanently</string>
     <!-- Text instruction for the "Dismiss" button on alarm lock screen for occasional alarm when swipe action is disabled. -->
-    <string name="description_dismiss_button_for_occasional_alarm">Click to dismiss and delete alarm</string>
     <!-- Timer preference title in the settings -->
     <string name="timer_settings">Timers</string>
     <!-- Timer preference summary in the settings -->
@@ -1154,11 +1128,9 @@
     <!-- Toast when a repeating alarm was permanently disabled while dismissing. %s is the alarm time. -->
     <string name="alarm_is_disabled"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> alarm turned off permanently</string>
     <!-- String that represents that the user has dismissed a repetitive alarm. %s indicates the day of the next alarm -->
-    <string name="repetitive_alarm_is_dismissed">Alarm dismissed. <xliff:g example="Next alarm Monday." id="alarm_day">Rescheduled for %s.</xliff:g></string>
     <!-- Toast content when an occasional alarm is dismissed and deleted.
     %s represents alarm time, e.g. 14:20
     -->
-    <string name="alarm_is_dismissed_and_deleted"><xliff:g example="14:20" id="alarm_time">%s</xliff:g> alarm dismissed and deleted</string>
     <!-- String that represents that the user has dismissed an alarm through a voice action.
     %s represents alarm time, e.g. 14:20
     [CHAR LIMIT=NONE]
@@ -1373,7 +1345,6 @@
     <!-- Step 2 of new-alarm wizard: pick time, repeat days and optional date -->
     <!-- Step 3 of new-alarm wizard: assign category/tag -->
     <!-- Title of the dialog allowing the user to pick an explicit snooze duration (long-press on the snooze button) -->
-    <string name="mighty_choose_snooze_duration_title">Snooze for…</string>
     <!-- Suffix appended to the label of a duplicated alarm -->
 
     <!-- Hint shown in the alarm list search field -->
@@ -1502,8 +1473,8 @@
     <string name="calendar_alarm_title_regex_help">Events whose title contains a match ring as alarms. Example: ^Alarm: matches titles starting with \"Alarm:\".</string>
     <string name="calendar_alarm_title_regex_invalid">This is not a valid regular expression.</string>
     <string name="calendar_alarm_section_sound">Sound and vibration</string>
-    <string name="calendar_alarm_volume">Volume: %1$d of %2$d</string>
-    <string name="calendar_alarm_volume_help">The alarm rings at this volume. Afterwards the previous alarm volume is restored.</string>
+    <string name="calendar_alarm_volume">Volume: %1$d%% of the alarm volume</string>
+    <string name="calendar_alarm_volume_help">The alarm volume is set in Settings, Alarms. This profile rings at this share of it.</string>
     <string name="calendar_alarm_vibrate">Vibrate</string>
     <string name="calendar_alarm_flash">Blink flashlight</string>
     <string name="calendar_alarm_vibrate_only">Vibrate only (no sound)</string>

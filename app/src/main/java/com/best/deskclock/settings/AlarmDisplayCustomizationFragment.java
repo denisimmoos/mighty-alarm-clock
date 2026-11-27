@@ -47,24 +47,14 @@ public class AlarmDisplayCustomizationFragment extends ScreenFragment
     CustomSliderPreference mAnalogClockSizePref;
     ListPreference mAlarmClockSecondHandPref;
     SwitchPreferenceCompat mDisplaySecondsPref;
-    SwitchPreferenceCompat mSwipeActionPref;
-    SwitchPreferenceCompat mDisplaySnoozeSelectorPref;
     ColorPickerPreference mBackgroundColorPref;
     ColorPickerPreference mBackgroundAmoledColorPref;
     ColorPickerPreference mAlarmClockColorPref;
     ColorPickerPreference mAlarmSecondHandColorPref;
-    ColorPickerPreference mSlideZoneColorPref;
-    ColorPickerPreference mAlarmButtonColorPref;
     ColorPickerPreference mSnoozeTitleColorPref;
-    ColorPickerPreference mSnoozeButtonColorPref;
-    ColorPickerPreference mDismissTitleColorPref;
     ColorPickerPreference mDismissButtonColorPref;
     ColorPickerPreference mSnoozeZoneColorPref;
-    ColorPickerPreference mSnoozeMinusButtonColorPref;
-    ColorPickerPreference mSnoozePlusButtonColorPref;
     ColorPickerPreference mSnoozeSelectorTextColorPref;
-    ColorPickerPreference mSnoozeMinusSymbolColorPref;
-    ColorPickerPreference mSnoozePlusSymbolColorPref;
     CustomSliderPreference mAlarmDigitalClockFontSizePref;
     SwitchPreferenceCompat mDisplayTextShadowPref;
     ColorPickerPreference mShadowColorPref;
@@ -155,24 +145,14 @@ public class AlarmDisplayCustomizationFragment extends ScreenFragment
         mAnalogClockSizePref = findPreference(KEY_ALARM_ANALOG_CLOCK_SIZE);
         mDisplaySecondsPref = findPreference(KEY_DISPLAY_ALARM_SECOND_HAND);
         mAlarmClockSecondHandPref = findPreference(KEY_ALARM_CLOCK_SECOND_HAND);
-        mSwipeActionPref = findPreference(KEY_SWIPE_ACTION);
-        mDisplaySnoozeSelectorPref = findPreference(KEY_DISPLAY_SNOOZE_SELECTOR);
         mBackgroundColorPref = findPreference(KEY_ALARM_BACKGROUND_COLOR);
         mBackgroundAmoledColorPref = findPreference(KEY_ALARM_BACKGROUND_AMOLED_COLOR);
         mAlarmClockColorPref = findPreference(KEY_ALARM_CLOCK_COLOR);
         mAlarmSecondHandColorPref = findPreference(KEY_ALARM_SECOND_HAND_COLOR);
-        mSlideZoneColorPref = findPreference(KEY_SLIDE_ZONE_COLOR);
-        mAlarmButtonColorPref = findPreference(KEY_ALARM_BUTTON_COLOR);
         mSnoozeTitleColorPref = findPreference(KEY_SNOOZE_TITLE_COLOR);
-        mSnoozeButtonColorPref = findPreference(KEY_SNOOZE_BUTTON_COLOR);
-        mDismissTitleColorPref = findPreference(KEY_DISMISS_TITLE_COLOR);
         mDismissButtonColorPref = findPreference(KEY_DISMISS_BUTTON_COLOR);
         mSnoozeZoneColorPref = findPreference(KEY_SNOOZE_ZONE_COLOR);
-        mSnoozeMinusButtonColorPref = findPreference(KEY_SNOOZE_MINUS_BUTTON_COLOR);
-        mSnoozePlusButtonColorPref = findPreference(KEY_SNOOZE_PLUS_BUTTON_COLOR);
         mSnoozeSelectorTextColorPref = findPreference(KEY_SNOOZE_SELECTOR_TEXT_COLOR);
-        mSnoozeMinusSymbolColorPref = findPreference(KEY_SNOOZE_MINUS_SYMBOL_COLOR);
-        mSnoozePlusSymbolColorPref = findPreference(KEY_SNOOZE_PLUS_SYMBOL_COLOR);
         mAlarmDigitalClockFontSizePref = findPreference(KEY_ALARM_DIGITAL_CLOCK_FONT_SIZE);
         mDisplayTextShadowPref = findPreference(KEY_ALARM_DISPLAY_TEXT_SHADOW);
         mShadowColorPref = findPreference(KEY_ALARM_SHADOW_COLOR);
@@ -206,11 +186,11 @@ public class AlarmDisplayCustomizationFragment extends ScreenFragment
     @Override
     public void onDestroy() {
         nullifyPreferenceListeners(mAlarmClockStylePref, mAlarmClockDialPref, mAlarmClockDialMaterialPref, mAnalogClockSizePref,
-            mAlarmClockSecondHandPref, mDisplaySecondsPref, mSwipeActionPref, mDisplaySnoozeSelectorPref, mBackgroundColorPref,
-            mBackgroundAmoledColorPref, mAlarmClockColorPref, mAlarmSecondHandColorPref, mSlideZoneColorPref, mAlarmButtonColorPref,
-            mSnoozeTitleColorPref, mSnoozeButtonColorPref, mDismissTitleColorPref, mDismissButtonColorPref, mSnoozeZoneColorPref,
-            mSnoozeMinusButtonColorPref, mSnoozePlusButtonColorPref, mSnoozeSelectorTextColorPref, mSnoozeMinusSymbolColorPref,
-            mSnoozePlusSymbolColorPref, mAlarmDigitalClockFontSizePref, mDisplayTextShadowPref, mShadowColorPref, mShadowOffsetPref,
+            mAlarmClockSecondHandPref, mDisplaySecondsPref, mBackgroundColorPref,
+            mBackgroundAmoledColorPref, mAlarmClockColorPref, mAlarmSecondHandColorPref,
+            mSnoozeTitleColorPref, mDismissButtonColorPref, mSnoozeZoneColorPref,
+            mSnoozeSelectorTextColorPref,
+            mAlarmDigitalClockFontSizePref, mDisplayTextShadowPref, mShadowColorPref, mShadowOffsetPref,
             mDisplayAlarmActionMessagePref, mDisplayRingtoneTitlePref, mRingtoneTitleColorPref, mAlarmBackgroundImagePref,
             mEnableAlarmBlurEffectPref, mAlarmBlurIntensityPref, mAlarmPreviewPref
         );
@@ -254,32 +234,6 @@ public class AlarmDisplayCustomizationFragment extends ScreenFragment
 
                 mAlarmClockSecondHandPref.setVisible(isSecondHandDisplayed && alarmClockStyle == ClockStyle.ANALOG);
                 mAlarmSecondHandColorPref.setVisible(isSecondHandDisplayed && alarmClockStyle != ClockStyle.ANALOG_MATERIAL);
-
-                Utils.performHapticFeedback(getView(), HapticFeedbackConstantsCompat.VIRTUAL_KEY);
-            }
-
-            case KEY_SWIPE_ACTION -> {
-                boolean isSwipeActionEnabled = (boolean) newValue;
-
-                mSlideZoneColorPref.setVisible(isSwipeActionEnabled);
-                mSnoozeTitleColorPref.setVisible(isSwipeActionEnabled);
-                mSnoozeButtonColorPref.setVisible(!isSwipeActionEnabled);
-                mDismissTitleColorPref.setVisible(isSwipeActionEnabled);
-                mDismissButtonColorPref.setVisible(!isSwipeActionEnabled);
-                mAlarmButtonColorPref.setVisible(isSwipeActionEnabled);
-
-                Utils.performHapticFeedback(getView(), HapticFeedbackConstantsCompat.VIRTUAL_KEY);
-            }
-
-            case KEY_DISPLAY_SNOOZE_SELECTOR -> {
-                boolean isSnoozeSelectorDisplayed = (boolean) newValue;
-
-                mSnoozeZoneColorPref.setVisible(isSnoozeSelectorDisplayed);
-                mSnoozeMinusButtonColorPref.setVisible(isSnoozeSelectorDisplayed);
-                mSnoozePlusButtonColorPref.setVisible(isSnoozeSelectorDisplayed);
-                mSnoozeSelectorTextColorPref.setVisible(isSnoozeSelectorDisplayed);
-                mSnoozeMinusSymbolColorPref.setVisible(isSnoozeSelectorDisplayed);
-                mSnoozePlusSymbolColorPref.setVisible(isSnoozeSelectorDisplayed);
 
                 Utils.performHapticFeedback(getView(), HapticFeedbackConstantsCompat.VIRTUAL_KEY);
             }
@@ -353,8 +307,6 @@ public class AlarmDisplayCustomizationFragment extends ScreenFragment
         final boolean isMaterialAnalogClock = mAlarmClockStylePref.getValue().equals(mMaterialAnalogClock);
         final boolean isDigitalClock = mAlarmClockStylePref.getValue().equals(mDigitalClock);
         final boolean isSecondHandDisplayed = SettingsDAO.isAlarmSecondHandDisplayed(mPrefs);
-        final boolean isSwipeActionEnabled = SettingsDAO.isSwipeActionEnabled(mPrefs);
-        final boolean isSnoozeSelectorDisplayed = SettingsDAO.isSnoozeSelectorDisplayed(mPrefs);
         final boolean isTextShadowDisplayed = SettingsDAO.isAlarmTextShadowDisplayed(mPrefs);
         final String alarmBackgroundImage = SettingsDAO.getAlarmBackgroundImage(mPrefs);
 
@@ -385,40 +337,11 @@ public class AlarmDisplayCustomizationFragment extends ScreenFragment
         mAlarmClockSecondHandPref.setSummary(mAlarmClockSecondHandPref.getEntry());
         mAlarmClockSecondHandPref.setOnPreferenceChangeListener(this);
 
-        mSwipeActionPref.setOnPreferenceChangeListener(this);
-
-        mDisplaySnoozeSelectorPref.setOnPreferenceChangeListener(this);
-
         int color = MaterialColors.getColor(requireContext(), com.google.android.material.R.attr.colorPrimaryInverse, Color.BLACK);
         mAlarmSecondHandColorPref.setVisible(isAnalogClock && isSecondHandDisplayed);
         mAlarmSecondHandColorPref.setDefaultValue(color);
 
-        mSlideZoneColorPref.setVisible(isSwipeActionEnabled);
-
-        mAlarmButtonColorPref.setVisible(isSwipeActionEnabled);
-        mAlarmButtonColorPref.setDefaultValue(color);
-
-        mSnoozeTitleColorPref.setVisible(isSwipeActionEnabled);
-
-        mSnoozeButtonColorPref.setVisible(!isSwipeActionEnabled);
-        mSnoozeButtonColorPref.setDefaultValue(color);
-
-        mDismissTitleColorPref.setVisible(isSwipeActionEnabled);
-
-        mDismissButtonColorPref.setVisible(!isSwipeActionEnabled);
         mDismissButtonColorPref.setDefaultValue(color);
-
-        mSnoozeZoneColorPref.setVisible(isSnoozeSelectorDisplayed);
-
-        mSnoozeMinusButtonColorPref.setVisible(isSnoozeSelectorDisplayed);
-
-        mSnoozePlusButtonColorPref.setVisible(isSnoozeSelectorDisplayed);
-
-        mSnoozeSelectorTextColorPref.setVisible(isSnoozeSelectorDisplayed);
-
-        mSnoozeMinusSymbolColorPref.setVisible(isSnoozeSelectorDisplayed);
-
-        mSnoozePlusSymbolColorPref.setVisible(isSnoozeSelectorDisplayed);
 
         mAlarmDigitalClockFontSizePref.setVisible(isDigitalClock);
 
@@ -461,24 +384,14 @@ public class AlarmDisplayCustomizationFragment extends ScreenFragment
         mAnalogClockSizePref = null;
         mAlarmClockSecondHandPref = null;
         mDisplaySecondsPref = null;
-        mSwipeActionPref = null;
-        mDisplaySnoozeSelectorPref = null;
         mBackgroundColorPref = null;
         mBackgroundAmoledColorPref = null;
         mAlarmClockColorPref = null;
         mAlarmSecondHandColorPref = null;
-        mSlideZoneColorPref = null;
-        mAlarmButtonColorPref = null;
         mSnoozeTitleColorPref = null;
-        mSnoozeButtonColorPref = null;
-        mDismissTitleColorPref = null;
         mDismissButtonColorPref = null;
         mSnoozeZoneColorPref = null;
-        mSnoozeMinusButtonColorPref = null;
-        mSnoozePlusButtonColorPref = null;
         mSnoozeSelectorTextColorPref = null;
-        mSnoozeMinusSymbolColorPref = null;
-        mSnoozePlusSymbolColorPref = null;
         mAlarmDigitalClockFontSizePref = null;
         mDisplayTextShadowPref = null;
         mShadowColorPref = null;

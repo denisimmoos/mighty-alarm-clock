@@ -21,6 +21,12 @@ import java.util.TimeZone;
 public final class City {
 
     /**
+     * The "Local Time" entry of the world clock. It always shows the phone's current time zone,
+     * so it stays right when travelling.
+     */
+    public static final String LOCAL_TIME_ID = "C364";
+
+    /**
      * A unique identifier for the city.
      */
     private final String mId;
@@ -94,7 +100,7 @@ public final class City {
     }
 
     public TimeZone getTimeZone() {
-        return mTimeZone;
+        return LOCAL_TIME_ID.equals(mId) ? TimeZone.getDefault() : mTimeZone;
     }
 
     public String getIndexString() {

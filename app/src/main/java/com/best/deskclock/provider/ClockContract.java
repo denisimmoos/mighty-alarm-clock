@@ -697,6 +697,13 @@ public final class ClockContract {
         String SNOOZE_MINUTES_3 = "snooze_minutes_3";
 
         /**
+         * Volume of the profile's alarms in percent of the alarm volume set in the app (10 to 100,
+         * in steps of 10). Replaces {@link #ALARM_VOLUME}, which held absolute volume steps.
+         * <p>Type: INTEGER</p>
+         */
+        String VOLUME_PERCENT = "volume_percent";
+
+        /**
          * Time of day for all-day events in minutes after midnight, or -1 to ignore them.
          * <p>Type: INTEGER</p>
          */

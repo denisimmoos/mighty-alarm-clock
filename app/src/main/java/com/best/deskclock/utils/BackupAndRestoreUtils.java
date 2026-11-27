@@ -70,6 +70,17 @@ public class BackupAndRestoreUtils {
      * backups still contain them; they are skipped when restoring.
      */
     private static final Set<String> REMOVED_NORMAL_ALARM_SETTINGS = Set.of(
+        "key_calendar_alert_tab_added",
+        "key_swipe_action",
+        "key_display_snooze_selector",
+        "key_slide_zone_color",
+        "key_alarm_button_color",
+        "key_snooze_button_color",
+        "key_dismiss_title_color",
+        "key_snooze_minus_button_color",
+        "key_snooze_plus_button_color",
+        "key_snooze_minus_symbol_color",
+        "key_snooze_plus_symbol_color",
         "key_sample_alarms_seeded",
         "key_material_time_picker_style",
         "key_material_date_picker_style",

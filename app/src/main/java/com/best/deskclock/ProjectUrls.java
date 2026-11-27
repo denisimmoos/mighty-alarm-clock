@@ -7,26 +7,24 @@ package com.best.deskclock;
  */
 public final class ProjectUrls {
 
-    /** Base repository URL (no trailing slash). */
-    public static final String GITHUB_REPO = "https://github.com/RapidAppCoder/mighty-alarm-clock";
+    /** Repository of this app (no trailing slash). */
+    public static final String GITHUB_REPO = "https://github.com/denisimmoos/mighty-alarm-clock";
 
-    /** Feature list of the calendar-only app (README on the fork's branch). */
-    public static final String GITHUB_FEATURES =
-        "https://github.com/denisimmoos/mighty-alarm-clock/tree/feature/calendar-only?tab=readme-ov-file#-features";
+    /** Branch the calendar-only app is built from. */
+    private static final String BRANCH = "feature/calendar-only";
 
-    public static final String GITHUB_LICENSE = GITHUB_REPO + "/blob/main/LICENSE";
+    /** Feature list of the app (README on its branch). */
+    public static final String GITHUB_FEATURES = GITHUB_REPO + "/tree/" + BRANCH + "?tab=readme-ov-file#-features";
 
-    /**
-     * Translation platform for this fork.
-     * No dedicated Weblate project yet — link to the issue tracker for now.
-     */
-    public static final String TRANSLATE = GITHUB_REPO + "/issues";
+    public static final String GITHUB_LICENSE = GITHUB_REPO + "/blob/" + BRANCH + "/LICENSE";
 
     private ProjectUrls() {
     }
 
-    /** GitHub release page for a version tag (e.g. {@code 2026.08.001}). */
+    /**
+     * What's new: the app has no releases yet, so this is the change history of its branch.
+     */
     public static String githubReleaseTag(String versionTag) {
-        return GITHUB_REPO + "/releases/tag/" + versionTag;
+        return GITHUB_REPO + "/commits/" + BRANCH;
     }
 }

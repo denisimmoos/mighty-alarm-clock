@@ -8,7 +8,6 @@ import static android.view.View.VISIBLE;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -266,14 +265,11 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         }
 
         // Volume
-        final AudioManager audioManager = getSystemService(AudioManager.class);
-        final int maxVolume = Math.max(1, audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM));
-        mBinding.volumeSlider.setValueTo(maxVolume);
         if (fillInputs) {
-            mBinding.volumeSlider.setValue(Math.max(0, Math.min(maxVolume, mProfile.alarmVolume)));
+            mBinding.volumeSlider.setValue(CalendarProfile.clampVolumePercent(mProfile.volumePercent));
         }
-        updateVolumeLabel(maxVolume);
-        mBinding.volumeSlider.addOnChangeListener((slider, value, fromUser) -> updateVolumeLabel(maxVolume));
+        updateVolumeLabel();
+        mBinding.volumeSlider.addOnChangeListener((slider, value, fromUser) -> updateVolumeLabel());
 
         // Lookahead window
         if (fillInputs) {
@@ -389,9 +385,9 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             (int) mBinding.lookaheadSlider.getValue()));
     }
 
-    private void updateVolumeLabel(int maxVolume) {
+    private void updateVolumeLabel() {
         mBinding.volumeLabel.setText(getString(R.string.calendar_alarm_volume,
-            (int) mBinding.volumeSlider.getValue(), maxVolume));
+            (int) mBinding.volumeSlider.getValue()));
     }
 
     private void bindCalendar() {
@@ -796,7 +792,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         // Flash only cannot escalate, see updateVibrateOnly().
         mProfile.escalation = mBinding.escalationSwitch.isChecked() && !mBinding.flashOnlySwitch.isChecked();
         mProfile.allDayMinutes = mBinding.allDaySwitch.isChecked() ? mAllDayMinutes : CalendarProfile.ALL_DAY_IGNORED;
-        mProfile.alarmVolume = (int) mBinding.volumeSlider.getValue();
+        mProfile.volumePercent = CalendarProfile.clampVolumePercent((int) mBinding.volumeSlider.getValue());
         mProfile.lookaheadDays = CalendarProfile.clampLookaheadDays((int) mBinding.lookaheadSlider.getValue());
         mProfile.vibrate = mBinding.vibrateSwitch.isChecked();
         mProfile.flash = mBinding.flashSwitch.isChecked();

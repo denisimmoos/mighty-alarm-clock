@@ -25,7 +25,6 @@ final class CityCoordinates {
         putCity("C293", 53.55f, 9.99f);  // Hamburg
         putCity("C362", 49.45f, 11.08f); // Nuremberg
         putCity("C363", 49.44f, 11.86f); // Amberg
-        putCity("C364", 49.39f, 11.94f); // Ebermannsdorf
         putCity("C365", 48.92f, 10.71f); // Polsingen
 
         // Europe

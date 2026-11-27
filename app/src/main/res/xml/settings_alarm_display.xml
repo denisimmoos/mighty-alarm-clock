@@ -72,22 +72,6 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <SwitchPreferenceCompat
-            android:key="key_swipe_action"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/swipe_action_title"
-            android:defaultValue="true"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <SwitchPreferenceCompat
-            android:key="key_display_snooze_selector"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/display_snooze_selector_title"
-            android:defaultValue="false"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -135,39 +119,9 @@
             app:singleLineTitle="false" />
 
         <com.best.deskclock.settings.custompreference.ColorPickerPreference
-            android:key="key_slide_zone_color"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/slide_zone_color_title"
-            android:defaultValue="#FF2E3337"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <com.best.deskclock.settings.custompreference.ColorPickerPreference
-            android:key="key_alarm_button_color"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/alarm_button_color"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <com.best.deskclock.settings.custompreference.ColorPickerPreference
             android:key="key_snooze_title_color"
             android:layout="@layout/settings_preference_layout"
             android:title="@string/snooze_title_color"
-            android:defaultValue="#FFFFFFFF"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <com.best.deskclock.settings.custompreference.ColorPickerPreference
-            android:key="key_snooze_button_color"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/snooze_button_color"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <com.best.deskclock.settings.custompreference.ColorPickerPreference
-            android:key="key_dismiss_title_color"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/dismiss_title_color"
             android:defaultValue="#FFFFFFFF"
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
@@ -188,41 +142,9 @@
             app:singleLineTitle="false" />
 
         <com.best.deskclock.settings.custompreference.ColorPickerPreference
-            android:key="key_snooze_minus_button_color"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/snooze_minus_button_color_title"
-            android:defaultValue="#80FFFFFF"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <com.best.deskclock.settings.custompreference.ColorPickerPreference
-            android:key="key_snooze_plus_button_color"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/snooze_plus_button_color_title"
-            android:defaultValue="#80FFFFFF"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <com.best.deskclock.settings.custompreference.ColorPickerPreference
             android:key="key_snooze_selector_text_color"
             android:layout="@layout/settings_preference_layout"
             android:title="@string/snooze_selector_text_color_title"
-            android:defaultValue="#FFFFFFFF"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <com.best.deskclock.settings.custompreference.ColorPickerPreference
-            android:key="key_snooze_minus_symbol_color"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/snooze_minus_symbol_color_title"
-            android:defaultValue="#FFFFFFFF"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <com.best.deskclock.settings.custompreference.ColorPickerPreference
-            android:key="key_snooze_plus_symbol_color"
-            android:layout="@layout/settings_preference_layout"
-            android:title="@string/snooze_plus_symbol_color_title"
             android:defaultValue="#FFFFFFFF"
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />

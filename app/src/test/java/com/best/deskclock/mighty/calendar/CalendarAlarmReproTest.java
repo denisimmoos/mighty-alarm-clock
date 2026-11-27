@@ -304,13 +304,9 @@ public class CalendarAlarmReproTest {
                 .setData(AlarmInstance.getContentUri(instance.mId))).create().start().postCreate(null).resume().get();
         // Calendar alarms say "Dismiss", not "Delete".
         final String delete = mContext.getString(com.best.deskclock.R.string.delete);
-        for (int id : new int[] {com.best.deskclock.R.id.dismiss_button, com.best.deskclock.R.id.dismiss_only_button,
-            com.best.deskclock.R.id.dismiss_text}) {
-            final android.view.View v = activity.findViewById(id);
-            if (v instanceof android.widget.TextView) {
-                org.junit.Assert.assertNotEquals(delete, ((android.widget.TextView) v).getText().toString());
-            }
-        }
+        final android.widget.TextView dismiss =
+            activity.findViewById(com.best.deskclock.R.id.calendar_dismiss_button);
+        org.junit.Assert.assertNotEquals(delete, dismiss.getText().toString());
     }
 
     @Test(timeout = 60000)
@@ -329,15 +325,7 @@ public class CalendarAlarmReproTest {
         for (int i = 0; i < ids.length; i++) {
             assertEquals(labels[i], ((android.widget.TextView) activity.findViewById(ids[i])).getText().toString());
         }
-        // No slider, no snooze picker, no other buttons: a big Dismiss bubble above the snooze bubbles.
-        assertEquals(android.view.View.GONE,
-            activity.findViewById(com.best.deskclock.R.id.snooze_selector_layout).getVisibility());
-        assertEquals(android.view.View.GONE,
-            activity.findViewById(com.best.deskclock.R.id.slide_zone_layout).getVisibility());
-        for (int id : new int[]{com.best.deskclock.R.id.snooze_button, com.best.deskclock.R.id.dismiss_button,
-            com.best.deskclock.R.id.dismiss_only_button}) {
-            assertEquals(android.view.View.GONE, activity.findViewById(id).getVisibility());
-        }
+        // No slider, no snooze picker, no other buttons: those views no longer exist.
         assertEquals(android.view.View.VISIBLE,
             activity.findViewById(com.best.deskclock.R.id.calendar_actions).getVisibility());
         assertEquals(mContext.getString(com.best.deskclock.R.string.button_action_dismiss),
