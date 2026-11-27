@@ -73,6 +73,31 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             }
         });
 
+    /** Wi-Fi networks chosen in the editor, kept while the Wi-Fi switch is off. */
+    private final List<CalendarWifi.Network> mWifiNetworks = new java.util.ArrayList<>();
+
+    /** What to do after the location permission was granted. */
+    private boolean mChooseWifiAfterPermission;
+
+    private final ActivityResultLauncher<String[]> mLocationPermissionLauncher = registerForActivityResult(
+        new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+            if (CalendarWifi.hasForegroundPermission(this)) {
+                if (mChooseWifiAfterPermission) {
+                    mChooseWifiAfterPermission = false;
+                    showNearbyNetworks();
+                } else {
+                    requestBackgroundLocation();
+                }
+            } else {
+                mChooseWifiAfterPermission = false;
+                CustomToast.showLong(this, getString(R.string.calendar_alarm_wifi_permission));
+            }
+            updateWifiPermission();
+        });
+
+    private final ActivityResultLauncher<String> mBackgroundLocationLauncher = registerForActivityResult(
+        new ActivityResultContracts.RequestPermission(), granted -> updateWifiPermission());
+
     private final ActivityResultLauncher<String> mPermissionLauncher = registerForActivityResult(
         new ActivityResultContracts.RequestPermission(), granted -> {
             if (granted) {
@@ -115,6 +140,8 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         if (mProfile.allDayMinutes >= 0) {
             mAllDayMinutes = mProfile.allDayMinutes;
         }
+        mWifiNetworks.addAll(CalendarWifi.parse(savedInstanceState != null
+            ? savedInstanceState.getString(STATE_WIFI_NETWORKS, mProfile.wifiNetworks) : mProfile.wifiNetworks));
         if (savedInstanceState != null) {
             mAllDayMinutes = savedInstanceState.getInt(STATE_ALL_DAY_MINUTES, mAllDayMinutes);
         }
@@ -130,6 +157,16 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         outState.putString(STATE_CALENDAR_NAME, mProfile.calendarName);
         outState.putString(STATE_RINGTONE, mProfile.ringtone == null ? null : mProfile.ringtone.toString());
         outState.putInt(STATE_ALL_DAY_MINUTES, mAllDayMinutes);
+        outState.putString(STATE_WIFI_NETWORKS, CalendarWifi.toJson(mWifiNetworks));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // The user may come back from the app settings with location allowed.
+        if (mBinding != null) {
+            updateWifiPermission();
+        }
     }
 
     @Override
@@ -157,6 +194,8 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.offsetMinutesInput.setText(String.valueOf(offset % 60));
             mBinding.ringAtStartSwitch.setChecked(mProfile.ringAtStart);
             mBinding.escalationSwitch.setChecked(mProfile.escalation);
+            mBinding.wifiSwitch.setChecked(mProfile.wifiCheck);
+            mBinding.wifiOffRingsSwitch.setChecked(mProfile.wifiOffRings);
             mBinding.allDaySwitch.setChecked(mProfile.allDayMinutes >= 0);
             mBinding.vibrateSwitch.setChecked(mProfile.vibrate);
             mBinding.flashSwitch.setChecked(mProfile.flash);
@@ -231,6 +270,18 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
         mBinding.offsetFields.setVisibility(mBinding.offsetSwitch.isChecked() ? VISIBLE : GONE);
         mBinding.offsetSwitch.setOnCheckedChangeListener((button, checked) ->
             mBinding.offsetFields.setVisibility(checked ? VISIBLE : GONE));
+
+        // Wi-Fi: the networks and the permission hint follow the Wi-Fi switch
+        mBinding.wifiFields.setVisibility(mBinding.wifiSwitch.isChecked() ? VISIBLE : GONE);
+        mBinding.wifiSwitch.setOnCheckedChangeListener((button, checked) -> {
+            mBinding.wifiFields.setVisibility(checked ? VISIBLE : GONE);
+            updateWifiPermission();
+        });
+        mBinding.wifiChooseButton.setOnClickListener(v -> chooseNearbyNetwork());
+        mBinding.wifiEnterButton.setOnClickListener(v -> enterNetwork());
+        mBinding.wifiPermissionButton.setOnClickListener(v -> requestLocation(false));
+        bindWifiNetworks();
+        updateWifiPermission();
 
         // Snooze fields follow the snooze switch
         mBinding.snoozeFields.setVisibility(mBinding.snoozeSwitch.isChecked() ? VISIBLE : GONE);
@@ -333,6 +384,218 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             (int) mBinding.vibrationStrengthSlider.getValue()));
     }
 
+    // ---------------------------------------------------------------------------------------
+    // Wi-Fi
+
+    private void bindWifiNetworks() {
+        final android.widget.LinearLayout container = mBinding.wifiNetworksContainer;
+        container.removeAllViews();
+        if (mWifiNetworks.isEmpty()) {
+            final android.widget.TextView none = new android.widget.TextView(this);
+            none.setText(R.string.calendar_alarm_wifi_none);
+            none.setTextSize(15);
+            none.setMinHeight(dp(40));
+            none.setGravity(android.view.Gravity.CENTER_VERTICAL);
+            container.addView(none);
+            return;
+        }
+        for (CalendarWifi.Network network : new java.util.ArrayList<>(mWifiNetworks)) {
+            final android.widget.LinearLayout row = new android.widget.LinearLayout(this);
+            row.setOrientation(android.widget.LinearLayout.HORIZONTAL);
+            row.setGravity(android.view.Gravity.CENTER_VERTICAL);
+            final android.widget.TextView text = new android.widget.TextView(this);
+            text.setText(describe(network));
+            text.setTextSize(16);
+            row.addView(text, new android.widget.LinearLayout.LayoutParams(0,
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+            final android.widget.ImageButton remove = new android.widget.ImageButton(this);
+            remove.setImageResource(R.drawable.ic_delete);
+            remove.setBackgroundResource(android.R.color.transparent);
+            remove.setContentDescription(getString(R.string.calendar_alarm_wifi_remove, describe(network)));
+            remove.setOnClickListener(v -> {
+                mWifiNetworks.remove(network);
+                bindWifiNetworks();
+            });
+            row.addView(remove, new android.widget.LinearLayout.LayoutParams(dp(48), dp(48)));
+            container.addView(row);
+        }
+    }
+
+    private String describe(CalendarWifi.Network network) {
+        if (network.bssid.isEmpty()) {
+            return getString(R.string.calendar_alarm_wifi_match_name, network.ssid);
+        }
+        if (network.ssid.isEmpty()) {
+            return getString(R.string.calendar_alarm_wifi_match_mac, network.bssid);
+        }
+        return network.ssid + " · " + network.bssid;
+    }
+
+    private int dp(int value) {
+        return Math.round(value * getResources().getDisplayMetrics().density);
+    }
+
+    private void addNetwork(CalendarWifi.Network network) {
+        if (!network.isEmpty() && !mWifiNetworks.contains(network)) {
+            mWifiNetworks.add(network);
+        }
+        bindWifiNetworks();
+    }
+
+    private void updateWifiPermission() {
+        if (mBinding == null) {
+            return;
+        }
+        final boolean missing = !CalendarWifi.hasBackgroundPermission(this);
+        final boolean locationOff = !missing && !CalendarWifi.isLocationEnabled(this);
+        mBinding.wifiPermissionFields.setVisibility(mBinding.wifiSwitch.isChecked() && (missing || locationOff)
+            ? VISIBLE : GONE);
+        mBinding.wifiPermissionText.setText(missing
+            ? R.string.calendar_alarm_wifi_permission : R.string.calendar_alarm_wifi_location_off);
+        mBinding.wifiPermissionButton.setVisibility(missing ? VISIBLE : GONE);
+    }
+
+    /**
+     * Asks for location: first while the app is open, then, on Android 10 and newer, all the time.
+     */
+    private void requestLocation(boolean thenChooseWifi) {
+        if (!CalendarWifi.hasForegroundPermission(this)) {
+            mChooseWifiAfterPermission = thenChooseWifi;
+            mLocationPermissionLauncher.launch(new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
+        } else if (thenChooseWifi) {
+            showNearbyNetworks();
+        } else {
+            requestBackgroundLocation();
+        }
+    }
+
+    private void requestBackgroundLocation() {
+        if (!SdkUtils.isAtLeastAndroid10() || CalendarWifi.hasBackgroundPermission(this)) {
+            updateWifiPermission();
+            return;
+        }
+        new MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.calendar_alarm_wifi_background_title)
+            .setMessage(R.string.calendar_alarm_wifi_background_message)
+            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                if (SdkUtils.isAtLeastAndroid11()) {
+                    // Android 11 and newer only offer "Allow all the time" in the app's settings.
+                    try {
+                        startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                            Uri.fromParts("package", getPackageName(), null)));
+                        return;
+                    } catch (android.content.ActivityNotFoundException ignored) {
+                        // Fall back to asking directly below.
+                    }
+                }
+                mBackgroundLocationLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+            })
+            .setNegativeButton(android.R.string.cancel, null)
+            .show();
+    }
+
+    private void chooseNearbyNetwork() {
+        if (!CalendarWifi.hasForegroundPermission(this)) {
+            requestLocation(true);
+        } else {
+            showNearbyNetworks();
+        }
+    }
+
+    private void showNearbyNetworks() {
+        final Context appContext = getApplicationContext();
+        AppExecutors.getDiskIO().execute(() -> {
+            final List<CalendarWifi.Seen> seen = CalendarWifi.getNearbyNetworks(appContext);
+            AppExecutors.getMainThread().post(() -> {
+                if (mBinding == null || isFinishing()) {
+                    return;
+                }
+                if (seen.isEmpty()) {
+                    new MaterialAlertDialogBuilder(this)
+                        .setTitle(R.string.calendar_alarm_wifi_list_title)
+                        .setMessage(CalendarWifi.isLocationEnabled(this)
+                            ? R.string.calendar_alarm_wifi_list_empty : R.string.calendar_alarm_wifi_location_off)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+                    return;
+                }
+                final CharSequence[] items = new CharSequence[seen.size()];
+                for (int i = 0; i < seen.size(); i++) {
+                    final CalendarWifi.Seen network = seen.get(i);
+                    final String name = network.ssid.isEmpty()
+                        ? getString(R.string.calendar_alarm_wifi_hidden_name) : network.ssid;
+                    items[i] = name + "\n" + network.bssid + " · " + network.level + " dBm"
+                        + (network.connected ? " · " + getString(R.string.calendar_alarm_wifi_connected) : "");
+                }
+                new MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.calendar_alarm_wifi_list_title)
+                    .setItems(items, (dialog, which) -> chooseMatch(seen.get(which)))
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
+            });
+        });
+    }
+
+    /**
+     * Lets the user pick whether a network from the list is matched by name, MAC address, or both.
+     */
+    private void chooseMatch(CalendarWifi.Seen seen) {
+        if (seen.ssid.isEmpty()) {
+            // A hidden network only has its MAC address.
+            addNetwork(new CalendarWifi.Network("", seen.bssid));
+            return;
+        }
+        final CharSequence[] options = {
+            getString(R.string.calendar_alarm_wifi_match_name, seen.ssid),
+            getString(R.string.calendar_alarm_wifi_match_mac, seen.bssid),
+            getString(R.string.calendar_alarm_wifi_match_both)
+        };
+        new MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.calendar_alarm_wifi_match_title, seen.ssid))
+            .setItems(options, (dialog, which) -> {
+                switch (which) {
+                    case 0 -> addNetwork(new CalendarWifi.Network(seen.ssid, ""));
+                    case 1 -> addNetwork(new CalendarWifi.Network("", seen.bssid));
+                    default -> addNetwork(new CalendarWifi.Network(seen.ssid, seen.bssid));
+                }
+            })
+            .setNegativeButton(android.R.string.cancel, null)
+            .show();
+    }
+
+    private void enterNetwork() {
+        final android.widget.LinearLayout fields = new android.widget.LinearLayout(this);
+        fields.setOrientation(android.widget.LinearLayout.VERTICAL);
+        fields.setPadding(dp(24), dp(8), dp(24), 0);
+        final android.widget.EditText ssid = new android.widget.EditText(this);
+        ssid.setHint(R.string.calendar_alarm_wifi_ssid_hint);
+        ssid.setSingleLine(true);
+        final android.widget.EditText bssid = new android.widget.EditText(this);
+        bssid.setHint(R.string.calendar_alarm_wifi_bssid_hint);
+        bssid.setSingleLine(true);
+        fields.addView(ssid);
+        fields.addView(bssid);
+        final androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.calendar_alarm_wifi_enter)
+            .setView(fields)
+            .setPositiveButton(android.R.string.ok, null)
+            .setNegativeButton(android.R.string.cancel, null)
+            .create();
+        dialog.setOnShowListener(d -> dialog.getButton(android.content.DialogInterface.BUTTON_POSITIVE)
+            .setOnClickListener(v -> {
+                final CalendarWifi.Network network =
+                    new CalendarWifi.Network(textOf(ssid.getText()), textOf(bssid.getText()));
+                if (network.isEmpty() || !CalendarWifi.isValidBssid(network.bssid)) {
+                    CustomToast.showLong(this, getString(R.string.calendar_alarm_wifi_error_entry));
+                    return;
+                }
+                addNetwork(network);
+                dialog.dismiss();
+            }));
+        dialog.show();
+    }
+
     private void updateAllDay() {
         mBinding.allDayTimeButton.setVisibility(mBinding.allDaySwitch.isChecked() ? VISIBLE : GONE);
         final java.util.Calendar time = java.util.Calendar.getInstance();
@@ -425,6 +688,11 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             return;
         }
 
+        if (mBinding.wifiSwitch.isChecked() && mWifiNetworks.isEmpty()) {
+            CustomToast.showLong(this, getString(R.string.calendar_alarm_wifi_error_no_network));
+            return;
+        }
+
         final Integer offsetHours = parseOptionalNumber(mBinding.offsetHoursInput.getText());
         final Integer offsetRest = parseOptionalNumber(mBinding.offsetMinutesInput.getText());
         final Integer offsetMinutes = offsetHours == null || offsetRest == null
@@ -450,6 +718,9 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mProfile.offsetMinutes = offsetMinutes;
         }
         mProfile.ringAtStart = mBinding.ringAtStartSwitch.isChecked();
+        mProfile.wifiCheck = mBinding.wifiSwitch.isChecked();
+        mProfile.wifiOffRings = mBinding.wifiOffRingsSwitch.isChecked();
+        mProfile.wifiNetworks = CalendarWifi.toJson(mWifiNetworks);
         // Flash only cannot escalate, see updateVibrateOnly().
         mProfile.escalation = mBinding.escalationSwitch.isChecked() && !mBinding.flashOnlySwitch.isChecked();
         mProfile.allDayMinutes = mBinding.allDaySwitch.isChecked() ? mAllDayMinutes : CalendarProfile.ALL_DAY_IGNORED;
@@ -529,6 +800,8 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
      * @return the number, 0 for an empty field, or {@code null} if the text is not a number
      */
     @Nullable
+    private static final String STATE_WIFI_NETWORKS = "state_wifi_networks";
+
     private static Integer parseOptionalNumber(@Nullable Editable text) {
         final String value = textOf(text).trim();
         if (value.isEmpty()) {

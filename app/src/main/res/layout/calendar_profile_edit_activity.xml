@@ -42,7 +42,7 @@
             android:text="@string/calendar_alarm_profile_enabled"
             android:textSize="16sp" />
 
-        <!-- Calendar and filter -->
+        <!-- Calendar and matching -->
         <com.google.android.material.textview.MaterialTextView
             style="@style/CalendarAlarmSectionTitle"
             android:text="@string/calendar_alarm_section_calendar" />
@@ -141,6 +141,11 @@
             android:layout_height="wrap_content"
             android:gravity="start|center_vertical" />
 
+        <!-- Timing -->
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/CalendarAlarmSectionTitle"
+            android:text="@string/calendar_alarm_section_timing" />
+
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/offset_switch"
             android:layout_width="match_parent"
@@ -212,15 +217,96 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
+        <!-- Wi-Fi -->
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/CalendarAlarmSectionTitle"
+            android:text="@string/calendar_alarm_section_wifi" />
+
         <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/show_details_locked_switch"
+            android:id="@+id/wifi_switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:text="@string/calendar_alarm_show_details_locked"
+            android:text="@string/calendar_alarm_wifi_check"
             android:textSize="16sp" />
 
-        <!-- Sound -->
+        <LinearLayout
+            android:id="@+id/wifi_fields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/calendar_alarm_wifi_help"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:id="@+id/wifi_networks_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/wifi_choose_button"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/calendar_alarm_wifi_choose" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/wifi_enter_button"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/calendar_alarm_wifi_enter" />
+            </LinearLayout>
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/wifi_off_rings_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="@string/calendar_alarm_wifi_off_rings"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/wifi_permission_fields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/wifi_permission_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/calendar_alarm_wifi_permission"
+                    android:textColor="?attr/colorError"
+                    android:textSize="13sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/wifi_permission_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/calendar_alarm_wifi_permission_button" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Sound and vibration -->
         <com.google.android.material.textview.MaterialTextView
             style="@style/CalendarAlarmSectionTitle"
             android:text="@string/calendar_alarm_section_sound" />
@@ -342,11 +428,16 @@
             android:text="@string/calendar_alarm_flash"
             android:textSize="16sp" />
 
+        <!-- Ringing and snooze -->
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/CalendarAlarmSectionTitle"
+            android:text="@string/calendar_alarm_section_snooze" />
+
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="0dp"
             android:hint="@string/calendar_alarm_max_duration"
             app:helperText="@string/calendar_alarm_max_duration_help"
             app:helperTextEnabled="true">
@@ -360,10 +451,6 @@
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Snooze -->
-        <com.google.android.material.textview.MaterialTextView
-            style="@style/CalendarAlarmSectionTitle"
-            android:text="@string/calendar_alarm_section_snooze" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/snooze_switch"
@@ -416,10 +503,25 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <!-- Dismiss -->
+        <!-- Lock screen and dismiss -->
         <com.google.android.material.textview.MaterialTextView
             style="@style/CalendarAlarmSectionTitle"
             android:text="@string/calendar_alarm_section_dismiss" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/show_details_locked_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/calendar_alarm_show_details_locked"
+            android:textSize="16sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/calendar_alarm_dismiss_label"
+            android:textSize="16sp" />
 
         <RadioGroup
             android:id="@+id/dismiss_group"

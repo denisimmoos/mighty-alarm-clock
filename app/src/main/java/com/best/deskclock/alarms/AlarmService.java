@@ -409,6 +409,10 @@ public class AlarmService extends Service {
                         if (mCurrentAlarm != null) {
                             // Only release lock if we are not firing alarm
                             AlarmAlertWakeLock.releaseCpuLock();
+                        } else {
+                            // Nothing rings, for example a calendar alarm kept quiet away from
+                            // its Wi-Fi. Don't keep the service running.
+                            stopSelf();
                         }
                         break;
                     }

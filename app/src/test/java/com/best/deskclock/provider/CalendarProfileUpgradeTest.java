@@ -117,4 +117,21 @@ public class CalendarProfileUpgradeTest {
         }
         db.close();
     }
+
+    @Test
+    public void upgradeFromVersion38AddsTheWifiCheckSwitchedOff() {
+        final SQLiteDatabase db = SQLiteDatabase.create(null);
+        db.execSQL("CREATE TABLE calendar_profiles (_id INTEGER PRIMARY KEY, flash INTEGER NOT NULL DEFAULT 0);");
+        db.execSQL("INSERT INTO calendar_profiles (_id) VALUES (1);");
+        final ClockDatabaseHelper helper = new ClockDatabaseHelper(ApplicationProvider.getApplicationContext());
+        helper.onUpgrade(db, 38, 39);
+        helper.onUpgrade(db, 38, 39);
+        try (Cursor c = db.rawQuery("SELECT wifi_check, wifi_networks, wifi_off_rings FROM calendar_profiles", null)) {
+            assertTrue(c.moveToFirst());
+            assertEquals(0, c.getInt(0));
+            assertEquals("", c.getString(1));
+            assertEquals(0, c.getInt(2));
+        }
+        db.close();
+    }
 }

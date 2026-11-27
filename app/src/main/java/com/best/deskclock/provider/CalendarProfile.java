@@ -86,7 +86,10 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         OFFSET_ENABLED,
         OFFSET_MINUTES,
         ESCALATION,
-        RING_AT_START
+        RING_AT_START,
+        WIFI_NETWORKS,
+        WIFI_CHECK,
+        WIFI_OFF_RINGS
     };
 
     // These must be kept in sync with QUERY_COLUMNS above.
@@ -120,6 +123,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     private static final int OFFSET_MINUTES_INDEX = 27;
     private static final int ESCALATION_INDEX = 28;
     private static final int RING_AT_START_INDEX = 29;
+    private static final int WIFI_NETWORKS_INDEX = 30;
+    private static final int WIFI_CHECK_INDEX = 31;
+    private static final int WIFI_OFF_RINGS_INDEX = 32;
 
     public long id;
     public String name;
@@ -166,6 +172,15 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public boolean escalation;
     /** With an offset, also rings again when the event starts. On by default. */
     public boolean ringAtStart;
+    /**
+     * Wi-Fi networks to ring near, see {@link com.best.deskclock.mighty.calendar.CalendarWifi}.
+     * Empty to ring anywhere.
+     */
+    public String wifiNetworks;
+    /** Only rings near one of the {@link #wifiNetworks}. Off by default. */
+    public boolean wifiCheck;
+    /** With the Wi-Fi check, rings anyway while the phone's Wi-Fi is turned off. Off by default. */
+    public boolean wifiOffRings;
     /** Time of day for all-day events in minutes after midnight, or {@link #ALL_DAY_IGNORED}. */
     public int allDayMinutes;
     public long createdAt;
@@ -200,6 +215,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         offsetMinutes = DEFAULT_OFFSET_MINUTES;
         escalation = false;
         ringAtStart = true;
+        wifiNetworks = "";
+        wifiCheck = false;
+        wifiOffRings = false;
         final long now = System.currentTimeMillis();
         createdAt = now;
         updatedAt = now;
@@ -236,6 +254,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         offsetMinutes = clampOffsetMinutes(c.getInt(OFFSET_MINUTES_INDEX));
         escalation = c.getInt(ESCALATION_INDEX) == 1;
         ringAtStart = c.getInt(RING_AT_START_INDEX) == 1;
+        wifiNetworks = c.isNull(WIFI_NETWORKS_INDEX) ? "" : c.getString(WIFI_NETWORKS_INDEX);
+        wifiCheck = c.getInt(WIFI_CHECK_INDEX) == 1;
+        wifiOffRings = c.getInt(WIFI_OFF_RINGS_INDEX) == 1;
     }
 
     public ContentValues createContentValues() {
@@ -274,6 +295,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         values.put(OFFSET_MINUTES, clampOffsetMinutes(offsetMinutes));
         values.put(ESCALATION, escalation ? 1 : 0);
         values.put(RING_AT_START, ringAtStart ? 1 : 0);
+        values.put(WIFI_NETWORKS, wifiNetworks == null ? "" : wifiNetworks);
+        values.put(WIFI_CHECK, wifiCheck ? 1 : 0);
+        values.put(WIFI_OFF_RINGS, wifiOffRings ? 1 : 0);
         values.put(CREATED_AT, createdAt);
         values.put(UPDATED_AT, updatedAt);
         return values;

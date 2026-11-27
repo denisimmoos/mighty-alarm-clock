@@ -708,6 +708,26 @@ public final class ClockContract {
         String RING_AT_START = "ring_at_start";
 
         /**
+         * Wi-Fi networks the profile only rings near, as a JSON array of objects with "ssid" and
+         * "bssid". Empty to ring anywhere.
+         * <p>Type: TEXT</p>
+         */
+        String WIFI_NETWORKS = "wifi_networks";
+
+        /**
+         * True if the profile only rings near one of its {@link #WIFI_NETWORKS}. Off by default.
+         * <p>Type: BOOLEAN</p>
+         */
+        String WIFI_CHECK = "wifi_check";
+
+        /**
+         * True if an alarm with the Wi-Fi check rings anyway while the phone's Wi-Fi is turned
+         * off. Off by default.
+         * <p>Type: BOOLEAN</p>
+         */
+        String WIFI_OFF_RINGS = "wifi_off_rings";
+
+        /**
          * Time of day for all-day events in minutes after midnight, or -1 to ignore them.
          * <p>Type: INTEGER</p>
          */

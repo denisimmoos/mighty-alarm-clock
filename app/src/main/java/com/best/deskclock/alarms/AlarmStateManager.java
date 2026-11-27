@@ -400,6 +400,20 @@ public final class AlarmStateManager extends BroadcastReceiver {
     public static void setFiredState(Context context, AlarmInstance instance) {
         LogUtils.i("Setting fire state to instance " + instance.mId);
 
+        // A calendar profile may only ring near certain Wi-Fi networks. Checked when the alarm is
+        // about to ring, not again while it is already ringing.
+        if (instance.mAlarmState != AlarmInstance.FIRED_STATE) {
+            final com.best.deskclock.mighty.calendar.CalendarWifi.Result skip =
+                com.best.deskclock.mighty.calendar.CalendarWifiGate.shouldSkip(context, instance);
+            if (skip != null) {
+                LogUtils.i("Calendar alarm instance " + instance.mId + " stays quiet: " + skip);
+                com.best.deskclock.mighty.calendar.CalendarWifiGate.notifySkipped(context, instance, skip);
+                // Like a dismissed alarm: the one-time calendar alarm is used up.
+                deleteInstanceAndUpdateParent(context, instance, false);
+                return;
+            }
+        }
+
         // Update alarm state in db
         ContentResolver contentResolver = context.getContentResolver();
         instance.mAlarmState = AlarmInstance.FIRED_STATE;

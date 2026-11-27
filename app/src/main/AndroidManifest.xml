@@ -37,13 +37,14 @@
 
     <!-- Used by the Wi-Fi alarm rules feature to read the currently connected SSID. -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- Needed on older API levels to read the SSID of the connected Wi-Fi network. -->
-    <uses-permission
-        android:name="android.permission.ACCESS_COARSE_LOCATION"
-        android:maxSdkVersion="28"
-        tools:ignore="CoarseFineLocation" />
+    <!-- Reading Wi-Fi names and MAC addresses needs location access. Android 12 and newer only
+         grant fine location if coarse location is requested with it. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- Needed on API 27+ to read the SSID of the connected Wi-Fi network for per-alarm Wi-Fi rules. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Calendar profiles that only ring near a Wi-Fi check it when the alarm is about to ring,
+         with the app in the background. Android 10 and newer need "Allow all the time" for that. -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <!-- Package visibility for optional Syncthing Fork nudge before exchange scans -->
     <queries>

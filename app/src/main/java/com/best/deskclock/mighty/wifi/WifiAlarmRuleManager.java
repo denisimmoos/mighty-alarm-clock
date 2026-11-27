@@ -34,6 +34,13 @@ public final class WifiAlarmRuleManager {
      */
     public static void evaluateRules(Context context) {
         try {
+            if (isConnectedToUnreadableWifi(context)) {
+                // Connected to a Wi-Fi whose name Android hides, for example without location
+                // permission or with location off. "Not connected" would be a guess, and could
+                // switch an alarm off at home, so leave every alarm as it is.
+                LogUtils.i("WifiAlarmRuleManager: connected Wi-Fi name unreadable; rules not applied");
+                return;
+            }
             final String ssid = getCurrentSsid(context);
             final ContentResolver cr = context.getContentResolver();
             final String selection = Alarm.WIFI_RULE_ENABLED + "=1";
@@ -85,6 +92,30 @@ public final class WifiAlarmRuleManager {
     }
 
     /**
+     * @return {@code true} if the phone is connected to a Wi-Fi network, but the app may not read
+     * its name.
+     */
+    @SuppressWarnings("deprecation")
+    static boolean isConnectedToUnreadableWifi(Context context) {
+        try {
+            final WifiManager wifiManager =
+                (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            if (wifiManager == null || !wifiManager.isWifiEnabled()) {
+                return false;
+            }
+            final WifiInfo info = wifiManager.getConnectionInfo();
+            if (info == null || info.getSupplicantState() != android.net.wifi.SupplicantState.COMPLETED) {
+                return false;
+            }
+            final String ssid = stripQuotes(info.getSSID());
+            return ssid == null || ssid.isEmpty() || ssid.equals(WifiManager.UNKNOWN_SSID);
+        } catch (Exception e) {
+            // Can't tell either way; don't change any alarm.
+            return true;
+        }
+    }
+
+    /**
      * @return the currently connected Wi-Fi SSID (without surrounding quotes), or {@code null}
      * if unavailable (not connected, permission missing, or unknown).
      */
@@ -101,19 +132,21 @@ public final class WifiAlarmRuleManager {
                 return null;
             }
 
-            String ssid = info.getSSID();
-            if (ssid == null || ssid.equals("<unknown ssid>")) {
+            final String ssid = stripQuotes(info.getSSID());
+            if (ssid == null || ssid.isEmpty() || ssid.equals(WifiManager.UNKNOWN_SSID)) {
                 return null;
             }
-
-            if (ssid.length() >= 2 && ssid.startsWith("\"") && ssid.endsWith("\"")) {
-                ssid = ssid.substring(1, ssid.length() - 1);
-            }
-
             return ssid;
         } catch (Exception e) {
             LogUtils.e("WifiAlarmRuleManager: failed to read current SSID (missing location permission?)", e);
             return null;
         }
+    }
+
+    private static String stripQuotes(String ssid) {
+        if (ssid != null && ssid.length() >= 2 && ssid.startsWith("\"") && ssid.endsWith("\"")) {
+            return ssid.substring(1, ssid.length() - 1);
+        }
+        return ssid;
     }
 }
