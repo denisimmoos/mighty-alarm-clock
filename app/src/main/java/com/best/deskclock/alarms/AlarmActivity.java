@@ -52,6 +52,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -300,6 +301,8 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
         }
 
         updateSnoozeTexts();
+
+        initCalendarSnoozeChoices();
 
         initRingtoneTitle();
 
@@ -615,6 +618,8 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
      * alarm, if any.
      */
     private boolean mIsCalendarAlarm;
+    /** The snooze lengths of the calendar profile, shown as buttons; empty if none. */
+    private int[] mCalendarSnoozeChoices = new int[0];
     /** The profile keeps the event title, description and place off the lock screen. */
     private boolean mHideCalendarDetailsLocked;
 
@@ -642,7 +647,41 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             mDefaultSnoozeMinutes = ALARM_SNOOZE_DURATION_DISABLED;
             mAlarmInstance.mSnoozeDuration = ALARM_SNOOZE_DURATION_DISABLED;
             mIsSnoozeSelectorDisplayed = false;
+        } else {
+            // The profile's own snooze lengths take the place of the general snooze selector.
+            mCalendarSnoozeChoices = profile.getSnoozeChoices();
+            if (mCalendarSnoozeChoices.length > 0) {
+                mIsSnoozeSelectorDisplayed = false;
+            }
         }
+    }
+
+    /**
+     * Shows a button for each snooze length of the calendar profile. Tapping one snoozes for that
+     * long; if the profile extends the event on snooze, it is extended by the same time.
+     */
+    private void initCalendarSnoozeChoices() {
+        if (mCalendarSnoozeChoices.length != 3) {
+            mBinding.calendarSnoozeChoices.setVisibility(GONE);
+            return;
+        }
+        final int snoozeZoneColor = SettingsDAO.getSnoozeZoneColor(mPrefs);
+        final int snoozeTextColor = SettingsDAO.getSnoozeSelectorTextColor(mPrefs);
+        final TextView[] buttons = {
+            mBinding.calendarSnoozeChoice1, mBinding.calendarSnoozeChoice2, mBinding.calendarSnoozeChoice3
+        };
+        for (int i = 0; i < buttons.length; i++) {
+            final int minutes = mCalendarSnoozeChoices[i];
+            final TextView button = buttons[i];
+            button.setText(getString(R.string.calendar_alarm_snooze_button, minutes));
+            button.setContentDescription(getResources().getQuantityString(
+                R.plurals.alarm_alert_snooze_set, minutes, minutes));
+            button.setBackground(ThemeUtils.pillRippleDrawable(this, snoozeZoneColor));
+            button.setTypeface(mGeneralBoldTypeface);
+            button.setTextColor(snoozeTextColor);
+            button.setOnClickListener(v -> snoozeWithExplicitDuration(minutes));
+        }
+        mBinding.calendarSnoozeChoices.setVisibility(VISIBLE);
     }
 
     /**
@@ -669,8 +708,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
                     && instance != null
                     && !com.best.deskclock.mighty.calendar.CalendarAlarmRules.isSnoozeLimitReached(profile, instance)
                     && com.best.deskclock.mighty.calendar.CalendarEventExtender.hasPermission(appContext);
-                final int extendMinutes = extends_ ? snoozeMinutes : 0;
-                com.best.deskclock.base.AppExecutors.getMainThread().post(() -> showCalendarEventEnds(extendMinutes));
+                com.best.deskclock.base.AppExecutors.getMainThread().post(() -> showCalendarEventEnds(extends_));
             } else if (profile != null && profile.offsetEnabled && event.alarmId == alarmId) {
                 // The early alarm says how long until the event. This is not private, so it
                 // shows also on the lock screen.
@@ -715,7 +753,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
     /**
      * Shows that this alarm rings because the event ends.
      */
-    private void showCalendarEventEnds(int extendMinutes) {
+    private void showCalendarEventEnds(boolean extendsOnSnooze) {
         if (isFinishing() || isDestroyed() || mBinding == null) {
             return;
         }
@@ -724,9 +762,9 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
         }
         mBinding.calendarCountdown.setTextColor(mAlarmTitleColor);
         final String ends = getString(R.string.calendar_alarm_event_ends);
-        mBinding.calendarCountdown.setText(extendMinutes > 0
-            ? ends + "\n" + getResources().getQuantityString(R.plurals.calendar_alarm_snooze_extends,
-                extendMinutes, extendMinutes)
+        // The event is extended by the snooze length picked, so the line names no number.
+        mBinding.calendarCountdown.setText(extendsOnSnooze
+            ? ends + "\n" + getString(R.string.calendar_alarm_snooze_extends)
             : ends);
         mBinding.calendarCountdown.setVisibility(VISIBLE);
         mBinding.calendarInfo.setVisibility(VISIBLE);

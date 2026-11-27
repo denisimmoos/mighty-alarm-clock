@@ -741,6 +741,14 @@ public final class ClockContract {
         String EXTEND_ON_SNOOZE = "extend_on_snooze";
 
         /**
+         * Second and third snooze length in minutes, offered next to the first one
+         * ({@link #SNOOZE_DURATION}) on the alarm screen. Defaults 10 and 20.
+         * <p>Type: INTEGER</p>
+         */
+        String SNOOZE_MINUTES_2 = "snooze_minutes_2";
+        String SNOOZE_MINUTES_3 = "snooze_minutes_3";
+
+        /**
          * Time of day for all-day events in minutes after midnight, or -1 to ignore them.
          * <p>Type: INTEGER</p>
          */

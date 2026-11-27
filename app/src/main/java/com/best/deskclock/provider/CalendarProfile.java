@@ -32,6 +32,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public static final int SNOOZE_DISABLED = -1;
 
     public static final int DEFAULT_SNOOZE_MINUTES = 5;
+    public static final int DEFAULT_SNOOZE_MINUTES_2 = 10;
+    public static final int DEFAULT_SNOOZE_MINUTES_3 = 20;
+    public static final int MAX_SNOOZE_MINUTES = 999;
 
     public static final int DEFAULT_ALARM_VOLUME = 5;
 
@@ -91,7 +94,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         WIFI_CHECK,
         WIFI_OFF_RINGS,
         RING_AT_END,
-        EXTEND_ON_SNOOZE
+        EXTEND_ON_SNOOZE,
+        SNOOZE_MINUTES_2,
+        SNOOZE_MINUTES_3
     };
 
     // These must be kept in sync with QUERY_COLUMNS above.
@@ -130,6 +135,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     private static final int WIFI_OFF_RINGS_INDEX = 32;
     private static final int RING_AT_END_INDEX = 33;
     private static final int EXTEND_ON_SNOOZE_INDEX = 34;
+    private static final int SNOOZE_MINUTES_2_INDEX = 35;
+    private static final int SNOOZE_MINUTES_3_INDEX = 36;
 
     public long id;
     public String name;
@@ -189,6 +196,9 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public boolean ringAtEnd;
     /** Snoozing the alarm at the end extends the calendar event. Off by default. */
     public boolean extendOnSnooze;
+    /** Second and third snooze length in minutes; the first is {@link #snoozeDuration}. */
+    public int snoozeMinutes2;
+    public int snoozeMinutes3;
     /** Time of day for all-day events in minutes after midnight, or {@link #ALL_DAY_IGNORED}. */
     public int allDayMinutes;
     public long createdAt;
@@ -228,6 +238,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         wifiOffRings = false;
         ringAtEnd = false;
         extendOnSnooze = false;
+        snoozeMinutes2 = DEFAULT_SNOOZE_MINUTES_2;
+        snoozeMinutes3 = DEFAULT_SNOOZE_MINUTES_3;
         final long now = System.currentTimeMillis();
         createdAt = now;
         updatedAt = now;
@@ -269,6 +281,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         wifiOffRings = c.getInt(WIFI_OFF_RINGS_INDEX) == 1;
         ringAtEnd = c.getInt(RING_AT_END_INDEX) == 1;
         extendOnSnooze = c.getInt(EXTEND_ON_SNOOZE_INDEX) == 1;
+        snoozeMinutes2 = c.getInt(SNOOZE_MINUTES_2_INDEX);
+        snoozeMinutes3 = c.getInt(SNOOZE_MINUTES_3_INDEX);
     }
 
     public ContentValues createContentValues() {
@@ -312,6 +326,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         values.put(WIFI_OFF_RINGS, wifiOffRings ? 1 : 0);
         values.put(RING_AT_END, ringAtEnd ? 1 : 0);
         values.put(EXTEND_ON_SNOOZE, extendOnSnooze ? 1 : 0);
+        values.put(SNOOZE_MINUTES_2, snoozeMinutes2);
+        values.put(SNOOZE_MINUTES_3, snoozeMinutes3);
         values.put(CREATED_AT, createdAt);
         values.put(UPDATED_AT, updatedAt);
         return values;
@@ -413,15 +429,39 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     }
 
     /**
-     * @return how many milliseconds before the event the alarm rings, 0 without an offset.
-     */
-    /**
      * @return {@code true} if the profile rings before the event and again at its start.
      */
     public boolean ringsEarlyAndAtStart() {
         return offsetEnabled && ringAtStart;
     }
 
+    /**
+     * @return the three snooze lengths in minutes, each longer than the one before, or an empty
+     * array if the profile doesn't snooze. Lengths stored out of order (for example from before
+     * there were three) are moved up so the order holds.
+     */
+    public int[] getSnoozeChoices() {
+        if (snoozeDuration == SNOOZE_DISABLED || snoozeDuration <= 0) {
+            return new int[0];
+        }
+        final int first = Math.min(snoozeDuration, MAX_SNOOZE_MINUTES - 2);
+        int second = snoozeMinutes2 > first ? snoozeMinutes2 : first * 2;
+        second = Math.max(first + 1, Math.min(second, MAX_SNOOZE_MINUTES - 1));
+        int third = snoozeMinutes3 > second ? snoozeMinutes3 : second * 2;
+        third = Math.max(second + 1, Math.min(third, MAX_SNOOZE_MINUTES));
+        return new int[]{first, second, third};
+    }
+
+    /**
+     * @return {@code true} if the three snooze lengths are each longer than the one before.
+     */
+    public static boolean isSnoozeOrderValid(int first, int second, int third) {
+        return first > 0 && first < second && second < third && third <= MAX_SNOOZE_MINUTES;
+    }
+
+    /**
+     * @return how many milliseconds before the event the alarm rings, 0 without an offset.
+     */
     public long getOffsetMillis() {
         return offsetEnabled ? clampOffsetMinutes(offsetMinutes) * 60_000L : 0L;
     }

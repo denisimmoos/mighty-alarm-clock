@@ -253,6 +253,15 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.snoozeSwitch.setChecked(snoozeAllowed);
             mBinding.snoozeMinutesInput.setText(String.valueOf(snoozeAllowed
                 ? mProfile.snoozeDuration : CalendarProfile.DEFAULT_SNOOZE_MINUTES));
+            final int[] choices = snoozeAllowed ? mProfile.getSnoozeChoices() : new int[0];
+            if (choices.length == 3) {
+                mBinding.snoozeMinutesInput.setText(String.valueOf(choices[0]));
+                mBinding.snoozeMinutes2Input.setText(String.valueOf(choices[1]));
+                mBinding.snoozeMinutes3Input.setText(String.valueOf(choices[2]));
+            } else {
+                mBinding.snoozeMinutes2Input.setText(String.valueOf(mProfile.snoozeMinutes2));
+                mBinding.snoozeMinutes3Input.setText(String.valueOf(mProfile.snoozeMinutes3));
+            }
             mBinding.maxSnoozesInput.setText(mProfile.maxSnoozeCount > 0 ? String.valueOf(mProfile.maxSnoozeCount) : "");
 
             if (mProfile.isSlideDismissForced()) {
@@ -734,14 +743,27 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
 
         final Integer maxDurationMinutes = parseOptionalNumber(mBinding.maxDurationInput.getText());
         final Integer snoozeMinutes = parseOptionalNumber(mBinding.snoozeMinutesInput.getText());
+        final Integer snoozeMinutes2 = parseOptionalNumber(mBinding.snoozeMinutes2Input.getText());
+        final Integer snoozeMinutes3 = parseOptionalNumber(mBinding.snoozeMinutes3Input.getText());
         final Integer maxSnoozes = parseOptionalNumber(mBinding.maxSnoozesInput.getText());
-        if (maxDurationMinutes == null || snoozeMinutes == null || maxSnoozes == null) {
+        if (maxDurationMinutes == null || snoozeMinutes == null || snoozeMinutes2 == null
+                || snoozeMinutes3 == null || maxSnoozes == null) {
             CustomToast.showLong(this, getString(R.string.calendar_alarm_error_number));
             return;
         }
 
         if (mBinding.wifiSwitch.isChecked() && mWifiNetworks.isEmpty()) {
             CustomToast.showLong(this, getString(R.string.calendar_alarm_wifi_error_no_network));
+            return;
+        }
+
+        // Empty snooze fields fall back to 5, 10 and 20 minutes.
+        final int snooze1 = snoozeMinutes > 0 ? snoozeMinutes : CalendarProfile.DEFAULT_SNOOZE_MINUTES;
+        final int snooze2 = snoozeMinutes2 > 0 ? snoozeMinutes2 : CalendarProfile.DEFAULT_SNOOZE_MINUTES_2;
+        final int snooze3 = snoozeMinutes3 > 0 ? snoozeMinutes3 : CalendarProfile.DEFAULT_SNOOZE_MINUTES_3;
+        if (mBinding.snoozeSwitch.isChecked() && !CalendarProfile.isSnoozeOrderValid(snooze1, snooze2, snooze3)) {
+            CustomToast.showLong(this, getString(R.string.calendar_alarm_error_snooze_order));
+            mBinding.snoozeMinutes2Input.requestFocus();
             return;
         }
 
@@ -790,7 +812,9 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             : CalendarProfile.RING_UNTIL_DISMISSED;
 
         if (mBinding.snoozeSwitch.isChecked()) {
-            mProfile.snoozeDuration = snoozeMinutes > 0 ? snoozeMinutes : CalendarProfile.DEFAULT_SNOOZE_MINUTES;
+            mProfile.snoozeDuration = snooze1;
+            mProfile.snoozeMinutes2 = snooze2;
+            mProfile.snoozeMinutes3 = snooze3;
             mProfile.maxSnoozeCount = Math.max(0, maxSnoozes);
         } else {
             mProfile.snoozeDuration = CalendarProfile.SNOOZE_DISABLED;

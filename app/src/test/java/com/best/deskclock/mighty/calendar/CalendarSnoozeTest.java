@@ -184,6 +184,64 @@ public class CalendarSnoozeTest {
     }
 
     @Test
+    public void profileOffersThreeSnoozeLengthsInOrder() {
+        final CalendarProfile fresh = new CalendarProfile();
+        org.junit.Assert.assertArrayEquals(new int[]{5, 10, 20}, fresh.getSnoozeChoices());
+        // Saved and read back.
+        mProfile.snoozeDuration = 3;
+        mProfile.snoozeMinutes2 = 15;
+        mProfile.snoozeMinutes3 = 45;
+        mProfile.updateProfile(mCr);
+        org.junit.Assert.assertArrayEquals(new int[]{3, 15, 45},
+            CalendarProfile.getProfile(mCr, mProfile.id).getSnoozeChoices());
+        // Lengths out of order are moved up so each is longer than the one before.
+        mProfile.snoozeDuration = 30;
+        org.junit.Assert.assertArrayEquals(new int[]{30, 60, 120}, mProfile.getSnoozeChoices());
+        mProfile.snoozeDuration = 999;
+        mProfile.snoozeMinutes2 = 999;
+        mProfile.snoozeMinutes3 = 999;
+        org.junit.Assert.assertArrayEquals(new int[]{997, 998, 999}, mProfile.getSnoozeChoices());
+        // No snooze, no buttons.
+        mProfile.snoozeDuration = CalendarProfile.SNOOZE_DISABLED;
+        assertEquals(0, mProfile.getSnoozeChoices().length);
+
+        assertTrue(CalendarProfile.isSnoozeOrderValid(5, 10, 20));
+        assertTrue(CalendarProfile.isSnoozeOrderValid(1, 2, 999));
+        org.junit.Assert.assertFalse(CalendarProfile.isSnoozeOrderValid(10, 10, 20));
+        org.junit.Assert.assertFalse(CalendarProfile.isSnoozeOrderValid(5, 20, 10));
+        org.junit.Assert.assertFalse(CalendarProfile.isSnoozeOrderValid(20, 10, 30));
+        org.junit.Assert.assertFalse(CalendarProfile.isSnoozeOrderValid(0, 10, 20));
+        org.junit.Assert.assertFalse(CalendarProfile.isSnoozeOrderValid(5, 10, 1000));
+    }
+
+    @Test
+    public void snoozingForTheLongestLengthExtendsTheEventByIt() throws Exception {
+        Shadows.shadowOf(mContext).grantPermissions(Manifest.permission.WRITE_CALENDAR);
+        mProfile.extendOnSnooze = true;
+        mProfile.updateProfile(mCr);
+        final long now = System.currentTimeMillis();
+        CalendarAlarmSyncTest.clearEvents();
+        CalendarAlarmSyncTest.addEvent(3, 7, now - TimeUnit.MINUTES.toMillis(30), "Alarm: Review");
+        CalendarAlarmSyncTest.ENDS.put(3L, now + TimeUnit.SECONDS.toMillis(90));
+        CalendarAlarmSync.syncAll(mContext);
+        final long endAlarmId = row().endAlarmId;
+        assertTrue(endAlarmId >= 0);
+        final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, endAlarmId).get(0);
+        AlarmStateManager.setFiredState(mContext, instance);
+        final long before = System.currentTimeMillis();
+        final int longest = mProfile.getSnoozeChoices()[2];
+        AlarmStateManager.setSnoozeState(mContext, AlarmInstance.getInstance(mCr, instance.mId), false, longest);
+        CalendarAlarmSync.EXECUTOR.submit(() -> { }).get();
+
+        final AlarmInstance snoozed = AlarmInstance.getInstance(mCr, instance.mId);
+        assertEquals(AlarmInstance.SNOOZE_STATE, snoozed.mAlarmState);
+        final long until = snoozed.getAlarmTime().getTimeInMillis();
+        final long expected = before + TimeUnit.MINUTES.toMillis(longest);
+        assertTrue("snoozed until " + until, Math.abs(until - expected) < TimeUnit.MINUTES.toMillis(1));
+        assertEquals(until, row().end);
+    }
+
+    @Test
     public void snoozedAlarmAtTheEndSurvivesAMovedEnd() throws Exception {
         final long endAlarmId = row().endAlarmId;
         final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, endAlarmId).get(0);

@@ -181,6 +181,8 @@ public class MainBackupRestoreTest {
         profile.wifiOffRings = true;
         profile.ringAtEnd = true;
         profile.extendOnSnooze = true;
+        profile.snoozeMinutes2 = 12;
+        profile.snoozeMinutes3 = 33;
         profile.wifiNetworks = "[{\"ssid\":\"Home\",\"bssid\":\"aa:bb:cc:dd:ee:ff\"}]";
         profile.addProfile(cr);
         final android.content.ContentValues before = CalendarProfile.getProfile(cr, profile.id).createContentValues();

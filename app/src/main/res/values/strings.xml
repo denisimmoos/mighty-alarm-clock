@@ -1792,10 +1792,7 @@
     <string name="calendar_alarm_clone_profile">Clone profile</string>
     <string name="calendar_alarm_clone_name">%s (clone)</string>
     <string name="calendar_alarm_ends_on">ends %s</string>
-    <plurals name="calendar_alarm_snooze_extends">
-        <item quantity="one">Snooze extends the event by %d min</item>
-        <item quantity="other">Snooze extends the event by %d min</item>
-    </plurals>
+    <string name="calendar_alarm_snooze_extends">Snoozing extends the event by the snooze time</string>
     <string name="calendar_alarm_event_ends">Event ends now</string>
     <string name="calendar_alarm_rings_at_and_end">Rings at %s and at the end</string>
     <string name="calendar_alarm_rings_at_start_and_end">Rings at %s, at the start and at the end</string>
@@ -1818,7 +1815,12 @@
     <string name="calendar_alarm_max_duration_help">Leave empty to ring until you dismiss the alarm.</string>
     <string name="calendar_alarm_section_snooze">Ringing and snooze</string>
     <string name="calendar_alarm_allow_snooze">Allow snooze</string>
-    <string name="calendar_alarm_snooze_minutes">Snooze minutes</string>
+    <string name="calendar_alarm_snooze_choices_help">Three snooze lengths in minutes, shown as buttons on the alarm. Each must be longer than the one before.</string>
+    <string name="calendar_alarm_snooze_1">Short</string>
+    <string name="calendar_alarm_snooze_2">Medium</string>
+    <string name="calendar_alarm_snooze_3">Long</string>
+    <string name="calendar_alarm_error_snooze_order">Snooze lengths must go up: short &lt; medium &lt; long (max 999 min).</string>
+    <string name="calendar_alarm_snooze_button">%d min</string>
     <string name="calendar_alarm_max_snoozes">Max snoozes</string>
     <string name="calendar_alarm_max_snoozes_help">Empty = unlimited</string>
     <string name="calendar_alarm_section_dismiss">Lock screen and dismiss</string>

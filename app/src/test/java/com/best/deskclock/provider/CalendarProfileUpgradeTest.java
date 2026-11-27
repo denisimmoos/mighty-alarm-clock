@@ -158,4 +158,21 @@ public class CalendarProfileUpgradeTest {
         }
         db.close();
     }
+
+    @Test
+    public void upgradeFromVersion41AddsSnoozeLengthsTenAndTwenty() {
+        final SQLiteDatabase db = SQLiteDatabase.create(null);
+        db.execSQL("CREATE TABLE calendar_profiles (_id INTEGER PRIMARY KEY, flash INTEGER NOT NULL DEFAULT 0);");
+        db.execSQL("INSERT INTO calendar_profiles (_id) VALUES (1);");
+        db.execSQL("CREATE TABLE calendar_alert_events (_id INTEGER PRIMARY KEY, alarm_id INTEGER NOT NULL DEFAULT -1);");
+        final ClockDatabaseHelper helper = new ClockDatabaseHelper(ApplicationProvider.getApplicationContext());
+        helper.onUpgrade(db, 41, 42);
+        helper.onUpgrade(db, 41, 42);
+        try (Cursor c = db.rawQuery("SELECT snooze_minutes_2, snooze_minutes_3 FROM calendar_profiles", null)) {
+            assertTrue(c.moveToFirst());
+            assertEquals(10, c.getInt(0));
+            assertEquals(20, c.getInt(1));
+        }
+        db.close();
+    }
 }
