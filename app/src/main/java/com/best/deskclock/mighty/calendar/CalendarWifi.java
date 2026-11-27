@@ -51,8 +51,10 @@ public final class CalendarWifi {
         NEAR,
         /** Wi-Fi could be checked and none of the networks is near. */
         NOT_NEAR,
-        /** Wi-Fi could not be checked: no location permission, location off, or Wi-Fi off. */
-        UNKNOWN
+        /** Wi-Fi could not be checked: no location permission or location off. */
+        UNKNOWN,
+        /** The phone's Wi-Fi is turned off, so it is near none of the networks. */
+        WIFI_OFF
     }
 
     /**
@@ -251,6 +253,11 @@ public final class CalendarWifi {
         if (wifi == null) {
             return Result.UNKNOWN;
         }
+        if (!wifi.isWifiEnabled()) {
+            // Old scan results and "Wi-Fi scanning" could still make the phone look near; with
+            // Wi-Fi off the alarm only rings if the profile asks for that.
+            return Result.WIFI_OFF;
+        }
         try {
             final WifiInfo info = wifi.getConnectionInfo();
             if (info != null) {
@@ -283,9 +290,6 @@ public final class CalendarWifi {
             return Result.UNKNOWN;
         }
         if (!isLocationEnabled(context)) {
-            return Result.UNKNOWN;
-        }
-        if (!wifi.isWifiEnabled() && !wifi.isScanAlwaysAvailable()) {
             return Result.UNKNOWN;
         }
         return Result.NOT_NEAR;

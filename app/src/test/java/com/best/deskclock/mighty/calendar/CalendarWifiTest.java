@@ -270,9 +270,11 @@ public class CalendarWifiTest {
         connect("Cafe", "11:11:11:11:11:11");
         assertStatus(CalendarWifiGate.Status.AWAY, true);
 
-        // Wi-Fi off, but "scanning always available" still sees the networks around.
+        // Wi-Fi off skips the alarm, even if the phone was near a chosen network before.
+        connect("Home", "aa:bb:cc:dd:ee:ff");
         mWifi.setWifiEnabled(false);
-        assertStatus(CalendarWifiGate.Status.AWAY, true);
+        assertStatus(CalendarWifiGate.Status.WIFI_OFF_SKIPS, true);
+        assertEquals(CalendarWifi.Result.WIFI_OFF, CalendarWifiGate.shouldSkip(mContext, instance()));
 
         mProfile.wifiOffRings = true;
         mProfile.updateProfile(mCr);

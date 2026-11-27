@@ -49,6 +49,22 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
 
     private final Handler mHandler = new Handler(Looper.getMainLooper());
     private final Runnable mReload = this::reload;
+
+    /** Updates the Wi-Fi line when the phone's Wi-Fi is turned on or off or connects. */
+    private final android.content.BroadcastReceiver mWifiReceiver = new android.content.BroadcastReceiver() {
+        @Override
+        public void onReceive(android.content.Context context, android.content.Intent intent) {
+            mHandler.removeCallbacks(mReload);
+            mHandler.postDelayed(mReload, 300);
+        }
+    };
+
+    private static android.content.IntentFilter wifiFilter() {
+        final android.content.IntentFilter filter = new android.content.IntentFilter(
+            android.net.wifi.WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(android.net.wifi.WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        return filter;
+    }
     private final ContentObserver mObserver = new ContentObserver(mHandler) {
         @Override
         public void onChange(boolean selfChange) {
@@ -135,6 +151,8 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
         super.onStart();
         getContentResolver().registerContentObserver(CalendarProfile.CONTENT_URI, true, mObserver);
         getContentResolver().registerContentObserver(CalendarAlarmEvent.CONTENT_URI, true, mObserver);
+        androidx.core.content.ContextCompat.registerReceiver(this, mWifiReceiver, wifiFilter(),
+            androidx.core.content.ContextCompat.RECEIVER_NOT_EXPORTED);
     }
 
     @Override
@@ -149,6 +167,7 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
     @Override
     protected void onStop() {
         getContentResolver().unregisterContentObserver(mObserver);
+        this.unregisterReceiver(mWifiReceiver);
         mHandler.removeCallbacks(mReload);
         super.onStop();
     }
@@ -194,9 +213,12 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
                 mBinding.eventsWifi.setVisibility(wifi == null ? GONE : VISIBLE);
                 mBinding.eventsWifi.setText(wifi == null ? null
                     : wifi + "\n" + getString(R.string.calendar_alarm_wifi_status_recheck));
-                mBinding.eventsWifi.setTextColor(com.google.android.material.color.MaterialColors.getColor(
+                final int wifiColor = com.google.android.material.color.MaterialColors.getColor(
                     mBinding.eventsWifi, CalendarWifiGate.isSkipping(wifiStatus) ? androidx.appcompat.R.attr.colorError
-                        : com.google.android.material.R.attr.colorOnSurfaceVariant));
+                        : com.google.android.material.R.attr.colorOnSurfaceVariant);
+                mBinding.eventsWifi.setTextColor(wifiColor);
+                androidx.core.widget.TextViewCompat.setCompoundDrawableTintList(mBinding.eventsWifi,
+                    android.content.res.ColorStateList.valueOf(wifiColor));
                 mAdapter.setEvents(events, profile);
                 mBinding.eventsEmpty.setText(getString(R.string.calendar_alarm_no_events,
                     CalendarProfile.clampLookaheadDays(profile.lookaheadDays)));

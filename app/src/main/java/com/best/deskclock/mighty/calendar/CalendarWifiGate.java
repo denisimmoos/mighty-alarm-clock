@@ -46,7 +46,9 @@ public final class CalendarWifiGate {
         /** Wi-Fi can't be checked: the alarms are skipped. */
         UNKNOWN,
         /** The phone's Wi-Fi is off and the profile rings anyway. */
-        WIFI_OFF_RINGS
+        WIFI_OFF_RINGS,
+        /** The phone's Wi-Fi is off: the alarms are skipped. */
+        WIFI_OFF_SKIPS
     }
 
     /**
@@ -61,13 +63,14 @@ public final class CalendarWifiGate {
         if (networks.isEmpty()) {
             return Status.NO_CHECK;
         }
-        if (profile.wifiOffRings && !CalendarWifi.isWifiEnabled(context)) {
-            return Status.WIFI_OFF_RINGS;
+        if (!CalendarWifi.isWifiEnabled(context)) {
+            return profile.wifiOffRings ? Status.WIFI_OFF_RINGS : Status.WIFI_OFF_SKIPS;
         }
         return switch (CalendarWifi.check(context, networks, scan)) {
             case NEAR -> Status.NEAR;
             case NOT_NEAR -> Status.AWAY;
             case UNKNOWN -> Status.UNKNOWN;
+            case WIFI_OFF -> profile.wifiOffRings ? Status.WIFI_OFF_RINGS : Status.WIFI_OFF_SKIPS;
         };
     }
 
@@ -81,6 +84,7 @@ public final class CalendarWifiGate {
             case AWAY -> context.getString(R.string.calendar_alarm_wifi_status_away);
             case UNKNOWN -> context.getString(R.string.calendar_alarm_wifi_status_unknown);
             case WIFI_OFF_RINGS -> context.getString(R.string.calendar_alarm_wifi_status_off_rings);
+            case WIFI_OFF_SKIPS -> context.getString(R.string.calendar_alarm_wifi_status_off_skips);
         };
     }
 
@@ -88,7 +92,7 @@ public final class CalendarWifiGate {
      * @return {@code true} if alarms with this status are skipped.
      */
     public static boolean isSkipping(Status status) {
-        return status == Status.AWAY || status == Status.UNKNOWN;
+        return status == Status.AWAY || status == Status.UNKNOWN || status == Status.WIFI_OFF_SKIPS;
     }
 
     /**
@@ -112,6 +116,7 @@ public final class CalendarWifiGate {
         return switch (status) {
             case AWAY -> CalendarWifi.Result.NOT_NEAR;
             case UNKNOWN -> CalendarWifi.Result.UNKNOWN;
+            case WIFI_OFF_SKIPS -> CalendarWifi.Result.WIFI_OFF;
             default -> null;
         };
     }
@@ -136,8 +141,11 @@ public final class CalendarWifiGate {
                 nm.createNotificationChannel(new NotificationChannel(CHANNEL_ID,
                     context.getString(R.string.calendar_alarm_status_channel), NotificationManager.IMPORTANCE_DEFAULT));
             }
-            final String text = context.getString(reason == CalendarWifi.Result.UNKNOWN
-                ? R.string.calendar_alarm_wifi_skipped_unknown : R.string.calendar_alarm_wifi_skipped_away);
+            final String text = context.getString(switch (reason) {
+                case UNKNOWN -> R.string.calendar_alarm_wifi_skipped_unknown;
+                case WIFI_OFF -> R.string.calendar_alarm_wifi_skipped_off;
+                default -> R.string.calendar_alarm_wifi_skipped_away;
+            });
             final String label = instance.mLabel == null || instance.mLabel.isEmpty()
                 ? context.getString(R.string.calendar_alarm_hidden_title) : instance.mLabel;
             final Intent open = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());

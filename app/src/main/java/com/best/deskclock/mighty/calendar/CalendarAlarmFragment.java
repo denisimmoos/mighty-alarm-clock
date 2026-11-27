@@ -60,6 +60,22 @@ public final class CalendarAlarmFragment extends DeskClockFragment {
 
     private final Runnable mReload = this::reload;
 
+    /** Updates the Wi-Fi line when the phone's Wi-Fi is turned on or off or connects. */
+    private final android.content.BroadcastReceiver mWifiReceiver = new android.content.BroadcastReceiver() {
+        @Override
+        public void onReceive(android.content.Context context, android.content.Intent intent) {
+            mHandler.removeCallbacks(mReload);
+            mHandler.postDelayed(mReload, 300);
+        }
+    };
+
+    private static android.content.IntentFilter wifiFilter() {
+        final android.content.IntentFilter filter = new android.content.IntentFilter(
+            android.net.wifi.WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(android.net.wifi.WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        return filter;
+    }
+
     private final ActivityResultLauncher<String> mPermissionLauncher = registerForActivityResult(
         new ActivityResultContracts.RequestPermission(), granted -> {
             if (granted) {
@@ -99,6 +115,8 @@ public final class CalendarAlarmFragment extends DeskClockFragment {
             .registerContentObserver(CalendarProfile.CONTENT_URI, true, mObserver);
         requireContext().getContentResolver()
             .registerContentObserver(CalendarAlarmEvent.CONTENT_URI, true, mObserver);
+        androidx.core.content.ContextCompat.registerReceiver(requireContext(), mWifiReceiver, wifiFilter(),
+            androidx.core.content.ContextCompat.RECEIVER_NOT_EXPORTED);
     }
 
     @Override
@@ -111,6 +129,7 @@ public final class CalendarAlarmFragment extends DeskClockFragment {
     @Override
     public void onStop() {
         requireContext().getContentResolver().unregisterContentObserver(mObserver);
+        requireContext().unregisterReceiver(mWifiReceiver);
         mHandler.removeCallbacks(mReload);
         super.onStop();
     }
@@ -341,9 +360,12 @@ public final class CalendarAlarmFragment extends DeskClockFragment {
             final String wifi = CalendarWifiGate.describe(context, row.wifiStatus());
             mItem.profileWifi.setVisibility(wifi == null ? View.GONE : View.VISIBLE);
             mItem.profileWifi.setText(wifi);
-            mItem.profileWifi.setTextColor(com.google.android.material.color.MaterialColors.getColor(mItem.profileWifi,
+            final int wifiColor = com.google.android.material.color.MaterialColors.getColor(mItem.profileWifi,
                 CalendarWifiGate.isSkipping(row.wifiStatus()) ? androidx.appcompat.R.attr.colorError
-                    : com.google.android.material.R.attr.colorOnSurfaceVariant));
+                    : com.google.android.material.R.attr.colorOnSurfaceVariant);
+            mItem.profileWifi.setTextColor(wifiColor);
+            androidx.core.widget.TextViewCompat.setCompoundDrawableTintList(mItem.profileWifi,
+                android.content.res.ColorStateList.valueOf(wifiColor));
 
             mItem.profileSwitch.setOnCheckedChangeListener(null);
             mItem.profileSwitch.setChecked(profile.enabled);

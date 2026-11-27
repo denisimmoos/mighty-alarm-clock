@@ -917,6 +917,8 @@
     <string name="calendar_alarm_wifi_status_away">Jetzt nicht in der Nähe eines gewählten WLANs: Wecker werden übersprungen</string>
     <string name="calendar_alarm_wifi_status_unknown">WLAN kann jetzt nicht geprüft werden: Wecker werden übersprungen</string>
     <string name="calendar_alarm_wifi_status_off_rings">WLAN ist aus: Wecker klingeln trotzdem („Trotzdem klingeln, wenn das WLAN aus ist“)</string>
+    <string name="calendar_alarm_wifi_status_off_skips">WLAN ist aus: Wecker werden übersprungen („Trotzdem klingeln, wenn das WLAN aus ist“ ist aus)</string>
+    <string name="calendar_alarm_wifi_skipped_off">Der Wecker hat nicht geklingelt, weil das WLAN des Telefons ausgeschaltet war.</string>
     <string name="calendar_alarm_wifi_status_recheck">Das WLAN wird erneut geprüft, wenn ein Wecker fällig ist.</string>
     <string name="calendar_alarm_wifi_off_rings">Trotzdem klingeln, wenn das WLAN des Telefons ausgeschaltet ist</string>
     <string name="calendar_alarm_wifi_help">Der Wecker klingelt nur, wenn das Telefon mit einem dieser Netze verbunden ist oder es in den letzten 30 Minuten in Reichweite gesehen hat. Sonst bleibt er still und du bekommst eine Benachrichtigung. Wähle nach Name, um alle Zugangspunkte eines Netzes zu erfassen, oder nach MAC-Adresse für einen bestimmten Zugangspunkt.</string>
@@ -943,7 +945,7 @@
     <string name="calendar_alarm_wifi_location_off">Der Standort ist ausgeschaltet. Das WLAN kann nur mit eingeschaltetem Standort geprüft werden.</string>
     <string name="calendar_alarm_wifi_skipped_title">Übersprungen: %s</string>
     <string name="calendar_alarm_wifi_skipped_away">Der Wecker hat nicht geklingelt, weil keines der gewählten WLANs in der Nähe war.</string>
-    <string name="calendar_alarm_wifi_skipped_unknown">Der Wecker hat nicht geklingelt, weil das WLAN nicht geprüft werden konnte. Standort “Immer”, Standort und WLAN oder WLAN-Suche müssen an sein.</string>
+    <string name="calendar_alarm_wifi_skipped_unknown">Der Wecker hat nicht geklingelt, weil das WLAN nicht geprüft werden konnte. Standort “Immer” und Standort müssen an sein.</string>
     <string name="calendar_alarm_offset">Vor Terminbeginn klingeln</string>
     <string name="calendar_alarm_offset_minutes">Minuten</string>
     <string name="calendar_alarm_offset_minutes_help">Bis zu 12 Stunden. Standard 10 Minuten.</string>
