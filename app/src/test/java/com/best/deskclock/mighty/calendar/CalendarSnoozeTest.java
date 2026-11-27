@@ -197,4 +197,57 @@ public class CalendarSnoozeTest {
         assertEquals(until, checkSnoozed(instance.mId, before));
         assertEquals(endAlarmId, row().endAlarmId);
     }
+
+    @Test
+    public void snoozedStartAlarmStaysQuietOnceTheEventIsOver() throws Exception {
+        // A running event that ends in a moment; its start alarm was snoozed past the end.
+        final long now = System.currentTimeMillis();
+        CalendarAlarmSyncTest.clearEvents();
+        mProfile.ringAtEnd = false;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSyncTest.addEvent(3, 7, now + TimeUnit.MINUTES.toMillis(3), "Alarm: Short");
+        CalendarAlarmSyncTest.ENDS.put(3L, now + TimeUnit.MINUTES.toMillis(20));
+        CalendarAlarmSync.syncAll(mContext);
+        final long startAlarmId = row().startAlarmId;
+        final AlarmInstance instance = AlarmInstance.getInstancesByAlarmId(mCr, startAlarmId).get(0);
+        AlarmStateManager.setFiredState(mContext, instance);
+        AlarmStateManager.setSnoozeState(mContext, AlarmInstance.getInstance(mCr, instance.mId), false);
+
+        // Before the end it still rings again.
+        assertEquals(false, CalendarAlarmSlots.isOverAfterSnooze(mContext,
+            AlarmInstance.getInstance(mCr, instance.mId), System.currentTimeMillis()));
+        // After the end it doesn't.
+        assertTrue(CalendarAlarmSlots.isOverAfterSnooze(mContext,
+            AlarmInstance.getInstance(mCr, instance.mId), now + TimeUnit.MINUTES.toMillis(21)));
+    }
+
+    @Test
+    public void alarmAtTheEndReplacesASnoozedStartAlarm() throws Exception {
+        final CalendarAlarmEvent event = row();
+        final AlarmInstance start = AlarmInstance.getInstancesByAlarmId(mCr, event.startAlarmId).get(0);
+        AlarmStateManager.setFiredState(mContext, start);
+        AlarmStateManager.setSnoozeState(mContext, AlarmInstance.getInstance(mCr, start.mId), false);
+        assertEquals(AlarmInstance.SNOOZE_STATE, AlarmInstance.getInstance(mCr, start.mId).mAlarmState);
+
+        final AlarmInstance end = AlarmInstance.getInstancesByAlarmId(mCr, event.endAlarmId).get(0);
+        AlarmStateManager.setFiredState(mContext, end);
+        assertEquals(AlarmInstance.FIRED_STATE, AlarmInstance.getInstance(mCr, end.mId).mAlarmState);
+        // The snoozed start alarm won't ring again after the end alarm.
+        org.junit.Assert.assertNull(AlarmInstance.getInstance(mCr, start.mId));
+    }
+
+    @Test
+    public void alarmAtTheStartReplacesASnoozedEarlyAlarm() throws Exception {
+        final CalendarAlarmEvent event = row();
+        final AlarmInstance early = AlarmInstance.getInstancesByAlarmId(mCr, event.alarmId).get(0);
+        AlarmStateManager.setFiredState(mContext, early);
+        AlarmStateManager.setSnoozeState(mContext, AlarmInstance.getInstance(mCr, early.mId), false);
+
+        final AlarmInstance start = AlarmInstance.getInstancesByAlarmId(mCr, event.startAlarmId).get(0);
+        AlarmStateManager.setFiredState(mContext, start);
+        assertEquals(AlarmInstance.FIRED_STATE, AlarmInstance.getInstance(mCr, start.mId).mAlarmState);
+        org.junit.Assert.assertNull(AlarmInstance.getInstance(mCr, early.mId));
+        // The event itself still has its alarm at the end.
+        assertTrue(row().endAlarmId >= 0);
+    }
 }
