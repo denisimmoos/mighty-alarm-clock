@@ -1790,6 +1790,7 @@
     <string name="calendar_alarm_event_ends">Event ends now</string>
     <string name="calendar_alarm_rings_at_and_end">Rings at %s and at the end</string>
     <string name="calendar_alarm_rings_at_start_and_end">Rings at %s, at the start and at the end</string>
+    <string name="calendar_alarm_running_rings_at_end">Running · rings at the end, %s</string>
     <string name="calendar_alarm_rings_at_and_start">Rings at %s and at the start</string>
     <string name="calendar_alarm_event_in">Event in %s</string>
     <string name="calendar_alarm_duration_minutes">%d min</string>

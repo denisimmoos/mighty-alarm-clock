@@ -189,7 +189,7 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
                 final long now = System.currentTimeMillis();
                 for (CalendarAlarmEvent event : CalendarAlarmEvent.getEventsForProfile(
                     appContext.getContentResolver(), profileId)) {
-                    if (event.begin > now) {
+                    if (event.isUpcoming(now)) {
                         events.add(event);
                     }
                 }
@@ -294,7 +294,12 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
                 : context.getString(R.string.calendar_alarm_next, date);
             final long now = System.currentTimeMillis();
             final boolean atEnd = CalendarAlarmSync.ringsAtEnd(profile, event, now);
-            if (!consumed && (profile.offsetEnabled || atEnd) && event.alarmId != CalendarAlarmEvent.ALARM_CONSUMED) {
+            if (event.isRunningWithEndAlarm(now)) {
+                // Already started: only the alarm at the end is left.
+                dateText = date + " · " + context.getString(R.string.calendar_alarm_running_rings_at_end,
+                    DateFormat.getTimeFormat(context).format(new java.util.Date(
+                        CalendarAlarmSync.alarmTimeFor(event.end, now))));
+            } else if (!consumed && (profile.offsetEnabled || atEnd) && event.alarmId != CalendarAlarmEvent.ALARM_CONSUMED) {
                 // With an offset, the alarm rings before the event time shown on the left.
                 final long ringTime = CalendarAlarmSync.ringTimeFor(profile, event.begin, now);
                 final boolean atStart = profile.ringsEarlyAndAtStart();

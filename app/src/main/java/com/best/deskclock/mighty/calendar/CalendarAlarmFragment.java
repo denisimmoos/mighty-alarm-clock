@@ -196,11 +196,13 @@ public final class CalendarAlarmFragment extends DeskClockFragment {
                 for (CalendarAlarmEvent event : CalendarAlarmEvent.getEventsForProfile(
                     appContext.getContentResolver(), profile.id)) {
                     // A switched off profile rings for nothing.
-                    if (profile.enabled && event.begin > now && event.userEnabled
+                    if (profile.enabled && event.isUpcoming(now) && event.userEnabled
                         && !event.isDismissed()) {
                         count++;
-                        if (next < 0) {
-                            next = event.begin;
+                        // A running event shows when it rings at its end.
+                        final long when = event.begin > now ? event.begin : event.end;
+                        if (next < 0 || when < next) {
+                            next = when;
                         }
                     }
                 }

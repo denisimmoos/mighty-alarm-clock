@@ -109,6 +109,21 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
     }
 
     /**
+     * @return {@code true} if the event has started and only its alarm at the end is still to come.
+     */
+    public boolean isRunningWithEndAlarm(long now) {
+        return begin <= now && end > now && endAlarmId >= 0;
+    }
+
+    /**
+     * @return {@code true} if the event still has something to show: it is upcoming, or it is
+     * running and rings at its end.
+     */
+    public boolean isUpcoming(long now) {
+        return begin > now || isRunningWithEndAlarm(now);
+    }
+
+    /**
      * Builds the key of an event occurrence. Recurring events share one event id, so the start
      * time is part of the key. When an event is moved, it gets a new key and a new alarm.
      */

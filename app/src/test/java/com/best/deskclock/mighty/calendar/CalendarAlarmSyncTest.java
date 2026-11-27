@@ -1106,6 +1106,11 @@ public class CalendarAlarmSyncTest {
         assertEquals(CalendarAlarmSync.alarmTimeFor(begin + EVENT_LENGTH_MS, System.currentTimeMillis()),
             AlarmInstance.getInstancesByAlarmId(mCr, row.endAlarmId).get(0).getAlarmTime().getTimeInMillis());
 
+        // It is listed until it ends.
+        final long now = System.currentTimeMillis();
+        assertTrue(row.isUpcoming(now));
+        assertTrue(row.isRunningWithEndAlarm(now));
+
         // A running event without the option gets no alarm.
         mProfile.ringAtEnd = false;
         mProfile.updateProfile(mCr);

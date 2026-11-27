@@ -956,6 +956,7 @@
     <string name="calendar_alarm_event_ends">Termin endet jetzt</string>
     <string name="calendar_alarm_rings_at_and_end">Klingelt um %s und am Ende</string>
     <string name="calendar_alarm_rings_at_start_and_end">Klingelt um %s, zu Beginn und am Ende</string>
+    <string name="calendar_alarm_running_rings_at_end">Läuft · klingelt am Ende, %s</string>
     <string name="calendar_alarm_rings_at_and_start">Klingelt um %s und bei Beginn</string>
     <string name="calendar_alarm_event_in">Termin in %s</string>
     <string name="calendar_alarm_duration_minutes">%d Min.</string>
