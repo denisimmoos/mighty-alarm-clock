@@ -66,10 +66,41 @@ public class BackupAndRestoreUtils {
     public static boolean appNeedsRestart = false;
 
     /**
-     * Settings of the removed normal alarms (list, editor, per-alarm defaults, exchange). Older
+     * Settings of removed features: the normal alarms (list, editor, per-alarm defaults, exchange)
+     * and the screensaver. Older
      * backups still contain them; they are skipped when restoring.
      */
     private static final Set<String> REMOVED_NORMAL_ALARM_SETTINGS = Set.of(
+        // The screensaver was removed too.
+        "key_screensaver_settings",
+        "key_screensaver_clock_style",
+        "key_screensaver_clock_dial",
+        "key_screensaver_clock_dial_material",
+        "key_screensaver_digital_clock_font",
+        "key_screensaver_analog_clock_size",
+        "key_display_screensaver_clock_seconds",
+        "key_screensaver_clock_second_hand",
+        "key_display_screensaver_battery",
+        "key_screensaver_clock_dynamic_colors",
+        "key_screensaver_clock_color_picker",
+        "key_screensaver_battery_color_picker",
+        "key_screensaver_date_color_picker",
+        "key_screensaver_next_alarm_color_picker",
+        "key_screensaver_brightness",
+        "key_screensaver_digital_clock_font_size",
+        "key_screensaver_display_text_uppercase",
+        "key_screensaver_digital_clock_in_bold",
+        "key_screensaver_digital_clock_in_italic",
+        "key_screensaver_battery_in_bold",
+        "key_screensaver_battery_in_italic",
+        "key_screensaver_date_in_bold",
+        "key_screensaver_date_in_italic",
+        "key_screensaver_next_alarm_in_bold",
+        "key_screensaver_next_alarm_in_italic",
+        "key_screensaver_keep_screen_on",
+        "key_screensaver_background_image",
+        "key_enable_screensaver_blur_effect",
+        "key_screensaver_blur_intensity",
         "key_calendar_alert_tab_added",
         "key_swipe_action",
         "key_display_snooze_selector",
@@ -131,7 +162,8 @@ public class BackupAndRestoreUtils {
                 // directly within the ZIP archive.
                 // Finally, exclude the essential permissions key, as it reflects the current system state and should not be saved,
                 // restored, or reset like other preferences.
-                if (key.equals(RINGTONE_IDS)
+                if (REMOVED_NORMAL_ALARM_SETTINGS.contains(key)
+                    || key.equals(RINGTONE_IDS)
                     || key.equals(KEY_GENERAL_FONT)
                     || key.startsWith(RINGTONE_URI)
                     || key.equals(NEXT_RINGTONE_ID)
@@ -143,8 +175,6 @@ public class BackupAndRestoreUtils {
                     || key.equals(KEY_TIMER_BACKGROUND_IMAGE)
                     || key.equals(KEY_SW_FONT)
                     || key.equals(KEY_DIGITAL_CLOCK_FONT)
-                    || key.equals(KEY_SCREENSAVER_DIGITAL_CLOCK_FONT)
-                    || key.equals(KEY_SCREENSAVER_BACKGROUND_IMAGE)
                     || key.equals(KEY_ESSENTIAL_PERMISSIONS_GRANTED)) {
                     continue;
                 }
@@ -278,8 +308,6 @@ public class BackupAndRestoreUtils {
                 && !key.equals(KEY_TIMER_BACKGROUND_IMAGE)
                 && !key.equals(KEY_SW_FONT)
                 && !key.equals(KEY_DIGITAL_CLOCK_FONT)
-                && !key.equals(KEY_SCREENSAVER_DIGITAL_CLOCK_FONT)
-                && !key.equals(KEY_SCREENSAVER_BACKGROUND_IMAGE)
                 && !key.equals(KEY_ESSENTIAL_PERMISSIONS_GRANTED)
             ) {
                 editor.remove(key);
@@ -474,8 +502,6 @@ public class BackupAndRestoreUtils {
             appendFileToZip(zip, prefs.getString(KEY_TIMER_BACKGROUND_IMAGE, null));
             appendFileToZip(zip, prefs.getString(KEY_SW_FONT, null));
             appendFileToZip(zip, prefs.getString(KEY_DIGITAL_CLOCK_FONT, null));
-            appendFileToZip(zip, prefs.getString(KEY_SCREENSAVER_DIGITAL_CLOCK_FONT, null));
-            appendFileToZip(zip, prefs.getString(KEY_SCREENSAVER_BACKGROUND_IMAGE, null));
         }
     }
 

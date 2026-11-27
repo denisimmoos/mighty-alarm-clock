@@ -92,7 +92,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Jam"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Jam randik"</string>
     <string name="button_cities" msgid="4555761857494501363">"Bandar"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Penyelamat skrin"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Isih mengikut waktu"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Isih mengikut nama"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Bandar Terpilih"</string>
@@ -155,8 +154,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Mulakan jam randik"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Jeda"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Jeda jam randik"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Pylmt skrn"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Mulakan penyelamat skrin"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Penggera"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Memproses tindakan daripada pemberitahuan pemasa."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Memproses tindakan daripada pemberitahuan jam randik."</string>

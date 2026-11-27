@@ -128,7 +128,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"الساعة"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"ساعة توقيف"</string>
     <string name="button_cities" msgid="4555761857494501363">"المدن"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"شاشة التوقف"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"تصنيف بحسب الوقت"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"تصنيف بحسب الاسم"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"المدن المحددة"</string>
@@ -191,8 +190,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"بدء ساعة الإيقاف"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"إيقاف مؤقت"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"إيقاف مؤقت لساعة الإيقاف"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"شاشة التوقف"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"بدء شاشة التوقف"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"التنبيهات"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"لمعالجة الإجراءات من إشعارات الموقِّت."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"لمعالجة الإجراءات من إشعارات ساعة الإيقاف."</string>
@@ -317,10 +314,6 @@
     <string name="display_warning_before_deleting_timer_title">أظهر تحذير قبل حذف المؤقت</string>
     <string name="warning_dialog_title">احذف المؤقت</string>
     <string name="warning_dialog_message">أمتأكد أنك تريد حذف المؤقت \"%s\"؟</string>
-    <string name="screensaver_settings_summary">قم بتخصيص نمط شاشة التوقف ونوع الخط ولونه</string>
-    <string name="screensaver_daydream_settings">حدِّد/فعِّل شاشة التوقف</string>
-    <string name="screensaver_daydream_settings_summary">يفتح إعدادات شاشة التوقف الرئيسية لنظام أندرويد</string>
-    <string name="screensaver_clock_dynamic_colors_title">ألوان الساعة الديناميكية</string>
     <string name="clock_color_title">لون الميقاتة</string>
     <string name="clock_default_color_title">استخدم اللون الافتراضي للساعة الرئيسية</string>
     <string name="hour_color_title">لون الساعة</string>
@@ -426,8 +419,6 @@
     <string name="minute_hand_default_color_title">استخدم اللون الافتراضي لعقرب الدقائق</string>
     <string name="second_hand_color_title">لون عقرب الثواني</string>
     <string name="second_hand_default_color_title">استخدم اللون الافتراضي لعقرب الثواني</string>
-    <string name="display_battery_title">عرض مستوى البطارية</string>
-    <string name="battery_color_title">لون مستوى البطارية</string>
     <string name="date_color_title">لون التاريخ</string>
     <string name="date_default_color_title">استخدم اللون الافتراضي للتاريخ</string>
     <string name="next_alarm_color_title">لون المنبه التالي</string>
@@ -438,17 +429,7 @@
     <string name="city_name_default_color_title">استخدم اللون الافتراضي لاسم المدينة</string>
     <string name="alarm_title_color">لون عنوان المنبه</string>
     <string name="alarm_title_default_color">استخدم اللون الافتراضي لعنوان المنبه</string>
-    <string name="screensaver_brightness_title">السطوع</string>
-    <string name="screensaver_bold_digital_clock_title">الساعة الرقمية بخط عريض</string>
-    <string name="screensaver_italic_digital_clock_title">الساعة الرقمية بخط مائل</string>
-    <string name="screensaver_bold_battery_title">مستوى البطارية بخط عريض</string>
-    <string name="screensaver_italic_battery_title">مستوى البطارية بخط مائل</string>
-    <string name="screensaver_bold_date_title">التاريخ بخط عريض</string>
-    <string name="screensaver_italic_date_title">التاريخ بخط مائل</string>
-    <string name="screensaver_bold_next_alarm_title">المنبه التالي بخط عريض</string>
-    <string name="screensaver_italic_next_alarm_title">المنبه التالي بخط مائل</string>
     <string name="preview_title">معاينة</string>
-    <string name="screensaver_preview_summary">أبدأ تشغيل شاشة التوقف فوراً</string>
     <string name="first_launch_important_info_message_for_SDK34">• &lt;b&gt;إشعارات بملء الشاشة;&lt;/b&gt; &lt;br&gt; &lt;br&gt;</string>
     <string name="first_launch_dialog_title">اخرج</string>
     <string name="first_launch_dialog_message">أمتأكد أنك تريد مغادرة التطبيق؟</string>

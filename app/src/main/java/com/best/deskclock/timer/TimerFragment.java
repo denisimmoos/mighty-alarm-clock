@@ -732,8 +732,8 @@ public final class TimerFragment extends DeskClockFragment implements RunnableFr
 
         mSettings.is24HourFormat = DataModel.getDataModel().is24HourFormat();
         mSettings.timerEndTimeFormatPattern = mSettings.is24HourFormat
-            ? ClockUtils.get24ModeFormat(false, false)
-            : ClockUtils.get12ModeFormat(requireContext(), 0.8f, false, false, false, true, false);
+            ? ClockUtils.get24ModeFormat(false)
+            : ClockUtils.get12ModeFormat(requireContext(), 0.8f, false, false, false, true);
 
         mSettings.isSingleTimerMode = SettingsDAO.isSingleTimerModeEnabled(mPrefs);
         mSettings.isTimerEndTimeDisplayed = SettingsDAO.isTimerEndTimeDisplayed(mPrefs);

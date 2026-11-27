@@ -368,7 +368,7 @@ public final class ClockFragment extends DeskClockFragment {
      */
     private void refreshAlarm() {
         if (mBinding != null) {
-            AlarmUtils.refreshAlarm(mBinding.mainClockFrame.mainClockContainer, false, mSettings.isTextUppercase);
+            AlarmUtils.refreshAlarm(mBinding.mainClockFrame.mainClockContainer, mSettings.isTextUppercase);
         }
     }
 
@@ -425,7 +425,7 @@ public final class ClockFragment extends DeskClockFragment {
 
         if (mIsDigitalClock) {
             digitalClock.setTypeface(mSettings.digitalClockTypeface);
-            ClockUtils.setDigitalClockTimeFormat(digitalClock, 0.4f, mSettings.showSeconds, false, true, false, false);
+            ClockUtils.setDigitalClockTimeFormat(digitalClock, 0.4f, mSettings.showSeconds, false, true, false);
             digitalClock.applyUserPreferredTextSizeSp(mSettings.digitalClockFontSize);
         } else {
             ClockUtils.adjustAnalogClockSize(analogClock, mSettings.analogClockSizePercent);
@@ -434,7 +434,7 @@ public final class ClockFragment extends DeskClockFragment {
 
         ClockUtils.updateDate(
             mDateFormat, mDateFormatForAccessibility, mBinding.mainClockFrame.mainClockContainer, mSettings.isTextUppercase);
-        AlarmUtils.refreshAlarm(mBinding.mainClockFrame.mainClockContainer, false, mSettings.isTextUppercase);
+        AlarmUtils.refreshAlarm(mBinding.mainClockFrame.mainClockContainer, mSettings.isTextUppercase);
     }
 
     private void updateDragAndDrop() {

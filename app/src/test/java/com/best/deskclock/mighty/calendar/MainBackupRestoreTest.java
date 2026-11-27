@@ -103,7 +103,9 @@ public class MainBackupRestoreTest {
         json.put("Alarms", new org.json.JSONArray().put(alarm));
         json.put("Alarms with specified date", new org.json.JSONArray());
         json.put("Tags", new org.json.JSONArray().put(new org.json.JSONObject().put("id", 1).put("name", "Work")));
-        json.getJSONObject("Boolean settings").put("key_display_enabled_alarms_first", true);
+        json.getJSONObject("Boolean settings").put("key_display_enabled_alarms_first", true)
+            .put("key_display_screensaver_battery", true);
+        json.getJSONObject("Integer settings").put("key_screensaver_brightness", 70);
         json.getJSONObject("String settings").put("key_sort_alarm", "2").put("key_tab_to_display", "0");
         json.put("Visible tabs", new org.json.JSONArray().put("alarm").put("clock").put("calendar_alarm"));
 
@@ -112,6 +114,9 @@ public class MainBackupRestoreTest {
         assertTrue(com.best.deskclock.provider.Alarm.getUserAlarms(cr).isEmpty());
         assertTrue(!prefs.contains("key_display_enabled_alarms_first"));
         assertTrue(!prefs.contains("key_sort_alarm"));
+        // Settings of the removed screensaver are skipped too.
+        assertTrue(!prefs.contains("key_screensaver_brightness"));
+        assertTrue(!prefs.contains("key_display_screensaver_battery"));
         final java.util.Set<String> tabs = com.best.deskclock.data.SettingsDAO.getVisibleTabs(prefs);
         assertTrue(!tabs.contains("alarm"));
         assertTrue(tabs.contains(com.best.deskclock.settings.PreferencesDefaultValues.VISIBLE_TAB_CALENDAR_ALARM));

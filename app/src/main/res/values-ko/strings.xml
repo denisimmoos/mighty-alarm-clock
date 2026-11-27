@@ -93,7 +93,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"시계"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"스톱워치"</string>
     <string name="button_cities" msgid="4555761857494501363">"도시"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"화면 보호기"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"시간순 정렬"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"이름순 정렬"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"선택된 도시"</string>
@@ -156,8 +155,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"스톱워치 시작"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"일시중지"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"스톱워치 일시중지"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"화면 보호기"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"화면 보호기 시작"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"알람"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"타이머 알림에서 작업 처리"</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"스톱워치 알림에서 작업 처리"</string>
@@ -287,13 +284,10 @@
     <string name="denied_permission_label">권한 거부됨</string>
     <string name="first_launch_important_info_message_for_SDK34">• &lt;b&gt;전체 화면 알림&lt;/b&gt; &lt;br&gt; &lt;br&gt;</string>
     <string name="shake_intensity_title">흔들기 강도</string>
-    <string name="screensaver_preview_summary">화면 보호기 지금 시작</string>
     <string name="sort_timer_title">타이머 정렬</string>
     <string name="restart_app_dialog_title_for_restore">복원을 마쳤습니다.</string>
     <string name="permission_management_summary">앱 사용에 필요한 권한 확인</string>
     <string name="about_title">정보</string>
-    <string name="screensaver_bold_digital_clock_title">디지털 시계 굵게</string>
-    <string name="screensaver_italic_digital_clock_title">디지털 시계 기울임꼴</string>
     <string name="hour_color_title">시간 텍스트 색상</string>
     <string name="backup_restore_title">백업 및 복원</string>
     <string name="backup_restore_dialog_message">정말 앱 데이터를 백업 또는 복원할까요?</string>
@@ -302,7 +296,6 @@
     <string name="timer_settings_summary">기본 벨소리, 볼륨, 타이머 정렬 설정</string>
     <string name="first_launch_dialog_message">정말 앱을 종료할까요?</string>
     <string name="hour_default_color_title">시간 텍스트에 기본 색상 사용</string>
-    <string name="screensaver_italic_date_title">날짜 기울임꼴</string>
     <string name="permission_status_title">상태:</string>
     <string name="first_launch_main_feature_link">그 밖에도 다양한 기능이 있습니다!</string>
     <string name="date_color_title">날짜 색상</string>
@@ -322,17 +315,12 @@
     <string name="notifications_dialog_title">알림</string>
     <string name="city_name_color_title">도시 이름 색상</string>
     <string name="second_hand_color_title">초침 색상</string>
-    <string name="screensaver_daydream_settings">화면 보호기 선택 및 사용 설정</string>
     <string name="timer_flip_action_title">기기를 뒤집어 알람 중지</string>
     <string name="timer_shake_action_title">기기를 흔들어 알람 중지</string>
     <string name="display_warning_before_deleting_timer_title">타이머를 삭제할 때 경고 표시</string>
     <string name="warning_dialog_title">타이머 삭제</string>
     <string name="warning_dialog_message">정말 \"%s\" 타이머를 삭제할까요?</string>
     <string name="clock_color_title">시계 색상</string>
-    <string name="screensaver_settings_summary">화면 보호기 스타일, 색상, 폰트 설정</string>
-    <string name="screensaver_daydream_settings_summary">Android 화면 보호기 설정을 엽니다.</string>
-    <string name="screensaver_clock_dynamic_colors_title">적응형 시계 색상</string>
-    <string name="screensaver_brightness_title">밝기</string>
     <string name="version">버전</string>
     <string name="clock_settings_summary">스타일, 시간대, 기기 날짜 및 시간 설정</string>
     <string name="version_text">버전 <xliff:g id="VERSION_NUMBER" example="1.0">%1$s</xliff:g></string>
@@ -340,9 +328,6 @@
     <string name="sort_name">이름</string>
     <string name="dialog_close">닫기</string>
     <string name="license">오픈 소스 라이선스</string>
-    <string name="screensaver_bold_date_title">날짜 굵게</string>
-    <string name="screensaver_bold_next_alarm_title">다음 알람 굵게</string>
-    <string name="screensaver_italic_next_alarm_title">다음 알람 기울임꼴</string>
     <string name="transparent_background_for_expired_timer_title">타이머 시간이 끝나면 배경을 투명하게 변경</string>
     <string name="digital_widget_message_summary">이 설정을 변경하려면 \"위젯에 도시 이름 표시\" 옵션이 꺼져 있어야 합니다.</string>
     <string name="alarm_notification_reminder_title">알람 시작 전 알림</string>

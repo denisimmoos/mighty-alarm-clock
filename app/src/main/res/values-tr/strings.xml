@@ -100,7 +100,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Saat"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Kronometre"</string>
     <string name="button_cities" msgid="4555761857494501363">"Şehirler"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Ekran koruyucu"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Saate göre sırala"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Ada göre sırala"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Seçilen Şehirler"</string>
@@ -163,8 +162,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Kronometreyi başlat"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Duraklat"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Kronometreyi duraklat"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">Ekr koru</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Ekran koruyucuyu başlat"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Alarmlar"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Zamanlayıcı bildirimlerinden gelen etkinlikleri işler."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Kronometre bildirimlerinden gelen etkinlikleri işler."</string>
@@ -287,10 +284,7 @@
     <string name="sort_timer_title">Zamanlayıcıları sırala</string>
     <string name="sort_timer_ascending_duration">Süreye göre (artan)</string>
     <string name="sort_name">İsme göre</string>
-    <string name="screensaver_daydream_settings">Ekran koruyucu seç/etkinleştir</string>
     <string name="next_alarm_color_title">Sonraki alarm rengi</string>
-    <string name="screensaver_italic_digital_clock_title">İtalik dijital saat</string>
-    <string name="screensaver_preview_summary">Ekran koruyucuyu anında başlatır</string>
     <string name="first_launch_button_now">Şimdi</string>
     <string name="first_launch_dialog_message">Uygulamadan çıkmak istediğinize emin misiniz?</string>
     <string name="settings_language_title">Dil</string>
@@ -310,7 +304,6 @@
     <string name="license">Açık kaynak lisansı</string>
     <string name="sort_timer_descending_duration">Süreye göre (azalan)</string>
     <string name="date_color_title">Tarih rengi</string>
-    <string name="screensaver_brightness_title">Parlaklık</string>
     <string name="digital_widget_message_summary">Bu ayara erişim için \"Widget\'ta şehirleri göster\" devre dışı bırakılmalı</string>
     <string name="alarm_notification_reminder_title">Bildirim hatırlatıcısı</string>
     <string name="hour_default_color_title">Saatler için varsayılan rengi kullan</string>
@@ -319,7 +312,6 @@
     <string name="amoled_dark_theme_mode">AMOLED</string>
     <string name="alarm_title_color">Alarm başlık rengi</string>
     <string name="dismiss_button_color">Alarm kapatma butonu rengi</string>
-    <string name="screensaver_clock_dynamic_colors_title">Dinamik saat renkleri</string>
     <string name="first_launch_main_feature_link">… ve daha fazlası!</string>
     <string name="permission_requirement_title">Gereklilik:</string>
     <string name="permission_status_title">Durum:</string>
@@ -339,8 +331,6 @@
     <string name="display_warning_before_deleting_timer_title">Zamanlayıcıyı silerken uyarı penceresi göster</string>
     <string name="warning_dialog_title">Zamanlayıcıyı sil</string>
     <string name="sort_manually">Elle (sürükleyerek)</string>
-    <string name="screensaver_settings_summary">Ekran koruyucunun stilini, rengini ve yazı tipini ayarlayın</string>
-    <string name="screensaver_daydream_settings_summary">Android\'in ekran koruyucu ayarlarını açar</string>
     <string name="second_hand_color_title">Saniye çubuğu rengi</string>
     <string name="first_launch_version">Sürüm %s</string>
     <string name="first_launch_main_feature_title">TEMEL ÖZELLİKLER</string>
@@ -374,11 +364,6 @@
     <string name="notifications_dialog_text">Alarm ayarlarına ek olarak bu uygulamanın aynı zamanda zamanlayıcı ve kronomotre modu da vardır. \n\nÖzellikle alarmın çalışması ve bütün modüllerin bildirimlerinin gözükmesi için uygulamanın bildirimlerini etkinleştirmenizi tavsiye ederiz.</string>
     <string name="display_card_background_title">Kart arka planlarını görüntüle</string>
     <string name="display_background_border_title">Arka plan kenarlıklarını göster</string>
-    <string name="screensaver_bold_date_title">Kalın tarih</string>
-    <string name="screensaver_italic_date_title">İtalik tarih</string>
-    <string name="screensaver_italic_next_alarm_title">İtalik sonraki alarm</string>
-    <string name="screensaver_bold_next_alarm_title">Kalın sonraki alarm</string>
-    <string name="screensaver_bold_digital_clock_title">Kalın dijital saat</string>
     <string name="reset_settings_title">Ayarları sıfırla</string>
     <string name="reset_settings_message">Uygulamanın bütün ayarlarını sıfırlamak istediğinize emin misiniz?</string>
     <string name="restart_app_dialog_title_for_reset">Sıfırlama tamamlandı</string>
@@ -470,10 +455,6 @@
     <string name="paused_timer_indicator_color_title">Durdurulmuş zamanlayıcı göstergecinin rengi</string>
     <string name="expired_timer_indicator_color_title">Süresi geçmiş zamanlayıcı göstergecinin rengi</string>
     <string name="second_hand_default_color_title">Saniye ibresi için varsayılan rengi kullanın</string>
-    <string name="display_battery_title">Pil seviyesini göster</string>
-    <string name="battery_color_title">Pil seviyesi rengi</string>
-    <string name="screensaver_bold_battery_title">Pil seviyesini kalın göster</string>
-    <string name="screensaver_italic_battery_title">Pil seviyesini eğik göster</string>
     <string name="display_text_uppercase_title">Metinleri büyük harfle göster</string>
     <string name="background_default_color_title">Arkaplan için varsayılan rengi kullan</string>
     <string name="sync_alarm_by_label_title">Aynı etiketi paylaşan alarmları senkronize edin</string>

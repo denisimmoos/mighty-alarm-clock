@@ -114,7 +114,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Hodiny"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Stopky"</string>
     <string name="button_cities" msgid="4555761857494501363">"Města"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Spořič obrazovky"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Seřadit podle času"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Seřadit podle názvu"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Vybraná města"</string>
@@ -177,8 +176,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Spustit stopky"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Pozastavit"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Pozastavit stopky"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Spořič obrazovky"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Spustit spořič obrazovky"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Budíky"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Zpracovává akce z oznámení časovače."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Zpracovává akce z oznámení stopek."</string>
@@ -254,9 +251,6 @@
     <string name="about_github_link">Zobrazit na GitHubu</string>
     <string name="license">Licence open source</string>
     <string name="gnu_gpl">GNU General Public License v3.0</string>
-    <string name="screensaver_daydream_settings_summary">Otevře hlavní nastavení spořiče obrazovky systému Android</string>
-    <string name="screensaver_settings_summary">Přizpůsobit styl, písmo a barvu spořiče obrazovky</string>
-    <string name="screensaver_bold_next_alarm_title">Další budík tučně</string>
     <string name="widget_background_title">Zobrazit pozadí</string>
     <string name="background_color_title">Barva pozadí</string>
     <string name="show_lockscreen_permission_title">ZOBRAZIT NA OBRAZOVCE UZAMČENÍ</string>
@@ -267,7 +261,6 @@
     <string name="widgets_settings_summary">Přizpůsobení widgetu, barev a velikosti písma widgetů</string>
     <string name="reset_settings_title">Resetovat nastavení</string>
     <string name="sw_volume_up_action_title">Zvýšení hlasitosti</string>
-    <string name="screensaver_italic_date_title">Datum kurzívou</string>
     <string name="blue_accent_color">Modrá</string>
     <string name="enable_snoozed_or_dismissed_alarm_vibrations_summary">Dvojité zavibrování při odložení a jedno zavibrování při zrušení budíku</string>
     <string name="power_button_title">Vypínač</string>
@@ -279,16 +272,10 @@
     <string name="reset_settings_message">Opravdu chcete resetovat všechna nastavení aplikace?</string>
     <string name="sort_timer_ascending_duration">Podle času (vzestupně)</string>
     <string name="default_time_to_add_to_timer_title">Výchozí čas, který přidat k časovači</string>
-    <string name="screensaver_brightness_title">Jas</string>
-    <string name="screensaver_italic_digital_clock_title">Digitální hodiny kurzívou</string>
-    <string name="screensaver_bold_digital_clock_title">Digitální hodiny tučně</string>
-    <string name="screensaver_italic_next_alarm_title">Další budík kurzívou</string>
     <string name="preview_title">Náhled</string>
-    <string name="screensaver_preview_summary">Okamžitě spustí spořič obrazovky</string>
     <string name="display_city_title">Zobrazit města</string>
     <string name="show_lockscreen_dialog_text">Na zařízeních Xiaomi je nutné v nastavení zařízení ručně povolit oprávnění „Zobrazit na obrazovce uzamčení“, aby aplikace správně fungovala.</string>
     <string name="restart_app_dialog_title_for_reset">Reset dokončen</string>
-    <string name="screensaver_clock_dynamic_colors_title">Dynamické barvy hodin</string>
     <string name="second_hand_color_title">Barva vteřinové ručičky</string>
     <string name="sw_settings_summary">Přizpůsobit písmo a akce pro tlačítka hlasitosti</string>
     <string name="clock_style_analog_material">Analogové (Material)</string>
@@ -347,7 +334,6 @@
     <string name="title_dark_theme_mode">Režim tmavého motivu</string>
     <string name="first_launch_main_feature_title">HLAVNÍ FUNKCE</string>
     <string name="sw_long_press_volume_up_action_title">Zvýšení hlasitosti (dlouhé stisknutí)</string>
-    <string name="screensaver_bold_date_title">Datum tučně</string>
     <string name="widget_max_font_size_title">Maximální velikost písma widgetu</string>
     <string name="date_color_title">Barva data</string>
     <string name="first_launch_main_feature_link">… a spousta dalšího!</string>
@@ -381,7 +367,6 @@
     <string name="settings_vibration_title">Povolit vibrace</string>
     <string name="warning_dialog_title">Odstranit časovač</string>
     <string name="warning_dialog_message">Opravdu chcete odstranit časovač „%s“?</string>
-    <string name="screensaver_daydream_settings">Vybrat/povolit spořič obrazovky</string>
     <string name="first_launch_button_now">Nyní</string>
     <string name="display_warning_before_deleting_timer_title">Zobrazit varování před odstraněním časovače</string>
     <string name="sort_manually">Ručně (táhnutím)</string>
@@ -498,10 +483,6 @@
     <string name="sw_total_title">Celkem</string>
     <string name="analog_clock_size_title">Velikost analogových hodin</string>
     <string name="display_compact_timers_title">Zobrazit aktivní časovače v kompaktním režimu</string>
-    <string name="display_battery_title">Zobrazit úroveň baterie</string>
-    <string name="battery_color_title">Barva úrovně baterie</string>
-    <string name="screensaver_bold_battery_title">Úroveň baterie tučně</string>
-    <string name="screensaver_italic_battery_title">Úroveň baterie kurzívou</string>
     <string name="sync_alarm_by_label_title">Synchronizovat budíky se stejným štítkem</string>
     <string name="button_tip_title">Podržte tlačítko „+“ pro přidání složky</string>
     <string name="permissions_category_title">Oprávnění</string>

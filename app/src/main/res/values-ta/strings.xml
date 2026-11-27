@@ -99,7 +99,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"கடிகாரம்"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"நிறுத்தக்கடிகாரம்"</string>
     <string name="button_cities" msgid="4555761857494501363">"நகரங்கள்"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"ஸ்கிரீன் சேவர்"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"நேர வரிசையில்"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"அகர வரிசையில்"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"தேர்ந்தெடுத்த நகரங்கள்"</string>
@@ -162,8 +161,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"ஸ்டாப்வாட்சைத் தொடங்கு"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"இடைநிறுத்து"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"ஸ்டாப்வாட்சை இடைநிறுத்து"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"ஸ்கிரீன் சேவர்"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"ஸ்கிரீன் சேவரைத் தொடங்கு"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"அலாரங்கள்"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"டைமர் அறிவிப்புகள் தொடர்பான செயல்பாடுகளைச் செயலாக்கும்."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"ஸ்டாப்வாட்ச் அறிவிப்புகள் தொடர்பான செயல்பாடுகளைச் செயலாக்கும்."</string>
@@ -365,10 +362,6 @@
     <string name="display_warning_before_deleting_timer_title">டைமரை நீக்கும் முன் எச்சரிக்கையைக் காட்டவும்</string>
     <string name="warning_dialog_title">டைமரை நீக்கு</string>
     <string name="warning_dialog_message">\"%s\" டைமரை நிச்சயமாக நீக்க விரும்புகிறீர்களா?</string>
-    <string name="screensaver_settings_summary">ச்கிரீன்சேவரின் நடை, நிறம் மற்றும் எழுத்துருவை அமைக்கவும்</string>
-    <string name="screensaver_daydream_settings">ச்கிரீன்சேவரைத் தேர்ந்தெடுக்கவும்/செயல்படுத்தவும்</string>
-    <string name="screensaver_daydream_settings_summary">முக்கிய ஆண்ட்ராய்டு ச்கிரீன்சேவர் அமைப்புகளைத் திறக்கிறது</string>
-    <string name="screensaver_clock_dynamic_colors_title">மாறும் கடிகார நிறங்கள்</string>
     <string name="clock_color_title">கடிகார நிறம்</string>
     <string name="clock_default_color_title">முதன்மை கடிகாரத்திற்கு இயல்பு வண்ணத்தைப் பயன்படுத்தவும்</string>
     <string name="hour_color_title">மணிநேர நிறம்</string>
@@ -393,15 +386,7 @@
     <string name="city_name_default_color_title">நகரின் பெயருக்கு இயல்பு வண்ணத்தைப் பயன்படுத்தவும்</string>
     <string name="alarm_title_color">அலாரத்தின் தலைப்பு நிறம்</string>
     <string name="alarm_title_default_color">அலாரம் தலைப்புக்கு இயல்பு வண்ணத்தைப் பயன்படுத்தவும்</string>
-    <string name="screensaver_brightness_title">ஒளிர்வு</string>
-    <string name="screensaver_bold_digital_clock_title">தடிமனான டிசிட்டல் கடிகாரம்</string>
-    <string name="screensaver_italic_digital_clock_title">சாய்வுகளில் டிசிட்டல் கடிகாரம்</string>
-    <string name="screensaver_bold_date_title">தடிமனான தேதி</string>
-    <string name="screensaver_italic_date_title">சாய்வு எழுத்துக்களில் தேதி</string>
-    <string name="screensaver_bold_next_alarm_title">தடிமனான அடுத்த அலாரம்</string>
-    <string name="screensaver_italic_next_alarm_title">சாய்வு எழுத்துக்களில் அடுத்த அலாரம்</string>
     <string name="preview_title">முன்னோட்டம்</string>
-    <string name="screensaver_preview_summary">ச்கிரீன்சேவரை உடனடியாகத் தொடங்கும்</string>
     <string name="flip_action_title">சாதனத்தை புரட்டுதல்</string>
     <string name="shake_action_title">சாதனத்தை அசைக்கும் செயல்</string>
     <string name="shake_intensity_title">குலுக்கல் தீவிரம்</string>
@@ -482,8 +467,4 @@
     <string name="sw_total_title">மொத்தம்</string>
     <string name="analog_clock_size_title">அனலாக் கடிகார அளவு</string>
     <string name="display_compact_timers_title">செயலில் உள்ள டைமர்களைக் கச்சிதமான முறையில் காண்பி</string>
-    <string name="display_battery_title">பேட்டரி அளவைக் காட்டவும்</string>
-    <string name="battery_color_title">பேட்டரி நிலை நிறம்</string>
-    <string name="screensaver_bold_battery_title">தடிமனான பேட்டரி நிலை</string>
-    <string name="screensaver_italic_battery_title">சாய்வுகளில் பேட்டரி நிலை</string>
 </resources>

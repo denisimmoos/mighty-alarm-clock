@@ -3,10 +3,6 @@
 package com.best.deskclock.settings;
 
 import static com.best.deskclock.DeskClockApplication.getDefaultSharedPreferences;
-import static com.best.deskclock.settings.PreferencesKeys.KEY_SCREENSAVER_BATTERY_COLOR_PICKER;
-import static com.best.deskclock.settings.PreferencesKeys.KEY_SCREENSAVER_CLOCK_COLOR_PICKER;
-import static com.best.deskclock.settings.PreferencesKeys.KEY_SCREENSAVER_DATE_COLOR_PICKER;
-import static com.best.deskclock.settings.PreferencesKeys.KEY_SCREENSAVER_NEXT_ALARM_COLOR_PICKER;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -118,11 +114,7 @@ public class ColorPreferenceDialogFragment extends DialogFragment {
 
         colorPickerView.setColor(preference.getColor());
 
-        // Don't display transparency for the screensaver color settings, as this has no effect.
-        colorPickerView.showAlpha(!preference.getKey().equals(KEY_SCREENSAVER_CLOCK_COLOR_PICKER)
-            && !preference.getKey().equals(KEY_SCREENSAVER_BATTERY_COLOR_PICKER)
-            && !preference.getKey().equals(KEY_SCREENSAVER_DATE_COLOR_PICKER)
-            && !preference.getKey().equals(KEY_SCREENSAVER_NEXT_ALARM_COLOR_PICKER));
+        colorPickerView.showAlpha(true);
 
         colorPickerView.showHex(true);
 

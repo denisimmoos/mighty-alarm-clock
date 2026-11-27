@@ -100,7 +100,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Часовник"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Хронометър"</string>
     <string name="button_cities" msgid="4555761857494501363">"Градове"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">Заставка</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">Сортиране по часови пояс</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Сортиране по име"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Избрани градове"</string>
@@ -163,8 +162,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">Пусканане на хронометъра</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Пауза"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">Хронометър на пауза</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">Заставка</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">Включване на заставката</string>
     <string name="alarm_settings" msgid="2947147071388290814">Будилник</string>
     <string name="timer_service_desc" msgid="2256002649882602433">Обработва действията от известията на отброяванетио.</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Обработва действията от известията на хронометъра."</string>
@@ -352,7 +349,6 @@
     <string name="reset_settings_message">Желаете ли настройките на приложението да бъдат нулирани?</string>
     <string name="restart_app_dialog_title_for_reset">Нулирането е извършено</string>
     <string name="dialog_close">Затваряне</string>
-    <string name="screensaver_settings_summary">Задаване на стила, цвета и шрифта на заставката</string>
     <string name="widgets_settings_summary">Задаване на стила, цвета и шрифта на приспособленията</string>
     <string name="description_dismiss_button">Докоснете за изключване на будилника</string>
     <string name="timer_settings_summary">Задаване на мелодия, сила на звука и сортиране</string>
@@ -375,9 +371,6 @@
     <string name="display_warning_before_deleting_timer_title">Потвърждаване преди премахване на отброяване</string>
     <string name="warning_dialog_title">Премахване на отброяване</string>
     <string name="warning_dialog_message">Желаете ли отброяването „%s“ да бъде премахнато?</string>
-    <string name="screensaver_daydream_settings">Избиране или включване на заставката</string>
-    <string name="screensaver_daydream_settings_summary">Отваря настройките на Андроид</string>
-    <string name="screensaver_clock_dynamic_colors_title">Динамични цветове на часовника</string>
     <string name="clock_color_title">Цвят на часовника</string>
     <string name="clock_default_color_title">Използване на стандартния цвят за основния часовник</string>
     <string name="hour_color_title">Цвят на часа</string>
@@ -406,15 +399,7 @@
     <string name="city_clock_color_title">Цвят за часовник на град</string>
     <string name="city_name_color_title">Цвят на името на град</string>
     <string name="alarm_title_color">Цвят на името на будилник</string>
-    <string name="screensaver_brightness_title">Яркост</string>
-    <string name="screensaver_bold_digital_clock_title">Цифровият часовник е с получер шрифт</string>
-    <string name="screensaver_italic_digital_clock_title">Цифровият часовник е с наклонен шрифт</string>
-    <string name="screensaver_bold_date_title">Датата е с получер шрифт</string>
-    <string name="screensaver_italic_date_title">Датата е с наклонен шрифт</string>
-    <string name="screensaver_bold_next_alarm_title">Следващият будилник е с получер шрифт</string>
-    <string name="screensaver_italic_next_alarm_title">Следващият будилник е с наклонен шрифт</string>
     <string name="preview_title">Преглед</string>
-    <string name="screensaver_preview_summary">Включва заставката сега</string>
     <string name="shake_intensity_title">Сила на разклащане</string>
     <string name="first_launch_version">Издание %s</string>
     <string name="first_launch_button_now">Сега</string>
@@ -477,15 +462,11 @@
     <string name="custom_font_toast_message_deleted">Шрифтът е премахнат</string>
     <string name="vibration_category_title">Вибриране</string>
     <string name="display_settings_title">Настройки на показване</string>
-    <string name="display_battery_title">Ниво на батерията</string>
     <string name="sw_laps_title">Обиколки</string>
     <string name="sw_split_title">Отсечка</string>
     <string name="sw_total_title">Общо</string>
     <string name="analog_clock_size_title">Размер на аналоговия часовник</string>
     <string name="display_compact_timers_title">Работещите отброявания видими при компактен режим</string>
-    <string name="battery_color_title">Цвят на нивото на батерията</string>
-    <string name="screensaver_bold_battery_title">Нивото на батерията в получер шрифт</string>
-    <string name="screensaver_italic_battery_title">Нивото на батерията в наклонен шрифт</string>
     <string name="sync_alarm_by_label_title">Синхронизиране на будилниците с еднакви етикети</string>
     <string name="button_tip_title">Докоснете бутона с „+“ за добавяне на папка</string>
 </resources>

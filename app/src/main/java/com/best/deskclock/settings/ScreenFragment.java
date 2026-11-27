@@ -616,10 +616,6 @@ public abstract class ScreenFragment extends PreferenceFragmentCompat {
             return KEY_TIMER_BACKGROUND_IMAGE;
         } else if (fileName.startsWith(FILE_STOPWATCH_FONT)) {
             return KEY_SW_FONT;
-        } else if (fileName.startsWith(FILE_SCREENSAVER_DIGITAL_CLOCK_FONT)) {
-            return KEY_SCREENSAVER_DIGITAL_CLOCK_FONT;
-        } else if (fileName.startsWith(FILE_SCREENSAVER_BACKGROUND)) {
-            return KEY_SCREENSAVER_BACKGROUND_IMAGE;
         } else if (fileName.startsWith(FILE_DIGITAL_CLOCK_FONT)) {
             return KEY_DIGITAL_CLOCK_FONT;
         }

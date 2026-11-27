@@ -114,7 +114,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Zegar"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Stoper"</string>
     <string name="button_cities" msgid="4555761857494501363">"Miasta"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Wygaszacz ekranu"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Sortuj według godziny"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Sortuj według nazwy"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Wybrane miasta"</string>
@@ -177,8 +176,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Uruchom stoper"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Wstrzymaj"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Wstrzymaj stoper"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Wygaszacz ekranu"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Uruchom wygaszacz ekranu"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Alarmy"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Przetwarza działania z powiadomień minutnika."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Przetwarza działania z powiadomień stopera."</string>
@@ -239,12 +236,9 @@
     <string name="features_title">Główne funkcje</string>
     <string name="sw_long_press_volume_up_action_title">Zwiększenie głośności (po długim naciśnięciu)</string>
     <string name="settings_permission_message">Odmówiono jednego lub więcej istotnych uprawnień. Nieprzyznanie ich może prowadzić do nieprawidłowego działania.</string>
-    <string name="screensaver_daydream_settings_summary">Otwiera główne ustawienia wygaszacza ekranu Android</string>
     <string name="sw_settings_summary">Dostosuj czcionkę i działania przycisków głośności</string>
     <string name="settings_vibration_title">Włącz wibracje</string>
-    <string name="screensaver_settings_summary">Dostosuj styl, czcionkę i kolor wygaszacza ekranu</string>
     <string name="timer_label_box_title">Etykieta minutnika</string>
-    <string name="screensaver_preview_summary">Uruchamia wygaszacz ekranu</string>
     <string name="firing_alarms_timers_channel">Uruchamianie alarmów i minutników</string>
     <string name="city_name_color_title">Niestandardowy kolor nazwy miasta</string>
     <string name="notifications_dialog_text">Oprócz ustawiania alarmów, aplikacja ta posiada również minutnik i stoper. \n\nAby powiadomienia były wyświetlane poprawnie dla wszystkich modułów, a zwłaszcza aby alarm był uruchamiany, zalecamy aktywowanie powiadomień dla tej aplikacji.</string>
@@ -289,7 +283,6 @@
     <string name="clock_settings_summary">Dostosuj styl, czcionkę, strefę czasową oraz datę i godzinę urządzenia</string>
     <string name="clock_font_size">Rozmiar czcionki zegara</string>
     <string name="alarm_title_font_size">Rozmiar czcionki tytułu alarmu</string>
-    <string name="screensaver_daydream_settings">Wybór/włączenie wygaszacza ekranu</string>
     <string name="version_text">Wersja <xliff:g id="VERSION_NUMBER" example="1.0">%1$s</xliff:g></string>
     <string name="first_launch_version">Wersja %s</string>
     <string name="first_launch_main_feature_title">GŁÓWNE FUNKCJE</string>
@@ -301,14 +294,8 @@
     <string name="whats_new_dialog_message">Odkryj co nowego:\n\n%s</string>
     <string name="default_time_to_add_to_timer_title">Domyślny czas dodawania do minutników</string>
     <string name="next_alarm_color_title">Kolor następnego alarmu</string>
-    <string name="screensaver_brightness_title">Jasność</string>
-    <string name="screensaver_clock_dynamic_colors_title">Dynamiczne kolory zegara</string>
     <string name="clock_color_title">Kolor zegara</string>
-    <string name="screensaver_italic_date_title">Data pochylona</string>
-    <string name="screensaver_italic_digital_clock_title">Zegar cyfrowy pochylony</string>
     <string name="second_hand_color_title">Kolor wskazówki sekundnika</string>
-    <string name="screensaver_bold_date_title">Data pogrubiona</string>
-    <string name="screensaver_bold_digital_clock_title">Zegar cyfrowy pogrubiony</string>
     <string name="first_launch_main_feature_link">… i wiele więcej!</string>
     <string name="first_launch_important_info_title">WAŻNE INFORMACJE</string>
     <string name="background_color_title">Kolor tła</string>
@@ -340,9 +327,7 @@
     <string name="settings_tab_indicator_title">Wyświetl wskaźnik karty w dolnym menu nawigacyjnym</string>
     <string name="alarm_upcoming_channel">Nadchodzące alarmy</string>
     <string name="stopwatch_channel">Stoper</string>
-    <string name="screensaver_bold_next_alarm_title">Następny alarm pogrubiony</string>
     <string name="settings_fade_transitions_title">Włącz przejścia podczas przełączania ekranów</string>
-    <string name="screensaver_italic_next_alarm_title">Następny alarm pochylony</string>
     <string name="toast_message_for_backup">Kopia zapasowa zakończona</string>
     <string name="restart_app_dialog_title_for_restore">Przywracanie zakończone</string>
     <string name="alarm_missed_channel">Pominięte alarmy</string>
@@ -498,10 +483,6 @@
     <string name="sw_total_title">Całkowity</string>
     <string name="analog_clock_size_title">Rozmiar zegara analogowego</string>
     <string name="display_compact_timers_title">Wyświetlaj aktywne minutniki w trybie kompaktowym</string>
-    <string name="display_battery_title">Wyświetl poziom naładowania baterii</string>
-    <string name="battery_color_title">Kolor poziomu naładowania baterii</string>
-    <string name="screensaver_bold_battery_title">Poziom naładowania baterii pogrubiony</string>
-    <string name="screensaver_italic_battery_title">Poziom naładowania baterii pochylony</string>
     <string name="sync_alarm_by_label_title">Synchronizuj alarmy o tej samej etykiecie</string>
     <string name="button_tip_title">Naciśnij i przytrzymaj przycisk „+”, aby dodać folder</string>
     <string name="permissions_category_title">Uprawnienia</string>

@@ -93,7 +93,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"時鐘"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"碼表"</string>
     <string name="button_cities" msgid="4555761857494501363">"城市"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"螢幕保護程式"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"依時間排序"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"依名稱排序"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"選取的城市"</string>
@@ -156,8 +155,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"啟動碼錶"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"暫停"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"暫停碼錶"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"螢幕保護程式"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"啟動螢幕保護程式"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"鬧鐘"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"處理計時器通知所指定的操作。"</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"處理碼錶通知所指定的操作。"</string>
@@ -186,10 +183,8 @@
     <string name="shake_action_title">裝置搖動動作</string>
     <string name="about_title">關於</string>
     <string name="style_category_title">樣式</string>
-    <string name="screensaver_daydream_settings">選擇 / 啟用螢幕保護程式</string>
     <string name="permission_requirement_title">要求： </string>
     <string name="title_theme">主題</string>
-    <string name="screensaver_brightness_title">亮度</string>
     <string name="stopwatch_channel">碼表</string>
     <string name="timer_channel">計時器</string>
     <string name="first_launch_button_now">現在</string>
@@ -203,8 +198,6 @@
     <string name="features_title">主要特點</string>
     <string name="license">開放原始碼授權</string>
     <string name="preview_title">預覽</string>
-    <string name="screensaver_bold_date_title">粗體日期</string>
-    <string name="screensaver_italic_date_title">斜體日期</string>
     <string name="first_launch_button_later">稍後</string>
     <string name="first_launch_dialog_title">退出</string>
     <string name="permission_status_title">狀態： </string>
@@ -267,7 +260,6 @@
     <string name="blue_accent_color">藍色</string>
     <string name="alarm_title_font_size">鬧鐘標題大小</string>
     <string name="timer_button_time_box_title">將分鐘加入至計時器</string>
-    <string name="screensaver_clock_dynamic_colors_title">動態時間色彩</string>
     <string name="restart_app_dialog_title_for_reset">重設完成</string>
     <string name="display_warning_before_deleting_timer_title">刪除計時器前警告</string>
     <string name="denied_permission_label">權限遭拒</string>
@@ -279,8 +271,6 @@
     <string name="sw_long_press_volume_up_action_title">提高音量 (按住)</string>
     <string name="sw_volume_down_action_title">降低音量</string>
     <string name="default_time_to_add_to_timer_title">預設計時器時間</string>
-    <string name="screensaver_bold_next_alarm_title">粗體下個鬧鐘</string>
-    <string name="screensaver_daydream_settings_summary">開啟系統螢幕保護程式設定</string>
     <string name="first_launch_dialog_message">要離開應用程式嗎？</string>
     <string name="widget_max_font_size_title">小工具文字大小</string>
     <string name="restart_app_dialog_title_for_restore">還原完成</string>
@@ -293,11 +283,8 @@
     <string name="clock_style_spinner">下拉式選單</string>
     <string name="timer_power_button_action_title">電源鍵重設到期的計時器</string>
     <string name="next_alarm_color_title">下個鬧鐘色彩</string>
-    <string name="screensaver_italic_digital_clock_title">斜體數位時鐘</string>
     <string name="backup_restore_summary">備份或還原應用程式資料 (不含自訂鈴聲)</string>
     <string name="warning_dialog_message">您要刪除計時器「%s」嗎？</string>
-    <string name="screensaver_settings_summary">設定螢幕保護程式外觀、色彩及字型</string>
-    <string name="screensaver_preview_summary">立即啟動螢幕保護程式</string>
     <string name="alarm_notification_reminder_title">提醒通知</string>
     <string name="settings_tab_indicator_title">底部選單顯示頁面指標</string>
     <string name="alarm_title_color">鬧鐘標題色彩</string>
@@ -329,8 +316,6 @@
     <string name="FSN_dialog_text">Android 14 以上必須授予「全螢幕通知」權限，才能在休眠狀態啟動鬧鐘。</string>
     <string name="dismiss_button_color">「關閉」按鍵色彩</string>
     <string name="clock_font_size">鬧鐘字體大小</string>
-    <string name="screensaver_bold_digital_clock_title">粗體數位時鐘</string>
-    <string name="screensaver_italic_next_alarm_title">斜體下個鬧鐘</string>
     <string name="city_name_color_title">城市名稱色彩</string>
     <string name="github_dialog_message">造訪這個計畫的 GitHub 頁面\n\n%s</string>
     <string name="whats_new_dialog_message">探索新功能：\n\n%s</string>
@@ -473,10 +458,6 @@
     <string name="sw_total_title">總計</string>
     <string name="analog_clock_size_title">類比時鐘大小</string>
     <string name="display_compact_timers_title">緊湊模式內顯示進行中的計時器</string>
-    <string name="display_battery_title">顯示電池電量</string>
-    <string name="battery_color_title">電池電量色彩</string>
-    <string name="screensaver_bold_battery_title">粗體電池電量</string>
-    <string name="screensaver_italic_battery_title">斜體電池電量</string>
     <string name="sw_split_title">分隔</string>
     <string name="sync_alarm_by_label_title">同步共享相同標籤的鬧鐘</string>
     <string name="button_tip_title">按住「+」以新增資料夾</string>

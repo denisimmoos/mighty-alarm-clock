@@ -99,7 +99,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"घडी"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"स्टपवाच"</string>
     <string name="button_cities" msgid="4555761857494501363">"शहरहरू"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"स्क्रिन सेभर"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"समय अनुसार क्रमबद्ध गर्नुहोस्"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"नामबाट क्रमबद्ध गर्नुहोस्"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"छानिएका शहरहरू"</string>
@@ -162,8 +161,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"स्टपवाच सुरु गर्नुहोस्"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"पज गर्नुहोस्"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"स्टपवाच पज गर्नुहोस्"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"स्क्रिन सेभर"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"स्क्रिन सेभर सुरु गर्नु"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"सचेतकहरू"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"टाइमर सूचनाहरूबाट कार्यहरूको प्रशोधन गर्छ।"</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"स्टपवाच सूचनाहरूबाट कार्यहरूको प्रशोधन गर्छ।"</string>

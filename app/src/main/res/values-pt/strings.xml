@@ -106,7 +106,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Relógio"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Cronômetro"</string>
     <string name="button_cities" msgid="4555761857494501363">"Cidades"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Protetor de tela"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Classificar por horário"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Classificar por nome"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Cidades selecionadas"</string>
@@ -169,8 +168,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Iniciar cronômetro"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Pausar"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Pausar cronômetro"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Protetor de tela"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Iniciar protetor de tela"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Alarmes"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Processa ações de notificações do timer."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Processa ações de notificações do cronômetro."</string>
@@ -225,7 +222,6 @@
     <string name="transparent_background_for_expired_timer_title">Fundo transparente quando os timers expiram</string>
     <string name="default_time_to_add_to_timer_title">Tempo padrão para adicionar ao timer</string>
     <string name="preview_title">Prévia</string>
-    <string name="screensaver_preview_summary">Inicia o protetor de tela imediatamente</string>
     <string name="gnu_gpl">GNU General Public License v3.0</string>
     <string name="timer_label_box_title">Etiqueta de Timer</string>
     <string name="timer_button_time_box_title">Minutos para adicionar ao timer</string>
@@ -249,21 +245,11 @@
     <string name="sort_name">Por nome</string>
     <string name="timer_settings_summary">Definir toque padrão, volume e classificação do timer</string>
     <string name="sort_timer_ascending_duration">Por duração (ordem ascendente)</string>
-    <string name="screensaver_clock_dynamic_colors_title">Cores dinâmicas do relógio</string>
     <string name="second_hand_color_title">Cor do ponteiro de segundos</string>
     <string name="clock_settings_summary">Definir estilo, fuso horário e alterar a data e a hora do dispositivo</string>
     <string name="dialog_close">Fechar</string>
-    <string name="screensaver_bold_digital_clock_title">Relógio digital em negrito</string>
-    <string name="screensaver_italic_digital_clock_title">Relógio digital em itálico</string>
-    <string name="screensaver_bold_date_title">Data em negrito</string>
-    <string name="screensaver_settings_summary">Definir estilo, cor e fonte do protetor de tela</string>
-    <string name="screensaver_daydream_settings">Selecione/ative o protetor de tela</string>
-    <string name="screensaver_daydream_settings_summary">Abre as configurações do protetor de tela do Android</string>
     <string name="date_color_title">Cor da data</string>
     <string name="next_alarm_color_title">Cor do próximo alarme</string>
-    <string name="screensaver_brightness_title">Brilho</string>
-    <string name="screensaver_italic_next_alarm_title">Próximo alarme em itálico</string>
-    <string name="screensaver_bold_next_alarm_title">Próximo alarme em negrito</string>
     <string name="whats_new_dialog_message">Descubra o que há de novo:\n\n%s</string>
     <string name="alarm_alert_dismiss_and_delete_text">Dispensar &amp; Excluir</string>
     <string name="system_theme">Sistema</string>
@@ -280,7 +266,6 @@
     <string name="license_dialog_message">Leia a licença:\n\n%s</string>
     <string name="timer_flip_action_title">Vire o dispositivo para parar o alarme</string>
     <string name="timer_shake_action_title">Chacoalhe o dispositivo para parar o alarme</string>
-    <string name="screensaver_italic_date_title">Data em itálico</string>
     <string name="night_accent_color_title">Cor de destaque para o modo noturno</string>
     <string name="pink_accent_color">Rosa</string>
     <string name="auto_night_accent_color_title">Aplicar cor de destaque para o modo noturno</string>

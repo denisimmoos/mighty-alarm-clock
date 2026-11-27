@@ -47,7 +47,7 @@ public class AlarmUtils {
     /**
      * Intent action sent when the alarm has been either created or updated in the Clock app.
      * <p>
-     * This action will display the next alarm of this app only in the clock tab and screensaver.
+     * This action will display the next alarm of this app only in the clock tab.
      */
     public static final String ACTION_NEXT_ALARM_CHANGED_BY_CLOCK = "com.best.deskclock.NEXT_ALARM_CHANGED_BY_CLOCK";
 
@@ -166,7 +166,7 @@ public class AlarmUtils {
     /**
      * Clock views can call this to refresh their alarm to the next upcoming value.
      */
-    public static void refreshAlarm(View clock, boolean isScreensaver, boolean isUppercase) {
+    public static void refreshAlarm(View clock, boolean isUppercase) {
         final Context context = clock.getContext();
         final TextView nextAlarmIconView = clock.findViewById(R.id.nextAlarmIcon);
         final TextView nextAlarmView = clock.findViewById(R.id.nextAlarm);
@@ -185,9 +185,7 @@ public class AlarmUtils {
         Calendar alarmCalendar = Calendar.getInstance();
         long alarmTime = instance.getAlarmTime().getTimeInMillis();
         alarmCalendar.setTimeInMillis(alarmTime);
-        String alarmFormattedTime = isScreensaver
-            ? ScreensaverUtils.getScreensaverFormattedTime(context, alarmCalendar)
-            : getFormattedTime(context, alarmCalendar);
+        String alarmFormattedTime = getFormattedTime(context, alarmCalendar);
 
         if (TextUtils.isEmpty(alarmFormattedTime)) {
             nextAlarmView.setVisibility(View.GONE);

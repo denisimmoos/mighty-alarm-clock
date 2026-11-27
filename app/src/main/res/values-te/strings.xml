@@ -99,7 +99,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"గడియారం"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"స్టాప్ వాచ్"</string>
     <string name="button_cities" msgid="4555761857494501363">"నగరాలు"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"స్క్రీన్ సేవర్"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"సమయం ద్వారా క్రమబద్ధీకరించు"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"పేరు ద్వారా క్రమబద్ధీకరించు"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"ఎంచుకున్న నగరాలు"</string>
@@ -162,8 +161,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"స్టాప్‌వాచ్ ప్రారంభించు"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"పాజ్ చేస్తుంది"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"స్టాప్‌వాచ్‌ను పాజ్ చేయి"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"స్క్రీన్ సేవర్"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"స్క్రీన్ సేవర్ ప్రారంభించు"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"అలారాలు"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"టైమర్ నోటిఫికేషన్‌ల నుండి చర్యలను ప్రాసెస్ చేస్తుంది."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"స్టాప్‌వాచ్ నోటిఫికేషన్‌ల నుండి చర్యలను ప్రాసెస్ చేస్తుంది."</string>

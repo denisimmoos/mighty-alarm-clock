@@ -99,7 +99,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"ଘଣ୍ଟା"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"ଷ୍ଟପୱାଚ୍"</string>
     <string name="button_cities" msgid="4555761857494501363">"ସହର"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"ସ୍କ୍ରୀନ୍‌ ସେଭର୍‌"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"ସମୟ ଅନୁସାରେ ସଜାନ୍ତୁ"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"ନାମ ଅନୁସାରେ ସର୍ଟ କରନ୍ତୁ"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"ଚୟନିତ ସହର"</string>
@@ -162,8 +161,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"ଷ୍ଟପୱାଚ୍ ଆରମ୍ଭ କରନ୍ତୁ"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"ପଜ୍‍ କରନ୍ତୁ"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"ଷ୍ଟପୱାଚ୍‌କୁ ପଜ୍ କରନ୍ତୁ"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"ସ୍କ୍ରୀନ୍‌ ସେଭର୍‌"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"ସ୍କ୍ରୀନ୍ ସେଭର୍ ଆରମ୍ଭ କରନ୍ତୁ"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"ଆଲାର୍ମ"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"ଟାଇମର୍ ବିଜ୍ଞପ୍ତିରୁ କାର୍ଯ୍ୟ ପ୍ରକ୍ରିୟା କରିଥାଏ।"</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"ଷ୍ଟପୱାଚ୍ ବିଜ୍ଞପ୍ତିଗୁଡ଼ିକରୁ କାର୍ଯ୍ୟ ପ୍ରକ୍ରିୟା କରିଥାଏ।"</string>

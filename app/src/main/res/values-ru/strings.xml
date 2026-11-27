@@ -114,7 +114,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Часы"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Секундомер"</string>
     <string name="button_cities" msgid="4555761857494501363">"Города"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Заставка"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Сортировать по времени"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Сортировать по названию"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Выбранные города"</string>
@@ -177,8 +176,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Запустить секундомер"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Пауза"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Приостановить секундомер"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Заставка"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Включить заставку"</string>
     <string name="alarm_settings" msgid="2947147071388290814">Будильники</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Обрабатывает действия из уведомлений таймера."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Обрабатывает действия из уведомлений секундомера."</string>
@@ -217,7 +214,6 @@
     <string name="font_category_title">Шрифт</string>
     <string name="alarm_notification_reminder_title">Уведомление о следующем будильнике</string>
     <string name="auto_silence_end_of_ringtone">Конец рингтона</string>
-    <string name="screensaver_brightness_title">Яркость</string>
     <string name="preview_title">Предпросмотр</string>
     <string name="widget_background_title">Показывать фон</string>
     <string name="background_color_title">Цвет фона</string>
@@ -275,8 +271,6 @@
     <string name="title_theme">Тема</string>
     <string name="title_accent_color">Цвет акцента</string>
     <string name="title_dark_theme_mode">Режим тёмной темы</string>
-    <string name="screensaver_daydream_settings_summary">Открыть настройки заставки системы</string>
-    <string name="screensaver_italic_next_alarm_title">Курсивный шрифт следующего будильника</string>
     <string name="city_clock_color_title">Цвет часов города</string>
     <string name="city_name_color_title">Цвет названия города</string>
     <string name="revoke_permission_dialog_message">Вы уверены, что хотите отозвать это разрешение?</string>
@@ -286,21 +280,12 @@
     <string name="power_button_title">Кнопка питания</string>
     <string name="interface_customization_summary">Настройка стиля, шрифта, языка и цвета приложения</string>
     <string name="add_label">Добавить ярлык</string>
-    <string name="screensaver_italic_date_title">Курсивный шрифт даты</string>
     <string name="timer_label_box_title">Ярлык таймера</string>
     <string name="timer_button_time_box_title">Время для добавления к таймеру</string>
     <string name="default_time_to_add_to_timer_title">Время по умолчанию, которое добавляется к таймеру</string>
-    <string name="screensaver_clock_dynamic_colors_title">Динамические цвета</string>
-    <string name="screensaver_bold_digital_clock_title">Жирный шрифт часов</string>
-    <string name="screensaver_italic_digital_clock_title">Курсивный шрифт часов</string>
-    <string name="screensaver_bold_date_title">Жирный шрифт даты</string>
-    <string name="screensaver_bold_next_alarm_title">Жирный шрифт следующего будильника</string>
     <string name="ignore_battery_optimizations_dialog_text">Система Android по умолчанию применяет оптимизацию расхода заряда батареи для всех пользовательских приложений. \n \nОптимизация расхода заряда батареи рекомендуется для большинства приложений, однако это приложение является будильником и может работать неправильно с этой функцией. При включенной оптимизации система Android может в любой момент остановить приложение и/или отменить установленные будильники, что негативно скажется на работе приложения. \n \nРекомендуется отключить ограничения на расход заряда батареи в фоновом режиме для этого приложения.</string>
     <string name="permission_dialog_revoke_title">Отозвать доступ</string>
     <string name="permission_requirement_title">Требование: </string>
-    <string name="screensaver_preview_summary">Запустить заставку сейчас</string>
-    <string name="screensaver_daydream_settings">Выбрать/включить заставку</string>
-    <string name="screensaver_settings_summary">Настройка стиля, шрифта и цвета заставки</string>
     <string name="alarm_label_box_title">Ярлык будильника</string>
     <string name="permission_denied">не предоставлено</string>
     <string name="permission_highly_recommended">крайне рекомендуется</string>
@@ -498,10 +483,6 @@
     <string name="sw_total_title">Всего</string>
     <string name="analog_clock_size_title">Размер аналоговых часов</string>
     <string name="display_compact_timers_title">Показывать активные таймеры в компактном режиме</string>
-    <string name="display_battery_title">Показывать уровень заряда батареи</string>
-    <string name="battery_color_title">Цвет уровня заряда батареи</string>
-    <string name="screensaver_bold_battery_title">Жирный шрифт уровня заряда батареи</string>
-    <string name="screensaver_italic_battery_title">Курсивный шрифт уровня заряда батареи</string>
     <string name="sync_alarm_by_label_title">Синхронизировать будильники с одинаковой меткой</string>
     <string name="button_tip_title">Нажмите и удерживайте кнопку «+», чтобы добавить папку</string>
     <string name="permissions_category_title">Разрешения</string>

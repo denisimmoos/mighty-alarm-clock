@@ -100,7 +100,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Kell"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Stopper"</string>
     <string name="button_cities" msgid="4555761857494501363">"Linnad"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Ekraanisäästja"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Sordi aja järgi"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Sordi nime järgi"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Valitud linnad"</string>
@@ -163,8 +162,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Käivita stopper"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">Peata</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Peata stopper"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Ekr-säästja"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Käivita ekraanisäästja"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Äratused"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Töötleb taimeri märguannete toiminguid."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Töötleb stopperi märguannete toiminguid."</string>
@@ -234,32 +231,20 @@
     <string name="features_title">Põhifunktsionaalsused</string>
     <string name="about_title">Rakenduse teave</string>
     <string name="dialog_close">Sulge</string>
-    <string name="screensaver_daydream_settings_summary">Järgnevaga avame Androidi ekraanisäästja seadistused</string>
     <string name="notifications_dialog_text">Lisaks äratamisele saad seda rakendust kasutada ka taimerina ja stopperina. \n \nEt kõik teavitused toimiksid korrektsel kõikide nende valikute, eriti aga äratuste, puhul, siis palun luba rakendusel kuvada teavitusi.</string>
     <string name="default_time_to_add_to_timer_title">Taimeritele vaikimisi lisatav aeg</string>
-    <string name="screensaver_clock_dynamic_colors_title">Kella dünaamilised värvid</string>
     <string name="clock_color_title">Kella värv</string>
     <string name="date_color_title">Kuupäeva värv</string>
-    <string name="screensaver_bold_next_alarm_title">Kuva järgmine äratus paksus kirjas</string>
-    <string name="screensaver_italic_next_alarm_title">Kuva järgmine äratus kaldkirjas</string>
     <string name="next_alarm_default_color_title">Kasuta järgmise äratuse jaoks vaikimisi värvi</string>
     <string name="FSN_dialog_text">Alates Androidi versioonist 14 on väljalülitatud ekraani puhul äratuste toimimiseks kohustuslik, et lubad sellele rakendusele õigused täisekraaniteavituste (Full Screen Notifications) kasutamiseks.</string>
-    <string name="screensaver_daydream_settings">Kasuta ekraanisäästjat</string>
     <string name="next_alarm_color_title">Järgmise äratuse värv</string>
     <string name="timer_settings_summary">Kohenda taimerite välimust, kirjatüüpi, vaikimisi helinat, peatamise võimalusi ja järjestust</string>
-    <string name="screensaver_settings_summary">Kohenda ekraanisäästja stiili, värvi ja kirjatüüpi</string>
-    <string name="screensaver_brightness_title">Eredus</string>
-    <string name="screensaver_bold_digital_clock_title">Digikell paksus kirjas</string>
-    <string name="screensaver_italic_digital_clock_title">Digikell kaldkirjas</string>
-    <string name="screensaver_bold_date_title">Kuupäev paksus kirjas</string>
-    <string name="screensaver_italic_date_title">Kuupäev kaldkirjas</string>
     <string name="preview_title">Eelvaade</string>
     <string name="first_launch_main_feature_link">… ja palju muud huvitavat!</string>
     <string name="first_launch_version">Versioon %s</string>
     <string name="first_launch_main_feature_title">PÕHIFUNKTSIONAALSUSED</string>
     <string name="widget_background_title">Näita tausta</string>
     <string name="first_launch_important_info_title">OLULINE TEAVE</string>
-    <string name="screensaver_preview_summary">Käivitab ekraanisäästja koheselt</string>
     <string name="first_launch_button_now">Nüüd</string>
     <string name="first_launch_button_later">Hiljem</string>
     <string name="first_launch_important_info_message_for_SDK34">• &lt;b&gt;TÄISEKRAANITEAVITUSED;&lt;/b&gt; &lt;br&gt; &lt;br&gt;</string>
@@ -492,10 +477,6 @@
     <string name="sw_total_title">Kokku</string>
     <string name="analog_clock_size_title">Analoogkella suurus</string>
     <string name="display_compact_timers_title">Näita aktiivseid taimereid kompaktses vaates</string>
-    <string name="display_battery_title">Näita aku laetust</string>
-    <string name="battery_color_title">Aku laetuse värv</string>
-    <string name="screensaver_bold_battery_title">Aku laetus paksus kirjas</string>
-    <string name="screensaver_italic_battery_title">Aku laetus kaldkirjas</string>
     <string name="sync_alarm_by_label_title">Sünkrooni sama sildiga äratused</string>
     <string name="button_tip_title">Kausta lisamiseks klõpsa + ikooniga nuppu</string>
     <string name="permissions_category_title">Õigused</string>

@@ -100,7 +100,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Klok"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">Stopklok</string>
     <string name="button_cities" msgid="4555761857494501363">"Plaatsen"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Screensaver"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Sorteren op tijd"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Sorteren op naam"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Geselecteerde plaatsen"</string>
@@ -163,8 +162,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">Stopklok starten</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Onderbreken"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">Stopklok onderbreken</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Screensaver"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Screensaver starten"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Wekkers"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">Verwerkt acties van kookwekkermeldingen.</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">Verwerkt acties van stopklokmeldingen.</string>
@@ -208,17 +205,7 @@
     <string name="settings_vibration_summary">Alleen van toepassing op sommige elementen (bijv. de start/pauze knop van de kookwekker)</string>
     <string name="ignore_battery_optimizations_dialog_title">Batterijoptimalisaties</string>
     <string name="about_title">Over</string>
-    <string name="screensaver_daydream_settings">Screensaver selecteren/inschakelen</string>
-    <string name="screensaver_daydream_settings_summary">Opent de systeeminstellingen voor screensavers</string>
-    <string name="screensaver_clock_dynamic_colors_title">Dynamische klokkleuren</string>
-    <string name="screensaver_settings_summary">Stijl, kleur, en lettertype van de screensaver aanpassen</string>
-    <string name="screensaver_bold_digital_clock_title">Dikgedrukte digitale klok</string>
-    <string name="screensaver_italic_digital_clock_title">Schuingedrukte digitale klok</string>
-    <string name="screensaver_bold_date_title">Dikgedrukte datum</string>
-    <string name="screensaver_italic_date_title">Schuingedrukte datum</string>
-    <string name="screensaver_italic_next_alarm_title">Schuingedrukte volgende wekker</string>
     <string name="preview_title">Voorvertoning</string>
-    <string name="screensaver_preview_summary">Start de screensaver meteen</string>
     <string name="alarm_missed_channel">Gemiste wekkers</string>
     <string name="alarm_snooze_channel">Gesluimerde wekkers</string>
     <string name="alarm_upcoming_channel">Volgende wekkers</string>
@@ -249,8 +236,6 @@
 \n
 \nWe raden aan deze app op de witte lijst te zetten van batterijoptimalisaties.</string>
     <string name="notifications_dialog_text">Naast het instellen van wekkers beschikt deze app ook over een kookwekker en stopklok. \n \nOm ervoor te zorgen dat meldingen correct verschijnen voor alle functies en vooral zodat de wekker kan activeren, raden we aan om meldingen voor deze app te aan te zetten.</string>
-    <string name="screensaver_brightness_title">Helderheid</string>
-    <string name="screensaver_bold_next_alarm_title">Dikgedrukte volgende wekker</string>
     <string name="add_label">Label toevoegen</string>
     <string name="version">Versie</string>
     <string name="version_text">Version <xliff:g id="VERSION_NUMBER" example="1.0">%1$s</xliff:g></string>
@@ -485,10 +470,6 @@
     <string name="sw_total_title">Totaal</string>
     <string name="analog_clock_size_title">Grootte analoge klok</string>
     <string name="display_compact_timers_title">Actieve kookwekkers compact weergeven</string>
-    <string name="display_battery_title">Batterijniveau weergeven</string>
-    <string name="battery_color_title">Kleur batterijniveau</string>
-    <string name="screensaver_bold_battery_title">Dikgedrukt batterijniveau</string>
-    <string name="screensaver_italic_battery_title">Schuingedrukt batterijniveau</string>
     <string name="display_settings_title">Weergave</string>
     <string name="sync_alarm_by_label_title">Wekkers met hetzelfde label synchroniseren</string>
     <string name="button_tip_title">Houd de \"+\" knop lang ingedrukt om een map toe te voegen</string>

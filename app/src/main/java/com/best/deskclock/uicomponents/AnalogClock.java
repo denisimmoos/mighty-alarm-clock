@@ -25,12 +25,10 @@ import android.widget.ImageView;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
-import com.best.deskclock.DeskClock;
 import com.best.deskclock.R;
 import com.best.deskclock.alarms.AlarmActivity;
 import com.best.deskclock.data.DataModel;
 import com.best.deskclock.data.SettingsDAO;
-import com.best.deskclock.screensaver.ScreensaverActivity;
 import com.best.deskclock.settings.AlarmDisplayPreviewActivity;
 import com.best.deskclock.utils.SdkUtils;
 import com.best.deskclock.utils.ThemeUtils;
@@ -248,13 +246,8 @@ public class AnalogClock extends FrameLayout {
     private DataModel.ClockStyle getClockStyleForContext() {
         if (getContext() instanceof AlarmActivity || getContext() instanceof AlarmDisplayPreviewActivity) {
             return SettingsDAO.getAlarmClockStyle(mPrefs);
-        } else if (getContext() instanceof ScreensaverActivity) {
-            return SettingsDAO.getScreensaverClockStyle(mPrefs);
-        } else if (getContext() instanceof DeskClock) {
-            return SettingsDAO.getClockStyle(mPrefs);
         } else {
-            // Default for DreamService or other unknown contexts
-            return SettingsDAO.getScreensaverClockStyle(mPrefs);
+            return SettingsDAO.getClockStyle(mPrefs);
         }
     }
 
@@ -278,12 +271,8 @@ public class AnalogClock extends FrameLayout {
     private String getMaterialAnalogDialPreference() {
         if (getContext() instanceof AlarmActivity || getContext() instanceof AlarmDisplayPreviewActivity) {
             return SettingsDAO.getAlarmClockDialMaterial(mPrefs);
-        } else if (getContext() instanceof ScreensaverActivity) {
-            return SettingsDAO.getScreensaverClockDialMaterial(mPrefs);
-        } else if (getContext() instanceof DeskClock) {
-            return SettingsDAO.getClockDialMaterial(mPrefs);
         } else {
-            return SettingsDAO.getScreensaverClockDialMaterial(mPrefs);
+            return SettingsDAO.getClockDialMaterial(mPrefs);
         }
     }
 
@@ -316,12 +305,8 @@ public class AnalogClock extends FrameLayout {
     private String getAnalogDialPreference() {
         if (getContext() instanceof AlarmActivity || getContext() instanceof AlarmDisplayPreviewActivity) {
             return SettingsDAO.getAlarmClockDial(mPrefs);
-        } else if (getContext() instanceof ScreensaverActivity) {
-            return SettingsDAO.getScreensaverClockDial(mPrefs);
-        } else if (getContext() instanceof DeskClock) {
-            return SettingsDAO.getClockDial(mPrefs);
         } else {
-            return SettingsDAO.getScreensaverClockDial(mPrefs);
+            return SettingsDAO.getClockDial(mPrefs);
         }
     }
 
@@ -331,12 +316,8 @@ public class AnalogClock extends FrameLayout {
     private String getAnalogSecondHandPreference() {
         if (getContext() instanceof AlarmActivity || getContext() instanceof AlarmDisplayPreviewActivity) {
             return SettingsDAO.getAlarmClockSecondHand(mPrefs);
-        } else if (getContext() instanceof ScreensaverActivity) {
-            return SettingsDAO.getScreensaverClockSecondHand(mPrefs);
-        } else if (getContext() instanceof DeskClock) {
-            return SettingsDAO.getClockSecondHand(mPrefs);
         } else {
-            return SettingsDAO.getScreensaverClockSecondHand(mPrefs);
+            return SettingsDAO.getClockSecondHand(mPrefs);
         }
     }
 

@@ -113,7 +113,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Годинник"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Секундомір"</string>
     <string name="button_cities" msgid="4555761857494501363">"Міста"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Заставка"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Сортувати за часом"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Сортувати за назвою"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Вибрані міста"</string>
@@ -176,8 +175,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Запустити секундомір"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Призупинити"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Призупинити секундомір"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Заставка"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Запустити заставку"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Будильник"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Обробляє дії зі сповіщень таймера."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Обробляє дії зі сповіщень секундоміра."</string>
@@ -220,7 +217,6 @@
     <string name="dialog_close">Закрити</string>
     <string name="whats_new_title">Що нового</string>
     <string name="first_launch_button_now">Зараз</string>
-    <string name="screensaver_brightness_title">Яскравість</string>
     <string name="preview_title">Попередній перегляд</string>
     <string name="stopwatch_channel">Секундомір</string>
     <string name="timer_channel">Таймер</string>
@@ -239,11 +235,9 @@
     <string name="more_options">Додаткові опції</string>
     <string name="settings_permission_summary">Натисніть тут, щоб відкрити сторінку керування дозволами.</string>
     <string name="settings_permission_message">Відмовлено в одному або декількох важливих дозволах. Якщо їх не надати, це може призвести до збоїв у роботі.</string>
-    <string name="screensaver_preview_summary">Запускає заставку негайно</string>
     <string name="display_card_background_title">Фон карток</string>
     <string name="features_title">Основні функції</string>
     <string name="clock_settings_summary">Налаштування стилю, шрифту, часового поясу, а також дати і часу на пристрої</string>
-    <string name="screensaver_clock_dynamic_colors_title">Динамічні кольори годинника</string>
     <string name="clock_color_title">Колір годинника</string>
     <string name="date_color_title">Колір дати</string>
     <string name="default_time_to_add_to_timer_title">Час за замовчуванням, який додається до таймерів</string>
@@ -270,22 +264,13 @@
     <string name="city_name_color_title">Колір назви міста</string>
     <string name="display_background_border_title">Рамки фону</string>
     <string name="title_dark_theme_mode">Темна тема</string>
-    <string name="screensaver_bold_digital_clock_title">Цифровий годинник жирним</string>
-    <string name="screensaver_italic_digital_clock_title">Цифровий годинник курсивом</string>
-    <string name="screensaver_italic_date_title">Дата курсивом</string>
-    <string name="screensaver_bold_next_alarm_title">Наступний будильник жирним</string>
-    <string name="screensaver_italic_next_alarm_title">Наступний будильник курсивом</string>
     <string name="permission_highly_recommended">Настійно рекомендується</string>
     <string name="interface_customization_summary">Налаштування стилю, шрифту, мови і кольорів додатка</string>
     <string name="timer_settings_summary">Налаштування стилю, шрифту, сигналу за замовчуванням, дії для зупинки таймерів, а також сортування таймерів</string>
     <string name="revoke_permission_dialog_message">Ви впевнені, що хочете відкликати цей дозвіл?</string>
-    <string name="screensaver_daydream_settings">Вибрати/ввімкнути заставку</string>
-    <string name="screensaver_daydream_settings_summary">Відкриває основні налаштування заставки Android</string>
-    <string name="screensaver_settings_summary">Налаштування стилю, шрифту і кольору заставки</string>
     <string name="first_launch_important_info_title">ВАЖЛИВА ІНФОРМАЦІЯ</string>
     <string name="ignore_battery_optimizations_title">ІГНОРУВАТИ ОПТИМІЗАЦІЮ ЗАРЯДУ</string>
     <string name="ignore_battery_optimizations_dialog_title">Оптимізація заряду акумулятора</string>
-    <string name="screensaver_bold_date_title">Дата жирним</string>
     <string name="settings_vibration_summary">Впливає лише на деякі кнопки (напр., запуск/пауза таймера або перемикачі)</string>
     <string name="alarm_label_box_title">Мітка будильника</string>
     <string name="timer_add_custom_time">+%s</string>
@@ -498,11 +483,7 @@
     <string name="custom_font_dialog_title">Шрифт</string>
     <string name="label_new_font">Новий шрифт</string>
     <string name="vibration_category_title">Вібрація</string>
-    <string name="screensaver_bold_battery_title">Рівень заряду жирним</string>
-    <string name="screensaver_italic_battery_title">Рівень заряду курсивом</string>
     <string name="analog_clock_size_title">Розмір аналогового годинника</string>
-    <string name="display_battery_title">Показувати рівень заряду</string>
-    <string name="battery_color_title">Колір рівня заряду</string>
     <string name="display_compact_timers_title">Показувати активні таймери в компактному режимі</string>
     <string name="custom_font_toast_message_deleted">Шрифт успішно видалено</string>
     <string name="custom_font_toast_message_selected">Шрифт успішно вибрано</string>

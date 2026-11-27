@@ -99,7 +99,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"ঘড়ী"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"স্টপৱাচ্চ"</string>
     <string name="button_cities" msgid="4555761857494501363">"চহৰবোৰ"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"স্ক্ৰীণ ছেভাৰ"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"সময় অনুসৰি সজাওক"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"নাম অনুসৰি সজাওক"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"বাছনি কৰা চহৰবোৰ"</string>
@@ -162,8 +161,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"স্টপৱাচ্চ আৰম্ভ কৰক"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"পজ কৰক"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"স্টপৱাচ্চ পজ কৰক"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"স্ক্ৰীণ ছেভাৰ"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"স্ক্ৰীণ ছেভাৰ আৰম্ভ কৰক"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"এলাৰ্মসমূহ"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"স্টপৱাচ্চ জাননীৰ পৰা কাৰ্যবিলাকত প্ৰক্ৰিয়া চলায়"</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"স্টপৱাচ্চ জাননীৰ পৰা কাৰ্যবিলাকত প্ৰক্ৰিয়া চলায়"</string>

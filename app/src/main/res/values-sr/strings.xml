@@ -107,7 +107,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Сат"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Штоперица"</string>
     <string name="button_cities" msgid="4555761857494501363">"Градови"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Чувар екрана"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Сортирај према времену"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Сортирај према имену"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Изабрани градови"</string>
@@ -170,8 +169,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Покрени штоперицу"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Пауза"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Паузирај штоперицу"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Чувар екрана"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Покрени чувар екрана"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Аларми"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Обрађује радње из обавештења тајмера."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Обрађује радње из обавештења штоперице."</string>
@@ -203,37 +200,25 @@
     <string name="title_accent_color">Акцент боја</string>
     <string name="title_dark_theme_mode">Тамни режим теме</string>
     <string name="about_title">О</string>
-    <string name="screensaver_italic_digital_clock_title">Дигитални сат у италику</string>
-    <string name="screensaver_bold_date_title">Датум у подебљаном</string>
-    <string name="screensaver_bold_next_alarm_title">Следећи аларм у подебљаном</string>
-    <string name="screensaver_italic_date_title">Датум у италику</string>
     <string name="more_options">Више опција</string>
     <string name="dialog_close">Затвори</string>
     <string name="settings_permission_message">Једна или више основних дозвола није одобрена. Неодобравање може довести до неправилности у раду.</string>
     <string name="selected">Изабрано</string>
     <string name="add_label">Додај ознаку</string>
-    <string name="screensaver_preview_summary">Покреће чувар екрана одмах</string>
-    <string name="screensaver_daydream_settings_summary">Отвара главна подешавања чувара екрана за Android</string>
     <string name="version">Верзија</string>
     <string name="version_text">Верзија <xliff:g id="VERSION_NUMBER" example="1.0">%1$s</xliff:g></string>
     <string name="whats_new_title">Шта је ново</string>
     <string name="features_title">Главне карактеристике</string>
-    <string name="screensaver_brightness_title">Осветљеност</string>
     <string name="power_button_title">Дугме за укључивање</string>
     <string name="settings_permission_summary">Кликните овде да прикажете страницу за управљање дозволама.</string>
     <string name="license">Лиценца отвореног кода</string>
     <string name="about_github_link">Погледај на GitHub-у</string>
     <string name="gnu_gpl">GNU Генерална Јавна Лиценца v3.0</string>
-    <string name="screensaver_settings_summary">Поставити стил, боју и фонт чувара екрана</string>
-    <string name="screensaver_daydream_settings">Изаберите/омогућите чувар екрана</string>
     <string name="settings_vibration_title">Омогућити вибрације</string>
     <string name="settings_vibration_summary">Само нека дугмад интерфејса су погођена (нпр.: дугме за пуштање/паузу тајмера или прекидачи)</string>
     <string name="title_theme">Тема</string>
     <string name="display_card_background_title">Приказ позадина картица</string>
     <string name="display_background_border_title">Приказ граница позадине</string>
-    <string name="screensaver_italic_next_alarm_title">Следећи аларм у италику</string>
-    <string name="screensaver_bold_digital_clock_title">Дигитални сат у подебљаном</string>
-    <string name="screensaver_clock_dynamic_colors_title">Динамичне боје сата</string>
     <string name="ignore_battery_optimizations_title">ИГНОРИШИ ОПТИМИЗАЦИЈЕ БАТЕРИЈЕ</string>
     <string name="notifications_dialog_title">Обавештења</string>
     <string name="permission_dialog_revoke_title">Опозови приступ</string>

@@ -108,7 +108,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Orologio"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Cronometro"</string>
     <string name="button_cities" msgid="4555761857494501363">"Città"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Salvaschermo"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Ordina per ora"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Ordina per nome"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Città selezionate"</string>
@@ -171,8 +170,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Avvia cronometro"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Pausa"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Metti in pausa cronometro"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Salvaschermo"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Avvia screensaver"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Sveglie"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Consente di elaborare le azioni derivanti dalle notifiche relative al timer."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Consente di elaborare le azioni derivanti dalle notifiche relative al cronometro."</string>
@@ -209,7 +206,6 @@
     <string name="timer_channel">Timer</string>
     <string name="date_color_title">Colore data</string>
     <string name="next_alarm_color_title">Colore prossima sveglia</string>
-    <string name="screensaver_italic_digital_clock_title">Orologio digitale in corsivo</string>
     <string name="minute_color_title">Colore dei minuti</string>
     <string name="timer_volume_buttons_action_title">Azzera i timer scaduti con i pulsanti del volume</string>
     <string name="first_launch_version">Versione %s</string>
@@ -222,8 +218,6 @@
     <string name="sw_start_pause_action">Avvio / Pausa</string>
     <string name="timer_power_button_action_title">Azzera i timer scaduti con il pulsante di accensione</string>
     <string name="timer_buttons_action_summary">Funzionamento solo sul blocco schermo</string>
-    <string name="screensaver_bold_date_title">Data in grassetto</string>
-    <string name="screensaver_bold_next_alarm_title">Prossima sveglia in grassetto</string>
     <string name="first_launch_button_later">Dopo</string>
     <string name="first_launch_button_now">Adesso</string>
     <string name="first_launch_main_feature_link">… ed altro ancora!</string>
@@ -249,15 +243,11 @@
     <string name="permission_management_settings">Gestione autorizzazioni</string>
     <string name="dialog_close">Chiudi</string>
     <string name="alarm_label_box_title">Etichetta sveglia</string>
-    <string name="screensaver_italic_next_alarm_title">Prossima sveglia in corsivo</string>
     <string name="font_category_title">Carattere</string>
     <string name="alarm_title_color">Colore titolo sveglia</string>
     <string name="dismiss_button_color">Colore del tasto \"Disattiva\"</string>
-    <string name="screensaver_settings_summary">Imposta stile, colore e carattere del salvaschermo</string>
     <string name="clock_color_title">Colore orologio</string>
     <string name="second_hand_color_title">Colore lancetta dei secondi</string>
-    <string name="screensaver_daydream_settings">Seleziona/abilita salvaschermo</string>
-    <string name="screensaver_daydream_settings_summary">Apre le impostazioni principali del salvaschermo di Android</string>
     <string name="first_launch_important_info_title">INFORMAZIONE IMPORTANTE</string>
     <string name="background_color_title">Colore sfondo</string>
     <string name="digital_widget_message_summary">\"Mostra città sul widget\" deve essere disabilitato per accedere a questa impostazione</string>
@@ -269,10 +259,8 @@
     <string name="FSN_dialog_title">Notifiche a Schermo Intero</string>
     <string name="notifications_dialog_text">Oltre all\'impostazione delle sveglie, questa applicazione dispone anche di un timer, di un cronometro. \n\nAffinché le notifiche vengano visualizzate correttamente per tutti i moduli e soprattutto per l\'attivazione della sveglia, si consiglia di attivare le notifiche per questa applicazione.</string>
     <string name="FSN_dialog_text">Da Android 14, affinché la sveglia venga attivata quando lo schermo è spento, è necessario che l\'autorizzazione \"Notifiche a schermo intero\" sia abilitata.</string>
-    <string name="screensaver_bold_digital_clock_title">Orologio digitale in grassetto</string>
     <string name="about_title">Info</string>
     <string name="permission_highly_recommended">Altamente consigliate</string>
-    <string name="screensaver_brightness_title">Luminosità</string>
     <string name="title_dark_theme_mode">Modalità tema scuro</string>
     <string name="permission_dialog_revoke_title">Accesso revocato</string>
     <string name="revoke_permission_dialog_message">Vuoi veramente revocare questa autorizzazione?</string>
@@ -286,7 +274,6 @@
     <string name="timer_label_box_title">Etichetta Timer</string>
     <string name="timer_settings_summary">Imposta la suoneria predefinita, il volume e l\'ordine dei timer</string>
     <string name="preview_title">Anteprima</string>
-    <string name="screensaver_preview_summary">Avvia subito il salvaschermo</string>
     <string name="permission_status_title">Stato:</string>
     <string name="label_default">Predefinita</string>
     <string name="clock_settings_summary">Imposta stile, fuso orario e modifica della data e dell\'ora del dispositivo</string>
@@ -339,7 +326,6 @@
     <string name="settings_tab_indicator_title">Mostra l\'indicatore di scheda nel menu di navigazione in basso</string>
     <string name="display_background_border_title">Mostra bordi dello sfondo</string>
     <string name="alarm_notification_reminder_title">Promemoria notifiche</string>
-    <string name="screensaver_italic_date_title">Data in corsivo</string>
     <string name="timer_button_time_box_title">Minuti da aggiungere al timer</string>
     <string name="timer_add_custom_time">+ %s</string>
     <string name="settings_fade_transitions_title">Abilita le transizioni in dissolvenza quando si cambia schermata</string>
@@ -353,7 +339,6 @@
     <string name="restore_button_title">Ripristino</string>
     <string name="toast_message_for_backup">Salvataggio completato</string>
     <string name="sort_timer_descending_duration">Per durata (ordine decrescente)</string>
-    <string name="screensaver_clock_dynamic_colors_title">Colori orologio dinamici</string>
     <string name="widget_max_font_size_title">Dimensione massima caratteri del widget</string>
     <string name="timer_shake_action_title">Scuoti il dispositivo per fermare la sveglia</string>
     <string name="timer_flip_action_title">Ruota il dispositivo per fermare la sveglia</string>

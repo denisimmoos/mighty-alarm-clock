@@ -100,7 +100,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Klocka"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Stoppur"</string>
     <string name="button_cities" msgid="4555761857494501363">"Orter"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Skärmsläckare"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Sortera efter tid"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Sortera efter namn"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Valda städer"</string>
@@ -163,8 +162,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Starta stoppur"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Pausa"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Pausa stoppuret"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Skärmsläckare"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Aktivera skärmsläckaren"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Alarm"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Bearbetar åtgärder från timeraviseringar."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Bearbetar åtgärder från stoppursaviseringar."</string>
@@ -194,7 +191,6 @@
     <string name="about_title">Om</string>
     <string name="version">Version</string>
     <string name="dialog_close">Stäng</string>
-    <string name="screensaver_brightness_title">Ljusstyrka</string>
     <string name="first_launch_button_now">Nu</string>
     <string name="first_launch_button_later">Senare</string>
     <string name="first_launch_dialog_title">Avsluta</string>
@@ -241,7 +237,6 @@
     <string name="reset_settings_title">Återställ inställningar</string>
     <string name="shadow_color_title">Skuggfärg</string>
     <string name="about_github_link">Visa på GitHub</string>
-    <string name="screensaver_clock_dynamic_colors_title">Dynamiska klockfärger</string>
     <string name="show_lockscreen_permission_title">VISA PÅ LÅSSKÄRM</string>
     <string name="show_lockscreen_dialog_title">Visa på låsskärm</string>
     <string name="display_text_shadow_title">Visa textskugga</string>

@@ -100,7 +100,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Óra"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">Stopper</string>
     <string name="button_cities" msgid="4555761857494501363">"Városok"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Képernyővédő"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Rendezés idő szerint"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Rendezés név szerint"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Kiválasztott városok"</string>
@@ -163,8 +162,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Stopper indítása"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Szünet"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Stopper szüneteltetése"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Képernyővédő"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Képernyővédő indítása"</string>
     <string name="alarm_settings" msgid="2947147071388290814">Ébresztők</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Feldolgozza az időzítő értesítéseiből származó műveleteket."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Feldolgozza a stopperóra értesítéseiből származó műveleteket."</string>
@@ -225,15 +222,7 @@
     <string name="clock_second_hand_title">Másodpercmutató</string>
     <string name="sort_cities_ascending_time_zone">Időzóna szerint (növekvő sorrendben)</string>
     <string name="sort_cities_descending_time_zone">Időzóna szerint (csökkenő sorrendben)</string>
-    <string name="screensaver_brightness_title">Fényerő</string>
-    <string name="screensaver_bold_digital_clock_title">Félkövér digitális óra</string>
-    <string name="screensaver_italic_digital_clock_title">Dőlt digitális óra</string>
-    <string name="screensaver_bold_date_title">Félkövér dátum</string>
-    <string name="screensaver_italic_date_title">Dőlt dátum</string>
-    <string name="screensaver_bold_next_alarm_title">Következő ébresztő félkövér</string>
-    <string name="screensaver_italic_next_alarm_title">Következő ébresztő dőlt</string>
     <string name="preview_title">Előnézet</string>
-    <string name="screensaver_preview_summary">Képernyőkímélő bekapcsolása egyből</string>
     <string name="alarm_label_box_title">Ébresztő címe</string>
     <string name="label_new_image">Új kép</string>
     <string name="label_new_font">Új betűtípus</string>
@@ -392,10 +381,6 @@
     <string name="display_warning_before_deleting_timer_title">Figyelmeztetés megjelenítése időzítő törlése előtt</string>
     <string name="warning_dialog_title">Időzítő törlése</string>
     <string name="warning_dialog_message">Biztosan törölni kívánja a(z) \"%s\" időzítőt?</string>
-    <string name="screensaver_settings_summary">Képernyővédő stílus, szín és betűtípus beállítások</string>
-    <string name="screensaver_daydream_settings">Képernyőkímélő kiválasztása/bekapcsolása</string>
-    <string name="screensaver_daydream_settings_summary">Megnyitja az alap Android képernyőkímélő beállításokat</string>
-    <string name="screensaver_clock_dynamic_colors_title">Dinamikus óra színek</string>
     <string name="clock_color_title">Óra szín</string>
     <string name="clock_default_color_title">Alap szín használata a fő óránál</string>
     <string name="hour_color_title">Óra szín</string>
@@ -410,8 +395,6 @@
     <string name="minute_hand_default_color_title">Alap szín használata a percmutatóhoz</string>
     <string name="second_hand_color_title">Másodpercmutató szín</string>
     <string name="second_hand_default_color_title">Alap szín használata a másodpercmutatóhoz</string>
-    <string name="display_battery_title">Töltöttségi szint megjelenítése</string>
-    <string name="battery_color_title">Töltöttségi szint szín</string>
     <string name="date_color_title">Dátum szín</string>
     <string name="date_default_color_title">Alap szín használata a dátumhoz</string>
     <string name="next_alarm_color_title">Következő ébresztő színe</string>
@@ -422,8 +405,6 @@
     <string name="city_name_default_color_title">Alap szín használata a város nevéhez</string>
     <string name="alarm_title_color">Ébresztő cím színe</string>
     <string name="alarm_title_default_color">Alap szín használata az ébresztő címhez</string>
-    <string name="screensaver_bold_battery_title">Félkövér töltöttség</string>
-    <string name="screensaver_italic_battery_title">Dőlt töltöttség</string>
     <string name="shake_intensity_title">Rázás intenzitás</string>
     <string name="first_launch_version">Verzió %s</string>
     <string name="first_launch_main_feature_title">FŐ FUNKCIÓK</string>

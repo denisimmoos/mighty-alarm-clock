@@ -892,12 +892,6 @@
     <!-- Long label for a shortcut to pause the stopwatch. The maximum length is ~25 characters
          (longer translations may be truncated). -->
     <string name="shortcut_pause_stopwatch_long">Pause stopwatch</string>
-    <!-- Short label for a shortcut to start the screensaver. The maximum length is ~10 characters
-         (longer translations may be truncated). -->
-    <string name="shortcut_start_screensaver_short">Screensaver</string>
-    <!-- Long label for a shortcut to start the screensaver. The maximum length is ~25 characters
-         (longer translations may be truncated). -->
-    <string name="shortcut_start_screensaver_long">Start screensaver</string>
     <!-- Alarm preferences title in the settings -->
     <string name="alarm_settings">Alarms</string>
     <!-- Alarm preferences summary in the settings -->
@@ -983,16 +977,6 @@
     <string name="timer_paused">Timer paused</string>
     <!-- Notification title when at least one timer, of those in use, is counting down. -->
     <string name="timers_in_use"><xliff:g example="7" id="number">%d</xliff:g> timers</string>
-    <!-- Header in the preferences settings for the section pertaining to screensaver -->
-    <string name="screensaver_settings_title">Screensaver</string>
-    <!-- Summary for the screensaver settings in settings -->
-    <string name="screensaver_settings_summary">Customize the screensaver\'s style, font, and color</string>
-    <!-- Label for the screensaver settings in settings -->
-    <string name="screensaver_daydream_settings">Select/enable screensaver</string>
-    <!-- Summary for the screensaver settings in settings -->
-    <string name="screensaver_daydream_settings_summary">Opens the main Android screensaver settings</string>
-    <!-- Title of dynamic screensaver clock color. -->
-    <string name="screensaver_clock_dynamic_colors_title">Dynamic clock colors</string>
     <!-- Title of clock color. -->
     <string name="clock_color_title">Clock color</string>
     <!-- Title to set the default color of the clock. -->
@@ -1021,10 +1005,7 @@
     <string name="second_hand_color_title">Second hand color</string>
     <!-- Title to set the default second hand color. -->
     <string name="second_hand_default_color_title">Use the default color for the second hand</string>
-    <!-- Title to display the screensaver battery level. -->
-    <string name="display_battery_title">Display the battery level</string>
     <!-- Title of battery color. -->
-    <string name="battery_color_title">Battery level color</string>
     <!-- Title of date color. -->
     <string name="date_color_title">Date color</string>
     <!-- Title to set the default color of the date. -->
@@ -1054,27 +1035,16 @@
     <!-- Title to set the default color of the alarm title. -->
     <string name="alarm_title_default_color">Use the default color for the alarm title</string>
     <!-- Title of slider for selecting clock brightness -->
-    <string name="screensaver_brightness_title">Brightness</string>
     <!-- Title for switch to pick if the clock text is displayed in bold -->
-    <string name="screensaver_bold_digital_clock_title">Digital clock in bold</string>
     <!-- Title for switch to pick if the clock text is displayed in italic -->
-    <string name="screensaver_italic_digital_clock_title">Digital clock in italics</string>
     <!-- Title for switch to pick if the battery level is displayed in bold -->
-    <string name="screensaver_bold_battery_title">Battery level in bold</string>
     <!-- Title for switch to pick if the battery level is displayed in italics -->
-    <string name="screensaver_italic_battery_title">Battery level in italics</string>
     <!-- Title for switch to pick if the date is displayed in bold -->
-    <string name="screensaver_bold_date_title">Date in bold</string>
     <!-- Title for switch to pick if the date text is displayed in italics -->
-    <string name="screensaver_italic_date_title">Date in italics</string>
     <!-- Title for switch to pick if the next alarm is displayed in bold -->
-    <string name="screensaver_bold_next_alarm_title">Next alarm in bold</string>
     <!-- Title for switch to pick if the next alarm is displayed in italics -->
-    <string name="screensaver_italic_next_alarm_title">Next alarm in italics</string>
     <!-- Label for the preview in settings -->
     <string name="preview_title">Preview</string>
-    <!-- Summary for the screensaver preview in settings -->
-    <string name="screensaver_preview_summary">Starts the screensaver immediately</string>
     <!-- Description of the button to undo change to alarm -->
     <!-- Toast content when an alarm was deleted  -->
     <!-- slash between date and next alarm in the clock: used for the DigitalAppWidget -->

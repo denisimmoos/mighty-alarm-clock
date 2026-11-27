@@ -46,14 +46,12 @@ public class CustomSliderPreference extends Preference {
     private static final int MIN_CORNER_RADIUS_VALUE = 0;
     private static final int MIN_SHAKE_INTENSITY_VALUE = DEFAULT_SHAKE_INTENSITY;
     private static final int MIN_TIMER_SHAKE_INTENSITY_VALUE = DEFAULT_TIMER_SHAKE_INTENSITY;
-    private static final int MIN_BRIGHTNESS_VALUE = 0;
     private static final int MIN_EXTERNAL_AUDIO_DEVICE_VOLUME = 10;
     private static final int MIN_SHADOW_OFFSET_VALUE = 1;
     private static final int MIN_BLUR_INTENSITY_VALUE = 1;
     private static final int MIN_ANALOG_CLOCK_SIZE_VALUE = 1;
 
     // The max values below correspond to the max values defined in the preferences XML files.
-    private static final int MAX_BRIGHTNESS_VALUE = 100;
     private static final int MAX_CORNER_RADIUS_VALUE = 100;
     private static final int MAX_SHAKE_INTENSITY_VALUE = 55;
     private static final int MAX_TIMER_SHAKE_INTENSITY_VALUE = 55;
@@ -153,10 +151,7 @@ public class CustomSliderPreference extends Preference {
     private int getSafeSliderValue(float newValue) {
         float min, max;
 
-        if (isScreensaverBrightnessPreference()) {
-            min = MIN_BRIGHTNESS_VALUE;
-            max = MAX_BRIGHTNESS_VALUE;
-        } else if (isDigitalWidgetBackgroundCornerRadius()
+        if (isDigitalWidgetBackgroundCornerRadius()
             || isNextAlarmWidgetBackgroundCornerRadius()
             || isVerticalWidgetBackgroundCornerRadius()) {
             min = MIN_CORNER_RADIUS_VALUE;
@@ -170,8 +165,7 @@ public class CustomSliderPreference extends Preference {
         } else if (isTimerShadowOffsetPreference() || isAlarmShadowOffsetPreference()) {
             min = MIN_SHADOW_OFFSET_VALUE;
             max = MAX_SHADOW_OFFSET_VALUE;
-        } else if (isScreensaverBlurIntensityPreference()
-            || isTimerBlurIntensityPreference()
+        } else if (isTimerBlurIntensityPreference()
             || isAlarmBlurIntensityPreference()) {
             min = MIN_BLUR_INTENSITY_VALUE;
             max = MAX_BLUR_INTENSITY_VALUE;
@@ -179,7 +173,6 @@ public class CustomSliderPreference extends Preference {
             min = MIN_EXTERNAL_AUDIO_DEVICE_VOLUME;
             max = MAX_EXTERNAL_AUDIO_DEVICE_VOLUME;
         } else if (isAnalogClockSizePreference()
-            || isScreensaverAnalogClockSizePreference()
             || isAlarmAnalogClockSizePreference()) {
             min = MIN_ANALOG_CLOCK_SIZE_VALUE;
             max = MAX_ANALOG_CLOCK_SIZE_VALUE;
@@ -202,7 +195,7 @@ public class CustomSliderPreference extends Preference {
     }
 
     /**
-     * Sets the slider value base on the current preference (screensaver brightness, widget font size, etc.)
+     * Sets the slider value base on the current preference (widget font size, blur intensity, etc.)
      * and updates the slider summary to reflect this value.
      */
     private void setSliderProgress(TextView sliderSummary) {
@@ -222,9 +215,7 @@ public class CustomSliderPreference extends Preference {
     private void updateSliderSummary(TextView sliderSummary, int progress) {
         if (progress == getDefaultSliderValue()) {
             sliderSummary.setText(R.string.label_default);
-        } else if (isScreensaverBrightnessPreference()
-            || isScreensaverAnalogClockSizePreference()
-            || isExternalAudioDeviceVolumePreference()
+        } else if (isExternalAudioDeviceVolumePreference()
             || isAnalogClockSizePreference()
             || isAlarmAnalogClockSizePreference()) {
             String formattedText = String.format(Locale.getDefault(), "%d%%", progress);
@@ -238,10 +229,7 @@ public class CustomSliderPreference extends Preference {
      * Sets the icons for the minus and plus buttons of the slider based on the current preference type.
      */
     private void configureSliderButtonDrawables() {
-        if (isScreensaverBrightnessPreference()) {
-            mBinding.sliderMinusIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_brightness_decrease));
-            mBinding.sliderPlusIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_brightness_increase));
-        } else if (isDigitalWidgetBackgroundCornerRadius()
+        if (isDigitalWidgetBackgroundCornerRadius()
             || isNextAlarmWidgetBackgroundCornerRadius()
             || isVerticalWidgetBackgroundCornerRadius()) {
             mBinding.sliderMinusIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_rounded_corner_decrease));
@@ -252,8 +240,7 @@ public class CustomSliderPreference extends Preference {
         } else if (isTimerShadowOffsetPreference() || isAlarmShadowOffsetPreference()) {
             mBinding.sliderMinusIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_shadow_decrease));
             mBinding.sliderPlusIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_shadow_increase));
-        } else if (isScreensaverBlurIntensityPreference()
-            || isTimerBlurIntensityPreference()
+        } else if (isTimerBlurIntensityPreference()
             || isAlarmBlurIntensityPreference()) {
             mBinding.sliderMinusIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_blur_decrease));
             mBinding.sliderPlusIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_blur_increase));
@@ -261,7 +248,6 @@ public class CustomSliderPreference extends Preference {
             mBinding.sliderMinusIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_volume_down));
             mBinding.sliderPlusIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_volume_up));
         } else if (isAnalogClockSizePreference()
-            || isScreensaverAnalogClockSizePreference()
             || isAlarmAnalogClockSizePreference()) {
             mBinding.sliderMinusIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_zoom_in));
             mBinding.sliderPlusIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_zoom_out));
@@ -350,9 +336,7 @@ public class CustomSliderPreference extends Preference {
      * @return the default value for the slider depending on the preference type.
      */
     private int getDefaultSliderValue() {
-        if (isScreensaverBrightnessPreference()) {
-            return DEFAULT_SCREENSAVER_BRIGHTNESS;
-        } else if (isDigitalWidgetBackgroundCornerRadius()
+        if (isDigitalWidgetBackgroundCornerRadius()
             || isNextAlarmWidgetBackgroundCornerRadius()
             || isVerticalWidgetBackgroundCornerRadius()) {
             return DEFAULT_WIDGET_BACKGROUND_CORNER_RADIUS;
@@ -360,22 +344,19 @@ public class CustomSliderPreference extends Preference {
             return DEFAULT_SHAKE_INTENSITY;
         } else if (isTimerShakeIntensityPreference()) {
             return DEFAULT_TIMER_SHAKE_INTENSITY;
-        } else if (isScreensaverDigitalClockFontSizePreference()
-            || isDigitalClockFontSizePreference()
+        } else if (isDigitalClockFontSizePreference()
             || isAlarmDigitalClockFontSizePreference()) {
             return DEFAULT_DIGITAL_CLOCK_FONT_SIZE;
         } else if (isAlarmTitleFontSizePreference()) {
             return DEFAULT_ALARM_TITLE_FONT_SIZE_PREF;
         } else if (isTimerShadowOffsetPreference() || isAlarmShadowOffsetPreference()) {
             return DEFAULT_SHADOW_OFFSET;
-        } else if (isScreensaverBlurIntensityPreference()
-            || isTimerBlurIntensityPreference()
+        } else if (isTimerBlurIntensityPreference()
             || isAlarmBlurIntensityPreference()) {
             return DEFAULT_BLUR_INTENSITY;
         } else if (isExternalAudioDeviceVolumePreference()) {
             return DEFAULT_EXTERNAL_AUDIO_DEVICE_VOLUME;
         } else if (isAnalogClockSizePreference()
-            || isScreensaverAnalogClockSizePreference()
             || isAlarmAnalogClockSizePreference()) {
             return DEFAULT_ANALOG_CLOCK_SIZE;
         } else {
@@ -401,11 +382,7 @@ public class CustomSliderPreference extends Preference {
      * Update digital widgets if the Preference is linked to the widgets one.
      */
     private void updateDigitalWidgets() {
-        if (!isScreensaverBrightnessPreference()
-            && !isScreensaverDigitalClockFontSizePreference()
-            && !isScreensaverAnalogClockSizePreference()
-            && !isScreensaverBlurIntensityPreference()
-            && !isShakeIntensityPreference()
+        if (!isShakeIntensityPreference()
             && !isTimerShakeIntensityPreference()
             && !isTimerShadowOffsetPreference()
             && !isTimerBlurIntensityPreference()
@@ -420,38 +397,6 @@ public class CustomSliderPreference extends Preference {
 
             WidgetUtils.updateAllDigitalWidgets(getContext());
         }
-    }
-
-    /**
-     * @return {@code true} if the current preference is related to screensaver brightness.
-     * {@code false} otherwise.
-     */
-    private boolean isScreensaverBrightnessPreference() {
-        return getKey().equals(KEY_SCREENSAVER_BRIGHTNESS);
-    }
-
-    /**
-     * @return {@code true} if the current preference is related to the screensaver analog clock size.
-     * {@code false} otherwise.
-     */
-    private boolean isScreensaverAnalogClockSizePreference() {
-        return getKey().equals(KEY_SCREENSAVER_ANALOG_CLOCK_SIZE);
-    }
-
-    /**
-     * @return {@code true} if the current preference is related to the font size of the screensaver
-     * clock. {@code false} otherwise.
-     */
-    private boolean isScreensaverDigitalClockFontSizePreference() {
-        return getKey().equals(KEY_SCREENSAVER_DIGITAL_CLOCK_FONT_SIZE);
-    }
-
-    /**
-     * @return {@code true} if the current preference is related to blur intensity for screensaver.
-     * {@code false} otherwise.
-     */
-    private boolean isScreensaverBlurIntensityPreference() {
-        return getKey().equals(KEY_SCREENSAVER_BLUR_INTENSITY);
     }
 
     /**

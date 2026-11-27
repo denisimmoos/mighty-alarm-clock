@@ -93,7 +93,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"时钟"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"秒表"</string>
     <string name="button_cities" msgid="4555761857494501363">"城市"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">屏幕保护程序</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"按时间排序"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"按名称排序"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"所选城市"</string>
@@ -156,8 +155,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"启动秒表"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"暂停"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"暂停秒表"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">屏幕保护程序</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">启动屏幕保护程序</string>
     <string name="alarm_settings" msgid="2947147071388290814">"闹钟"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">处理来自定时器通知的操作。</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">处理来自秒表通知的操作。</string>
@@ -216,7 +213,6 @@
     <string name="timer_label_box_title">定时器标签</string>
     <string name="whats_new_title">更新日志</string>
     <string name="first_launch_main_feature_link">…还有更多！</string>
-    <string name="screensaver_italic_date_title">日期（斜体）</string>
     <string name="background_color_title">背景颜色</string>
     <string name="display_city_title">显示城市</string>
     <string name="city_clock_color_title">城市时钟自定义颜色</string>
@@ -233,21 +229,10 @@
     <string name="dialog_close">关闭</string>
     <string name="timer_settings_summary">自定义样式、字体、默认铃声、停止定时器的操作以及定时器排序</string>
     <string name="default_time_to_add_to_timer_title">添加到定时器的默认时间</string>
-    <string name="screensaver_settings_summary">自定义屏幕保护程序的样式、字体和颜色</string>
-    <string name="screensaver_daydream_settings">选择/启用屏幕保护程序</string>
-    <string name="screensaver_daydream_settings_summary">打开 Android 屏幕保护程序主设置</string>
-    <string name="screensaver_clock_dynamic_colors_title">动态时钟颜色</string>
     <string name="clock_color_title">时钟颜色</string>
     <string name="date_color_title">日期颜色</string>
-    <string name="screensaver_brightness_title">亮度</string>
-    <string name="screensaver_bold_digital_clock_title">数字时钟（粗体）</string>
-    <string name="screensaver_italic_digital_clock_title">数字时钟（斜体）</string>
-    <string name="screensaver_bold_date_title">日期（粗体）</string>
     <string name="preview_title">预览</string>
-    <string name="screensaver_preview_summary">立即启动屏幕保护程序</string>
     <string name="next_alarm_color_title">下次闹钟颜色</string>
-    <string name="screensaver_bold_next_alarm_title">下次闹钟（粗体）</string>
-    <string name="screensaver_italic_next_alarm_title">下次闹钟（斜体）</string>
     <string name="first_launch_version">版本 %s</string>
     <string name="first_launch_important_info_title">重要信息</string>
     <string name="first_launch_dialog_title">退出</string>
@@ -473,10 +458,6 @@
     <string name="display_settings_title">显示设置</string>
     <string name="analog_clock_size_title">指针时钟大小</string>
     <string name="display_compact_timers_title">以紧凑模式显示活动定时器</string>
-    <string name="display_battery_title">显示电池电量</string>
-    <string name="battery_color_title">电池电量颜色</string>
-    <string name="screensaver_bold_battery_title">电池电量（粗体）</string>
-    <string name="screensaver_italic_battery_title">电池电量（斜体）</string>
     <string name="sw_total_title">总计</string>
     <string name="sw_laps_title">圈数</string>
     <string name="sw_split_title">分段</string>

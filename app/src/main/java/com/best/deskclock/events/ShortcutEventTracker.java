@@ -34,7 +34,6 @@ public final class ShortcutEventTracker implements EventTracker {
         shortcuts.add(uidm.getShortcutId(R.string.category_timer, R.string.action_create));
         shortcuts.add(uidm.getShortcutId(R.string.category_stopwatch, R.string.action_pause));
         shortcuts.add(uidm.getShortcutId(R.string.category_stopwatch, R.string.action_start));
-        shortcuts.add(uidm.getShortcutId(R.string.category_screensaver, R.string.action_show));
     }
 
     @Override

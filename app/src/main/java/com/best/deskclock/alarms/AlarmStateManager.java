@@ -136,7 +136,7 @@ public final class AlarmStateManager extends BroadcastReceiver {
      * Update the next alarm stored in framework.
      * This value is displayed:
      * <ul>
-     *     <li>in the Clock app (alarm tab and screensaver)</li>
+     *     <li>in the Clock tab of this app</li>
      *     <li>in the app's digital widgets (if accessible)</li>
      * </ul>
      * <p>

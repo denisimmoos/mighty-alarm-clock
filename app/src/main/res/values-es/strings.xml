@@ -107,7 +107,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Reloj"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Cronómetro"</string>
     <string name="button_cities" msgid="4555761857494501363">"Ciudades"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Salvapantallas"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">"Ordenar por hora"</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Ordenar por nombre"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Ciudades seleccionadas"</string>
@@ -170,8 +169,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Iniciar cronómetro"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Pausar"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Pausar cronómetro"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Salvapantallas"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Iniciar salvapantallas"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Alarmas"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Procesa acciones de notificaciones del temporizador."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Procesa acciones de notificaciones del cronómetro."</string>
@@ -297,27 +294,19 @@
     <string name="timer_volume_buttons_action_title">Restablece los temporizadores que han caducado con los botones de volumen</string>
     <string name="timer_power_button_action_title">Restablece los temporizadores que han caducado con el botón de encendido</string>
     <string name="date_color_title">Color de la fecha</string>
-    <string name="screensaver_brightness_title">Brillo</string>
     <string name="sw_settings_summary">Personaliza la fuente y las acciones de los botones de volumen</string>
     <string name="sw_volume_up_action_title">Subir volumen</string>
     <string name="timer_buttons_action_summary">Solo funciona en la pantalla de bloqueo</string>
-    <string name="screensaver_italic_next_alarm_title">Próxima alarma en cursiva</string>
-    <string name="screensaver_bold_next_alarm_title">Próxima alarma en negrita</string>
-    <string name="screensaver_preview_summary">Inicia el salvapantallas inmediatamente</string>
     <string name="next_alarm_no_upcoming_alarm_titles_color">Color del título «No hay alarmas próximas»</string>
     <string name="timer_add_custom_time">+ %s</string>
     <string name="about_title">Acerca de</string>
     <string name="timer_settings_summary">Personaliza el estilo, la fuente, el tono de llamada predeterminado, la acción para detener los temporizadores y el orden de los temporizadores</string>
     <string name="first_launch_main_feature_title">FUNCIONES PRINCIPALES</string>
-    <string name="screensaver_italic_date_title">Fecha en cursiva</string>
     <string name="purple_accent_color">Púrpura</string>
     <string name="sw_start_pause_action">Iniciar / Pausar</string>
     <string name="denied_permission_label">Permiso denegado</string>
     <string name="yellow_accent_color">Amarillo</string>
-    <string name="screensaver_daydream_settings">Seleccionar/habilitar protector de pantalla</string>
-    <string name="screensaver_settings_summary">Personaliza el estilo, la fuente y el color del salvapantallas</string>
     <string name="day_accent_color_title">Color de acento para el modo de día</string>
-    <string name="screensaver_daydream_settings_summary">Abre la configuración principal del salvapantallas de Android</string>
     <string name="first_launch_button_now">Ahora</string>
     <string name="first_launch_button_later">Después</string>
     <string name="ignore_battery_optimizations_dialog_title">Optimizaciones de la batería</string>
@@ -337,8 +326,6 @@
     <string name="pink_accent_color">Rosa</string>
     <string name="red_accent_color">Rojo</string>
     <string name="amoled_dark_theme_mode">AMOLED</string>
-    <string name="screensaver_italic_digital_clock_title">Reloj digital en cursiva</string>
-    <string name="screensaver_clock_dynamic_colors_title">Colores dinámicos del reloj</string>
     <string name="sort_timer_ascending_duration">Por duración (orden ascendente)</string>
     <string name="preview_title">Previsualización</string>
     <string name="permission_requirement_title">Requerido:</string>
@@ -357,7 +344,6 @@
     <string name="night_accent_color_title">Color de acento para el modo nocturno</string>
     <string name="clock_color_title">Color del reloj</string>
     <string name="second_hand_color_title">Color del segundero</string>
-    <string name="screensaver_bold_digital_clock_title">Reloj digital en negrita</string>
     <string name="display_warning_before_deleting_timer_title">Mostrar un aviso antes de borrar un temporizador</string>
     <string name="warning_dialog_title">Eliminar temporizador</string>
     <string name="warning_dialog_message">¿Confirma que quiere eliminar el temporizador «%s»?</string>
@@ -369,7 +355,6 @@
     <string name="timer_button_time_box_title">Minutos a añadir al temporizador</string>
     <string name="next_alarm_color_title">Color de la siguiente alarma</string>
     <string name="transparent_background_for_expired_timer_title">Fondo transparente cuando expiran los temporizadores</string>
-    <string name="screensaver_bold_date_title">Fecha en negrita</string>
     <string name="clock_settings_summary">Personaliza el estilo, la fuente, la zona horaria y la fecha y hora del dispositivo</string>
     <string name="permission_denied">Denegado</string>
     <string name="settings_language_title">Idioma</string>
@@ -503,14 +488,10 @@
     <string name="minute_hand_color_title">Color del minutero</string>
     <string name="minute_hand_default_color_title">Usar el color predeterminado para el minutero</string>
     <string name="second_hand_default_color_title">Usar el color predeterminado para el segundero</string>
-    <string name="display_battery_title">Mostrar el nivel de batería</string>
-    <string name="battery_color_title">Color del nivel de batería</string>
     <string name="next_alarm_title_color_title">Color del título de la próxima alarma</string>
     <string name="next_alarm_title_default_color_title">Utiliza el color predeterminado para el título de la próxima alarma</string>
     <string name="city_note_color_title">Color de la nota de la ciudad</string>
     <string name="city_note_default_color_title">Utiliza el color predeterminado para la nota de la ciudad</string>
-    <string name="screensaver_bold_battery_title">Nivel de batería en negrita</string>
-    <string name="screensaver_italic_battery_title">Nivel de batería en cursiva</string>
     <string name="foreground_service_channel">Notificación en primer plano</string>
     <string name="foreground_service_message">Ejecutándose en segundo plano</string>
     <string name="display_text_uppercase_title">Mostrar el texto en mayúsculas</string>

@@ -101,7 +101,6 @@
     <string name="menu_clock" msgid="5612760670606829805">"Uhr"</string>
     <string name="menu_stopwatch" msgid="3396117705293574701">"Stoppuhr"</string>
     <string name="button_cities" msgid="4555761857494501363">"Städte"</string>
-    <string name="screensaver_settings_title" msgid="2930695838866189483">"Bildschirmschoner"</string>
     <string name="menu_item_sort_by_gmt_offset" msgid="3120860422682721706">Nach Zeit sortieren</string>
     <string name="menu_item_sort_by_name" msgid="1762931290495104106">"Nach Namen sortieren"</string>
     <string name="selected_cities_label" msgid="3607479399424246605">"Ausgewählte Städte"</string>
@@ -168,8 +167,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Stoppuhr starten"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Anhalten"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Stoppuhr anhalten"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Bildschirmschoner"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Bildschirmschoner starten"</string>
     <string name="alarm_settings" msgid="2947147071388290814">Wecker</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Verarbeitet Aktionen von Timer-Benachrichtigungen."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Verarbeitet Aktionen von Stoppuhr-Benachrichtigungen."</string>
@@ -237,15 +234,8 @@
     <string name="dialog_close">Schließen</string>
     <string name="timer_settings_summary">Stil, Schriftart, Standardton, Timer-Stop und -Sortierung festlegen</string>
     <string name="default_time_to_add_to_timer_title">Standardzeit zur Verlängerung des Timers</string>
-    <string name="screensaver_daydream_settings">Bildschirmschoner auswählen/aktivieren</string>
-    <string name="screensaver_daydream_settings_summary">Öffnet die Android-Einstellungen für den Bildschirmschoner</string>
-    <string name="screensaver_clock_dynamic_colors_title">Dynamische Uhrenfarben</string>
     <string name="clock_color_title">Schriftfarbe der Uhr</string>
-    <string name="screensaver_bold_date_title">Datum <b>fett</b></string>
-    <string name="screensaver_italic_date_title">Datum <i>kursiv</i></string>
-    <string name="screensaver_bold_next_alarm_title">Nächster Wecker <b>fett</b></string>
     <string name="preview_title">Vorschau</string>
-    <string name="screensaver_preview_summary">Startet den Bildschirmschoner sofort</string>
     <string name="first_launch_version">Version %s</string>
     <string name="first_launch_main_feature_title">HAUPTMERKMALE</string>
     <string name="first_launch_main_feature_link">… und vieles mehr!</string>
@@ -273,9 +263,7 @@
     <string name="miscellaneous_category_title">Verschiedenes</string>
     <string name="actions_category_title">Aktionen</string>
     <string name="date_color_title">Datumfarbe</string>
-    <string name="screensaver_italic_next_alarm_title">Nächster Wecker <i>kursiv</i></string>
     <string name="FSN_permission_title">VOLLBILD-​BENACHRICHTIGUNGEN AKTIVIEREN</string>
-    <string name="screensaver_settings_summary">Einstellen von Stil, Schriftart und Farbe des Bildschirmschoners</string>
     <string name="city_clock_default_color_title">Standardfarbe für Uhr einer Stadt verwenden</string>
     <string name="city_name_default_color_title">Standardfarbe für Stadtnamen verwenden</string>
     <string name="city_name_color_title">Stadtnamenfarbe</string>
@@ -297,9 +285,6 @@
     <string name="about_title">Über</string>
     <string name="permission_requirement_title">Erfordernis: </string>
     <string name="next_alarm_color_title">Farbe des nächsten Weckers</string>
-    <string name="screensaver_brightness_title">Helligkeit</string>
-    <string name="screensaver_bold_digital_clock_title">Digitaluhr <b>fett</b></string>
-    <string name="screensaver_italic_digital_clock_title">Digitaluhr <i>kursiv</i></string>
     <string name="widget_background_title">Hintergrund anzeigen</string>
     <string name="background_color_title">Hintergrundfarbe</string>
     <string name="display_city_title">Städte anzeigen</string>
@@ -513,10 +498,6 @@
     <string name="sw_delete_confirm">Diese Stoppuhr löschen?</string>
     <string name="analog_clock_size_title">Analoguhr-Größe</string>
     <string name="display_compact_timers_title">Aktive Timer im Kompaktmodus anzeigen</string>
-    <string name="display_battery_title">Batteriestand zeigen</string>
-    <string name="battery_color_title">Akkustandsfarbe</string>
-    <string name="screensaver_bold_battery_title">Batteriestand in fett</string>
-    <string name="screensaver_italic_battery_title">Batteriestand in kursiv</string>
     <string name="sync_alarm_by_label_title">Ein- und Ausschalten mit anderen Weckern synchronisieren, die den gleichen Namen haben</string>
     <string name="permissions_category_title">Berechtigungen</string>
     <string name="clock_dial_with_roman_numbers">Mit römischen Ziffern</string>

@@ -32,7 +32,6 @@ import com.best.deskclock.events.Events;
 import com.best.deskclock.events.ShortcutEventTracker;
 import com.best.deskclock.mighty.calendar.CalendarProfileEditActivity;
 import com.best.deskclock.provider.CalendarProfile;
-import com.best.deskclock.screensaver.ScreensaverActivity;
 import com.best.deskclock.stopwatch.StopwatchService;
 import com.best.deskclock.uidata.UiDataModel;
 import com.best.deskclock.utils.DeviceUtils;
@@ -85,8 +84,6 @@ class ShortcutController {
                 disabledShortcutIds.add(UiDataModel.getUiDataModel().getShortcutId(R.string.category_stopwatch, R.string.action_start));
                 disabledShortcutIds.add(UiDataModel.getUiDataModel().getShortcutId(R.string.category_stopwatch, R.string.action_pause));
             }
-
-            dynamicShortcuts.add(createScreensaverShortcut());
 
             mShortcutManager.setDynamicShortcuts(dynamicShortcuts);
 
@@ -171,25 +168,6 @@ class ShortcutController {
         intent.setClass(appContext, HandleShortcuts.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         return shortcut.setIntent(intent).build();
-    }
-
-    private ShortcutInfo createScreensaverShortcut() {
-        Context appContext = Utils.getLocalizedContext(DeskClockApplication.getAppContext());
-
-        final Intent intent = new Intent(Intent.ACTION_MAIN)
-            .setClass(appContext, ScreensaverActivity.class)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(Events.EXTRA_EVENT_LABEL, R.string.label_shortcut);
-        final String screensaverShortcut = UiDataModel.getUiDataModel().getShortcutId(R.string.category_screensaver, R.string.action_show);
-
-        return new ShortcutInfo.Builder(appContext, screensaverShortcut)
-            .setIcon(Icon.createWithResource(appContext, R.drawable.shortcut_screensaver))
-            .setActivity(mComponentName)
-            .setShortLabel((appContext.getString(R.string.shortcut_start_screensaver_short)))
-            .setLongLabel((appContext.getString(R.string.shortcut_start_screensaver_long)))
-            .setIntent(intent)
-            .setRank(3)
-            .build();
     }
 
     private class StopwatchWatcher implements StopwatchListener {

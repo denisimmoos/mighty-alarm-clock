@@ -154,15 +154,15 @@ public class ClockUtils {
      * @param includeSeconds whether to include seconds in the clock's time
      */
     public static void setDigitalClockTimeFormat(TextClock clock, float amPmRatio, boolean includeSeconds, boolean isAlarm,
-                                                 boolean isClockTab, boolean isTimer, boolean isScreensaver) {
+                                                 boolean isClockTab, boolean isTimer) {
 
         if (clock != null) {
             // Get the best format for 12 hours mode according to the locale
             clock.setFormat12Hour(get12ModeFormat(
-                clock.getContext(), amPmRatio, includeSeconds, isAlarm, isClockTab, isTimer, isScreensaver)
+                clock.getContext(), amPmRatio, includeSeconds, isAlarm, isClockTab, isTimer)
             );
             // Get the best format for 24 hours mode according to the locale
-            clock.setFormat24Hour(get24ModeFormat(includeSeconds, isScreensaver));
+            clock.setFormat24Hour(get24ModeFormat(includeSeconds));
         }
     }
 
@@ -173,7 +173,7 @@ public class ClockUtils {
      * @return format string for 12 hours mode time, not including seconds
      */
     public static CharSequence get12ModeFormat(Context context, float amPmRatio, boolean includeSeconds, boolean isAlarm,
-                                               boolean isClockTab, boolean isTimer, boolean isScreensaver) {
+                                               boolean isClockTab, boolean isTimer) {
 
         SharedPreferences prefs = getDefaultSharedPreferences(context);
 
@@ -184,14 +184,6 @@ public class ClockUtils {
 
         if (amPmRatio <= 0) {
             pattern = pattern.replace("\u200Aa", "").trim();
-        } else {
-            if (isScreensaver) {
-                // For screensaver, add a "Thin Space" (\u2009) at the end of the AM/PM to prevent
-                // its display from being cut off on some devices.
-                // A "Thin Space" (\u2009) is also added at the beginning to correctly center the date,
-                // alarm icon and next alarm.
-                pattern = "\u2009" + pattern.replace("a", "a" + "\u2009");
-            }
         }
 
         // Build a spannable so that the am/pm will be formatted
@@ -212,22 +204,6 @@ public class ClockUtils {
             applyTypefaceSpan(sp, amPmPos, ThemeUtils.loadFont(SettingsDAO.getDigitalClockFont(prefs)), defaultSpan, Typeface.BOLD);
         } else if (isTimer) {
             applyTypefaceSpan(sp, amPmPos, ThemeUtils.loadFont(SettingsDAO.getGeneralFont(prefs)), defaultSpan, Typeface.ITALIC);
-        } else if (isScreensaver) {
-            Typeface baseTypeface = ThemeUtils.loadFont(SettingsDAO.getScreensaverDigitalClockFont(prefs));
-            boolean isItalic = SettingsDAO.isScreensaverDigitalClockInItalic(prefs);
-            int style = isItalic ? Typeface.BOLD_ITALIC : Typeface.BOLD;
-
-            if (baseTypeface == null) {
-                baseTypeface = Typeface.create("sans-serif", style);
-            }
-
-            Typeface styledTypeface = Typeface.create(baseTypeface, style);
-
-            if (SdkUtils.isAtLeastAndroid9()) {
-                sp.setSpan(new TypefaceSpan(styledTypeface), amPmPos, amPmPos + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            } else {
-                sp.setSpan(new CustomTypefaceSpan(styledTypeface), amPmPos, amPmPos + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
         } else {
             sp.setSpan(defaultSpan, amPmPos, amPmPos + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
@@ -253,18 +229,8 @@ public class ClockUtils {
         }
     }
 
-    public static CharSequence get24ModeFormat(boolean includeSeconds, boolean isScreensaver) {
-        if (isScreensaver) {
-            // For screensaver, add a "Thin Space" (\u2009) at the end of the time to prevent
-            // its display from being cut off on some devices.
-            // A "Thin Space" (\u2009) is also added at the beginning to correctly center the date,
-            // alarm icon and next alarm.
-            return "\u2009"
-                + DateFormat.getBestDateTimePattern(Locale.getDefault(), includeSeconds ? "Hms" : "Hm")
-                + "\u2009";
-        } else {
-            return DateFormat.getBestDateTimePattern(Locale.getDefault(), includeSeconds ? "Hms" : "Hm");
-        }
+    public static CharSequence get24ModeFormat(boolean includeSeconds) {
+        return DateFormat.getBestDateTimePattern(Locale.getDefault(), includeSeconds ? "Hms" : "Hm");
     }
 
     /**

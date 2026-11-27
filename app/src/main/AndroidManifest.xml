@@ -326,41 +326,6 @@
                 android:value="Used to notify the user that stopwatch is running" />
         </service>
 
-        <!-- ============================================================== -->
-        <!-- Screen saver components.                                       -->
-        <!-- ============================================================== -->
-
-        <activity
-            android:name="com.best.deskclock.screensaver.ScreensaverActivity"
-            android:exported="true"
-            android:excludeFromRecents="true"
-            android:resizeableActivity="false"
-            android:taskAffinity=""
-            android:theme="@style/Theme.DeskClock"
-            tools:ignore="DiscouragedApi, NonResizeableActivity" />
-
-        <activity
-            android:name="com.best.deskclock.settings.ScreensaverSettingsActivity"
-            android:excludeFromRecents="true"
-            android:taskAffinity=""
-            android:theme="@style/Theme.DeskClock" />
-
-        <service
-            android:name="com.best.deskclock.screensaver.Screensaver"
-            android:exported="true"
-            android:label="@string/app_label"
-            android:permission="android.permission.BIND_DREAM_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.dreams.DreamService" />
-                <action android:name="com.best.deskclock.NEXT_ALARM_CHANGED_BY_CLOCK" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <meta-data
-                android:name="android.service.dream"
-                android:resource="@xml/screensaver_info" />
-        </service>
-
         <!-- Receiver for handling the daily update of app widgets at midnight
              and more mainly the widgets that display the date -->
         <receiver
@@ -503,18 +468,6 @@
             <meta-data
                 android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
-        </service>
-
-        <!-- Screensaver tile -->
-        <service
-            android:name="com.best.deskclock.tiles.ScreensaverTileService"
-            android:exported="true"
-            android:label="@string/screensaver_settings_title"
-            android:icon="@drawable/ic_screensaver"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
         </service>
 
         <receiver

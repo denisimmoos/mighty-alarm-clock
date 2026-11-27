@@ -174,15 +174,6 @@ public class PreferencesDefaultValues {
     public static final String SW_ACTION_LAP = "3";
     public static final String SW_ACTION_SHARE = "4";
 
-    // Screensaver
-    public static final boolean DEFAULT_DISPLAY_SCREENSAVER_CLOCK_SECONDS = false;
-    public static final boolean DEFAULT_DISPLAY_SCREENSAVER_BATTERY = false;
-    public static final boolean DEFAULT_SCREENSAVER_CLOCK_DYNAMIC_COLORS = false;
-    public static final int DEFAULT_SCREENSAVER_CUSTOM_COLOR = Color.WHITE;
-    public static final int DEFAULT_SCREENSAVER_BRIGHTNESS = 40;
-    public static final boolean DEFAULT_SCREENSAVER_TEXT_UPPERCASE_DISPLAYED = false;
-    public static final boolean DEFAULT_SCREENSAVER_FORMATTING = false;
-    public static final boolean DEFAULT_SCREENSAVER_KEEP_SCREEN_ON = false;
 
     // Common settings values
     public static final String DEFAULT_CLOCK_DIAL = "dial_with_numbers";

@@ -158,10 +158,10 @@ public class TextTime extends AppCompatTextView {
     }
 
     private void setTimeFormat() {
-        CharSequence format12 = ClockUtils.get12ModeFormat(getContext(), 0.5f, false, true, false, false, false);
+        CharSequence format12 = ClockUtils.get12ModeFormat(getContext(), 0.5f, false, true, false, false);
         setFormat12Hour(format12);
 
-        CharSequence format24 = ClockUtils.get24ModeFormat(false, false);
+        CharSequence format24 = ClockUtils.get24ModeFormat(false);
         setFormat24Hour(format24);
     }
 

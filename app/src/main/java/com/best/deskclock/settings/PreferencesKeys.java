@@ -28,7 +28,6 @@ public class PreferencesKeys {
     public static final String KEY_ALARM_SETTINGS = "key_alarm_settings";
     public static final String KEY_TIMER_SETTINGS = "key_timer_settings";
     public static final String KEY_STOPWATCH_SETTINGS = "key_stopwatch_settings";
-    public static final String KEY_SCREENSAVER_SETTINGS = "key_screensaver_settings";
     public static final String KEY_WIDGETS_SETTINGS = "key_widgets_settings";
     public static final String KEY_PERMISSIONS_MANAGEMENT = "key_permissions_management";
     public static final String KEY_BACKUP_RESTORE_PREFERENCES = "key_backup_restore_preferences";
@@ -183,37 +182,6 @@ public class PreferencesKeys {
     public static final String KEY_SW_VOLUME_DOWN_ACTION = "key_sw_volume_down_action";
     public static final String KEY_SW_VOLUME_DOWN_ACTION_AFTER_LONG_PRESS = "key_sw_volume_down_action_after_long_press";
 
-    // Screensaver
-    public static final String KEY_SCREENSAVER_CLOCK_STYLE = "key_screensaver_clock_style";
-    public static final String KEY_SCREENSAVER_CLOCK_DIAL = "key_screensaver_clock_dial";
-    public static final String KEY_SCREENSAVER_CLOCK_DIAL_MATERIAL = "key_screensaver_clock_dial_material";
-    public static final String KEY_SCREENSAVER_DIGITAL_CLOCK_FONT = "key_screensaver_digital_clock_font";
-    public static final String KEY_SCREENSAVER_ANALOG_CLOCK_SIZE = "key_screensaver_analog_clock_size";
-    public static final String KEY_DISPLAY_SCREENSAVER_CLOCK_SECONDS = "key_display_screensaver_clock_seconds";
-    public static final String KEY_SCREENSAVER_CLOCK_SECOND_HAND = "key_screensaver_clock_second_hand";
-    public static final String KEY_DISPLAY_SCREENSAVER_BATTERY = "key_display_screensaver_battery";
-    public static final String KEY_SCREENSAVER_CLOCK_DYNAMIC_COLORS = "key_screensaver_clock_dynamic_colors";
-    public static final String KEY_SCREENSAVER_CLOCK_COLOR_PICKER = "key_screensaver_clock_color_picker";
-    public static final String KEY_SCREENSAVER_BATTERY_COLOR_PICKER = "key_screensaver_battery_color_picker";
-    public static final String KEY_SCREENSAVER_DATE_COLOR_PICKER = "key_screensaver_date_color_picker";
-    public static final String KEY_SCREENSAVER_NEXT_ALARM_COLOR_PICKER = "key_screensaver_next_alarm_color_picker";
-    public static final String KEY_SCREENSAVER_BRIGHTNESS = "key_screensaver_brightness";
-    public static final String KEY_SCREENSAVER_DIGITAL_CLOCK_FONT_SIZE = "key_screensaver_digital_clock_font_size";
-    public static final String KEY_SCREENSAVER_DISPLAY_TEXT_UPPERCASE = "key_screensaver_display_text_uppercase";
-    public static final String KEY_SCREENSAVER_DIGITAL_CLOCK_IN_BOLD = "key_screensaver_digital_clock_in_bold";
-    public static final String KEY_SCREENSAVER_DIGITAL_CLOCK_IN_ITALIC = "key_screensaver_digital_clock_in_italic";
-    public static final String KEY_SCREENSAVER_BATTERY_IN_BOLD = "key_screensaver_battery_in_bold";
-    public static final String KEY_SCREENSAVER_BATTERY_IN_ITALIC = "key_screensaver_battery_in_italic";
-    public static final String KEY_SCREENSAVER_DATE_IN_BOLD = "key_screensaver_date_in_bold";
-    public static final String KEY_SCREENSAVER_DATE_IN_ITALIC = "key_screensaver_date_in_italic";
-    public static final String KEY_SCREENSAVER_NEXT_ALARM_IN_BOLD = "key_screensaver_next_alarm_in_bold";
-    public static final String KEY_SCREENSAVER_NEXT_ALARM_IN_ITALIC = "key_screensaver_next_alarm_in_italic";
-    public static final String KEY_SCREENSAVER_KEEP_SCREEN_ON = "key_screensaver_keep_screen_on";
-    public static final String KEY_SCREENSAVER_BACKGROUND_IMAGE = "key_screensaver_background_image";
-    public static final String KEY_ENABLE_SCREENSAVER_BLUR_EFFECT = "key_enable_screensaver_blur_effect";
-    public static final String KEY_SCREENSAVER_BLUR_INTENSITY = "key_screensaver_blur_intensity";
-    public static final String KEY_SCREENSAVER_PREVIEW = "key_screensaver_preview";
-    public static final String KEY_SCREENSAVER_DAYDREAM_SETTINGS = "key_screensaver_daydream_settings";
 
     // Permission management
     public static final String KEY_IGNORE_BATTERY_OPTIMIZATIONS = "key_ignore_battery_optimizations";
@@ -341,7 +309,5 @@ public class PreferencesKeys {
     public static final String FILE_TIMER_FONT = "timer_font";
     public static final String FILE_TIMER_BACKGROUND = "timer_background";
     public static final String FILE_STOPWATCH_FONT = "stopwatch_font";
-    public static final String FILE_SCREENSAVER_DIGITAL_CLOCK_FONT = "screensaver_digital_clock_font";
-    public static final String FILE_SCREENSAVER_BACKGROUND = "screensaver_background";
     public static final String FILE_DIGITAL_CLOCK_FONT = "digital_clock_font";
 }

@@ -212,8 +212,6 @@
     <string name="shortcut_start_stopwatch_long" msgid="9183061797046030376">"Lancer le chronomètre"</string>
     <string name="shortcut_pause_stopwatch_short" msgid="4022667323693785830">"Suspendre"</string>
     <string name="shortcut_pause_stopwatch_long" msgid="435026905074898334">"Suspendre le chronomètre"</string>
-    <string name="shortcut_start_screensaver_short" msgid="3414762073311954753">"Économ. d\'écran"</string>
-    <string name="shortcut_start_screensaver_long" msgid="6134275671119484907">"Démarrer l\'éco. d\'écran"</string>
     <string name="alarm_settings" msgid="2947147071388290814">"Alarmes"</string>
     <string name="timer_service_desc" msgid="2256002649882602433">"Traite les actions issues des notifications du minuteur."</string>
     <string name="stopwatch_service_desc" msgid="9220132827343760767">"Traite les actions issues des notifications du chronomètre."</string>
@@ -225,24 +223,11 @@
     <string name="transparent_background_for_expired_timer_title">Arrière-plan transparent à l\'expiration des minuteurs</string>
     <string name="timer_paused" msgid="5941160896040771462">"Minuteur interrompu"</string>
     <string name="timers_in_use" msgid="5570729467344408506">"<xliff:g id="NUMBER">%d</xliff:g> minuteurs"</string>
-    <string name="screensaver_settings_title">Économiseur d\'écran</string>
-    <string name="screensaver_settings_summary">Personnaliser le style, la police et la couleur de l\'économiseur d\'écran</string>
-    <string name="screensaver_daydream_settings">Sélectionner/activer l\'économiseur d\'écran</string>
-    <string name="screensaver_daydream_settings_summary">Ouvre les paramètres principaux de l\'économiseur d\'écran Android</string>
-    <string name="screensaver_clock_dynamic_colors_title">Couleurs dynamiques de l\'horloge</string>
     <string name="clock_color_title">Couleur de l\'horloge</string>
     <string name="second_hand_color_title">Couleur de l\'aiguille des secondes</string>
     <string name="date_color_title">Couleur de la date</string>
     <string name="next_alarm_color_title">Couleur de la prochaine alarme</string>
-    <string name="screensaver_brightness_title">Luminosité</string>
-    <string name="screensaver_bold_digital_clock_title">Horloge numérique en gras</string>
-    <string name="screensaver_italic_digital_clock_title">Horloge numérique en italique</string>
-    <string name="screensaver_bold_date_title">Date en gras</string>
-    <string name="screensaver_italic_date_title">Date en italique</string>
-    <string name="screensaver_bold_next_alarm_title">Prochaine alarme en gras</string>
-    <string name="screensaver_italic_next_alarm_title">Prochaine alarme en italique</string>
     <string name="preview_title">Prévisualisation</string>
-    <string name="screensaver_preview_summary">Lance l\'économiseur d\'écran immédiatement</string>
     <string name="world_day_of_week_label" msgid="5911196322328341288">/ <xliff:g id="LABEL">%s</xliff:g></string>
     <string name="world_time_ahead" msgid="625559988238637652">"<xliff:g id="TIME">%1$s</xliff:g> de plus"</string>
     <string name="world_time_behind" msgid="5395771290726167865">"<xliff:g id="TIME">%1$s</xliff:g> de moins"</string>
@@ -491,10 +476,6 @@
     <string name="sw_total_title">Total</string>
     <string name="analog_clock_size_title">Taille de l\'horloge analogique</string>
     <string name="display_compact_timers_title">Afficher les minuteurs actifs en mode compact</string>
-    <string name="display_battery_title">Afficher le niveau de batterie</string>
-    <string name="battery_color_title">Couleur du niveau de batterie</string>
-    <string name="screensaver_bold_battery_title">Niveau de batterie en gras</string>
-    <string name="screensaver_italic_battery_title">Niveau de batterie en italique</string>
     <string name="sync_alarm_by_label_title">Synchroniser les alarmes partageant le même libellé</string>
     <string name="button_tip_title">Appuyez longuement sur le bouton \"+\" pour ajouter un dossier</string>
     <string name="permissions_category_title">Autorisations</string>

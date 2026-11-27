@@ -127,7 +127,6 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
         Preference mAlarmSettingsPref;
         Preference mTimerSettingsPref;
         Preference mStopwatchSettingsPref;
-        Preference mScreensaverSettings;
         Preference mWidgetsSettings;
         Preference mPermissionsManagement;
         Preference mPermissionMessage;
@@ -243,7 +242,6 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
             mAlarmSettingsPref = findPreference(KEY_ALARM_SETTINGS);
             mTimerSettingsPref = findPreference(KEY_TIMER_SETTINGS);
             mStopwatchSettingsPref = findPreference(KEY_STOPWATCH_SETTINGS);
-            mScreensaverSettings = findPreference(KEY_SCREENSAVER_SETTINGS);
             mWidgetsSettings = findPreference(KEY_WIDGETS_SETTINGS);
             mPermissionsManagement = findPreference(KEY_PERMISSIONS_MANAGEMENT);
             mPermissionMessage = findPreference(KEY_PERMISSION_MESSAGE);
@@ -316,7 +314,7 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
         @Override
         public void onDestroy() {
             nullifyPreferenceListeners(mInterfaceCustomizationPref, mClockSettingsPref, mAlarmSettingsPref, mTimerSettingsPref,
-                mStopwatchSettingsPref, mScreensaverSettings, mWidgetsSettings, mPermissionsManagement, mPermissionMessage,
+                mStopwatchSettingsPref, mWidgetsSettings, mPermissionsManagement, mPermissionMessage,
                 mBackupRestorePref, mMightyFeaturesPref);
 
             nullifyAllPrefs();
@@ -337,7 +335,6 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
 
                 case KEY_STOPWATCH_SETTINGS -> animateAndShowFragment(new StopwatchSettingsFragment());
 
-                case KEY_SCREENSAVER_SETTINGS -> animateAndShowFragment(new ScreensaverSettingsActivity.ScreensaverSettingsFragment());
 
                 case KEY_WIDGETS_SETTINGS -> animateAndShowFragment(new WidgetSettingsFragment());
 
@@ -365,7 +362,6 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
 
             mStopwatchSettingsPref.setOnPreferenceClickListener(this);
 
-            mScreensaverSettings.setOnPreferenceClickListener(this);
 
             mWidgetsSettings.setOnPreferenceClickListener(this);
 
@@ -451,8 +447,6 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
             editor.remove(KEY_TIMER_BACKGROUND_IMAGE);
             editor.remove(KEY_SW_FONT);
             editor.remove(KEY_DIGITAL_CLOCK_FONT);
-            editor.remove(KEY_SCREENSAVER_DIGITAL_CLOCK_FONT);
-            editor.remove(KEY_SCREENSAVER_BACKGROUND_IMAGE);
             editor.commit();
 
             wipeAllCustomFiles(context);
@@ -478,6 +472,11 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
 
         private void restoreFileFromZip(Context context, ZipInputStream zipInputStream, String fileName)
             throws IOException {
+
+            if (fileName.startsWith("screensaver_")) {
+                // Font or background of the removed screensaver, from an older backup.
+                return;
+            }
 
             File outputFile = new File(context.getFilesDir(), fileName);
 
@@ -532,7 +531,6 @@ public final class SettingsActivity extends CollapsingToolbarBaseActivity {
             mAlarmSettingsPref = null;
             mTimerSettingsPref = null;
             mStopwatchSettingsPref = null;
-            mScreensaverSettings = null;
             mWidgetsSettings = null;
             mPermissionsManagement = null;
             mPermissionMessage = null;

@@ -39,7 +39,7 @@ Fork builds are not yet published on F-Droid. Build from source or use local APK
   * Light, dark, or system theme
   * AMOLED mode for deep blacks
   * Digital or analog clock styles
-  * Customizable interface, screensaver, and widgets
+  * Customizable interface and widgets
   * Dynamic colors for Android 12+
 
 ### • 🌍 **World clock**
