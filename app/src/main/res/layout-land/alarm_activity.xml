@@ -298,6 +298,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/calendar_alarm_snooze_extends"
+                android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:visibility="gone"
                 tools:visibility="visible" />
