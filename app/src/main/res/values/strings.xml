@@ -1792,6 +1792,10 @@
     <string name="calendar_alarm_clone_profile">Clone profile</string>
     <string name="calendar_alarm_clone_name">%s (clone)</string>
     <string name="calendar_alarm_ends_on">ends %s</string>
+    <plurals name="calendar_alarm_snooze_extends">
+        <item quantity="one">Snooze extends the event by %d min</item>
+        <item quantity="other">Snooze extends the event by %d min</item>
+    </plurals>
     <string name="calendar_alarm_event_ends">Event ends now</string>
     <string name="calendar_alarm_rings_at_and_end">Rings at %s and at the end</string>
     <string name="calendar_alarm_rings_at_start_and_end">Rings at %s, at the start and at the end</string>

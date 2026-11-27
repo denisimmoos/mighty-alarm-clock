@@ -661,8 +661,16 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             final com.best.deskclock.provider.CalendarProfile profile =
                 com.best.deskclock.provider.CalendarProfile.getProfile(appContext.getContentResolver(), event.profileId);
             if (event.endAlarmId == alarmId) {
-                // The alarm at the end of the event says so, also on the lock screen.
-                com.best.deskclock.base.AppExecutors.getMainThread().post(this::showCalendarEventEnds);
+                // The alarm at the end of the event says so, also on the lock screen, and how long
+                // a snooze extends the event, if the profile does that.
+                final AlarmInstance instance = mAlarmInstance;
+                final int snoozeMinutes = instance == null ? 0 : instance.mSnoozeDuration;
+                final boolean extends_ = profile != null && profile.extendOnSnooze && snoozeMinutes > 0
+                    && instance != null
+                    && !com.best.deskclock.mighty.calendar.CalendarAlarmRules.isSnoozeLimitReached(profile, instance)
+                    && com.best.deskclock.mighty.calendar.CalendarEventExtender.hasPermission(appContext);
+                final int extendMinutes = extends_ ? snoozeMinutes : 0;
+                com.best.deskclock.base.AppExecutors.getMainThread().post(() -> showCalendarEventEnds(extendMinutes));
             } else if (profile != null && profile.offsetEnabled && event.alarmId == alarmId) {
                 // The early alarm says how long until the event. This is not private, so it
                 // shows also on the lock screen.
@@ -707,7 +715,7 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
     /**
      * Shows that this alarm rings because the event ends.
      */
-    private void showCalendarEventEnds() {
+    private void showCalendarEventEnds(int extendMinutes) {
         if (isFinishing() || isDestroyed() || mBinding == null) {
             return;
         }
@@ -715,7 +723,11 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             mBinding.calendarCountdown.setShadowLayer(mShadowRadius, mShadowOffset, mShadowOffset, mShadowColor);
         }
         mBinding.calendarCountdown.setTextColor(mAlarmTitleColor);
-        mBinding.calendarCountdown.setText(R.string.calendar_alarm_event_ends);
+        final String ends = getString(R.string.calendar_alarm_event_ends);
+        mBinding.calendarCountdown.setText(extendMinutes > 0
+            ? ends + "\n" + getResources().getQuantityString(R.plurals.calendar_alarm_snooze_extends,
+                extendMinutes, extendMinutes)
+            : ends);
         mBinding.calendarCountdown.setVisibility(VISIBLE);
         mBinding.calendarInfo.setVisibility(VISIBLE);
     }
