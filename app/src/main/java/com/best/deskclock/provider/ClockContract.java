@@ -728,6 +728,12 @@ public final class ClockContract {
         String WIFI_OFF_RINGS = "wifi_off_rings";
 
         /**
+         * True if the profile also rings when the event ends. Off by default.
+         * <p>Type: BOOLEAN</p>
+         */
+        String RING_AT_END = "ring_at_end";
+
+        /**
          * Time of day for all-day events in minutes after midnight, or -1 to ignore them.
          * <p>Type: INTEGER</p>
          */
@@ -797,5 +803,17 @@ public final class ClockContract {
          * <p>Type: INTEGER (long)</p>
          */
         String START_ALARM_ID = "start_alarm_id";
+
+        /**
+         * When the event ends, 0 if unknown or for all-day events.
+         * <p>Type: INTEGER (long)</p>
+         */
+        String END = "event_end";
+
+        /**
+         * Id of the alarm at the end of the event, -1 if there is none, or -2 once it was dismissed.
+         * <p>Type: INTEGER (long)</p>
+         */
+        String END_ALARM_ID = "end_alarm_id";
     }
 }

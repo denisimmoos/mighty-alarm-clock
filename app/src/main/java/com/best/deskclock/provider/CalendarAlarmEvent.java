@@ -37,7 +37,9 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
         BEGIN,
         USER_ENABLED,
         ALARM_ID,
-        START_ALARM_ID
+        START_ALARM_ID,
+        END,
+        END_ALARM_ID
     };
 
     private static final int ID_INDEX = 0;
@@ -49,6 +51,8 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
     private static final int USER_ENABLED_INDEX = 6;
     private static final int ALARM_ID_INDEX = 7;
     private static final int START_ALARM_ID_INDEX = 8;
+    private static final int END_INDEX = 9;
+    private static final int END_ALARM_ID_INDEX = 10;
 
     public long id;
     public long profileId;
@@ -64,6 +68,10 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
      * Uses the same values as {@link #alarmId}.
      */
     public long startAlarmId;
+    /** When the event ends, 0 if unknown or for all-day events. */
+    public long end;
+    /** The alarm at the end of the event. Uses the same values as {@link #alarmId}. */
+    public long endAlarmId;
 
     public CalendarAlarmEvent(long profileId, long eventId, long begin, String title) {
         this.id = INVALID_ID;
@@ -75,6 +83,7 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
         this.userEnabled = true;
         this.alarmId = Alarm.INVALID_ID;
         this.startAlarmId = Alarm.INVALID_ID;
+        this.endAlarmId = Alarm.INVALID_ID;
     }
 
     public CalendarAlarmEvent(Cursor c) {
@@ -87,6 +96,8 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
         userEnabled = c.getInt(USER_ENABLED_INDEX) == 1;
         alarmId = c.getLong(ALARM_ID_INDEX);
         startAlarmId = c.getLong(START_ALARM_ID_INDEX);
+        end = c.getLong(END_INDEX);
+        endAlarmId = c.getLong(END_ALARM_ID_INDEX);
     }
 
     /**
@@ -94,7 +105,7 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
      * for it.
      */
     public boolean isDismissed() {
-        return alarmId == ALARM_CONSUMED && startAlarmId < 0;
+        return alarmId == ALARM_CONSUMED && startAlarmId < 0 && endAlarmId < 0;
     }
 
     /**
@@ -118,6 +129,8 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
         values.put(USER_ENABLED, userEnabled ? 1 : 0);
         values.put(ALARM_ID, alarmId);
         values.put(START_ALARM_ID, startAlarmId);
+        values.put(END, end);
+        values.put(END_ALARM_ID, endAlarmId);
         return values;
     }
 
@@ -156,8 +169,8 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
             return null;
         }
         final String id = String.valueOf(alarmId);
-        final List<CalendarAlarmEvent> events = query(cr, ALARM_ID + "=? OR " + START_ALARM_ID + "=?",
-            new String[]{id, id});
+        final List<CalendarAlarmEvent> events = query(cr,
+            ALARM_ID + "=? OR " + START_ALARM_ID + "=? OR " + END_ALARM_ID + "=?", new String[]{id, id, id});
         return events.isEmpty() ? null : events.get(0);
     }
 
@@ -203,6 +216,8 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
         return "(" + alarmIdColumn + " NOT IN (SELECT " + ALARM_ID + " FROM "
             + ClockDatabaseHelper.CALENDAR_ALARM_EVENTS_TABLE_NAME + ") AND "
             + alarmIdColumn + " NOT IN (SELECT " + START_ALARM_ID + " FROM "
+            + ClockDatabaseHelper.CALENDAR_ALARM_EVENTS_TABLE_NAME + ") AND "
+            + alarmIdColumn + " NOT IN (SELECT " + END_ALARM_ID + " FROM "
             + ClockDatabaseHelper.CALENDAR_ALARM_EVENTS_TABLE_NAME + "))";
     }
 
@@ -210,6 +225,7 @@ public final class CalendarAlarmEvent implements ClockContract.CalendarAlarmEven
     @Override
     public String toString() {
         return "CalendarAlarmEvent{id=" + id + ", profileId=" + profileId + ", key='" + eventKey
-            + "', begin=" + begin + ", userEnabled=" + userEnabled + ", alarmId=" + alarmId + ", startAlarmId=" + startAlarmId + "}";
+            + "', begin=" + begin + ", userEnabled=" + userEnabled + ", alarmId=" + alarmId + ", startAlarmId=" + startAlarmId
+            + ", end=" + end + ", endAlarmId=" + endAlarmId + "}";
     }
 }

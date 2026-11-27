@@ -217,6 +217,14 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/ring_at_end_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/calendar_alarm_ring_at_end"
+            android:textSize="16sp" />
+
         <!-- Wi-Fi -->
         <com.google.android.material.textview.MaterialTextView
             style="@style/CalendarAlarmSectionTitle"

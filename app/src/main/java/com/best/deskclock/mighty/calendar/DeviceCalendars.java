@@ -64,16 +64,23 @@ public final class DeviceCalendars {
         public final String title;
         /** One of the {@link CalendarContract.Attendees} ATTENDEE_STATUS values. */
         public final int selfAttendeeStatus;
+        /** When the event ends, 0 if unknown or for all-day events. */
+        public final long end;
 
         EventInstance(long eventId, long begin, String title) {
-            this(eventId, begin, title, CalendarContract.Attendees.ATTENDEE_STATUS_NONE);
+            this(eventId, begin, title, CalendarContract.Attendees.ATTENDEE_STATUS_NONE, 0);
         }
 
         EventInstance(long eventId, long begin, String title, int selfAttendeeStatus) {
+            this(eventId, begin, title, selfAttendeeStatus, 0);
+        }
+
+        EventInstance(long eventId, long begin, String title, int selfAttendeeStatus, long end) {
             this.eventId = eventId;
             this.begin = begin;
             this.title = title == null ? "" : title;
             this.selfAttendeeStatus = selfAttendeeStatus;
+            this.end = end;
         }
     }
 
@@ -170,7 +177,8 @@ public final class DeviceCalendars {
             CalendarContract.Instances.BEGIN,
             CalendarContract.Instances.TITLE,
             CalendarContract.Instances.ALL_DAY,
-            CalendarContract.Instances.SELF_ATTENDEE_STATUS
+            CalendarContract.Instances.SELF_ATTENDEE_STATUS,
+            CalendarContract.Instances.END
         };
         final String selection = CalendarContract.Instances.CALENDAR_ID + "=? AND "
             + (includeAllDay ? "" : CalendarContract.Instances.ALL_DAY + "=0 AND ")
@@ -189,16 +197,20 @@ public final class DeviceCalendars {
             {
                 final int allDayIndex = c.getColumnIndex(CalendarContract.Instances.ALL_DAY);
                 final int statusIndex = c.getColumnIndex(CalendarContract.Instances.SELF_ATTENDEE_STATUS);
+                final int endIndex = c.getColumnIndex(CalendarContract.Instances.END);
                 while (c.moveToNext()) {
                     final boolean allDay = allDayIndex >= 0 && c.getInt(allDayIndex) == 1;
                     if (allDay && !includeAllDay) {
                         continue;
                     }
                     final long begin = allDay ? allDayAlarmTime(c.getLong(1), allDayMinutes) : c.getLong(1);
-                    if (begin > fromMillis && begin <= toMillis) {
+                    // All-day events have no end time to ring at.
+                    final long end = allDay || endIndex < 0 || c.isNull(endIndex) ? 0 : c.getLong(endIndex);
+                    // Upcoming events, and events already running, which can still ring at their end.
+                    if ((begin > fromMillis || end > fromMillis) && begin <= toMillis) {
                         final int status = statusIndex >= 0 && !c.isNull(statusIndex)
                             ? c.getInt(statusIndex) : CalendarContract.Attendees.ATTENDEE_STATUS_NONE;
-                        result.add(new EventInstance(c.getLong(0), begin, c.getString(2), status));
+                        result.add(new EventInstance(c.getLong(0), begin, c.getString(2), status, end));
                     }
                 }
             }

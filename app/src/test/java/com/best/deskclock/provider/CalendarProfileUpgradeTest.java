@@ -134,4 +134,27 @@ public class CalendarProfileUpgradeTest {
         }
         db.close();
     }
+
+    @Test
+    public void upgradeFromVersion39AddsRingAtEndSwitchedOff() {
+        final SQLiteDatabase db = SQLiteDatabase.create(null);
+        db.execSQL("CREATE TABLE calendar_profiles (_id INTEGER PRIMARY KEY, flash INTEGER NOT NULL DEFAULT 0);");
+        db.execSQL("INSERT INTO calendar_profiles (_id) VALUES (1);");
+        db.execSQL("CREATE TABLE calendar_alert_events (_id INTEGER PRIMARY KEY, alarm_id INTEGER NOT NULL DEFAULT -1);");
+        db.execSQL("INSERT INTO calendar_alert_events (_id) VALUES (1);");
+        final ClockDatabaseHelper helper = new ClockDatabaseHelper(ApplicationProvider.getApplicationContext());
+        helper.onUpgrade(db, 39, 40);
+        helper.onUpgrade(db, 39, 40);
+        try (Cursor c = db.rawQuery("SELECT ring_at_end FROM calendar_profiles", null)) {
+            assertTrue(c.moveToFirst());
+            assertEquals(0, c.getInt(0));
+        }
+        try (Cursor c = db.rawQuery("SELECT start_alarm_id, event_end, end_alarm_id FROM calendar_alert_events", null)) {
+            assertTrue(c.moveToFirst());
+            assertEquals(-1, c.getInt(0));
+            assertEquals(0, c.getLong(1));
+            assertEquals(-1, c.getInt(2));
+        }
+        db.close();
+    }
 }

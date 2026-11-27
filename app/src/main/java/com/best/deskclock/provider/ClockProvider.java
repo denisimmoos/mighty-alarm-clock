@@ -472,7 +472,8 @@ public class ClockProvider extends ContentProvider {
      */
     private static void markDeletedCalendarAlarms(SQLiteDatabase db) {
         for (String column : new String[]{ClockContract.CalendarAlarmEventsColumns.ALARM_ID,
-            ClockContract.CalendarAlarmEventsColumns.START_ALARM_ID}) {
+            ClockContract.CalendarAlarmEventsColumns.START_ALARM_ID,
+            ClockContract.CalendarAlarmEventsColumns.END_ALARM_ID}) {
             final ContentValues values = new ContentValues(1);
             values.put(column, CalendarAlarmEvent.ALARM_CONSUMED);
             db.update(CALENDAR_ALARM_EVENTS_TABLE_NAME, values,

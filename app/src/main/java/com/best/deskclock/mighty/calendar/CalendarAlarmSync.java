@@ -114,7 +114,7 @@ public final class CalendarAlarmSync {
      */
     private static void deleteEventAndAlarm(Context context, CalendarAlarmEvent event) {
         final ContentResolver cr = context.getContentResolver();
-        for (long alarmId : new long[]{event.alarmId, event.startAlarmId}) {
+        for (long alarmId : new long[]{event.alarmId, event.startAlarmId, event.endAlarmId}) {
             try {
                 if (alarmExists(cr, alarmId)) {
                     deleteAlarm(context, alarmId);
@@ -294,9 +294,17 @@ public final class CalendarAlarmSync {
                     // The event was deleted, moved, renamed so it no longer matches, or the profile
                     // now points to another calendar or regex.
                     removeEvent(context, event, false);
-                } else if (event.begin < now - PAST_EVENT_RETENTION_MS
-                    || (!alarmExists(cr, event.alarmId) && !alarmExists(cr, event.startAlarmId))) {
+                } else if (Math.max(event.begin, event.end) < now - PAST_EVENT_RETENTION_MS
+                    || (!alarmExists(cr, event.alarmId) && !alarmExists(cr, event.startAlarmId)
+                    && !alarmExists(cr, event.endAlarmId))) {
                     removeEvent(context, event, false);
+                } else if (alarmExists(cr, event.endAlarmId) && event.end > now
+                    && !(profile.enabled && event.userEnabled && profile.ringAtEnd)) {
+                    // The event has started, so the calendar no longer lists it, but its alarm at
+                    // the end is still to come: follow the profile and the event's switch.
+                    event.endAlarmId = reconcileAlarm(context, profile, event, event.endAlarmId,
+                        alarmTimeFor(event.end, now), event.end, false, false, false);
+                    event.save(cr);
                 }
             } catch (Throwable e) {
                 LogUtils.e("CalendarAlarmSync: failed to remove " + event, e);
@@ -317,6 +325,7 @@ public final class CalendarAlarmSync {
                 } else {
                     event.title = instance.title;
                 }
+                event.end = instance.end;
 
                 reconcileAlarms(context, profile, event, profile.enabled && event.userEnabled, false, false);
                 event.save(cr);
@@ -332,7 +341,7 @@ public final class CalendarAlarmSync {
     private static void keepClaims(List<CalendarAlarmEvent> existing, CalendarProfile profile, Set<String> claimedKeys) {
         if (profile.enabled) {
             for (CalendarAlarmEvent event : existing) {
-                if (event.userEnabled && (event.alarmId >= 0 || event.startAlarmId >= 0)) {
+                if (event.userEnabled && (event.alarmId >= 0 || event.startAlarmId >= 0 || event.endAlarmId >= 0)) {
                     claimedKeys.add(event.eventKey);
                 }
             }
@@ -360,7 +369,8 @@ public final class CalendarAlarmSync {
             try {
                 final boolean early = alarmExists(cr, event.alarmId);
                 final boolean start = alarmExists(cr, event.startAlarmId);
-                if (!early && !start) {
+                final boolean end = alarmExists(cr, event.endAlarmId);
+                if (!early && !start && !end) {
                     // Nothing scheduled. A dismissed event stays dismissed.
                     continue;
                 }
@@ -373,6 +383,11 @@ public final class CalendarAlarmSync {
                     deleteAlarm(context, event.startAlarmId);
                     LogUtils.i("CalendarAlarmSync: profile off, removed alarm " + event.startAlarmId);
                     event.startAlarmId = Alarm.INVALID_ID;
+                }
+                if (end) {
+                    deleteAlarm(context, event.endAlarmId);
+                    LogUtils.i("CalendarAlarmSync: profile off, removed alarm " + event.endAlarmId);
+                    event.endAlarmId = Alarm.INVALID_ID;
                 }
                 if (event.begin <= now) {
                     event.delete(cr);
@@ -405,14 +420,28 @@ public final class CalendarAlarmSync {
         final long ringTime = ringTimeFor(profile, event.begin, now);
         final long startTime = alarmTimeFor(event.begin, now);
         final boolean[] armed = planAlarms(profile, event.begin, now, rearmConsumed);
-        event.alarmId = reconcileAlarm(context, profile, event, event.alarmId, ringTime,
+        event.alarmId = reconcileAlarm(context, profile, event, event.alarmId, ringTime, event.begin,
             shouldBeArmed && armed[0], rearmConsumed, stopRinging);
-        final long startAlarmId = reconcileAlarm(context, profile, event, event.startAlarmId, startTime,
+        final long startAlarmId = reconcileAlarm(context, profile, event, event.startAlarmId, startTime, event.begin,
             shouldBeArmed && armed[1], rearmConsumed, stopRinging);
         // Without a second alarm wanted, forget that one was dismissed, so it can come back
         // when the setting is switched on again.
         event.startAlarmId = !profile.ringsEarlyAndAtStart() && startAlarmId == CalendarAlarmEvent.ALARM_CONSUMED
             ? Alarm.INVALID_ID : startAlarmId;
+        final boolean ringsAtEnd = ringsAtEnd(profile, event, now);
+        final long endAlarmId = reconcileAlarm(context, profile, event, event.endAlarmId,
+            alarmTimeFor(event.end, now), event.end, shouldBeArmed && ringsAtEnd, rearmConsumed, stopRinging);
+        event.endAlarmId = !ringsAtEnd && endAlarmId == CalendarAlarmEvent.ALARM_CONSUMED
+            ? Alarm.INVALID_ID : endAlarmId;
+    }
+
+    /**
+     * @return {@code true} if the event gets an alarm when it ends: the profile asks for it, and
+     * the event has an end time in a later minute than its start. All-day events have none.
+     */
+    static boolean ringsAtEnd(CalendarProfile profile, CalendarAlarmEvent event, long now) {
+        return profile.ringAtEnd && event.end > event.begin
+            && alarmTimeFor(event.end, now) > alarmTimeFor(event.begin, now);
     }
 
     /**
@@ -442,10 +471,11 @@ public final class CalendarAlarmSync {
      * @param alarmId  the alarm's current id, {@link Alarm#INVALID_ID} or
      *                 {@link CalendarAlarmEvent#ALARM_CONSUMED}
      * @param ringTime when the alarm rings
+     * @param moment   the event time the alarm is for: its start, or its end
      * @return the alarm's new id, {@link Alarm#INVALID_ID} or {@link CalendarAlarmEvent#ALARM_CONSUMED}
      */
     private static long reconcileAlarm(Context context, CalendarProfile profile, CalendarAlarmEvent event,
-                                       long alarmId, long ringTime, boolean shouldBeArmed,
+                                       long alarmId, long ringTime, long moment, boolean shouldBeArmed,
                                        boolean rearmConsumed, boolean stopRinging) {
         final ContentResolver cr = context.getContentResolver();
         Alarm alarm = alarmId >= 0 ? Alarm.getAlarm(cr, alarmId) : null;
@@ -461,7 +491,9 @@ public final class CalendarAlarmSync {
             return alarm.id;
         }
 
-        if (!shouldBeArmed || event.begin <= System.currentTimeMillis()) {
+        // Once its moment (the event start, or its end for the alarm at the end) has passed,
+        // an alarm that has not rung yet is not needed any more.
+        if (!shouldBeArmed || moment <= System.currentTimeMillis()) {
             if (alarm != null) {
                 deleteAlarm(context, alarm.id);
             }
@@ -592,7 +624,7 @@ public final class CalendarAlarmSync {
 
     private static void removeEvent(Context context, CalendarAlarmEvent event, boolean force) {
         final ContentResolver cr = context.getContentResolver();
-        final long[] alarmIds = {event.alarmId, event.startAlarmId};
+        final long[] alarmIds = {event.alarmId, event.startAlarmId, event.endAlarmId};
         for (long alarmId : alarmIds) {
             if (alarmExists(cr, alarmId) && isRingingOrSnoozed(cr, alarmId)) {
                 // Leave a ringing or snoozed alarm alone. It deletes itself once dismissed.

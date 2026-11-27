@@ -89,7 +89,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         RING_AT_START,
         WIFI_NETWORKS,
         WIFI_CHECK,
-        WIFI_OFF_RINGS
+        WIFI_OFF_RINGS,
+        RING_AT_END
     };
 
     // These must be kept in sync with QUERY_COLUMNS above.
@@ -126,6 +127,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     private static final int WIFI_NETWORKS_INDEX = 30;
     private static final int WIFI_CHECK_INDEX = 31;
     private static final int WIFI_OFF_RINGS_INDEX = 32;
+    private static final int RING_AT_END_INDEX = 33;
 
     public long id;
     public String name;
@@ -181,6 +183,8 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     public boolean wifiCheck;
     /** With the Wi-Fi check, rings anyway while the phone's Wi-Fi is turned off. Off by default. */
     public boolean wifiOffRings;
+    /** Also rings when the event ends. Off by default. */
+    public boolean ringAtEnd;
     /** Time of day for all-day events in minutes after midnight, or {@link #ALL_DAY_IGNORED}. */
     public int allDayMinutes;
     public long createdAt;
@@ -218,6 +222,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         wifiNetworks = "";
         wifiCheck = false;
         wifiOffRings = false;
+        ringAtEnd = false;
         final long now = System.currentTimeMillis();
         createdAt = now;
         updatedAt = now;
@@ -257,6 +262,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         wifiNetworks = c.isNull(WIFI_NETWORKS_INDEX) ? "" : c.getString(WIFI_NETWORKS_INDEX);
         wifiCheck = c.getInt(WIFI_CHECK_INDEX) == 1;
         wifiOffRings = c.getInt(WIFI_OFF_RINGS_INDEX) == 1;
+        ringAtEnd = c.getInt(RING_AT_END_INDEX) == 1;
     }
 
     public ContentValues createContentValues() {
@@ -298,6 +304,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         values.put(WIFI_NETWORKS, wifiNetworks == null ? "" : wifiNetworks);
         values.put(WIFI_CHECK, wifiCheck ? 1 : 0);
         values.put(WIFI_OFF_RINGS, wifiOffRings ? 1 : 0);
+        values.put(RING_AT_END, ringAtEnd ? 1 : 0);
         values.put(CREATED_AT, createdAt);
         values.put(UPDATED_AT, updatedAt);
         return values;

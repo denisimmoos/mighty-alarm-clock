@@ -46,6 +46,7 @@ public class CalendarAlarmSyncTest {
 
     private static final long CALENDAR_ID = 7;
     private static final long OTHER_CALENDAR_ID = 8;
+    private static final long EVENT_LENGTH_MS = TimeUnit.HOURS.toMillis(1);
 
     /** Events served by the fake calendar provider. */
     private static final List<FakeEvent> EVENTS = new ArrayList<>();
@@ -102,12 +103,15 @@ public class CalendarAlarmSyncTest {
             final long calendarId = Long.parseLong(args[0]);
             final MatrixCursor cursor = new MatrixCursor(projection);
             for (FakeEvent event : EVENTS) {
-                if (event.calendarId() == calendarId && event.begin() >= from && event.begin() <= to) {
+                // Like the real provider: every instance that overlaps the window.
+                if (event.calendarId() == calendarId && event.begin() + EVENT_LENGTH_MS > from && event.begin() <= to) {
                     final Object[] row = new Object[projection.length];
                     for (int i = 0; i < projection.length; i++) {
                         switch (projection[i]) {
                             case CalendarContract.Instances.EVENT_ID -> row[i] = event.id();
                             case CalendarContract.Instances.BEGIN -> row[i] = event.begin();
+                            // Every fake event lasts one hour.
+                            case CalendarContract.Instances.END -> row[i] = event.begin() + EVENT_LENGTH_MS;
                             case CalendarContract.Instances.TITLE -> row[i] = event.title();
                             case CalendarContract.Instances.ALL_DAY -> row[i] = event.allDay();
                             case CalendarContract.Instances.SELF_ATTENDEE_STATUS -> row[i] = event.status();
@@ -996,5 +1000,116 @@ public class CalendarAlarmSyncTest {
         assertEquals(Alarm.INVALID_ID, row.alarmId);
         assertTrue(row.startAlarmId >= 0);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
+    }
+
+    @Test
+    public void ringAtEndIsOffByDefaultAndAddsAnAlarmAtTheEnd() {
+        final long begin = inHours(3);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, "Alarm: Meeting"));
+        assertFalse(CalendarProfile.getProfile(mCr, mProfile.id).ringAtEnd);
+        CalendarAlarmSync.syncAll(mContext);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+        assertEquals(Alarm.INVALID_ID, events().get(0).endAlarmId);
+        assertEquals(begin + EVENT_LENGTH_MS, events().get(0).end);
+
+        mProfile.ringAtEnd = true;
+        mProfile.updateProfile(mCr);
+        assertTrue(CalendarProfile.getProfile(mCr, mProfile.id).ringAtEnd);
+        CalendarAlarmSync.syncAll(mContext);
+        final CalendarAlarmEvent row = events().get(0);
+        assertTrue(row.alarmId >= 0);
+        assertTrue(row.endAlarmId >= 0);
+        assertEquals(2, Alarm.getAlarms(mCr, null).size());
+        final List<AlarmInstance> atEnd = AlarmInstance.getInstancesByAlarmId(mCr, row.endAlarmId);
+        assertEquals(1, atEnd.size());
+        assertEquals(begin + EVENT_LENGTH_MS, atEnd.get(0).getAlarmTime().getTimeInMillis());
+        // The alarm at the end belongs to the event and stays out of the normal alarm list.
+        assertEquals(row.id, CalendarAlarmEvent.getEventForAlarm(mCr, row.endAlarmId).id);
+        assertTrue(Alarm.getUserAlarms(mCr).isEmpty());
+
+        // Dismissing the alarm at the start keeps the one at the end.
+        Alarm.deleteAlarm(mCr, row.alarmId);
+        CalendarAlarmSync.syncAll(mContext);
+        assertFalse(events().get(0).isDismissed());
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+
+        // Switching the option off removes it again.
+        mProfile.ringAtEnd = false;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+        assertTrue(events().get(0).isDismissed());
+    }
+
+    @Test
+    public void alarmAtTheEndStaysWhileTheEventIsRunning() {
+        mProfile.ringAtEnd = true;
+        mProfile.updateProfile(mCr);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Meeting"));
+        CalendarAlarmSync.syncAll(mContext);
+        // The event has started: the calendar no longer lists it as upcoming.
+        final CalendarAlarmEvent row = events().get(0);
+        Alarm.deleteAlarm(mCr, row.alarmId);
+        final long now = System.currentTimeMillis();
+        final ContentValues values = new ContentValues();
+        values.put("begin", now - TimeUnit.MINUTES.toMillis(10));
+        values.put("event_end", now + TimeUnit.MINUTES.toMillis(50));
+        mCr.update(CalendarAlarmEvent.getContentUri(row.id), values, null, null);
+        EVENTS.clear();
+        CalendarAlarmSync.syncAll(mContext);
+        assertEquals(1, events().size());
+        assertTrue(Alarm.getAlarm(mCr, row.endAlarmId) != null);
+
+        // Switching the profile's option off removes the alarm at the end.
+        mProfile.ringAtEnd = false;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+    }
+
+    @Test
+    public void ringAtEndAndItsDismissedStateAreRestored() throws Exception {
+        mProfile.ringAtEnd = true;
+        mProfile.updateProfile(mCr);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(5), "Alarm: Flight"));
+        CalendarAlarmSync.syncAll(mContext);
+        // The alarm at the end was dismissed early, the one at the start still waits.
+        Alarm.deleteAlarm(mCr, events().get(0).endAlarmId);
+        final org.json.JSONArray backup = CalendarProfileRestore.exportProfiles(mCr);
+        CalendarProfileRestore.replaceAll(mContext, backup);
+
+        final CalendarProfile restored = CalendarProfile.getProfiles(mCr).get(0);
+        assertTrue(restored.ringAtEnd);
+        restored.calendarId = CALENDAR_ID;
+        restored.calendarName = "Calendar 7";
+        restored.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        final CalendarAlarmEvent row = CalendarAlarmEvent.getEventsForProfile(mCr, restored.id).get(0);
+        assertTrue(row.alarmId >= 0);
+        assertEquals(CalendarAlarmEvent.ALARM_CONSUMED, row.endAlarmId);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+    }
+
+    @Test
+    public void runningEventWhoseStartAlreadyRangStillRingsAtItsEnd() {
+        mProfile.ringAtEnd = true;
+        mProfile.updateProfile(mCr);
+        final long begin = System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, "Alarm: Workshop"));
+        CalendarAlarmSync.syncAll(mContext);
+
+        // No alarm for the start that has passed, one for the end that is still to come.
+        final CalendarAlarmEvent row = events().get(0);
+        assertTrue(row.alarmId < 0);
+        assertTrue(row.endAlarmId >= 0);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+        assertEquals(CalendarAlarmSync.alarmTimeFor(begin + EVENT_LENGTH_MS, System.currentTimeMillis()),
+            AlarmInstance.getInstancesByAlarmId(mCr, row.endAlarmId).get(0).getAlarmTime().getTimeInMillis());
+
+        // A running event without the option gets no alarm.
+        mProfile.ringAtEnd = false;
+        mProfile.updateProfile(mCr);
+        CalendarAlarmSync.syncAll(mContext);
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
     }
 }

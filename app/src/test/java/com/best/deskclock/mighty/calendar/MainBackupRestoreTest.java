@@ -179,6 +179,7 @@ public class MainBackupRestoreTest {
         profile.ringAtStart = false;
         profile.wifiCheck = true;
         profile.wifiOffRings = true;
+        profile.ringAtEnd = true;
         profile.wifiNetworks = "[{\"ssid\":\"Home\",\"bssid\":\"aa:bb:cc:dd:ee:ff\"}]";
         profile.addProfile(cr);
         final android.content.ContentValues before = CalendarProfile.getProfile(cr, profile.id).createContentValues();

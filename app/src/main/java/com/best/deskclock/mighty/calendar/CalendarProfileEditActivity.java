@@ -194,6 +194,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mBinding.offsetHoursInput.setText(offset >= 60 ? String.valueOf(offset / 60) : "");
             mBinding.offsetMinutesInput.setText(String.valueOf(offset % 60));
             mBinding.ringAtStartSwitch.setChecked(mProfile.ringAtStart);
+            mBinding.ringAtEndSwitch.setChecked(mProfile.ringAtEnd);
             mBinding.escalationSwitch.setChecked(mProfile.escalation);
             mBinding.wifiSwitch.setChecked(mProfile.wifiCheck);
             mBinding.wifiOffRingsSwitch.setChecked(mProfile.wifiOffRings);
@@ -719,6 +720,7 @@ public final class CalendarProfileEditActivity extends CollapsingToolbarBaseActi
             mProfile.offsetMinutes = offsetMinutes;
         }
         mProfile.ringAtStart = mBinding.ringAtStartSwitch.isChecked();
+        mProfile.ringAtEnd = mBinding.ringAtEndSwitch.isChecked();
         mProfile.wifiCheck = mBinding.wifiSwitch.isChecked();
         mProfile.wifiOffRings = mBinding.wifiOffRingsSwitch.isChecked();
         mProfile.wifiNetworks = CalendarWifi.toJson(mWifiNetworks);

@@ -660,7 +660,10 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
             }
             final com.best.deskclock.provider.CalendarProfile profile =
                 com.best.deskclock.provider.CalendarProfile.getProfile(appContext.getContentResolver(), event.profileId);
-            if (profile != null && profile.offsetEnabled && event.alarmId == alarmId) {
+            if (event.endAlarmId == alarmId) {
+                // The alarm at the end of the event says so, also on the lock screen.
+                com.best.deskclock.base.AppExecutors.getMainThread().post(this::showCalendarEventEnds);
+            } else if (profile != null && profile.offsetEnabled && event.alarmId == alarmId) {
                 // The early alarm says how long until the event. This is not private, so it
                 // shows also on the lock screen.
                 final long begin = event.begin;
@@ -699,6 +702,22 @@ public class AlarmActivity extends BaseActivity implements View.OnClickListener,
         }
         mBinding.calendarCountdown.setTextColor(mAlarmTitleColor);
         updateCalendarCountdown();
+    }
+
+    /**
+     * Shows that this alarm rings because the event ends.
+     */
+    private void showCalendarEventEnds() {
+        if (isFinishing() || isDestroyed() || mBinding == null) {
+            return;
+        }
+        if (mIsTextShadowDisplayed) {
+            mBinding.calendarCountdown.setShadowLayer(mShadowRadius, mShadowOffset, mShadowOffset, mShadowColor);
+        }
+        mBinding.calendarCountdown.setTextColor(mAlarmTitleColor);
+        mBinding.calendarCountdown.setText(R.string.calendar_alarm_event_ends);
+        mBinding.calendarCountdown.setVisibility(VISIBLE);
+        mBinding.calendarInfo.setVisibility(VISIBLE);
     }
 
     private void updateCalendarCountdown() {

@@ -292,11 +292,16 @@ public final class CalendarProfileEventsActivity extends CollapsingToolbarBaseAc
             String dateText = consumed
                 ? date + " · " + context.getString(R.string.calendar_alarm_event_dismissed)
                 : context.getString(R.string.calendar_alarm_next, date);
-            if (!consumed && profile.offsetEnabled && event.alarmId != CalendarAlarmEvent.ALARM_CONSUMED) {
+            final long now = System.currentTimeMillis();
+            final boolean atEnd = CalendarAlarmSync.ringsAtEnd(profile, event, now);
+            if (!consumed && (profile.offsetEnabled || atEnd) && event.alarmId != CalendarAlarmEvent.ALARM_CONSUMED) {
                 // With an offset, the alarm rings before the event time shown on the left.
-                final long ringTime = CalendarAlarmSync.ringTimeFor(profile, event.begin, System.currentTimeMillis());
-                dateText += " · " + context.getString(profile.ringAtStart
-                        ? R.string.calendar_alarm_rings_at_and_start : R.string.calendar_alarm_rings_at,
+                final long ringTime = CalendarAlarmSync.ringTimeFor(profile, event.begin, now);
+                final boolean atStart = profile.ringsEarlyAndAtStart();
+                final int text = atEnd
+                    ? (atStart ? R.string.calendar_alarm_rings_at_start_and_end : R.string.calendar_alarm_rings_at_and_end)
+                    : (atStart ? R.string.calendar_alarm_rings_at_and_start : R.string.calendar_alarm_rings_at);
+                dateText += " · " + context.getString(text,
                     DateFormat.getTimeFormat(context).format(new java.util.Date(ringTime)));
             }
             mItem.eventDate.setText(dateText);

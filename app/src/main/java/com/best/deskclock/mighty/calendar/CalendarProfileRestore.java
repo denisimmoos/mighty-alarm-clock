@@ -67,14 +67,19 @@ public final class CalendarProfileRestore {
             final boolean dismissed = event.isDismissed();
             // The early alarm of a profile that rings before the event and again at its start.
             final boolean earlyDismissed = event.alarmId == CalendarAlarmEvent.ALARM_CONSUMED;
-            if (event.begin > now && (!event.userEnabled || dismissed || earlyDismissed)) {
+            final boolean startDismissed = event.startAlarmId == CalendarAlarmEvent.ALARM_CONSUMED;
+            final boolean endDismissed = event.endAlarmId == CalendarAlarmEvent.ALARM_CONSUMED;
+            if (event.begin > now
+                && (!event.userEnabled || dismissed || earlyDismissed || startDismissed || endDismissed)) {
                 events.put(new JSONObject()
                     .put("event_id", event.eventId)
                     .put("begin", event.begin)
                     .put("title", event.title == null ? "" : event.title)
                     .put("switched_off", !event.userEnabled)
                     .put("dismissed", dismissed)
-                    .put("early_dismissed", earlyDismissed));
+                    .put("early_dismissed", earlyDismissed)
+                    .put("start_dismissed", startDismissed)
+                    .put("end_dismissed", endDismissed));
             }
         }
         return events;
@@ -93,11 +98,15 @@ public final class CalendarProfileRestore {
             final CalendarAlarmEvent event = new CalendarAlarmEvent(profileId, json.optLong("event_id"),
                 json.optLong("begin"), json.optString("title"));
             event.userEnabled = !json.optBoolean("switched_off");
-            if (json.optBoolean("dismissed")) {
+            final boolean all = json.optBoolean("dismissed");
+            if (all || json.optBoolean("early_dismissed")) {
                 event.alarmId = CalendarAlarmEvent.ALARM_CONSUMED;
+            }
+            if (all || json.optBoolean("start_dismissed")) {
                 event.startAlarmId = CalendarAlarmEvent.ALARM_CONSUMED;
-            } else if (json.optBoolean("early_dismissed")) {
-                event.alarmId = CalendarAlarmEvent.ALARM_CONSUMED;
+            }
+            if (all || json.optBoolean("end_dismissed")) {
+                event.endAlarmId = CalendarAlarmEvent.ALARM_CONSUMED;
             }
             try {
                 event.save(cr);
