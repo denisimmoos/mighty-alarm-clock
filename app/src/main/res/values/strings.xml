@@ -1825,7 +1825,7 @@
     <string name="calendar_alarm_snooze_3">Long</string>
     <string name="calendar_alarm_error_snooze_order">Snooze lengths must go up: short &lt; medium &lt; long (max 999 min).</string>
     <string name="calendar_alarm_snooze_button">+%d</string>
-    <string name="calendar_alarm_snooze_action">+%d min</string>
+    <string name="calendar_alarm_snooze_action">+%d</string>
     <string name="calendar_alarm_max_snoozes">Max snoozes</string>
     <string name="calendar_alarm_max_snoozes_help">Empty = unlimited</string>
     <string name="calendar_alarm_section_dismiss">Lock screen and dismiss</string>

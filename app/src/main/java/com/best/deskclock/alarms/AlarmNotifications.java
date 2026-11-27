@@ -480,6 +480,8 @@ public final class AlarmNotifications {
                 content.setTextViewText(buttons[i],
                     localizedContext.getString(R.string.calendar_alarm_snooze_action, snoozeChoices[i]));
                 content.setOnClickPendingIntent(buttons[i], snoozePendingIntent);
+                content.setContentDescription(buttons[i], localizedContext.getResources().getQuantityString(
+                    R.plurals.alarm_alert_snooze_set, snoozeChoices[i], snoozeChoices[i]));
             }
             notification.setStyle(new NotificationCompat.DecoratedCustomViewStyle())
                 .setCustomContentView(content)
