@@ -1,90 +1,101 @@
 <!--suppress CheckImageSize -->
-# <img width="24" height="24" alt="image" src="/fastlane/metadata/android/en-US/images/icon.png" /> Mighty Calendar Alarm
-**Mighty Calendar Alarm** is a HutterSoft fork of [Clock](https://github.com/BlackyHawky/Clock) (AOSP-inspired), focused on alarms from Google Calendar events: profiles matched by event title, fullscreen alarms with snooze, end-of-event alarms, Wi‑Fi conditions and backup. Timer, Stopwatch and Clock are kept; normal alarms were removed.
+# <img width="28" height="28" alt="App icon" src="fastlane/metadata/android/en-US/images/icon.png" /> Mighty Calendar Alarm
 
-Application ID: `redpantyhose.claude.mightycalendaralarm` (installs side by side with the upstream Clock app).
+**Mighty Calendar Alarm** turns events in your Google Calendar into real, fullscreen alarms.
+You decide which events ring with profiles: each profile watches one calendar and rings for
+every event whose title matches its pattern, for example every event that starts with ⏰.
+Clock, Timer and Stopwatch are included. The app has no internet permission.
 
-# 📑 Table of Contents
+It is a fork of [Clock](https://github.com/BlackyHawky/Clock) by BlackyHawky, which is based on AOSP Clock.
 
-- [Download](#-download)
-- [Features](#-features)
-- [Common Issues](#-common-issues)
-- [License](#-license)
-- [Credits](#-credits)
+# 📅 Calendar alarms
 
-# 📥 Download
+### How it works
+1. Open the **Calendar** tab and tap **+** to create a profile (or long-press the app icon and pick **Create new profile**).
+2. Pick a calendar and enter a title filter, for example `⏰` or `^Alarm:`.
+3. Every matching event in the next 7 to 30 days gets an alarm. The app checks your calendar every 15 minutes and after every change.
+4. Tap a profile to see its upcoming alarms and switch single alarms off.
 
-Fork builds are not yet published on F-Droid. Build from source or use local APKs.
+When an alarm rings you get a big **Dismiss** button and three snooze buttons (by default 5, 10 and 20 minutes), on the alarm screen and in the notification.
 
-> [!NOTE]  
-> **Build variants:**
-> - **Release:** Stable versions recommended for everyday use.
-> - **Nightly:** Experimental builds with the latest changes.
-> - **Debug:** Developer-oriented builds with extra logging and diagnostics.
->
-> All variants (Release, Nightly, Debug) can be installed side by side without conflict.
-> This fork also installs side by side with upstream `com.best.deskclock`.
+### What a profile can do
+* Several profiles, each with its own calendar, title filter, sound and behaviour
+* The same calendar can be used by several profiles with different filters
+* Skip events you declined or answered "maybe" to, optionally ring for all-day events
+* Ring before the event starts, and optionally again when it ends
+* Three snooze lengths, optional extending of the event in the calendar when you snooze
+* Optional Wi‑Fi condition: ring only near a chosen network
+* Volume as a share of the app's alarm volume, vibration, flashlight and escalation
+* Shows title, description and place on the lock screen (can be switched off)
 
-# ✨ Features
+### Calendar tab
+All your profiles at a glance. Each card shows the profile name, how many alarms it has in the next days, the next alarm, and which calendar and title filter it uses. The switch turns a profile on or off, the gear opens its settings, and **+** creates a new profile.
 
-### • 📅 **Calendar alarms**
+<img src="docs/screenshots/calendar-tab.jpg" width="300" alt="Calendar tab" />
 
-* Alarms from Google Calendar events, matched to profiles by a title regex
-* Per profile: calendar, ringtone, volume, vibration, offset, escalation and max alert duration
-* Three snooze lengths, optional extend-event-on-snooze, and alarms at the end of events
-* Optional Wi-Fi condition (ring only near a chosen network)
-* Flip or shake to dismiss/postpone, power or volume buttons to snooze/stop
+### Upcoming alarms of a profile
+Tapping a profile lists every event that will ring, with time, title and date. Each alarm can be switched off on its own, for example to skip one day.
 
-### • 🎨 **Customization**
-  * Light, dark, or system theme
-  * AMOLED mode for deep blacks
-  * Digital or analog clock styles
-  * Customizable interface and widgets
-  * Dynamic colors for Android 12+
+<img src="docs/screenshots/silent-profile-alarms.jpg" width="300" alt="Upcoming alarms of a profile" />
 
-### • 🌍 **World clock**
-  * Display home time when abroad
-  * View time in multiple cities worldwide
+### A profile with a single alarm
+Another profile with one matching event in the next days. The line at the top says which calendar is checked and which title filter is used.
 
-### • ⏱️ **Timer & stopwatch**
-  * Built-in timer and stopwatch
-  * Share stopwatch results with contacts
+<img src="docs/screenshots/profile-alarms.jpg" width="300" alt="A profile with a single alarm" />
 
-### • ⚙️ **Extra features**
-  * Quick settings tiles (Android 7+)
-  * Backup & restore of calendar profiles and settings (except custom ringtones)
-  * Material Design UI
-  * Support for [Direct Boot](https://developer.android.com/privacy-and-security/direct-boot)
-  * Alarm support on some Snapdragon devices when powered off
+### All profile options
+The whole profile editor from top to bottom: name and calendar, title filter and look-ahead, which events ring, timing, the Wi‑Fi condition, sound and vibration, maximum ring time, the three snooze lengths and the lock screen.
 
-> [!NOTE]  
-> Some extra features may not work on certain devices:
-> - **Direct Boot support**: see the discussion [here](https://github.com/BlackyHawky/Clock/issues/396).
-> - **Power‑off alarm on Snapdragon devices**: may fail even if the _"com.qualcomm.qti.poweroffalarm"_ system app is present. See the discussion [here](https://github.com/BlackyHawky/Clock/issues/88).
+<img src="docs/screenshots/edit-profile-full.jpg" width="320" alt="All profile options" />
 
-# 🐞 Common Issues
+# 🌍 Clock
 
-* Device-specific issues may occur due to limited testing.
-* On Android 14+ with HyperOS, the _"Full screen notification"_ permission may be revoked. Possible solution [here](https://github.com/BlackyHawky/Clock/discussions/303#discussioncomment-13407709).
-* MIUI users may face problems due to aggressive battery optimizations.
-  * Please make sure that battery optimizations are disabled for the app before opening an issue.
+* Big digital or analog clock with the next alarm
+* World clock with a rotatable globe, local time and cities around the world
+
+### Clock tab
+The current time with the next alarm, a rotatable globe showing day and night, and the time in your chosen cities.
+
+<img src="docs/screenshots/clock-tab.jpg" width="300" alt="Clock tab" />
+
+# ⏱️ Timer and stopwatch
+
+* Timer with keypad, several named stopwatches
+
+### Timer tab
+A simple timer: type the duration on the keypad and start it. Next to it are the Calendar, Clock and Stopwatch tabs.
+
+<img src="docs/screenshots/timer.jpg" width="300" alt="Timer tab" />
+
+# ⚙️ More
+
+* Backup and restore of profiles and settings, optionally on a schedule (older backups still import)
+* App shortcuts: Create new profile, New timer, Start stopwatch
+* Widgets that show the next calendar alarm, quick settings tiles
+* Light, dark or system theme, AMOLED mode, accent colors (Blue by default)
+* English and German
+
+# 📥 Install
+
+There are no store builds yet. Build the app from this branch with Android Studio, or install an APK built from it.
+
+Application ID: `redpantyhose.claude.mightycalendaralarm` (debug builds add `.debug`). The app installs side by side with the original Clock app.
+
+The app needs access to your calendar. For the Wi‑Fi condition it also needs location access, which Android requires to see Wi‑Fi networks; no location data is collected or sent.
+
+# 🐞 Common issues
+
+* Disable battery optimization for the app, otherwise some phones delay the calendar check or the alarm.
+* On Android 14 and newer some phones (for example with HyperOS) revoke the "Full screen notification" permission. Allow it again in the app's permission settings.
 
 # 📜 License
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
-Clock is licensed under **GNU General Public License v3.0 (GPLv3)**.
-This strong copyleft license requires that any modifications or larger works using Clock must also be distributed under the same license, with complete source code available.
-
-See the [LICENSE](LICENSE) file for full details.
-
-> [!NOTE]  
-> Since Clock is based on **AOSP Clock**, which is licensed under **Apache License 2.0**, an additional [Apache 2.0](LICENSE-Apache-2.0) license file is provided in this repository.
+Mighty Calendar Alarm is licensed under the **GNU General Public License v3.0**. Any modified version must be released under the same license with its full source code.
+See [LICENSE](LICENSE). As it is based on **AOSP Clock**, which uses the Apache License 2.0, the [Apache 2.0](LICENSE-Apache-2.0) license file is included too.
 
 # 🏅 Credits
-* 🖼️ **App icon**: Soft 3D calendar and clock icon made for this fork
-* 💻 Code references and inspiration from:
-    * [LineageOS](https://github.com/LineageOS/android_packages_apps_DeskClock)
-    * [crDroid Android](https://github.com/crdroidandroid/android_packages_apps_DeskClock)
-* 🌍 Translations provided by the community via [Weblate](https://translate.codeberg.org/projects/clock/)
-* 🤝 Thanks to all [contributors](https://github.com/BlackyHawky/Clock/graphs/contributors) who help improve Clock
+* [Clock](https://github.com/BlackyHawky/Clock) by BlackyHawky and its contributors, the base of this app
+* Code references from [LineageOS](https://github.com/LineageOS/android_packages_apps_DeskClock) and [crDroid](https://github.com/crdroidandroid/android_packages_apps_DeskClock)
+* Translations of the original app by the community via [Weblate](https://translate.codeberg.org/projects/clock/)
