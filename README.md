@@ -1,7 +1,7 @@
 <!--suppress CheckImageSize -->
-# <img width="28" height="28" alt="App icon" src="fastlane/metadata/android/en-US/images/icon.png" /> Mighty Calendar Alarm
+# <img width="28" height="28" alt="App icon" src="fastlane/metadata/android/en-US/images/icon.png" /> Mighty Calendar Alarms
 
-**Mighty Calendar Alarm** turns events in your Google Calendar into real, fullscreen alarms.
+**Mighty Calendar Alarms** turns events in your Google Calendar into real, fullscreen alarms.
 You decide which events ring with profiles: each profile watches one calendar and rings for
 every event whose title matches its pattern, for example every event that starts with ⏰.
 Clock, Timer and Stopwatch are included. The app has no internet permission.
@@ -108,7 +108,7 @@ The app needs access to your calendar. For the Wi‑Fi condition it also needs l
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
-Mighty Calendar Alarm is licensed under the **GNU General Public License v3.0**. Any modified version must be released under the same license with its full source code.
+Mighty Calendar Alarms is licensed under the **GNU General Public License v3.0**. Any modified version must be released under the same license with its full source code.
 See [LICENSE](LICENSE). As it is based on **AOSP Clock**, which uses the Apache License 2.0, the [Apache 2.0](LICENSE-Apache-2.0) license file is included too.
 
 # 🏅 Credits

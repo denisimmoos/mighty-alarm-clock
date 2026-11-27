@@ -1,4 +1,4 @@
-Mighty Calendar Alarm (redpantyhose.claude.mightycalendaralarm) turns your calendar
+Mighty Calendar Alarms (redpantyhose.claude.mightycalendaralarm) turns your calendar
 events into fullscreen alarms. It is a fork of BlackyHawky's Clock (based on AOSP),
 released under the GNU General Public License v3.0 (GPL-3.0).
 

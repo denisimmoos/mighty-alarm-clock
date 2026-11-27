@@ -4,7 +4,7 @@
     modified
     SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_label">Mighty Calendar Alarm</string>
+    <string name="app_label">Mighty Calendar Alarms</string>
     <string name="default_label">Alarma</string>
     <string name="delete">Desaniciar</string>
     <string name="default_timer_ringtone_title">Caducó\'l temporizador</string>

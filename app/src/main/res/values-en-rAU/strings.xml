@@ -4,7 +4,7 @@
     modified
     SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_label" msgid="6674495003718166674">Mighty Calendar Alarm</string>
+    <string name="app_label" msgid="6674495003718166674">Mighty Calendar Alarms</string>
     <string name="default_label" msgid="5590025289805630372">"Alarm"</string>
     <string name="delete" msgid="5732434972457000541">"Delete"</string>
     <string name="default_alarm_ringtone_title" msgid="2916376768509623643">Default Alarm Sound</string>

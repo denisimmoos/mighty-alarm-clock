@@ -8,7 +8,7 @@ package com.best.deskclock;
 public final class ProjectUrls {
 
     /** Repository of this app (no trailing slash). */
-    public static final String GITHUB_REPO = "https://github.com/denisimmoos/mighty-alarm-clock";
+    public static final String GITHUB_REPO = "https://github.com/denisimmoos/mighty-calendar-alarms";
 
     /** Branch the calendar-only app is built from. */
     private static final String BRANCH = "feature/calendar-only";

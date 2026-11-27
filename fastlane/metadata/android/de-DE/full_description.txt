@@ -1,4 +1,4 @@
-Mighty Calendar Alarm (redpantyhose.claude.mightycalendaralarm) macht aus deinen
+Mighty Calendar Alarms (redpantyhose.claude.mightycalendaralarm) macht aus deinen
 Kalenderterminen Vollbild-Wecker. Die App ist ein Fork von BlackyHawkys Clock
 (basierend auf AOSP) und steht unter der GNU General Public License v3.0 (GPL-3.0).
 
