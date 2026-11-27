@@ -220,7 +220,6 @@
     <string name="power_button_title">Butonul de pornire</string>
     <string name="add_label">Adaugă o etichetă</string>
     <string name="about_title">Despre</string>
-    <string name="app_slogan">Ceas 100% FOSS, bazat pe AOSP</string>
     <string name="version">Versiune</string>
     <string name="version_text">Versiune <xliff:g id="VERSION_NUMBER" example="1.0">%1$s</xliff:g></string>
     <string name="whats_new_title">Ce este nou</string>
@@ -272,8 +271,6 @@
     <string name="permission_granted">Acordată</string>
     <string name="title_theme">Temă</string>
     <string name="display_card_background_title">Afișează fundalurile cardului</string>
-    <string name="first_launch_main_feature_message">► Temă deschisă, întunecată sau de sistem; &lt;br&gt; &lt;br&gt; ► Screensaver personalizabil; &lt;br&gt; &lt;br&gt; ► Widgeturi personalizabil; &lt;br&gt; &lt;br&gt; ► Design material și culori dinamice; &lt;br&gt; &lt;br&gt; ► Glisează pentru a șterge o alarmă; &lt;br&gt; &lt;br&gt; ► Dublează o alarmă; &lt;br&gt; &lt;br&gt; ► Acțiune de întoarcere și agitare pentru a anula/amâna alarma; &lt;br&gt; &lt;br&gt; ► Oprește/amână alarma cu butonul de pornire sau butoanele de volum;&lt;br&gt; &lt;br&gt; ► %s</string>
-    <string name="first_launch_important_info_message">Pentru a te asigura că aplicația funcționează corect, &lt;b&gt;unele dintre setările dispozitivului trebuie să fie modificate:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;NU DERANJA;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt; b&gt;OPTIMIZAREA BATERIEI;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;NOTIFICĂRI;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;În funcție de versiunea Android a dispozitivului, unele dintre aceste setări sunt deja optimizate (de exemplu, notificările).&lt;/i&gt; &lt;br&gt; &lt;br&gt; Le poți modifica acum sau mai târziu în setările de gestionare a permisiunilor:</string>
     <string name="permission_dialog_revoke_title">Revocă accesul</string>
     <string name="ignore_battery_optimizations_title">IGNORĂ OPTIMIZAREA BATERIEI</string>
     <string name="ignore_battery_optimizations_dialog_text">În mod implicit, sistemul Android configurează toate aplicațiile instalate de utilizator pentru a fi optimizate pentru a economisi durata de viață a bateriei.

@@ -207,7 +207,6 @@
     <string name="invalid_timer" msgid="900957020728335675">"Вибрано недійсний таймер"</string>
     <string name="no_expired_timers" msgid="4624192298397846876">"Немає використаних таймерів"</string>
     <string name="add_label">Додати мітку</string>
-    <string name="app_slogan">100% вільний годинник на основі проєкту Android Open Source</string>
     <string name="version">Версія</string>
     <string name="about_title">Про додаток</string>
     <string name="title_theme">Тема</string>
@@ -270,7 +269,6 @@
     <string name="shake_action_title">Дія струшування пристрою</string>
     <string name="notifications_dialog_text">Окрім встановлення будильників, цей додаток також має режими таймера та секундоміра. \n \nЩоб сповіщення коректно відображалися для всіх модулів, а особливо щоб спрацьовував будильник, рекомендуємо активувати сповіщення для цього додатка.</string>
     <string name="max_clock_font_size_title">Максимальний розмір шрифту для основного годинника</string>
-    <string name="first_launch_main_feature_message">► Світла, темна або системна тема;&lt;br&gt;&lt;br&gt;► Налаштовувана заставка;&lt;br&gt;&lt;br&gt;► Налаштовувані віджети;&lt;br&gt;&lt;br&gt;► Підтримка плиток у швидких налаштуваннях (для Android 7+);&lt;br&gt;&lt;br&gt;► Резервне копіювання і відновлення даних додатка (крім користувацьких мелодій);&lt;br&gt;&lt;br&gt;► Material design і динамічні кольори;&lt;br&gt;&lt;br&gt;► Встановлення будильника на певну дату;&lt;br&gt;&lt;br&gt;► Провести пальцем, щоб видалити будильник;&lt;br&gt;&lt;br&gt;► Дублювання будильників;&lt;br&gt;&lt;br&gt;► Вимкнення/відкладення будильника перевертанням або струшуванням пристрою;&lt;br&gt;&lt;br&gt;► Вимкнення/відкладення будильника за допомогою кнопки живлення або кнопок гучності;&lt;br&gt;&lt;br&gt;► %s</string>
     <string name="city_name_color_title">Колір назви міста</string>
     <string name="display_card_background_summary">Відображає фон для деяких елементів (будильники, міста, кнопка таймера тощо)</string>
     <string name="display_background_border_title">Рамки фону</string>
@@ -290,7 +288,6 @@
     <string name="screensaver_daydream_settings_summary">Відкриває основні налаштування заставки Android</string>
     <string name="screensaver_settings_summary">Налаштування стилю, шрифту і кольору заставки</string>
     <string name="first_launch_important_info_title">ВАЖЛИВА ІНФОРМАЦІЯ</string>
-    <string name="first_launch_important_info_message">Щоб додаток працював належним чином, необхідно &lt;b&gt;змінити деякі налаштування Вашого пристрою:&lt;/b&gt;&lt;br&gt;&lt;br&gt; • &lt;b&gt;Оптимізація заряду акумулятора;&lt;/b&gt;&lt;br&gt;&lt;br&gt; • &lt;b&gt;Сповіщення;&lt;/b&gt;&lt;br&gt;&lt;br&gt; %s • &lt;b&gt;Сховище &lt;i&gt;(необов’язково).&lt;/i&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Залежно від версії Android Вашого пристрою, деякі з цих налаштувань (наприклад, Сповіщення) можуть бути вже оптимізовані.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Ви можете змінити їх зараз або пізніше в налаштуваннях управління дозволами:</string>
     <string name="ignore_battery_optimizations_title">ІГНОРУВАТИ ОПТИМІЗАЦІЮ ЗАРЯДУ</string>
     <string name="ignore_battery_optimizations_dialog_title">Оптимізація заряду акумулятора</string>
     <string name="screensaver_bold_date_title">Дата жирним</string>

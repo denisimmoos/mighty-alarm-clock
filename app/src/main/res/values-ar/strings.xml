@@ -400,7 +400,6 @@
     <string name="sort_cities_ascending_time_zone">حسب المنطقة الزمنية (ترتيب تصاعدي)</string>
     <string name="sort_cities_descending_time_zone">حسب المنطقة الزمنية (ترتيب تنازلي)</string>
     <string name="about_title">عن البرنامج</string>
-    <string name="app_slogan">ساعة مفتوحة المصدر بنسبة 100%، مبنية على نظام أندرويد مفتوح المصدر</string>
     <string name="version">إصدار</string>
     <string name="version_text">إصدار <xliff:g id="VERSION_NUMBER" example="1.0">%1$s</xliff:g></string>
     <string name="whats_new_title">ما الجديد</string>
@@ -487,10 +486,8 @@
     <string name="first_launch_main_feature_title">الميزات الرئيسية</string>
     <string name="first_launch_button_now">الآن</string>
     <string name="first_launch_button_later">لاحقًا</string>
-    <string name="first_launch_main_feature_message">◄ مظهر فاتح، داكن أو مظهر النظام؛ &lt;br&gt; &lt;br&gt; ◄ شاشة توقف قابلة للتخصيص؛ &lt;br&gt; &lt;br&gt; ◄ أدوات (widgets) قابلة للتخصيص؛ &lt;br&gt; &lt;br&gt; ◄ دعم المربعات في الإعدادات السريعة (لإصدار أندرويد 7 فما فوق)؛ &lt;br&gt; &lt;br&gt; ◄ نسخ. احتياطي واستعادة بيانات التطبيق (باستثناء نغمات الرنين المخصَّصة)؛ &lt;br&gt; &lt;br&gt; ◄ تصميم \"ماتيريال\" وألوان ديناميكية؛ &lt;br&gt; &lt;br&gt; ◄ ضبط التنبيهات لتاريخ محدّد؛ &lt;br&gt; &lt;br&gt; ◄ السحب لحذف التنبيه؛ &lt;br&gt; &lt;br&gt; ◄ تكرار التنبيه؛ &lt;br&gt; &lt;br&gt; ◄ خاصية القلب والهز لإهمال/تأجيل التنبيه؛ &lt;br&gt; &lt;br&gt; ◄ إيقاف/تأجيل التنبيه باستخدام زر الطاقة أو أزرار الصوت؛ &lt;br&gt; &lt;br&gt; ◄ %s</string>
     <string name="first_launch_main_feature_link">… وأكثر من ذلك بكثير!</string>
     <string name="first_launch_important_info_title">معلومات هامة</string>
-    <string name="first_launch_important_info_message">لضمان عمل التطبيق بشكل صحيح، &lt;b&gt;يجب تغيير بعض إعدادات جهازك:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;تحسين البطارية؛&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;الإشعارات؛&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s *اعتمادًا على إصدار الأندرويد الخاص بجهازك، قد تكون بعض هذه الإعدادات محسنة بالفعل (مثل الإشعارات).* &lt;br&gt; &lt;br&gt; يمكنك تغييرها الآن أو لاحقًا من خلال إعدادات إدارة الأذونات:</string>
     <string name="display_city_title">عرض المدن</string>
     <string name="display_date_title">عرض التاريخ</string>
     <string name="display_next_alarm_title">عرض المنبه التالي</string>

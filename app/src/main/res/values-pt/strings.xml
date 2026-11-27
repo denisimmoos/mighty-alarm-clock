@@ -234,7 +234,6 @@
     <string name="timer_label_box_title">Etiqueta de Timer</string>
     <string name="timer_button_time_box_title">Minutos para adicionar ao timer</string>
     <string name="alarm_settings_summary">Definir toque padrão, volume, ações para ignorar ou adiar alarmes, o primeiro dia da semana e a hora da notificação do lembrete</string>
-    <string name="app_slogan">Relógio 100% FOSS, baseado em AOSP</string>
     <string name="orange_accent_color">Laranja</string>
     <string name="indigo_accent_color">Índigo</string>
     <string name="red_accent_color">Vermelho</string>
@@ -310,7 +309,6 @@
     <string name="alarm_snooze_channel">Alarmes com soneca</string>
     <string name="stopwatch_channel">Cronômetro</string>
     <string name="first_launch_important_info_message_for_SDK34">• &lt;b&gt;NOTIFICAÇÕES DE TELA CHEIA;&lt;/b&gt; &lt;br&gt; &lt;br&gt;</string>
-    <string name="first_launch_important_info_message">Para garantir que o aplicativo funcione corretamente, &lt;b&gt;algumas das configurações do seu dispositivo devem ser alteradas:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;OTIMIZAÇÃO DE BATERIA;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;NOTIFICAÇÕES;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;Dependendo da versão do Android de seu dispositivo, algumas dessas configurações já estão otimizadas (ex.: notificações).&lt;/i&gt; &lt;br&gt; &lt;br&gt; Você pode alterá-las agora ou posteriormente nas configurações de gerenciamento de permissões:</string>
     <string name="widget_background_title">Mostrar plano de fundo</string>
     <string name="hour_default_color_title">Use a cor padrão para as horas</string>
     <string name="hour_color_title">Cor das horas personalizada</string>
@@ -321,7 +319,6 @@
     <string name="city_clock_default_color_title">Usar a cor padrão para o relógio da cidade</string>
     <string name="flip_action_title">Ação de virar o dispositivo</string>
     <string name="first_launch_main_feature_link">… e muito mais!</string>
-    <string name="first_launch_main_feature_message">► Claro, escuro ou tema do sistema; &lt;br&gt; &lt;br&gt; ► Protetor de tela personalizável; &lt;br&gt; &lt;br&gt; ► Widgets personalizáveis; &lt;br&gt; &lt;br&gt; ► Suporte para blocos em configurações rápidas (para Android 7+); &lt;br&gt; &lt;br&gt; ► Configurações de backup e restauração &lt;br&gt; &lt;br &gt; ► Material design e cores dinâmicas; &lt;br&gt; &lt;br&gt; ► Deslize para excluir um alarme; &lt;br&gt; &lt;br&gt; ► Duplique um alarme; &lt;br&gt; &lt;br&gt; ► Ação de virar e chacoalhar para desativar/adiar alarme; &lt;br&gt; &lt;br&gt; ► Desligar/adiar o alarme com os botões de ligar ou de volume; &lt;br&gt; &lt;br&gt; ► %s</string>
     <string name="city_clock_color_title">Cor personalizada do relógio da cidade</string>
     <string name="minute_color_title">Cor dos minutos personalizada</string>
     <string name="date_default_color_title">Usar a cor padrão para a data</string>

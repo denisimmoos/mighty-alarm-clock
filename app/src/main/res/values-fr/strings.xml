@@ -204,7 +204,6 @@
     <string name="city_checked" msgid="616847871968019">"Case \"<xliff:g id="CITY_NAME">%s</xliff:g>\" cochée"</string>
     <string name="city_unchecked" msgid="710212932781145918">"Case \"<xliff:g id="CITY_NAME">%s</xliff:g>\" décochée"</string>
     <string name="about_title">À propos</string>
-    <string name="app_slogan">Horloge 100% FOSS, basée sur AOSP</string>
     <string name="version">Version</string>
     <string name="version_text">Version <xliff:g id="VERSION_NUMBER" example="1.0">%1$s</xliff:g></string>
     <string name="whats_new_title">Nouveautés</string>
@@ -282,16 +281,8 @@
     <string name="first_launch_main_feature_title">PRINCIPALES FONCTIONNALITÉS</string>
     <string name="first_launch_button_now">Maintenant</string>
     <string name="first_launch_button_later">Plus tard</string>
-    <string name="first_launch_main_feature_message">► Thème clair, sombre ou système ; &lt;br&gt; &lt;br&gt; ► Économiseur d\'écran personnalisable ; &lt;br&gt; &lt;br&gt; ► Widgets personnalisables ; &lt;br&gt; &lt;br&gt; ► Prise en charge des tuiles dans les paramètres rapides (pour Android 7+) ; &lt;br&gt; &lt;br&gt; ► Sauvegarder et restaurer les données de l\'application (à l\'exception des sonneries personnalisées) ; &lt;br&gt; &lt;br&gt; ► Design Material et couleurs dynamiques ; &lt;br&gt; &lt;br&gt; ► Régler les alarmes à une date spécifique ; &lt;br&gt; &lt;br&gt; ► Glisser pour supprimer une alarme ; &lt;br&gt; &lt;br&gt; ► Dupliquer une alarme ; &lt;br&gt; &lt;br&gt; ► L\'action de retourner ou de secouer l\'appareil permet d\'arrêter ou de reporter l\'alarme ; &lt;br&gt; &lt;br&gt; ► Désactiver ou reporter l\'alarme à l\'aide de la touche d\'alimentation ou des touches de volume ; &lt;br&gt; &lt;br&gt; ► %s</string>
     <string name="first_launch_main_feature_link">… et bien plus encore !</string>
     <string name="first_launch_important_info_title">INFORMATION IMPORTANTE</string>
-    <string name="first_launch_important_info_message">
-        Pour s\'assurer que l\'application fonctionne correctement, &lt;b&gt;certains paramètres de votre appareil doivent être modifiés :&lt;/b&gt; &lt;br&gt; &lt;br&gt;
-        • &lt;b&gt;OPTIMISATION DE LA BATTERIE ;&lt;/b&gt; &lt;br&gt; &lt;br&gt;
-        • &lt;b&gt;NOTIFICATIONS ;&lt;/b&gt; &lt;br&gt; &lt;br&gt;
-        %s
-        &lt;i&gt;Selon la version Android de votre appareil, certains de ces paramètres sont déjà optimisés (par exemple, les notifications).&lt;/i&gt; &lt;br&gt; &lt;br&gt;
-        Vous pouvez les modifier maintenant ou plus tard dans les paramètres de gestion des autorisations :</string>
     <string name="first_launch_important_info_message_for_SDK34">• &lt;b&gt;NOTIFICATIONS EN PLEIN ÉCRAN ;&lt;/b&gt; &lt;br&gt; &lt;br&gt;</string>
     <string name="first_launch_dialog_title">Quitter</string>
     <string name="first_launch_dialog_message">Êtes-vous sûr de vouloir quitter l\'application ?</string>

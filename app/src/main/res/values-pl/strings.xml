@@ -245,9 +245,7 @@
     <string name="sw_settings_summary">Dostosuj czcionkę i działania przycisków głośności</string>
     <string name="settings_vibration_title">Włącz wibracje</string>
     <string name="screensaver_settings_summary">Dostosuj styl, czcionkę i kolor wygaszacza ekranu</string>
-    <string name="first_launch_main_feature_message">► Motyw jasny, ciemny lub systemowy; &lt;br&gt; &lt;br&gt; ► Dostosowywalny wygaszacz ekranu; &lt;br&gt; &lt;br&gt; ► Dostosowywalne widżety; &lt;br&gt; &lt;br&gt; ► Obsługa kafelków w szybkich ustawieniach (dla Androida 7+); &lt;br&gt; &lt;br&gt; ► Tworzenie kopii zapasowej i przywracanie danych aplikacji (oprócz niestandardowych dzwonków); &lt;br&gt; &lt;br&gt; ► Material design i dynamiczne kolory; &lt;br&gt; &lt;br&gt; ► Ustawianie alarmów na określoną datę; &lt;br&gt; &lt;br&gt; ► Przesunięcie palcem w celu usunięcia alarmu; &lt;br&gt; &lt;br&gt; ► Duplikowanie alarmu; &lt;br&gt; &lt;br&gt; ► Odwrócenie/odroczenie alarmu poprzez przewrócenie i potrząśnięcie; &lt;br&gt; &lt;br&gt; ► Wyłącz/odroczenie alarmu za pomocą przycisku zasilania lub przycisków głośności; &lt;br&gt; &lt;br&gt; ► %s</string>
     <string name="timer_label_box_title">Etykieta minutnika</string>
-    <string name="app_slogan">Zegar w 100% FOSS, oparty na AOSP</string>
     <string name="screensaver_preview_summary">Uruchamia wygaszacz ekranu</string>
     <string name="firing_alarms_timers_channel">Uruchamianie alarmów i minutników</string>
     <string name="city_name_color_title">Niestandardowy kolor nazwy miasta</string>
@@ -321,7 +319,6 @@
     <string name="screensaver_bold_digital_clock_title">Zegar cyfrowy pogrubiony</string>
     <string name="first_launch_main_feature_link">… i wiele więcej!</string>
     <string name="first_launch_important_info_title">WAŻNE INFORMACJE</string>
-    <string name="first_launch_important_info_message">Aby aplikacja działała prawidłowo, &lt;b&gt;należy zmienić niektóre ustawienia urządzenia:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;OPTYMALIZACJA BATERII;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;POWIADOMIENIA;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;W zależności od wersji systemu Android na urządzeniu niektóre z tych ustawień są już zoptymalizowane (np. powiadomienia).&lt;/i&gt; &lt;br&gt; &lt;br&gt; Możesz je zmienić teraz lub później w ustawieniach zarządzania uprawnieniami:</string>
     <string name="background_color_title">Kolor tła</string>
     <string name="display_city_title">Wyświetl miasta</string>
     <string name="clock_default_color_title">Użyj domyślnego koloru dla zegara głównego</string>

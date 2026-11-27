@@ -217,7 +217,6 @@
     <string name="style_category_title">Välimus</string>
     <string name="alarm_notification_reminder_title">Teavituse meeldetuletus</string>
     <string name="timer_add_custom_time">+ %s</string>
-    <string name="app_slogan">AOSP-l põhinev, 100% avatud lähtekoodiga kell</string>
     <string name="display_background_border_summary">See eelistus võimaldab mõnede rakenduse elementide (äratused, linnad, taimeri nupud, jne) puhul kuvada taustu äärejoontega</string>
     <string name="display_background_border_title">Kuva taustade äärejooni</string>
     <string name="settings_vibration_title">Kasuta vibreerimist/värinat</string>
@@ -241,7 +240,6 @@
     <string name="dialog_close">Sulge</string>
     <string name="screensaver_daydream_settings_summary">Järgnevaga avame Androidi ekraanisäästja seadistused</string>
     <string name="notifications_dialog_text">Lisaks äratamisele saad seda rakendust kasutada ka taimerina ja stopperina. \n \nEt kõik teavitused toimiksid korrektsel kõikide nende valikute, eriti aga äratuste, puhul, siis palun luba rakendusel kuvada teavitusi.</string>
-    <string name="first_launch_main_feature_message">► Hele, tume või süsteemi poolt määratud kujundus; &lt;br&gt; &lt;br&gt; ► Kohandatav ekraanisäästja; &lt;br&gt; &lt;br&gt; ► Kohandatavad vidinad; &lt;br&gt; &lt;br&gt; ► Paanide tugi kiirseadistustes (alates Androidi versioonist 7); &lt;br&gt; &lt;br&gt; ► Rakenduse andmete varundamine ja taastamine (v.a. kohandatud helinad); &lt;br&gt; &lt;br&gt; ► Material design ja dünaamilised värvid; &lt;br&gt; &lt;br&gt; ► Äratuse lisamine kindlaks kuupäevaks; &lt;br&gt; &lt;br&gt;► Äratuse kustutamiseks viipa; &lt;br&gt; &lt;br&gt; ► Saad teha äratusest koopa; &lt;br&gt; &lt;br&gt; ► Kasuta pööramist ja raputamist äratusest loobumiseks või tema edasilükkamiseks; &lt;br&gt; &lt;br&gt; ► Saad lülitada äratuse välja või ta edasi lükata toimetnupuga või helivaljuse nuppudega; &lt;br&gt; &lt;br&gt; ► %s</string>
     <string name="alarm_settings_summary">Seadista välimust, kirjatüüpi, vaikimisi helinat, valjust, tegevusi äratuste edasilükkamiseks või katkestamiseks, nädala alguspäeva ja meeldetuletuste teavituse aega</string>
     <string name="description_direction_both_for_non_repeatable_alarm">Loobumiseks viipa vasakule või paremale</string>
     <string name="default_time_to_add_to_timer_title">Taimeritele vaikimisi lisatav aeg</string>
@@ -296,7 +294,6 @@
     <string name="notifications_permission_title">LUBA TEAVITUSED</string>
     <string name="ignore_battery_optimizations_title">EIRA AKUKASUTUSE OPTIMEERIMIST</string>
     <string name="ignore_battery_optimizations_dialog_title">Akukasutuse optimeerimine</string>
-    <string name="first_launch_important_info_message">Selleks, et olla kindel rakenduse korrektses toimimises, &lt;b&gt;vajavad mõned nutiseadme seadistused muutmist:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;AKUKASUTUSE OPTIMEERIMINE;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;TEAVITUSED;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;Sõltuvalt sinu nutiseadme Androidi versioonist on mõned seadistused juba optimaalsed (nt. teavitused).&lt;/i&gt; &lt;br&gt; &lt;br&gt; Sa võid neid muuta kas kohe või hiljem õiguste halduse vaatest:</string>
     <string name="date_default_color_title">Kasuta kuupäeva jaoks vaikimisi värve</string>
     <string name="city_clock_default_color_title">Kasuta linnade kella jaoks oma värve</string>
     <string name="city_name_default_color_title">Kasuta linnade nimede jaoks vaikimisi värvi</string>

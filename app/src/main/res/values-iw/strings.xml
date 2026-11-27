@@ -356,7 +356,6 @@
     <string name="clock_dial_without_numbers">בלי מספרים</string>
     <string name="clock_second_hand_title">מחוג לשניות</string>
     <string name="analog_clock_size_title">גודל שעון אנלוגי</string>
-    <string name="app_slogan">יישום שעון שהוא 100% תוכנה חופשית וקוד פתוח, מבוסס על AOSP (מיזם הקוד הפתוח של אנדרואיד)</string>
     <string name="version_text">גרסה <xliff:g id="VERSION_NUMBER" example="1.0">%1$s</xliff:g></string>
     <string name="whats_new_dialog_message">מגלים מה חדש:\n\n%s</string>
     <string name="gnu_gpl">הרישיון הציבורי הכללי של GNU, גרסה 3.0</string>

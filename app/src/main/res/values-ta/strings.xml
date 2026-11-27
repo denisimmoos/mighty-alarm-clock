@@ -341,7 +341,6 @@
     <string name="sort_cities_ascending_time_zone">நேர மண்டலத்தின்படி (ஏறுவரிசை)</string>
     <string name="sort_cities_descending_time_zone">நேர மண்டலத்தின்படி (இறங்கு வரிசை)</string>
     <string name="about_title">பற்றி</string>
-    <string name="app_slogan">100% FOSS கடிகாரம், AOSP அடிப்படையிலானது</string>
     <string name="version">பதிப்பு</string>
     <string name="version_text">பதிப்பு <xliff:g id="VERSION_NUMBER" example="1.0">%1$s</xliff:g></string>
     <string name="whats_new_title">என்ன புதுசு</string>
@@ -438,10 +437,8 @@
     <string name="first_launch_main_feature_title">முக்கிய நற்பொருத்தங்கள்</string>
     <string name="first_launch_button_now">இப்போது</string>
     <string name="first_launch_button_later">பின்னர்</string>
-    <string name="first_launch_main_feature_message">► ஒளி, இருண்ட அல்லது கணினி தீம்; &lt;br&gt; &lt;br&gt; ► தனிப்பயனாக்கக்கூடிய ச்கிரீன்சேவர்; &lt;br&gt; &lt;br&gt; ► தனிப்பயனாக்கக்கூடிய விட்செட்டுகள்; &lt;br&gt; &lt;br&gt; ► விரைவான அமைப்புகளில் டைல்களுக்கான உதவி (Android 7+ க்கு); &lt;br&gt; &lt;br&gt; ► காப்புப்பிரதி மற்றும் பயன்பாட்டுத் தரவை மீட்டமைத்தல் (தனிப்பயன் ரிங்டோன்கள் தவிர); &lt;br&gt; &lt;br&gt; ► பொருள் வடிவமைப்பு மற்றும் மாறும் வண்ணங்கள்; &lt;br&gt; &lt;br&gt; ► அலாரங்களை குறிப்பிட்ட தேதிக்கு அமைக்கவும்; &lt;br&gt; &lt;br&gt; ► அலாரத்தை நீக்க ச்வைப் செய்யவும்; &lt;br&gt; &lt;br&gt; ► அலாரத்தை நகலெடுக்கவும்; &lt;br&gt; &lt;br&gt; ► அலாரத்தை நிராகரிக்க/ஒத்திவைக்க புரட்டு மற்றும் குலுக்கல்; &lt;br&gt; &lt;br&gt; ► பவர் பட்டன் அல்லது வால்யூம் பட்டன்கள் மூலம் அலாரத்தை அணைக்கவும்/ ஒத்திவைக்கவும்; &lt;br&gt; &lt;br&gt; ► %s</string>
     <string name="first_launch_main_feature_link">… மேலும் பல!</string>
     <string name="first_launch_important_info_title">முக்கியமான செய்தி</string>
-    <string name="first_launch_important_info_message">ஆப்ச் சரியாகச் செயல்படுவதை உறுதிசெய்ய, &lt;b&gt;உங்கள் சாதன அமைப்புகளில் சில மாற்றப்பட வேண்டும்:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;பேட்டரி ஆப்டிமைசேசன்;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;NOTIFICATIONS;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;உங்கள் சாதனத்தின் ஆண்ட்ராய்டு பதிப்பைப் பொறுத்து (உங்கள் சாதனத்தின் சில அமைப்புகள், ஏற்கனவே தேர்வு செய்யப்படவில்லை.&lt;/b&gt; இந்த அமைப்புகளில் சில). &lt;br&gt; இசைவு மேலாண்மை அமைப்புகளில் அவற்றை இப்போது அல்லது பின்னர் மாற்றலாம்:</string>
     <string name="first_launch_important_info_message_for_SDK34">• &lt;b&gt;முழுத் திரை அறிவிப்புகள்;&lt;/b&gt; &lt;br&gt; &lt;br&gt;</string>
     <string name="first_launch_dialog_title">வெளியேறு</string>
     <string name="first_launch_dialog_message">விண்ணப்பத்திலிருந்து நிச்சயமாக வெளியேற விரும்புகிறீர்களா?</string>

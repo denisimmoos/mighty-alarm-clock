@@ -372,7 +372,6 @@
     <string name="city_note_dialog_title">%s címkéje</string>
     <string name="sort_manually">Kézzel (ráhúzva)</string>
     <string name="about_title">Névjegy</string>
-    <string name="app_slogan">100% FOSS C Óra, az AOSP alapján</string>
     <string name="version_text">Verzió <xliff:g id="VERSION_NUMBER" example="1.0">%1$s</xliff:g></string>
     <string name="whats_new_dialog_message">Tekintse át a változásokat:\n\n%s</string>
     <string name="features_title">Fő funkciók</string>
@@ -452,10 +451,8 @@
     <string name="first_launch_main_feature_title">FŐ FUNKCIÓK</string>
     <string name="first_launch_button_now">Most</string>
     <string name="first_launch_button_later">Később</string>
-    <string name="first_launch_main_feature_message">► Világos, sötét vagy rendszerkövető téma; &lt;br&gt; &lt;br&gt; ► Személyre szabható képernyőkímélő; &lt;br&gt; &lt;br&gt; ► Szmeélyre szabható widgetek; &lt;br&gt; &lt;br&gt; ► A gyors beállítáokban levő csempe támogatása (Android 7+ esetén); &lt;br&gt; &lt;br&gt; ► App adatok mentése és visszaállítása (kivétel az egyedi csengőhang); &lt;br&gt; &lt;br&gt; ► Material dizájn és dinamikus színek; &lt;br&gt; &lt;br&gt; ► Ébresztő beállítása bizonyos dátumra; &lt;br&gt; &lt;br&gt; ► Félrehúzás az ébresztő törléséhez; &lt;br&gt; &lt;br&gt; ► Ébresztő duplikálása; &lt;br&gt; &lt;br&gt; ► Átforgatás és rázás műveletekkel való ébresztőelvetés/késleltetés; &lt;br&gt; &lt;br&gt; ► Ébresztő kikapcsolása / késleltetése a bekapcsoló- és hangerőgombokkal; &lt;br&gt; &lt;br&gt; ► %s</string>
     <string name="first_launch_main_feature_link">…és még sok más!</string>
     <string name="first_launch_important_info_title">FONTOS INFORMÁCIÓ</string>
-    <string name="first_launch_important_info_message">Az app megfelelő működésének biztosítása érdekében, &lt;b&gt;bizonyos beállításokat engedélyezni kell:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;AKKSI OPTIMALIZÁCIÓ;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;ÉRTESÍTÉSEK;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;A készüléke Android verziójától függően egyes beállítások már alapból optimalizálásra kerültek (pl. értesítések).&lt;/i&gt; &lt;br&gt; &lt;br&gt; Most, vagy akár később is meg tudja őket változtatni az engedély kezelés beállításoknál:</string>
     <string name="first_launch_important_info_message_for_SDK34">• &lt;b&gt;TELJES KÉPERNYŐS ÉRTESÍTÉSEK;&lt;/b&gt; &lt;br&gt; &lt;br&gt;</string>
     <string name="first_launch_dialog_title">Kilépés</string>
     <string name="first_launch_dialog_message">Biztosan ki akar lépni az applikációból?</string>

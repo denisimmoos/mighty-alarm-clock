@@ -336,7 +336,6 @@
     <string name="minute_default_color_title">Dakikalar için varsayılan rengi kullan</string>
     <string name="minute_color_title">Dakika rengi</string>
     <string name="date_default_color_title">Tarih için varsayılan rengi kullanın</string>
-    <string name="app_slogan">AOSP tabanlı, %100 Ücretsiz Açık Kaynak Kodlu Saat</string>
     <string name="city_name_default_color_title">Şehir adı için varsayılan rengi kullanın</string>
     <string name="alarm_title_default_color">Alarm başlığı için varsayılan rengi kullanın</string>
     <string name="settings_fade_transitions_title">Ekran geçişlerinde solma efektini etkinleştir</string>
@@ -384,8 +383,6 @@
     <string name="show_lockscreen_permission_title">KİLİT EKRANINDA GÖSTER</string>
     <string name="ignore_battery_optimizations_dialog_text">Android pil tasarrufu yapmak için bütün kullanıcı uygulamalarını varsayılan olarak optimize eder. \n\nBu durum çoğu uygulama için kabul edilebilir ancak bu bir alarm uygulamasıdır ve pil optimizasyonu sık sorun çıkarabilir. Etkinleştirilirse Android uygulamayı herhangi bir anda sonlandırarak, kurulmuş alarmları iptal ederek uygulamanın çalışmasını kötü yönde etkileyebilir. \n\nUygulamayı pil optimizasyonunda beyaz listeye almanızı tavsiye ederiz.</string>
     <string name="version_text">Sürüm <xliff:g id="VERSION_NUMBER" example="1.0">%1$s</xliff:g></string>
-    <string name="first_launch_main_feature_message">► Aydınlık, karanlık veya sistem teması; &lt;br&gt; &lt;br&gt; ► Özelleştirilebilir ekran koruyucu; &lt;br&gt; &lt;br&gt; ► Özelleştirilebilir widget\'lar; &lt;br&gt; &lt;br&gt; ► Hızlı ayarlarda kutucuk desteği (Android 7+); &lt;br&gt; &lt;br&gt; ► Uygulama verilerini yedekle ve geri yükle (özel zil sesleri hariç); &lt;br&gt; &lt;br&gt; ► Material tasarım ve dinamik renkler; &lt;br&gt; &lt;br&gt; ► Alarmları belli bir tarihe ayarla; &lt;br&gt; &lt;br&gt;► Alarm silmek için kaydır; &lt;br&gt; &lt;br&gt; ► Alarm çoğaltma; &lt;br&gt; &lt;br&gt; ► Alarmı kapatmak/ertelemek için ters çevirme ve sallama hareketi; &lt;br&gt; &lt;br&gt; ► Alarmı güç tuşu veya ses tuşlarıyla kapat/ertele; &lt;br&gt; &lt;br&gt; ► %s</string>
-    <string name="first_launch_important_info_message">Uygulamanın sorunsuz çalışmasını sağlamak için &lt;b&gt;bazı cihaz ayarlarınızın değişmesi gerekiyor:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;PİL OPTİMİZASYONU;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;BİLDİRİMLER;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;Cihazınızın Android sürümüne bağlı olarak bazı ayarlar zaten optimize edilmiştir (örn. bildirimler).&lt;/i&gt; &lt;br&gt; &lt;br&gt; Şimdi veya daha sonra izin yönetimi ayarlarından değiştirebilirsiniz:</string>
     <string name="notifications_dialog_text">Alarm ayarlarına ek olarak bu uygulamanın aynı zamanda zamanlayıcı ve kronomotre modu da vardır. \n\nÖzellikle alarmın çalışması ve bütün modüllerin bildirimlerinin gözükmesi için uygulamanın bildirimlerini etkinleştirmenizi tavsiye ederiz.</string>
     <string name="display_card_background_title">Kart arka planlarını görüntüle</string>
     <string name="display_background_border_title">Arka plan kenarlıklarını göster</string>

@@ -236,7 +236,6 @@
     <string name="timer_add_custom_time">+ %s</string>
     <string name="clock_settings_summary">Настройка стиля, шрифта, часового пояса, даты и времени на устройстве</string>
     <string name="next_alarm_color_title">Цвет следующего будильника</string>
-    <string name="first_launch_important_info_message">Чтобы гарантировать правильную работу приложения, &lt;b&gt;некоторые настройки вашего устройства должны быть изменены:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;ОПТИМИЗАЦИЯ РАСХОДА ЗАРЯДА БАТАРЕИ;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;УВЕДОМЛЕНИЯ;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;В зависимости от версии Android на вашем устройстве, некоторые из этих настроек уже оптимизированы (например, уведомления).&lt;/i&gt; &lt;br&gt; &lt;br&gt; Вы можете изменить их сейчас или позже в настройках управления разрешениями:</string>
     <string name="first_launch_dialog_message">Выйти из приложения?</string>
     <string name="display_city_title">Показывать города</string>
     <string name="next_alarm_default_color_title">Цвет по умолчанию для следующего будильника</string>
@@ -249,7 +248,6 @@
     <string name="ringtone_category_title">Рингтон</string>
     <string name="interface_customization_settings">Внешний вид</string>
     <string name="swipe_action_title">Свайп для выключения или откладывания будильника</string>
-    <string name="app_slogan">100% FOSS Часы, основанные на AOSP</string>
     <string name="version">Версия</string>
     <string name="whats_new_title">Что нового</string>
     <string name="features_title">Основные функции</string>
@@ -293,7 +291,6 @@
     <string name="interface_customization_summary">Настройка стиля, шрифта, языка и цвета приложения</string>
     <string name="add_label">Добавить ярлык</string>
     <string name="screensaver_italic_date_title">Курсивный шрифт даты</string>
-    <string name="first_launch_main_feature_message">► Светлая, тёмная или системная тема; &lt;br&gt; &lt;br&gt; ► Настраиваемая заставка; &lt;br&gt; &lt;br&gt; ► Настраиваемые виджеты; &lt;br&gt; &lt;br&gt; ► Поддержка плиток в быстрых настройках (для Android 7+); &lt;br&gt; &lt;br&gt; ► Резервное копирование и восстановление данных приложения (кроме пользовательских рингтонов); &lt;br&gt; &lt;br&gt; ► Material дизайн и динамические цвета; &lt;br&gt; &lt;br&gt; ► Установка будильника на определенную дату; &lt;br&gt; &lt;br&gt; ► Свайп для удаления будильника; &lt;br&gt; &lt;br&gt; ► Дублирование будильника; &lt;br&gt; &lt;br&gt; ► Переворот или встряхивание устройства для выключения/откладывания будильника; &lt;br&gt; &lt;br&gt; ► Выключение/откладывание будильника с помощью кнопки питания или кнопок громкости; &lt;br&gt; &lt;br&gt; ► %s</string>
     <string name="timer_label_box_title">Ярлык таймера</string>
     <string name="timer_button_time_box_title">Время для добавления к таймеру</string>
     <string name="default_time_to_add_to_timer_title">Время по умолчанию, которое добавляется к таймеру</string>

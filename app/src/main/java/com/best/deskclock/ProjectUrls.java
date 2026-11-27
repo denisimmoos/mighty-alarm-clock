@@ -10,7 +10,9 @@ public final class ProjectUrls {
     /** Base repository URL (no trailing slash). */
     public static final String GITHUB_REPO = "https://github.com/RapidAppCoder/mighty-alarm-clock";
 
-    public static final String GITHUB_FEATURES = GITHUB_REPO + "?tab=readme-ov-file#-features";
+    /** Feature list of the calendar-only app (README on the fork's branch). */
+    public static final String GITHUB_FEATURES =
+        "https://github.com/denisimmoos/mighty-alarm-clock/tree/feature/calendar-only?tab=readme-ov-file#-features";
 
     public static final String GITHUB_LICENSE = GITHUB_REPO + "/blob/main/LICENSE";
 

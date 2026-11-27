@@ -287,7 +287,6 @@
     <string name="screensaver_bold_next_alarm_title">粗體下個鬧鐘</string>
     <string name="screensaver_daydream_settings_summary">開啟系統螢幕保護程式設定</string>
     <string name="first_launch_dialog_message">要離開應用程式嗎？</string>
-    <string name="first_launch_main_feature_message">► 淺色、深色及系統主題&lt;br&gt; &lt;br&gt; ► 自訂螢幕保護程式&lt;br&gt; &lt;br&gt; ► 自訂小工具&lt;br&gt; &lt;br&gt; ► 快速設定方塊 (Android 7 以上)&lt;br&gt; &lt;br&gt; ► 備份與還原資料 (不含自訂鈴聲)&lt;br&gt; &lt;br&gt; ► Material 外觀與動態色彩&lt;br&gt; &lt;br&gt; ► 為指定日期配置鬧鐘&lt;br&gt; &lt;br&gt; ► 滑動刪除鬧鐘&lt;br&gt; &lt;br&gt; ► 複製鬧鐘&lt;br&gt; &lt;br&gt; ► 翻轉或搖動裝置以關閉 / 延後鬧鐘&lt;br&gt; &lt;br&gt; ► 按下電源鍵或音量鍵以關閉 / 延後鬧鐘&lt;br&gt; &lt;br&gt; ► %s</string>
     <string name="widget_max_font_size_title">小工具文字大小</string>
     <string name="restart_app_dialog_title_for_restore">還原完成</string>
     <string name="alarm_upcoming_channel">即將啟動的鬧鐘</string>
@@ -334,7 +333,6 @@
     <string name="description_direction_both_for_occasional_alarm">向左滑動延後或向右滑動關閉並刪除鬧鐘</string>
     <string name="widgets_settings_summary">設定小工具樣式、色彩與字型</string>
     <string name="FSN_dialog_text">Android 14 以上必須授予「全螢幕通知」權限，才能在休眠狀態啟動鬧鐘。</string>
-    <string name="first_launch_important_info_message">您必須&lt;b&gt;變更部分裝置設定&lt;/b&gt;，才能使應用程式正常運作。&lt;br&gt; &lt;br&gt; • &lt;b&gt;電池效能最佳化&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;通知&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;部分內容可能有所變化 (例如通知)，依您裝置的 Android 版本而定。&lt;/i&gt; &lt;br&gt; &lt;br&gt; 您可立即變更或稍後前往權限管理頁面：</string>
     <string name="snooze_button_color">「延後」按鍵色彩</string>
     <string name="dismiss_button_color">「關閉」按鍵色彩</string>
     <string name="alarm_button_color">鬧鐘按鍵色彩</string>
@@ -342,7 +340,6 @@
     <string name="screensaver_bold_digital_clock_title">粗體數位時鐘</string>
     <string name="screensaver_italic_next_alarm_title">斜體下個鬧鐘</string>
     <string name="swipe_action_title">滑動以延後或關閉鬧鐘</string>
-    <string name="app_slogan">源自 AOSP，100% 自由與開源的鬧鐘</string>
     <string name="city_name_color_title">城市名稱色彩</string>
     <string name="github_dialog_message">造訪這個計畫的 GitHub 頁面\n\n%s</string>
     <string name="whats_new_dialog_message">探索新功能：\n\n%s</string>

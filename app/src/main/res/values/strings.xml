@@ -842,7 +842,7 @@
     <!-- Menu item About -->
     <string name="about_title">About</string>
     <!-- App slogan -->
-    <string name="app_slogan">100% FOSS Clock, based on AOSP</string>
+    <string name="app_slogan">Your calendar events as alarms</string>
     <!-- Version for about screen -->
     <string name="version">Version</string>
     <!-- Version text [CHAR LIMIT=30] -->
@@ -1238,17 +1238,15 @@
     <string name="first_launch_button_now">Now</string>
     <string name="first_launch_button_later">Later</string>
     <string name="first_launch_main_feature_message">
-        ► Light, dark or system theme; &lt;br&gt; &lt;br&gt;
-        ► Customizable screensaver; &lt;br&gt; &lt;br&gt;
-        ► Customizable widgets; &lt;br&gt; &lt;br&gt;
-        ► Support for tiles in quick settings (for Android 7+); &lt;br&gt; &lt;br&gt;
-        ► Back up and restore application data (except custom ringtones); &lt;br&gt; &lt;br&gt;
-        ► Material design and dynamic colors; &lt;br&gt; &lt;br&gt;
-        ► Set the alarms to a specific date; &lt;br&gt; &lt;br&gt;
-        ► Swipe to delete an alarm; &lt;br&gt; &lt;br&gt;
-        ► Duplicate an alarm; &lt;br&gt; &lt;br&gt;
-        ► Flip and shake action to dismiss/postpone alarm; &lt;br&gt; &lt;br&gt;
-        ► Turn off/postpone the alarm with the power button or volume buttons; &lt;br&gt; &lt;br&gt;
+        ► Alarms from your Google Calendar events; &lt;br&gt; &lt;br&gt;
+        ► Profiles match events by title (for example \"Alarm:\"), one calendar per profile; &lt;br&gt; &lt;br&gt;
+        ► Per profile: ringtone, volume, vibration, offset, escalation and max alert duration; &lt;br&gt; &lt;br&gt;
+        ► Fullscreen alarm with a big Dismiss button and three snooze lengths; &lt;br&gt; &lt;br&gt;
+        ► Optional alarm at the end of an event and extend-event-on-snooze; &lt;br&gt; &lt;br&gt;
+        ► Optional Wi-Fi condition: rings only near a chosen network; &lt;br&gt; &lt;br&gt;
+        ► Flip, shake, power or volume buttons to snooze or dismiss; &lt;br&gt; &lt;br&gt;
+        ► Timer, stopwatch, world clock and widgets; &lt;br&gt; &lt;br&gt;
+        ► Back up and restore profiles and settings (except custom ringtones); &lt;br&gt; &lt;br&gt;
         ► %s</string>
     <!-- Title of the link to the web page inserted in the main features message -->
     <string name="first_launch_main_feature_link">… and much more!</string>
@@ -1257,6 +1255,7 @@
         To ensure that the application works properly, &lt;b&gt;some of your device settings must be changed:&lt;/b&gt; &lt;br&gt; &lt;br&gt;
         • &lt;b&gt;BATTERY OPTIMIZATION;&lt;/b&gt; &lt;br&gt; &lt;br&gt;
         • &lt;b&gt;NOTIFICATIONS;&lt;/b&gt; &lt;br&gt; &lt;br&gt;
+        • &lt;b&gt;CALENDAR ACCESS;&lt;/b&gt; &lt;br&gt; &lt;br&gt;
         %s
         &lt;i&gt;Depending on the Android version of your device, some of these settings are already optimized (e.g. notifications).&lt;/i&gt; &lt;br&gt; &lt;br&gt;
         You can change them now or later in the permission management settings:</string>

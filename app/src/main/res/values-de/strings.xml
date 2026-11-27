@@ -286,7 +286,7 @@
     <string name="max_clock_font_size_title">Schriftgröße der Hauptuhr</string>
     <string name="FSN_dialog_text">Damit der Wecker bei ausgeschaltetem Bildschirm ausgelöst werden kann, muss seit Android 14 die Berechtigung für \"Vollbild-Benachrichtigungen\" aktiviert sein.</string>
     <string name="gnu_gpl">GNU-General-Public-Lizenz v3.0</string>
-    <string name="app_slogan">100% FOSS; „Uhr“ basiert auf AOSP</string>
+    <string name="app_slogan">Deine Kalendertermine als Wecker</string>
     <string name="version_text">Version <xliff:g id="VERSION_NUMBER" example="1.0">%1$s</xliff:g></string>
     <string name="notifications_dialog_text">Neben dem Stellen von Weckern verfügt diese App auch über einen Timer- und einen Stoppuhr-Modus. \n \nDamit die Benachrichtigungen für alle Module korrekt angezeigt werden und insbesondere der Wecker ausgelöst wird, empfehlen wir, die Benachrichtigungen für diese Anwendung zu aktivieren.</string>
     <string name="title_dark_theme_mode">Dunkel-Modus</string>
@@ -308,8 +308,18 @@
     <string name="display_city_title">Städte anzeigen</string>
     <string name="clock_default_color_title">Standardfarbe für Hauptuhr verwenden</string>
     <string name="FSN_dialog_title">Vollbild-​Benachrichtigungen</string>
-    <string name="first_launch_main_feature_message">► Helles, dunkles oder System-Thema; &lt;br&gt; &lt;br&gt; ► Anpassbarer Bildschirmschoner; &lt;br&gt; &lt;br&gt; ► Anpassbare Widgets; &lt;br&gt; &lt;br&gt; ► Unterstützung für Kacheln in den Schnelleinstellungen (für Android 7+); &lt;br&gt; &lt;br&gt; ► Sichern und Wiederherstellen von Einstellungen (außer benutzerdefinierte Wecktöne); &lt;br&gt; &lt;br&gt; ► Material-Design und dynamische Farben; &lt;br&gt; &lt;br&gt; ► Stellen der Wecker auf ein bestimmtes Datum; &lt;br&gt; &lt;br&gt; ► Wischen, um einen Wecker zu löschen; &lt;br&gt; &lt;br&gt; ► Duplizieren eines Weckers; &lt;br&gt; &lt;br&gt; ► Kippen und Schütteln zum Verwerfen/Aufschieben eines Weckers; &lt;br&gt; &lt;br&gt; ► Verwerfen/Aufschieben des Weckers mit der Power- oder den Lautstärketasten; &lt;br&gt; &lt;br&gt; ► %s</string>
-    <string name="first_launch_important_info_message">Um sicherzustellen, dass die Anwendung ordnungsgemäß funktioniert, &lt;b&gt;müssen einige Ihrer Geräteeinstellungen geändert werden:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;AKKU-OPTIMIERUNG;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;BENACHRICHTIGUNGEN;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;Abhängig von der Android-Version Ihres Geräts sind einige dieser Einstellungen bereits optimiert (z. B. Benachrichtigungen).&lt;/i&gt; &lt;br&gt; &lt;br&gt; Sie können sie jetzt oder später in den Einstellungen zur Berechtigungsverwaltung ändern:</string>
+    <string name="first_launch_main_feature_message">
+        ► Wecker aus deinen Google-Kalender-Terminen; &lt;br&gt; &lt;br&gt;
+        ► Profile erkennen Termine am Titel (zum Beispiel „Alarm:“), ein Kalender pro Profil; &lt;br&gt; &lt;br&gt;
+        ► Pro Profil: Weckton, Lautstärke, Vibration, Vorlaufzeit, Eskalation und maximale Weckdauer; &lt;br&gt; &lt;br&gt;
+        ► Vollbild-Wecker mit großem Beenden-Button und drei Schlummerzeiten; &lt;br&gt; &lt;br&gt;
+        ► Optionaler Wecker am Ende eines Termins und Termin verlängern beim Schlummern; &lt;br&gt; &lt;br&gt;
+        ► Optionale WLAN-Bedingung: klingelt nur in der Nähe eines gewählten Netzwerks; &lt;br&gt; &lt;br&gt;
+        ► Kippen, Schütteln, Power- oder Lautstärketasten zum Schlummern oder Beenden; &lt;br&gt; &lt;br&gt;
+        ► Timer, Stoppuhr, Weltuhr und Widgets; &lt;br&gt; &lt;br&gt;
+        ► Sichern und Wiederherstellen von Profilen und Einstellungen (außer eigene Wecktöne); &lt;br&gt; &lt;br&gt;
+        ► %s</string>
+    <string name="first_launch_important_info_message">Um sicherzustellen, dass die Anwendung ordnungsgemäß funktioniert, &lt;b&gt;müssen einige Ihrer Geräteeinstellungen geändert werden:&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;AKKU-OPTIMIERUNG;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;BENACHRICHTIGUNGEN;&lt;/b&gt; &lt;br&gt; &lt;br&gt; • &lt;b&gt;KALENDERZUGRIFF;&lt;/b&gt; &lt;br&gt; &lt;br&gt; %s &lt;i&gt;Abhängig von der Android-Version Ihres Geräts sind einige dieser Einstellungen bereits optimiert (z. B. Benachrichtigungen).&lt;/i&gt; &lt;br&gt; &lt;br&gt; Sie können sie jetzt oder später in den Einstellungen zur Berechtigungsverwaltung ändern:</string>
     <string name="snooze_button_color">Farbe des „Schlummern“-Buttons</string>
     <string name="dismiss_button_color">Farbe des „Verwerfen“-Buttons</string>
     <string name="alarm_button_color">Farbe des Schiebereglers</string>

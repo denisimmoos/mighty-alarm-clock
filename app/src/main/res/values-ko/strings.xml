@@ -252,7 +252,6 @@
     <string name="sort_timer_descending_duration">길이 (내림차순)</string>
     <string name="clock_style_analog_material">아날로그 (Material)</string>
     <string name="clock_style_spinner">스피너</string>
-    <string name="app_slogan">AOSP 기반 100% 오픈 소스 시계 앱</string>
     <string name="features_title">주요 기능</string>
     <string name="timer_volume_buttons_action_title">볼륨 버튼으로 만료된 타이머 초기화</string>
     <string name="preview_title">미리보기</string>
@@ -311,7 +310,6 @@
     <string name="timer_settings_summary">기본 벨소리, 볼륨, 타이머 정렬 설정</string>
     <string name="first_launch_dialog_message">정말 앱을 종료할까요?</string>
     <string name="hour_default_color_title">시간 텍스트에 기본 색상 사용</string>
-    <string name="first_launch_main_feature_message">► 라이트, 다크, 시스템 테마 사용 &lt;br&gt; &lt;br&gt; ► 화면 보호기 꾸미기&lt;br&gt; &lt;br&gt; ► 위젯 스타일 설정&lt;br&gt; &lt;br&gt; ► 빠른 설정 타일 지원(Android 7 이상) &lt;br&gt; &lt;br&gt; ► 설정 백업 및 복원(사용자 정의 벨소리 제외) &lt;br&gt; &lt;br&gt; ► Material 디자인 및 적응형 색상 지원 &lt;br&gt; &lt;br&gt; ► 특정 날짜에 알람 예약 &lt;br&gt; &lt;br&gt; ► 스와이프로 알람 삭제 &lt;br&gt; &lt;br&gt; ► 알람 복제 &lt;br&gt; &lt;br&gt; ► 기기를 뒤집거나 흔들어 알람 제어 &lt;br&gt; &lt;br&gt; ► 전원 버튼 및 볼륨 버튼으로 알람 제어 &lt;br&gt; &lt;br&gt; ► %s</string>
     <string name="screensaver_italic_date_title">날짜 기울임꼴</string>
     <string name="permission_status_title">상태:</string>
     <string name="first_launch_main_feature_link">그 밖에도 다양한 기능이 있습니다!</string>
@@ -348,7 +346,6 @@
     <string name="version_text">버전 <xliff:g id="VERSION_NUMBER" example="1.0">%1$s</xliff:g></string>
     <string name="about_github_link">GitHub에서 보기</string>
     <string name="sort_name">이름</string>
-    <string name="first_launch_important_info_message">앱이 정상적으로 작동하려면 &lt;b&gt;기기의 일부 설정을 변경해야 합니다.&lt;/b&gt;&lt;br&gt;&lt;br&gt; • &lt;b&gt;배터리 사용량 최적화&lt;/b&gt;&lt;br&gt; &lt;br&gt; • &lt;b&gt;알림&lt;/b&gt; &lt;br&gt; &lt;br&gt;%s&lt;i&gt;사용 중인 Android 버전에 따라 알림 등 일부 설정은 이미 최적화되어 있을 수 있습니다.&lt;/i&gt;&lt;br&gt;&lt;br&gt;이 설정은 나중에 권한 관리 설정에서도 변경할 수 있습니다.</string>
     <string name="about_translate_link">Codeberg에서 앱 번역</string>
     <string name="translate_dialog_message">Codeberg 페이지를 엽니다.\n\n%s</string>
     <string name="alarm_settings_summary">스타일, 기본 벨소리, 볼륨, 알람 해제, 잠시 미루기 설정</string>
