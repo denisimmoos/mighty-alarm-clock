@@ -146,13 +146,18 @@ public class NextAlarmMenuActivity extends BaseActivity {
         ((TextView) view.findViewById(R.id.next_alarm_menu_subtitle)).setText(subtitle);
 
         final LinearLayout items = view.findViewById(R.id.next_alarm_menu_items);
+        addSection(items, R.string.next_alarm_menu_section_event);
         addItem(items, R.drawable.ic_edit, R.string.next_alarm_menu_edit_event, this::editEvent);
-        if (mTarget.profile != null) {
-            addItem(items, R.drawable.ic_settings, R.string.next_alarm_menu_edit_profile, this::editProfile);
-        }
-        addDivider(items);
         addItem(items, R.drawable.ic_alarm_off, R.string.next_alarm_menu_disable, this::disableAlarm);
         addItem(items, R.drawable.ic_delete, R.string.next_alarm_menu_delete_event, this::deleteEvent);
+        if (mTarget.profile != null) {
+            addDivider(items);
+            addSection(items, R.string.next_alarm_menu_section_profile);
+            addItem(items, R.drawable.ic_settings, R.string.next_alarm_menu_edit_profile, this::editProfile);
+            addItem(items, R.drawable.ic_tab_calendar_alarm, mTarget.profile.enabled
+                ? R.string.next_alarm_menu_disable_profile
+                : R.string.next_alarm_menu_enable_profile, this::toggleProfile);
+        }
         addDivider(items);
         addItem(items, R.drawable.ic_calendar_clock, R.string.next_alarm_menu_open_app, this::openApp);
 
@@ -187,6 +192,13 @@ public class NextAlarmMenuActivity extends BaseActivity {
             action.run();
         });
         items.addView(item);
+    }
+
+    private void addSection(LinearLayout items, int label) {
+        final TextView section = (TextView) LayoutInflater.from(this)
+            .inflate(R.layout.next_alarm_menu_section, items, false);
+        section.setText(label);
+        items.addView(section);
     }
 
     private void addDivider(LinearLayout items) {
@@ -227,9 +239,47 @@ public class NextAlarmMenuActivity extends BaseActivity {
     private void disableAlarm() {
         final Context appContext = getApplicationContext();
         final long rowId = mTarget.event.id;
-        CalendarAlarmSync.EXECUTOR.execute(() -> CalendarAlarmSync.setEventEnabled(appContext, rowId, false));
+        CalendarAlarmSync.EXECUTOR.execute(() -> {
+            CalendarAlarmSync.setEventEnabled(appContext, rowId, false);
+            refreshNextAlarm(appContext);
+        });
         CustomToast.show(this, getString(R.string.next_alarm_menu_disabled));
         finish();
+    }
+
+    private void toggleProfile() {
+        final Context appContext = getApplicationContext();
+        final long profileId = mTarget.profile.id;
+        final boolean enable = !mTarget.profile.enabled;
+        CalendarAlarmSync.EXECUTOR.execute(() -> {
+            setProfileEnabled(appContext, profileId, enable);
+            refreshNextAlarm(appContext);
+        });
+        CustomToast.show(this, getString(enable
+            ? R.string.next_alarm_menu_profile_enabled
+            : R.string.next_alarm_menu_profile_disabled));
+        finish();
+    }
+
+    /**
+     * Switches a whole profile on or off, like its switch in the Calendar tab. Changes only the
+     * switch, so settings saved meanwhile are kept. Must not run on the main thread.
+     */
+    @VisibleForTesting
+    static void setProfileEnabled(Context context, long profileId, boolean enabled) {
+        final CalendarProfile current = CalendarProfile.getProfile(context.getContentResolver(), profileId);
+        if (current == null) {
+            return;
+        }
+        current.enabled = enabled;
+        current.updateProfile(context.getContentResolver());
+        CalendarAlarmSync.syncProfile(context, profileId);
+        CalendarAlarmWorker.ensureScheduled(context);
+    }
+
+    /** Makes the widgets show the alarm that is now next. */
+    private static void refreshNextAlarm(Context context) {
+        AlarmStateManager.updateNextAlarm(context);
     }
 
     private void deleteEvent() {
@@ -263,6 +313,7 @@ public class NextAlarmMenuActivity extends BaseActivity {
                             final boolean deleted = deleteFromCalendar(appContext, event, recurring);
                             if (deleted) {
                                 CalendarAlarmSync.syncAll(appContext);
+                                refreshNextAlarm(appContext);
                             }
                             AppExecutors.getMainThread().post(() -> CustomToast.show(appContext,
                                 appContext.getString(deleted

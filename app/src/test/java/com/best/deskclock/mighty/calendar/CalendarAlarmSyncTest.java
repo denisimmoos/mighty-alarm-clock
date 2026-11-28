@@ -594,6 +594,25 @@ public class CalendarAlarmSyncTest {
         assertEquals("Alarm: Later", target.event.title);
     }
 
+    /** "Disable profile" in the widget menu silences all of the profile's events, and back on. */
+    @Test
+    public void widgetMenuSwitchesTheProfileOffAndOn() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(2), "Alarm: One"));
+        EVENTS.add(new FakeEvent(2, CALENDAR_ID, inHours(4), "Alarm: Two"));
+        CalendarAlarmSync.syncAll(mContext);
+        assertEquals(2, Alarm.getAlarms(mCr, null).size());
+
+        NextAlarmMenuActivity.setProfileEnabled(mContext, mProfile.id, false);
+        assertFalse(CalendarProfile.getProfile(mCr, mProfile.id).enabled);
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+        assertNull(NextAlarmMenuActivity.loadTarget(mContext));
+
+        NextAlarmMenuActivity.setProfileEnabled(mContext, mProfile.id, true);
+        assertEquals(2, Alarm.getAlarms(mCr, null).size());
+        // Other settings stay as they were.
+        assertEquals("^Alarm:", CalendarProfile.getProfile(mCr, mProfile.id).titleRegex);
+    }
+
     /** Deleting a repeating event from the widget menu cancels only that occurrence. */
     @Test
     public void widgetMenuDeletesOnlyOneOccurrenceOfARepeatingEvent() {

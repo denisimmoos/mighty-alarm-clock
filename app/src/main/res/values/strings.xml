@@ -1579,4 +1579,10 @@
     <string name="next_alarm_menu_delete_confirm">Delete</string>
     <string name="next_alarm_menu_deleted">Event deleted</string>
     <string name="next_alarm_menu_delete_failed">The event could not be deleted</string>
+    <string name="next_alarm_menu_section_event">Event</string>
+    <string name="next_alarm_menu_section_profile">Profile</string>
+    <string name="next_alarm_menu_disable_profile">Disable profile</string>
+    <string name="next_alarm_menu_enable_profile">Enable profile</string>
+    <string name="next_alarm_menu_profile_disabled">Profile switched off. Its events no longer ring.</string>
+    <string name="next_alarm_menu_profile_enabled">Profile switched on</string>
 </resources>
