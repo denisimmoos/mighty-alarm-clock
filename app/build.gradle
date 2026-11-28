@@ -121,6 +121,11 @@ android {
 
             variant.outputs.forEach { output ->
                 output.outputFileName.set(outputFileName)
+                if (variant.buildType == "debug") {
+                    // Older debug builds used date-based version codes (202608001). Keep debug
+                    // codes above them so a new debug build installs over an old one.
+                    output.versionCode.set(300000000 + versionCodeFor(versionName))
+                }
             }
         }
     }
