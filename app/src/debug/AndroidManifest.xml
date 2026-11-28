@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    SPDX-License-Identifier: GPL-3.0-only
+-->
+<!-- Debug builds: no Android Auto Backup, so a reinstalled test app always starts empty.
+     Release builds keep it. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="false"
+        tools:replace="android:allowBackup" />
+
+</manifest>
