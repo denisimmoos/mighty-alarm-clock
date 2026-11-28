@@ -182,6 +182,13 @@ public abstract class BaseDigitalAppWidgetProvider extends AppWidgetProvider {
 
     protected abstract int getCityNoteColor(SharedPreferences prefs);
 
+    /**
+     * @return what tapping the widget opens: the app, unless a widget shows something else.
+     */
+    protected Intent getWidgetClickIntent(Context context) {
+        return new Intent(context, DeskClock.class);
+    }
+
     protected abstract void bindDateClickAction(RemoteViews rv, SharedPreferences prefs, PendingIntent calendarPendingIntent);
 
     protected abstract void configureClock(RemoteViews rv, Context context, SharedPreferences prefs);
@@ -278,8 +285,9 @@ public abstract class BaseDigitalAppWidgetProvider extends AppWidgetProvider {
 
         // Tapping on the widget opens the app or the calendar (if not on the lock screen).
         if (WidgetUtils.isWidgetClickable(wm, widgetId)) {
-            Intent clockIntent = new Intent(context, DeskClock.class);
-            PendingIntent clockPendingIntent = PendingIntent.getActivity(context, 0, clockIntent, PendingIntent.FLAG_IMMUTABLE);
+            Intent clockIntent = getWidgetClickIntent(context);
+            PendingIntent clockPendingIntent = PendingIntent.getActivity(context, 0, clockIntent,
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
             rv.setOnClickPendingIntent(getWidgetViewId(), clockPendingIntent);
 

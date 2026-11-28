@@ -1423,7 +1423,7 @@
 
     <!-- Calendar Alarm tab -->
     <string name="menu_calendar_alarm">Calendar</string>
-    <string name="calendar_alarm_permission_needed">Calendar Alarm needs access to your calendars to find events and set alarms for them.</string>
+    <string name="calendar_alarm_permission_needed">Mighty Calendar Alarms needs access to your calendars to find events and set alarms for them.</string>
     <string name="calendar_alarm_permission_button">Allow calendar access</string>
     <string name="calendar_alarm_permission_denied">Without calendar access, no calendar alarms can be set.</string>
     <string name="calendar_alarm_no_profiles">No profiles yet. Tap + to create one and choose which calendar events should ring as alarms.</string>
@@ -1563,4 +1563,20 @@
     <string name="calendar_alarm_error_no_calendar">Choose a calendar first.</string>
     <string name="calendar_alarm_error_number">Enter a whole number.</string>
 
+    <!-- Menu of the "Next alarm" widget -->
+    <string name="next_alarm_menu_no_title">(no title)</string>
+    <!-- %1$s: date and time of the alarm, %2$s: profile name -->
+    <string name="next_alarm_menu_subtitle">%1$s · %2$s</string>
+    <string name="next_alarm_menu_edit_event">Edit event</string>
+    <string name="next_alarm_menu_edit_profile">Edit profile</string>
+    <string name="next_alarm_menu_disable">Disable this alarm</string>
+    <string name="next_alarm_menu_delete_event">Delete event…</string>
+    <string name="next_alarm_menu_open_app">Open MCA</string>
+    <string name="next_alarm_menu_disabled">Alarm switched off. The event stays in your calendar.</string>
+    <string name="next_alarm_menu_delete_title">Delete event?</string>
+    <string name="next_alarm_menu_delete_message">\"%1$s\" will be deleted from your calendar.</string>
+    <string name="next_alarm_menu_delete_occurrence_message">This occurrence of \"%1$s\" will be deleted from your calendar. The other occurrences of the series stay.</string>
+    <string name="next_alarm_menu_delete_confirm">Delete</string>
+    <string name="next_alarm_menu_deleted">Event deleted</string>
+    <string name="next_alarm_menu_delete_failed">The event could not be deleted</string>
 </resources>

@@ -12,6 +12,7 @@ import static com.best.deskclock.utils.WidgetUtils.METHOD_SET_IMAGE_ICON;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Icon;
 import android.text.TextUtils;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import androidx.annotation.Keep;
 
 import com.best.deskclock.R;
+import com.best.deskclock.mighty.calendar.NextAlarmMenuActivity;
 import com.best.deskclock.data.WidgetDAO;
 import com.best.deskclock.utils.AlarmUtils;
 import com.best.deskclock.utils.ClockUtils;
@@ -207,6 +209,12 @@ public class NextAlarmAppWidgetProvider extends BaseDigitalAppWidgetProvider {
     @Override
     protected float getFontScaleFactor() {
         return 3f;
+    }
+
+    @Override
+    protected Intent getWidgetClickIntent(Context context) {
+        // A menu for the next alarm: edit or delete the event, edit the profile, switch it off.
+        return NextAlarmMenuActivity.createIntent(context);
     }
 
     @Override

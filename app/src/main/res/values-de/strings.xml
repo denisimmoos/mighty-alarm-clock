@@ -612,7 +612,7 @@
 
     <!-- Calendar Alarm tab -->
     <string name="menu_calendar_alarm">Kalender</string>
-    <string name="calendar_alarm_permission_needed">Kalender-Alarme brauchen Zugriff auf deine Kalender, um Termine zu finden und Wecker dafür zu stellen.</string>
+    <string name="calendar_alarm_permission_needed">Mighty Calendar Alarms braucht Zugriff auf deine Kalender, um Termine zu finden und Wecker dafür zu stellen.</string>
     <string name="calendar_alarm_permission_button">Kalenderzugriff erlauben</string>
     <string name="calendar_alarm_permission_denied">Ohne Kalenderzugriff können keine Kalender-Alarme gestellt werden.</string>
     <string name="calendar_alarm_no_profiles">Noch keine Profile. Tippe auf +, um eines anzulegen und festzulegen, welche Termine als Wecker klingeln.</string>
@@ -752,4 +752,19 @@
     <string name="calendar_alarm_error_no_calendar">Wähle zuerst einen Kalender aus.</string>
     <string name="calendar_alarm_error_number">Gib eine ganze Zahl ein.</string>
 
+    <!-- Menü des Widgets "Nächster Alarm" -->
+    <string name="next_alarm_menu_no_title">(ohne Titel)</string>
+    <string name="next_alarm_menu_subtitle">%1$s · %2$s</string>
+    <string name="next_alarm_menu_edit_event">Termin bearbeiten</string>
+    <string name="next_alarm_menu_edit_profile">Profil bearbeiten</string>
+    <string name="next_alarm_menu_disable">Diesen Alarm ausschalten</string>
+    <string name="next_alarm_menu_delete_event">Termin löschen…</string>
+    <string name="next_alarm_menu_open_app">MCA öffnen</string>
+    <string name="next_alarm_menu_disabled">Alarm ausgeschaltet. Der Termin bleibt in deinem Kalender.</string>
+    <string name="next_alarm_menu_delete_title">Termin löschen?</string>
+    <string name="next_alarm_menu_delete_message">„%1$s“ wird aus deinem Kalender gelöscht.</string>
+    <string name="next_alarm_menu_delete_occurrence_message">Dieser Termin der Serie „%1$s“ wird aus deinem Kalender gelöscht. Die anderen Termine der Serie bleiben.</string>
+    <string name="next_alarm_menu_delete_confirm">Löschen</string>
+    <string name="next_alarm_menu_deleted">Termin gelöscht</string>
+    <string name="next_alarm_menu_delete_failed">Der Termin konnte nicht gelöscht werden</string>
 </resources>

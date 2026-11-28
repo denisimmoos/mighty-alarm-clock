@@ -152,14 +152,17 @@ public class CalendarAlarmSyncTest {
             CHANGES.add(uri + " " + values);
             // Like some calendars, the new occurrence gets the length of the repeating event, and
             // stores it as a length.
-            DTENDS.put(EXCEPTION_ID, values.getAsLong(CalendarContract.Events.DTSTART) + EVENT_LENGTH_MS);
-            WITH_DURATION.add(EXCEPTION_ID);
+            if (values.containsKey(CalendarContract.Events.DTSTART)) {
+                DTENDS.put(EXCEPTION_ID, values.getAsLong(CalendarContract.Events.DTSTART) + EVENT_LENGTH_MS);
+                WITH_DURATION.add(EXCEPTION_ID);
+            }
             return Uri.parse("content://" + CalendarContract.AUTHORITY + "/events/" + EXCEPTION_ID);
         }
 
         @Override
         public int delete(@NonNull Uri uri, String selection, String[] args) {
-            return 0;
+            CHANGES.add("delete " + uri);
+            return 1;
         }
 
         @Override
@@ -569,6 +572,81 @@ public class CalendarAlarmSyncTest {
         CalendarAlarmSync.setEventEnabled(mContext, events().get(0).id, true);
         CalendarAlarmSync.syncAll(mContext);
         assertEquals(1, Alarm.getAlarms(mCr, null).size());
+    }
+
+    /** The "Next alarm" widget menu finds the next alarm's event and profile. */
+    @Test
+    public void widgetMenuFindsTheNextAlarmsEventAndProfile() {
+        assertNull(NextAlarmMenuActivity.loadTarget(mContext));
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(5), "Alarm: Later"));
+        EVENTS.add(new FakeEvent(2, CALENDAR_ID, inHours(2), "Alarm: Sooner"));
+        CalendarAlarmSync.syncAll(mContext);
+
+        NextAlarmMenuActivity.Target target = NextAlarmMenuActivity.loadTarget(mContext);
+        assertNotNull(target);
+        assertEquals("Alarm: Sooner", target.event.title);
+        assertEquals(mProfile.id, target.profile.id);
+
+        // Disabled from the menu, the widget moves on to the next event.
+        CalendarAlarmSync.setEventEnabled(mContext, target.event.id, false);
+        target = NextAlarmMenuActivity.loadTarget(mContext);
+        assertNotNull(target);
+        assertEquals("Alarm: Later", target.event.title);
+    }
+
+    /** Deleting a repeating event from the widget menu cancels only that occurrence. */
+    @Test
+    public void widgetMenuDeletesOnlyOneOccurrenceOfARepeatingEvent() {
+        final long first = inHours(2);
+        final long second = first + TimeUnit.DAYS.toMillis(1);
+        RECURRING.add(1L);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, first, "Alarm: Weekly"));
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, second, "Alarm: Weekly"));
+        CalendarAlarmSync.syncAll(mContext);
+        final CalendarAlarmEvent event = NextAlarmMenuActivity.loadTarget(mContext).event;
+        assertEquals(first, event.begin);
+
+        assertTrue(NextAlarmMenuActivity.isRecurring(mCr, event.eventId));
+        assertTrue(NextAlarmMenuActivity.deleteFromCalendar(mContext, event, true));
+
+        assertEquals(1, CHANGES.size());
+        final String change = CHANGES.get(0);
+        // An exception for this one occurrence, never a delete of the series.
+        assertTrue(change, change.startsWith(CalendarContract.Events.CONTENT_EXCEPTION_URI + "/1 "));
+        assertTrue(change, change.contains(CalendarContract.Events.ORIGINAL_INSTANCE_TIME + "=" + first));
+        assertTrue(change, change.contains(CalendarContract.Events.STATUS + "=" + CalendarContract.Events.STATUS_CANCELED));
+    }
+
+    /** A single event is deleted as a whole. */
+    @Test
+    public void widgetMenuDeletesASingleEvent() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(2), "Alarm: Once"));
+        CalendarAlarmSync.syncAll(mContext);
+        final CalendarAlarmEvent event = NextAlarmMenuActivity.loadTarget(mContext).event;
+
+        assertFalse(NextAlarmMenuActivity.isRecurring(mCr, event.eventId));
+        assertTrue(NextAlarmMenuActivity.deleteFromCalendar(mContext, event, false));
+        assertEquals(List.of("delete " + CalendarContract.Events.CONTENT_URI + "/1"), CHANGES);
+    }
+
+    /** Disabling one occurrence of a repeating event keeps the alarms of the other occurrences. */
+    @Test
+    public void widgetMenuDisablesOnlyOneOccurrenceOfARepeatingEvent() {
+        final long first = inHours(2);
+        final long second = first + TimeUnit.DAYS.toMillis(1);
+        RECURRING.add(1L);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, first, "Alarm: Weekly"));
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, second, "Alarm: Weekly"));
+        CalendarAlarmSync.syncAll(mContext);
+        assertEquals(2, Alarm.getAlarms(mCr, null).size());
+
+        CalendarAlarmSync.setEventEnabled(mContext, NextAlarmMenuActivity.loadTarget(mContext).event.id, false);
+        CalendarAlarmSync.syncAll(mContext);
+
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+        final NextAlarmMenuActivity.Target next = NextAlarmMenuActivity.loadTarget(mContext);
+        assertEquals(second, next.event.begin);
+        assertTrue(CHANGES.isEmpty());
     }
 
     /** Review finding 4: a regex that gives up on a title keeps the event's alarm. */

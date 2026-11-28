@@ -141,6 +141,13 @@
             android:theme="@style/Theme.DeskClock" />
 
         <activity
+            android:name="com.best.deskclock.mighty.calendar.NextAlarmMenuActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:taskAffinity=""
+            android:theme="@style/Theme.DeskClock.Translucent" />
+
+        <activity
             android:name="com.best.deskclock.mighty.calendar.CalendarProfileEditActivity"
             android:excludeFromRecents="true"
             android:parentActivityName=".DeskClock"

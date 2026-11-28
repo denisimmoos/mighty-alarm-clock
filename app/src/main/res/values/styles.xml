@@ -416,4 +416,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Invisible activity that only shows a dialog, e.g. the menu of the "Next alarm" widget. -->
+    <style name="Theme.DeskClock.Translucent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
 </resources>
