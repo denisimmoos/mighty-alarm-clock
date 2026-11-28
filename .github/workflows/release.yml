@@ -1,6 +1,12 @@
-# Builds a signed release APK when a version tag is pushed, e.g. v0.9.0-beta or v1.0.0,
-# creates the GitHub release for that tag and attaches the APK.
-# Tags with a dash (v0.9.0-beta, v1.0.0-rc1) become pre-releases.
+# Builds a signed release APK, creates the GitHub release and attaches the APK.
+#
+# Two ways to start it:
+#  * Raise the default version in app/build.gradle (appVersion, e.g. "0.9.2-beta") and push to
+#    feature/calendar-only. If the tag v<version> does not exist yet, this workflow creates the
+#    tag and the release itself. Pushes that keep the version do nothing.
+#  * Push a tag such as v1.0.0, or create a release with a new tag on GitHub.
+# Versions with a dash (0.9.0-beta, 1.0.0-rc1) become pre-releases.
+# The release text comes from docs/release-notes/v<version>.md when that file exists.
 #
 # Needs these repository secrets (Settings > Secrets and variables > Actions):
 #   KEYSTORE_BASE64    the release keystore.jks, base64 encoded
@@ -11,11 +17,17 @@ name: Release
 
 on:
   push:
+    branches:
+      - feature/calendar-only
     tags:
       - 'v*'
 
 permissions:
   contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   release:
@@ -23,20 +35,41 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Work out version and whether to release
+        id: version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            TAG="$GITHUB_REF_NAME"
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          else
+            NAME=$(sed -nE 's/.*findProperty\("appVersion"\) \?: "([^"]+)".*/\1/p' app/build.gradle)
+            if [ -z "$NAME" ]; then
+              echo "::error::Could not read the default appVersion from app/build.gradle"
+              exit 1
+            fi
+            TAG="v$NAME"
+            if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" > /dev/null 2>&1; then
+              echo "Tag $TAG already exists: raise appVersion in app/build.gradle to release."
+              echo "release=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "release=true" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "name=${TAG#v}" >> "$GITHUB_OUTPUT"
+          if [[ "$TAG" == *-* ]]; then echo "prerelease=--prerelease" >> "$GITHUB_OUTPUT"; fi
+
       - uses: actions/setup-java@v4
+        if: steps.version.outputs.release == 'true'
         with:
           distribution: temurin
           java-version: '21'
           cache: gradle
 
-      - name: Read version from tag
-        id: version
-        run: |
-          TAG="${GITHUB_REF_NAME}"
-          echo "name=${TAG#v}" >> "$GITHUB_OUTPUT"
-          if [[ "$TAG" == *-* ]]; then echo "prerelease=--prerelease" >> "$GITHUB_OUTPUT"; fi
-
       - name: Set up signing key
+        if: steps.version.outputs.release == 'true'
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -55,9 +88,11 @@ jobs:
           } > keystore.properties
 
       - name: Run tests
+        if: steps.version.outputs.release == 'true'
         run: ./gradlew --no-daemon :app:testDebugUnitTest -PappVersion=${{ steps.version.outputs.name }}
 
       - name: Build signed release APK
+        if: steps.version.outputs.release == 'true'
         run: ./gradlew --no-daemon :app:assembleRelease -PappVersion=${{ steps.version.outputs.name }}
 
       - name: Remove signing key
@@ -65,16 +100,23 @@ jobs:
         run: rm -f keystore.jks keystore.properties
 
       - name: Create release and attach APK
+        if: steps.version.outputs.release == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
         run: |
           APK="app/build/outputs/apk/release/MightyCalendarAlarms-v${{ steps.version.outputs.name }}.apk"
           test -f "$APK"
-          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+          if gh release view "$TAG" > /dev/null 2>&1; then
             # A release written by hand already exists: only add or replace the APK.
-            gh release upload "$GITHUB_REF_NAME" "$APK" --clobber
+            gh release upload "$TAG" "$APK" --clobber
           else
-            gh release create "$GITHUB_REF_NAME" "$APK" \
-              --title "Mighty Calendar Alarms ${GITHUB_REF_NAME}" \
-              --generate-notes ${{ steps.version.outputs.prerelease }}
+            # Release text: docs/release-notes/<tag>.md if it exists, otherwise GitHub's list of
+            # changes since the last release.
+            NOTES="docs/release-notes/$TAG.md"
+            if [ -f "$NOTES" ]; then NOTES_ARGS=(--notes-file "$NOTES"); else NOTES_ARGS=(--generate-notes); fi
+            # Also creates the tag on this commit when it does not exist yet.
+            gh release create "$TAG" "$APK" --target "$GITHUB_SHA" \
+              --title "Mighty Calendar Alarms $TAG" \
+              "${NOTES_ARGS[@]}" ${{ steps.version.outputs.prerelease }}
           fi
