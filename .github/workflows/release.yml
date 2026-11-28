@@ -50,11 +50,17 @@ jobs:
               exit 1
             fi
             TAG="v$NAME"
-            if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" > /dev/null 2>&1; then
+            # Only a clear "not found" means the tag is new. Any other error stops the run, so an
+            # existing release is never replaced by a build of another commit.
+            CODE=$(gh api -i "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" 2>/dev/null | head -1 | awk '{print $2}')
+            if [ "$CODE" = "200" ]; then
               echo "Tag $TAG already exists: raise appVersion in app/build.gradle to release."
               echo "release=false" >> "$GITHUB_OUTPUT"
-            else
+            elif [ "$CODE" = "404" ]; then
               echo "release=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "::error::Could not check whether tag $TAG exists (HTTP ${CODE:-none})."
+              exit 1
             fi
           fi
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"

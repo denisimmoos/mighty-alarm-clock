@@ -38,4 +38,27 @@ public class DefaultAccentColorTest {
         activity.getTheme().resolveAttribute(androidx.appcompat.R.attr.colorPrimary, value, true);
         assertEquals(ContextCompat.getColor(activity, com.best.deskclock.BuildConfig.IS_DEBUG_BUILD ? R.color.orangeColorPrimary : R.color.blueColorPrimary), value.data);
     }
+
+    @Test
+    public void olderDebugDataWithBlueIsSwitchedToOrangeOnce() {
+        final Application app = ApplicationProvider.getApplicationContext();
+        final SharedPreferences prefs = DeskClockApplication.getDefaultSharedPreferences(app);
+        prefs.edit().clear().putString("key_accent_color", "11").putString("key_night_accent_color", "7").commit();
+        DeskClockApplication.migrateDebugAccentToOrange(prefs, true);
+        assertEquals("5", prefs.getString("key_accent_color", null));
+        assertEquals("7", prefs.getString("key_night_accent_color", null));
+        // A colour picked afterwards is kept.
+        prefs.edit().putString("key_accent_color", "11").commit();
+        DeskClockApplication.migrateDebugAccentToOrange(prefs, true);
+        assertEquals("11", prefs.getString("key_accent_color", null));
+    }
+
+    @Test
+    public void releaseBuildsKeepBlue() {
+        final Application app = ApplicationProvider.getApplicationContext();
+        final SharedPreferences prefs = DeskClockApplication.getDefaultSharedPreferences(app);
+        prefs.edit().clear().putString("key_accent_color", "11").commit();
+        DeskClockApplication.migrateDebugAccentToOrange(prefs, false);
+        assertEquals("11", prefs.getString("key_accent_color", null));
+    }
 }

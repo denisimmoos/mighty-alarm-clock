@@ -106,6 +106,10 @@ public final class CalendarAlarmSync {
                 deleteEventAndAlarm(appContext, event);
             }
         }
+
+        // A Wi-Fi condition switched on or changed doesn't touch the alarms themselves, so plan
+        // the scan before the next such alarm here too.
+        CalendarWifiPrescan.schedule(appContext);
     }
 
     /**

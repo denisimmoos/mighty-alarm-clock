@@ -10,7 +10,12 @@ import static com.best.deskclock.settings.PreferencesDefaultValues.DARK_THEME;
 import static com.best.deskclock.settings.PreferencesDefaultValues.DEFAULT_FLIP_ACTION;
 import static com.best.deskclock.settings.PreferencesDefaultValues.LIGHT_THEME;
 import static com.best.deskclock.settings.PreferencesDefaultValues.SYSTEM_THEME;
+import static com.best.deskclock.settings.PreferencesDefaultValues.BLUE_ACCENT_COLOR;
+import static com.best.deskclock.settings.PreferencesDefaultValues.ORANGE_ACCENT_COLOR;
+import static com.best.deskclock.settings.PreferencesKeys.KEY_ACCENT_COLOR;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_FLIP_ACTION;
+import static com.best.deskclock.settings.PreferencesKeys.KEY_NIGHT_ACCENT_COLOR;
+import static com.best.deskclock.settings.PreferencesKeys.KEY_DEBUG_ORANGE_ACCENT_APPLIED;
 import static com.best.deskclock.settings.PreferencesKeys.KEY_FLIP_SNOOZE_DEFAULT_APPLIED;
 
 import android.app.Activity;
@@ -53,6 +58,7 @@ public class DeskClockApplication extends Application implements Application.Act
         sInstance = this;
 
         migrateFlipActionDefaultToSnooze();
+        migrateDebugAccentToOrange(getDefaultSharedPreferences(this), BuildConfig.IS_DEBUG_BUILD);
 
         String theme = SettingsDAO.getTheme(getDefaultSharedPreferences(this));
         applySystemNightMode(theme);
@@ -132,6 +138,28 @@ public class DeskClockApplication extends Application implements Application.Act
             editor.putString(KEY_FLIP_ACTION, DEFAULT_FLIP_ACTION);
         }
         editor.putBoolean(KEY_FLIP_SNOOZE_DEFAULT_APPLIED, true).apply();
+    }
+
+    /**
+     * Debug builds default to Orange so they can be told apart from the release app. Data that
+     * was created by an older debug build still holds Blue ("11"), the old default, because the
+     * settings screen stores its default when it is shown. Switch that over once; a colour the
+     * user picks afterwards is kept.
+     */
+    public static void migrateDebugAccentToOrange(SharedPreferences prefs, boolean isDebugBuild) {
+        if (!isDebugBuild) {
+            return;
+        }
+        if (prefs.getBoolean(KEY_DEBUG_ORANGE_ACCENT_APPLIED, false)) {
+            return;
+        }
+        SharedPreferences.Editor editor = prefs.edit();
+        for (String key : new String[]{KEY_ACCENT_COLOR, KEY_NIGHT_ACCENT_COLOR}) {
+            if (BLUE_ACCENT_COLOR.equals(prefs.getString(key, null))) {
+                editor.putString(key, ORANGE_ACCENT_COLOR);
+            }
+        }
+        editor.putBoolean(KEY_DEBUG_ORANGE_ACCENT_APPLIED, true).apply();
     }
 
     private void applySystemNightMode(String theme) {

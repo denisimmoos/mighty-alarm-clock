@@ -8,7 +8,7 @@ plugins {
 // 50+n for rc (n = the number after the label, 0 to 19) and 90 for the final version.
 // So 0.9.3-beta -> 90330, 1.0.0-rc2 -> 1000052, 1.0.0 -> 1000090.
 // (Releases up to 0.9.2-beta used a smaller scheme, so these codes are higher than all of them.)
-def appVersionName = (project.findProperty("appVersion") ?: "0.9.3-beta").toString().replaceFirst(/^v/, "")
+def appVersionName = (project.findProperty("appVersion") ?: "0.9.4-beta").toString().replaceFirst(/^v/, "")
 
 static int versionCodeFor(String name) {
     def m = name =~ /^(\d+)\.(\d+)\.(\d+)(?:-([A-Za-z]+)\.?(\d*))?$/

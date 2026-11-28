@@ -15,6 +15,7 @@ public class PreferencesKeys {
 
     /** True after flip-to-snooze was applied as the new default for existing installs. */
     public static final String KEY_FLIP_SNOOZE_DEFAULT_APPLIED = "key_flip_snooze_default_applied";
+    public static final String KEY_DEBUG_ORANGE_ACCENT_APPLIED = "key_debug_orange_accent_applied";
 
     // **************
     // ** SETTINGS **
