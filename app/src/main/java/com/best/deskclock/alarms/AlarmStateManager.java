@@ -164,6 +164,9 @@ public final class AlarmStateManager extends BroadcastReceiver {
 
         updateNextAlarmInAlarmManager(context, nextAlarm);
 
+        // Profiles with a Wi-Fi condition need a fresh Wi-Fi scan shortly before they ring.
+        com.best.deskclock.mighty.calendar.CalendarWifiPrescan.schedule(context);
+
         // Adding a Handler ensures better fluidity when activating/deactivating the alarm
         AppExecutors.getMainThread().postDelayed(() -> {
             Intent nextAlarmChangedIntent = new Intent(ACTION_NEXT_ALARM_CHANGED_BY_CLOCK);

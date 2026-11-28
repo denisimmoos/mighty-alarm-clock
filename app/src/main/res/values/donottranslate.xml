@@ -68,6 +68,8 @@
     <!-- Label names for Debug mode. -->
     <!-- App title for the debug version. -->
     <string name="app_label_debug">MCA Debug</string>
+    <!-- Default accent color: 11 = Blue (debug builds: 5 = Orange, see src/debug). -->
+    <string name="default_accent_color" translatable="false">11</string>
     <!-- Short name under the launcher icon of release builds. -->
     <string name="app_label_launcher">MCA</string>
     <!-- Settings title for the debug version. -->

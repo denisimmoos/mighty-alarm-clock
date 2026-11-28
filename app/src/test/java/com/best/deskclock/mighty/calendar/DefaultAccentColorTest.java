@@ -22,13 +22,13 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-/** A fresh install, debug builds included, opens with the Blue accent color. */
+/** A fresh install opens with the Blue accent color; debug builds (which the tests use) with Orange. */
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = 35)
 public class DefaultAccentColorTest {
 
     @Test
-    public void freshInstallIsBlue() {
+    public void freshInstallHasTheDefaultAccentColor() {
         final Application app = ApplicationProvider.getApplicationContext();
         final SharedPreferences prefs = DeskClockApplication.getDefaultSharedPreferences(app);
         assertFalse(prefs.contains("key_accent_color"));
@@ -36,6 +36,6 @@ public class DefaultAccentColorTest {
             CalendarProfileEditActivity.createIntent(app, CalendarProfile.INVALID_ID)).setup().get();
         final TypedValue value = new TypedValue();
         activity.getTheme().resolveAttribute(androidx.appcompat.R.attr.colorPrimary, value, true);
-        assertEquals(ContextCompat.getColor(activity, R.color.blueColorPrimary), value.data);
+        assertEquals(ContextCompat.getColor(activity, com.best.deskclock.BuildConfig.IS_DEBUG_BUILD ? R.color.orangeColorPrimary : R.color.blueColorPrimary), value.data);
     }
 }

@@ -25,7 +25,8 @@ public class PreferencesDefaultValues {
     public static final String DARK_THEME = "2";
     public static final String DEFAULT_DARK_MODE = "0";
     public static final String AMOLED_DARK_MODE = "1";
-    public static final String DEFAULT_ACCENT_COLOR = "11"; // Blue
+    // Blue; debug builds use Orange, like their launcher icon, to tell them apart.
+    public static final String DEFAULT_ACCENT_COLOR = com.best.deskclock.BuildConfig.IS_DEBUG_BUILD ? "5" : "11";
     public static final String BLUE_GRAY_ACCENT_COLOR = "1";
     public static final String BROWN_ACCENT_COLOR = "2";
     public static final String GREEN_ACCENT_COLOR = "3";
@@ -38,7 +39,7 @@ public class PreferencesDefaultValues {
     public static final String YELLOW_ACCENT_COLOR = "10";
     public static final String BLUE_ACCENT_COLOR = "11";
     public static final boolean DEFAULT_AUTO_NIGHT_ACCENT_COLOR = true;
-    public static final String DEFAULT_NIGHT_ACCENT_COLOR = "11"; // Blue
+    public static final String DEFAULT_NIGHT_ACCENT_COLOR = DEFAULT_ACCENT_COLOR;
     public static final boolean DEFAULT_CARD_BACKGROUND = true;
     public static final boolean DEFAULT_CARD_BORDER = false;
     public static final String DEFAULT_SYSTEM_LANGUAGE_CODE = "system_language_code";

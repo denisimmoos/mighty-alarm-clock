@@ -474,5 +474,9 @@
             android:name="com.best.deskclock.mighty.calendar.CalendarAlarmWakeReceiver"
             android:exported="false" />
 
+        <receiver
+            android:name="com.best.deskclock.mighty.calendar.CalendarWifiPrescan"
+            android:exported="false" />
+
     </application>
 </manifest>

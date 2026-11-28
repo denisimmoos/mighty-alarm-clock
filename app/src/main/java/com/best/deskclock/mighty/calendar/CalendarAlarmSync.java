@@ -147,6 +147,22 @@ public final class CalendarAlarmSync {
      * Deletes a profile together with its alarms. Must not run on the main thread.
      */
     public static void deleteProfile(Context context, long profileId) {
+        deleteProfile(context, profileId, true);
+    }
+
+    /**
+     * Runs the task while no calendar check can run, for changes made of several steps.
+     */
+    static void runExclusive(Runnable task) {
+        synchronized (LOCK) {
+            task.run();
+        }
+    }
+
+    /**
+     * @param resync {@code false} to skip the calendar check afterwards, when the caller runs one
+     */
+    static void deleteProfile(Context context, long profileId, boolean resync) {
         synchronized (LOCK) {
             try {
                 final Context appContext = context.getApplicationContext();
@@ -158,7 +174,9 @@ public final class CalendarAlarmSync {
                     deleteEventAndAlarm(appContext, event);
                 }
                 // Another profile may match the same events and now gets their alarms.
-                syncAllLocked(appContext);
+                if (resync) {
+                    syncAllLocked(appContext);
+                }
             } catch (Throwable e) {
                 LogUtils.e("CalendarAlarmSync: failed to delete profile " + profileId, e);
             }
@@ -262,10 +280,22 @@ public final class CalendarAlarmSync {
         final List<DeviceCalendars.EventInstance> matched = new java.util.ArrayList<>();
         final Map<Long, Integer> matchesPerEvent = new HashMap<>();
         for (DeviceCalendars.EventInstance instance : instances) {
-            if (!CalendarProfile.titleMatches(pattern, instance.title) || isSkipped(profile, instance)) {
+            final String key = CalendarAlarmEvent.buildKey(instance.eventId, instance.begin);
+            final Boolean titleMatch = CalendarProfile.matchTitle(pattern, instance.title);
+            if (titleMatch == null) {
+                // The regex gave up on this title, so whether it matches is unknown: keep the
+                // event's alarm as it is instead of removing it.
+                if (existingByKey.containsKey(key) && !claimedKeys.contains(key)) {
+                    matchedKeys.add(key);
+                    if (profile.enabled) {
+                        claimedKeys.add(key);
+                    }
+                }
                 continue;
             }
-            final String key = CalendarAlarmEvent.buildKey(instance.eventId, instance.begin);
+            if (!titleMatch || isSkipped(profile, instance)) {
+                continue;
+            }
             if (claimedKeys.contains(key)) {
                 // An earlier profile already rings for this event.
                 continue;
@@ -329,7 +359,9 @@ public final class CalendarAlarmSync {
 
                 reconcileAlarms(context, profile, event, profile.enabled && event.userEnabled, false, false);
                 event.save(cr);
-                if (profile.enabled && event.userEnabled) {
+                if (profile.enabled) {
+                    // Also when the user switched this alarm off: it stays off, and no later
+                    // profile that matches the same event takes it over.
                     claimedKeys.add(key);
                 }
             } catch (Throwable e) {
@@ -341,7 +373,7 @@ public final class CalendarAlarmSync {
     private static void keepClaims(List<CalendarAlarmEvent> existing, CalendarProfile profile, Set<String> claimedKeys) {
         if (profile.enabled) {
             for (CalendarAlarmEvent event : existing) {
-                if (event.userEnabled && (event.alarmId >= 0 || event.startAlarmId >= 0 || event.endAlarmId >= 0)) {
+                if (!event.userEnabled || event.alarmId >= 0 || event.startAlarmId >= 0 || event.endAlarmId >= 0) {
                     claimedKeys.add(event.eventKey);
                 }
             }

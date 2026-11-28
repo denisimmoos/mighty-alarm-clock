@@ -128,13 +128,16 @@ public final class CalendarProfileRestore {
             return;
         }
         final ContentResolver cr = context.getContentResolver();
-        for (CalendarProfile profile : CalendarProfile.getProfiles(cr)) {
-            // Also removes their events and alarms now. The restored profiles often get the same
-            // ids, and a restored event row would otherwise replace one that still has an alarm.
-            CalendarAlarmSync.deleteProfile(context, profile.id);
-        }
-        insertAll(context, profiles);
-        CalendarAlarmSync.syncAll(context);
+        // One step for calendar checks: none runs halfway, and only one runs at the end.
+        CalendarAlarmSync.runExclusive(() -> {
+            for (CalendarProfile profile : CalendarProfile.getProfiles(cr)) {
+                // Also removes their events and alarms now. The restored profiles often get the same
+                // ids, and a restored event row would otherwise replace one that still has an alarm.
+                CalendarAlarmSync.deleteProfile(context, profile.id, false);
+            }
+            insertAll(context, profiles);
+            CalendarAlarmSync.syncAll(context);
+        });
         CalendarAlarmWorker.ensureScheduled(context);
     }
 

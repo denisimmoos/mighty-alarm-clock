@@ -57,9 +57,12 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
 
     /** Titles are cut to this length before matching, which keeps a bad regex from taking long. */
     private static final int MAX_MATCHED_TITLE_LENGTH = 500;
-
-    /** Matching one title may take at most this long. */
-    private static final long MATCH_TIMEOUT_MS = 200;
+    /**
+     * Characters the regex engine may read for one title before the match is given up. Counting
+     * reads instead of clock time gives the same answer on a slow or paused phone. Normal
+     * patterns read a few thousand at most; a runaway pattern reaches this in well under a second.
+     */
+    private static final int MAX_MATCH_READS = 5_000_000;
 
     private static final String[] QUERY_COLUMNS = {
         _ID,
@@ -364,19 +367,28 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     }
 
     /**
-     * @return {@code true} if the event title matches this profile's regex. A regex that takes too
-     * long on a title (catastrophic backtracking) counts as no match instead of blocking the app.
+     * @return {@code true} if the event title matches this profile's regex. A regex that runs away
+     * on a title (catastrophic backtracking) counts as no match instead of blocking the app.
      */
     public static boolean titleMatches(@Nullable Pattern pattern, @Nullable String title) {
+        return Boolean.TRUE.equals(matchTitle(pattern, title));
+    }
+
+    /**
+     * @return whether the event title matches this profile's regex, or {@code null} if the regex
+     * gave up on this title (catastrophic backtracking), so the answer is unknown.
+     */
+    @Nullable
+    public static Boolean matchTitle(@Nullable Pattern pattern, @Nullable String title) {
         if (pattern == null || title == null) {
             return false;
         }
         final String cut = title.length() > MAX_MATCHED_TITLE_LENGTH
             ? title.substring(0, MAX_MATCHED_TITLE_LENGTH) : title;
         try {
-            return pattern.matcher(new DeadlineCharSequence(cut, System.currentTimeMillis() + MATCH_TIMEOUT_MS)).find();
+            return pattern.matcher(new BudgetCharSequence(cut, new int[]{MAX_MATCH_READS})).find();
         } catch (MatchTimeoutException e) {
-            return false;
+            return null;
         }
     }
 
@@ -384,22 +396,21 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
     }
 
     /**
-     * Gives up once the deadline has passed. The regex engine reads characters all the time, so
-     * this stops even a runaway match.
+     * Gives up once the regex engine has read too many characters. The engine reads characters all
+     * the time, so this stops even a runaway match. The budget is shared with sub-sequences.
      */
-    private static final class DeadlineCharSequence implements CharSequence {
+    private static final class BudgetCharSequence implements CharSequence {
         private final CharSequence mText;
-        private final long mDeadline;
-        private int mReads;
+        private final int[] mReadsLeft;
 
-        DeadlineCharSequence(CharSequence text, long deadline) {
+        BudgetCharSequence(CharSequence text, int[] readsLeft) {
             mText = text;
-            mDeadline = deadline;
+            mReadsLeft = readsLeft;
         }
 
         @Override
         public char charAt(int index) {
-            if (++mReads % 1024 == 0 && System.currentTimeMillis() > mDeadline) {
+            if (--mReadsLeft[0] < 0) {
                 throw new MatchTimeoutException();
             }
             return mText.charAt(index);
@@ -413,7 +424,7 @@ public final class CalendarProfile implements ClockContract.CalendarProfilesColu
         @NonNull
         @Override
         public CharSequence subSequence(int start, int end) {
-            return new DeadlineCharSequence(mText.subSequence(start, end), mDeadline);
+            return new BudgetCharSequence(mText.subSequence(start, end), mReadsLeft);
         }
 
         @NonNull

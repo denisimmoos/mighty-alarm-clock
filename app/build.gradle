@@ -2,16 +2,18 @@ plugins {
     id 'com.android.application'
 }
 
-// The version comes from one name, e.g. "0.9.0-beta". A release workflow passes the git tag
-// with -PappVersion=0.9.0-beta. The version code is derived from it and always goes up:
-// (major*10000 + minor*100 + patch)*10 + stage, stage = 3 alpha, 5 beta, 7 rc, 9 final.
-// So 0.9.0-beta -> 9005, 0.9.0 -> 9009, 0.9.1-beta -> 9015, 1.0.0 -> 100009.
-def appVersionName = (project.findProperty("appVersion") ?: "0.9.2-beta").toString().replaceFirst(/^v/, "")
+// The version comes from one name, e.g. "0.9.3-beta". A release workflow passes the git tag
+// with -PappVersion=0.9.3-beta. The version code is derived from it and always goes up:
+// (major*10000 + minor*100 + patch)*100 + stage, where stage is 10+n for alpha, 30+n for beta,
+// 50+n for rc (n = the number after the label, 0 to 19) and 90 for the final version.
+// So 0.9.3-beta -> 90330, 1.0.0-rc2 -> 1000052, 1.0.0 -> 1000090.
+// (Releases up to 0.9.2-beta used a smaller scheme, so these codes are higher than all of them.)
+def appVersionName = (project.findProperty("appVersion") ?: "0.9.3-beta").toString().replaceFirst(/^v/, "")
 
 static int versionCodeFor(String name) {
-    def m = name =~ /^(\d+)\.(\d+)\.(\d+)(?:-([A-Za-z]+)\d*)?$/
+    def m = name =~ /^(\d+)\.(\d+)\.(\d+)(?:-([A-Za-z]+)\.?(\d*))?$/
     if (!m.matches()) {
-        throw new GradleException("Version must look like 1.2.3 or 1.2.3-beta, got: " + name)
+        throw new GradleException("Version must look like 1.2.3, 1.2.3-beta or 1.2.3-rc2, got: " + name)
     }
     def major = m.group(1) as int
     def minor = m.group(2) as int
@@ -19,10 +21,20 @@ static int versionCodeFor(String name) {
     if (minor > 99 || patch > 99) {
         throw new GradleException("Minor and patch must be 0 to 99: " + name)
     }
-    def stages = [alpha: 3, beta: 5, rc: 7]
     def label = m.group(4)?.toLowerCase()
-    int stage = label == null ? 9 : (stages[label] ?: 1)
-    return ((major * 10000 + minor * 100 + patch) * 10) + stage
+    int stage = 90
+    if (label != null) {
+        def bases = [alpha: 10, beta: 30, rc: 50]
+        if (!bases.containsKey(label)) {
+            throw new GradleException("Label must be alpha, beta or rc: " + name)
+        }
+        int n = m.group(5) ? (m.group(5) as int) : 0
+        if (n > 19) {
+            throw new GradleException("The number after the label must be 0 to 19: " + name)
+        }
+        stage = bases[label] + n
+    }
+    return ((major * 10000 + minor * 100 + patch) * 100) + stage
 }
 
 android {

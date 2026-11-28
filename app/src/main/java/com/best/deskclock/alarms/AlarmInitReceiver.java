@@ -150,9 +150,11 @@ public class AlarmInitReceiver extends BroadcastReceiver {
 
                 // Calendar alarms follow the event's real start time. After a restart or a change
                 // of time or time zone, check the calendar right away instead of waiting.
-                // The calendar can only be read once the phone is unlocked after a restart; until
-                // then the hourly check and the app start take care of it.
-                if ((ACTION_BOOT_COMPLETED.equals(action) || ACTION_TIME_CHANGED.equals(action)
+                // The calendar can only be read once the phone is unlocked after a restart. On
+                // Android 7 and newer the locked boot broadcast comes before that, and the normal
+                // BOOT_COMPLETED follows right after the first unlock: check then.
+                if ((ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_BOOT_COMPLETED.equals(action)
+                    || ACTION_TIME_CHANGED.equals(action)
                     || Intent.ACTION_TIMEZONE_CHANGED.equals(action))
                     && com.best.deskclock.utils.DeviceUtils.isUserUnlocked(context)) {
                     com.best.deskclock.mighty.calendar.CalendarAlarmSync.syncAll(context);

@@ -545,6 +545,74 @@ public class CalendarAlarmSyncTest {
         assertEquals(1, AlarmInstance.getInstances(mCr, null).size());
     }
 
+    /** Review finding 1: switching an alarm off must not hand its event to the next profile. */
+    @Test
+    public void switchedOffAlarmIsNotTakenOverByAnotherProfile() {
+        final CalendarProfile second = new CalendarProfile();
+        second.name = "Dentist";
+        second.calendarId = CALENDAR_ID;
+        second.accountName = "someone@example.com";
+        second.titleRegex = "Dentist";
+        second.addProfile(mCr);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
+        CalendarAlarmSync.syncAll(mContext);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+
+        CalendarAlarmSync.setEventEnabled(mContext, events().get(0).id, false);
+        CalendarAlarmSync.syncAll(mContext);
+        CalendarAlarmSync.syncAll(mContext);
+
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+        assertTrue(CalendarAlarmEvent.getEventsForProfile(mCr, second.id).isEmpty());
+
+        // Switched on again, the first profile rings for it as before.
+        CalendarAlarmSync.setEventEnabled(mContext, events().get(0).id, true);
+        CalendarAlarmSync.syncAll(mContext);
+        assertEquals(1, Alarm.getAlarms(mCr, null).size());
+    }
+
+    /** Review finding 4: a regex that gives up on a title keeps the event's alarm. */
+    @Test
+    public void titleTheRegexGivesUpOnKeepsItsAlarm() {
+        mProfile.titleRegex = "(.*a){15}x";
+        mProfile.updateProfile(mCr);
+        final long begin = inHours(3);
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, "aaaaaaaaaaaaaaax"));
+        CalendarAlarmSync.syncAll(mContext);
+        final long alarmId = events().get(0).alarmId;
+        assertNotNull(Alarm.getAlarm(mCr, alarmId));
+
+        final String runaway = "a".repeat(80);
+        assertNull(CalendarProfile.matchTitle(mProfile.compileTitlePattern(), runaway));
+        EVENTS.clear();
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, runaway));
+        CalendarAlarmSync.syncAll(mContext);
+
+        assertEquals(1, events().size());
+        assertNotNull(Alarm.getAlarm(mCr, alarmId));
+        // A plain mismatch still removes the alarm.
+        EVENTS.clear();
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, begin, "b"));
+        CalendarAlarmSync.syncAll(mContext);
+        assertTrue(Alarm.getAlarms(mCr, null).isEmpty());
+    }
+
+    /** Review finding 3: a Wi-Fi scan is planned shortly before an alarm with a Wi-Fi condition. */
+    @Test
+    public void wifiScanIsPlannedBeforeAlarmsWithAWifiCondition() {
+        EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: Dentist"));
+        CalendarAlarmSync.syncAll(mContext);
+        final long now = System.currentTimeMillis();
+        assertEquals(-1, CalendarWifiPrescan.nextScanTime(mContext, now));
+
+        mProfile.wifiCheck = true;
+        mProfile.wifiNetworks = CalendarWifi.toJson(List.of(new CalendarWifi.Network("Home", "")));
+        mProfile.updateProfile(mCr);
+        final AlarmInstance instance = AlarmInstance.getInstances(mCr, null).get(0);
+        assertEquals(instance.getAlarmTime().getTimeInMillis() - CalendarWifiPrescan.LEAD_MS,
+            CalendarWifiPrescan.nextScanTime(mContext, now));
+    }
+
     @Test
     public void declinedEventsAreSkippedAndMaybeOnlyWhenAsked() {
         EVENTS.add(new FakeEvent(1, CALENDAR_ID, inHours(3), "Alarm: declined", 0,
