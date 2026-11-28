@@ -2,6 +2,29 @@ plugins {
     id 'com.android.application'
 }
 
+// The version comes from one name, e.g. "0.9.0-beta". A release workflow passes the git tag
+// with -PappVersion=0.9.0-beta. The version code is derived from it and always goes up:
+// (major*10000 + minor*100 + patch)*10 + stage, stage = 3 alpha, 5 beta, 7 rc, 9 final.
+// So 0.9.0-beta -> 9005, 0.9.0 -> 9009, 0.9.1-beta -> 9015, 1.0.0 -> 100009.
+def appVersionName = (project.findProperty("appVersion") ?: "0.9.0-beta").toString().replaceFirst(/^v/, "")
+
+static int versionCodeFor(String name) {
+    def m = name =~ /^(\d+)\.(\d+)\.(\d+)(?:-([A-Za-z]+)\d*)?$/
+    if (!m.matches()) {
+        throw new GradleException("Version must look like 1.2.3 or 1.2.3-beta, got: " + name)
+    }
+    def major = m.group(1) as int
+    def minor = m.group(2) as int
+    def patch = m.group(3) as int
+    if (minor > 99 || patch > 99) {
+        throw new GradleException("Minor and patch must be 0 to 99: " + name)
+    }
+    def stages = [alpha: 3, beta: 5, rc: 7]
+    def label = m.group(4)?.toLowerCase()
+    int stage = label == null ? 9 : (stages[label] ?: 1)
+    return ((major * 10000 + minor * 100 + patch) * 10) + stage
+}
+
 android {
     compileSdk = 36
 
@@ -9,9 +32,8 @@ android {
         applicationId = "redpantyhose.claude.mightycalendaralarm"
         minSdk = 23
         targetSdk = 36
-        // 0.9.0 -> 900, 1.2.3 -> 10203. Must go up with every release.
-        versionCode = 900
-        versionName = '0.9.0-beta'
+        versionCode = versionCodeFor(appVersionName)
+        versionName = appVersionName
     }
 
     def keystorePropertiesFile = rootProject.file("keystore.properties")
