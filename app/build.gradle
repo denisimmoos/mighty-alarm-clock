@@ -9,8 +9,9 @@ android {
         applicationId = "redpantyhose.claude.mightycalendaralarm"
         minSdk = 23
         targetSdk = 36
-        versionCode = 202608001
-        versionName = '2026.08.001'
+        // 0.9.0 -> 900, 1.2.3 -> 10203. Must go up with every release.
+        versionCode = 900
+        versionName = '0.9.0-beta'
     }
 
     def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -89,9 +90,11 @@ android {
 
             if (variant.buildType == "nightly") {
                 outputFileName = "MightyCalendarAlarms_${versionName}-nightly-${commitNumber}-${buildCommit}.apk"
+            } else if (variant.buildType == "release") {
+                def suffix = keystorePropertiesFile.exists() ? "" : "-unsigned"
+                outputFileName = "MightyCalendarAlarms-v${versionName}${suffix}.apk"
             } else {
-                def suffix = versionNameSuffix ?: (keystorePropertiesFile.exists() ? "-release" : "-unsigned")
-                outputFileName = "MightyCalendarAlarms_${versionName}${suffix}.apk"
+                outputFileName = "MightyCalendarAlarms_${versionName}${versionNameSuffix ?: ""}.apk"
             }
 
             variant.outputs.forEach { output ->
